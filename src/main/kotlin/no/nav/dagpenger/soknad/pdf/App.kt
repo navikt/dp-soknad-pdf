@@ -8,10 +8,11 @@ fun main() {
 }
 
 internal object App : RapidsConnection.StatusListener {
-    private val rapidsConnection = RapidApplication.create(mapOf())
+    private val rapidsConnection = RapidApplication.create(Configuration.config)
 
     init {
         rapidsConnection.register(this)
     }
+
     fun start() = rapidsConnection.start()
 }
