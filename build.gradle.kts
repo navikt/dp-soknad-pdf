@@ -1,3 +1,5 @@
+import org.gradle.api.JavaVersion.VERSION_17
+import org.gradle.api.JavaVersion.VERSION_1_8
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.gradle.api.tasks.testing.logging.TestLogEvent
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
@@ -29,13 +31,8 @@ application {
     mainClass.set("no.nav.dagpenger.soknad.pdf.AppKt")
 }
 
-kotlin {
-    jvmToolchain {
-        (this as JavaToolchainSpec).languageVersion.set(JavaLanguageVersion.of(JavaVersion.VERSION_17.toString())) // "8"
-    }
-}
 java {
-    toolchain.languageVersion.set(JavaLanguageVersion.of(17))
+    targetCompatibility = VERSION_17
 }
 
 tasks.withType<Jar>().configureEach {
@@ -53,7 +50,7 @@ tasks.withType<Jar>().configureEach {
 }
 
 tasks.withType<KotlinCompile>().all {
-    kotlinOptions.jvmTarget = JavaVersion.VERSION_17.toString()
+    kotlinOptions.jvmTarget = VERSION_1_8.toString()
 }
 
 dependencies {
