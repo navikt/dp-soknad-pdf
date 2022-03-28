@@ -1,4 +1,4 @@
-rootProject.name = "dagpenger-SERVICENAME"
+rootProject.name = "dp-soknad-pdf"
 
 pluginManagement {
     repositories {
