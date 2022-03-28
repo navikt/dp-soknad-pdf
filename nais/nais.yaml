@@ -15,6 +15,8 @@ spec:
   prometheus:
     enabled: true
     path: /metrics
+  kafka:
+    pool: {{ kafka_pool }}
   replicas:
     min: 2
     max: 2
