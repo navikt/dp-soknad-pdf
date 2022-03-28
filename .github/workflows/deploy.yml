@@ -45,7 +45,6 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v2
         with:
-          context: mediator
           builder: ${{ steps.buildx.outputs.name }}
           tags: ${{ env.IMAGE }}
           push: true
@@ -57,7 +56,7 @@ jobs:
         uses: actions/upload-artifact@v1
         with:
           name: nais-yaml
-          path: mediator/nais
+          path: nais
 
   deploy-dev:
     name: Deploy to dev
