@@ -1,10 +1,10 @@
 apiVersion: nais.io/v1alpha1
 kind: Application
 metadata:
-  name: {{app}}
-  namespace: {{namespace}}
+  name: dp-soknad-pdf
+  namespace: teamdagpenger
   labels:
-    team: {{team}}
+    team: teamdagpenger
 spec:
   image: {{ image }}
   port: 8080
@@ -17,7 +17,7 @@ spec:
     path: /metrics
   replicas:
     min: 2
-    max: 3
+    max: 2
   resources:
     limits:
       cpu: 500m
@@ -25,10 +25,3 @@ spec:
     requests:
       cpu: 200m
       memory: 256Mi
-  secureLogs:
-    enabled: true
-  vault:
-    enabled: true
-    paths:
-      - kvPath: "serviceuser/data/dev/{{service_user}}"
-        mountPath: "/var/run/secrets/nais.io/service_user"
