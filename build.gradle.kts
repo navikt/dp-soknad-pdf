@@ -27,7 +27,7 @@ repositories {
 }
 
 application {
-    applicationName = "dp-soknad-pdf"
+    applicationName = "dp-behov-soknad-pdf"
     mainClass.set("no.nav.dagpenger.soknad.pdf.AppKt")
 }
 

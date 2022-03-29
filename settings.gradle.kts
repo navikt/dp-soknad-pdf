@@ -1,4 +1,4 @@
-rootProject.name = "dp-soknad-pdf"
+rootProject.name = "dp-behov-soknad-pdf"
 
 pluginManagement {
     repositories {

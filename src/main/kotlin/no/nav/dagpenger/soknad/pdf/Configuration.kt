@@ -8,7 +8,7 @@ import com.natpryce.konfig.overriding
 
 internal object Configuration {
 
-    const val appName = "dp-soknad-pdf"
+    const val appName = "dp-behov-soknad-pdf"
 
     private val defaultProperties = ConfigurationMap(
         mapOf(
