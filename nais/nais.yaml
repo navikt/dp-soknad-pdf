@@ -27,3 +27,10 @@ spec:
     requests:
       cpu: 200m
       memory: 256Mi
+  azure:
+    application:
+      enabled: true
+  accessPolicy:
+    outbound:
+      rules:
+        - application: dp-mellomlagring
