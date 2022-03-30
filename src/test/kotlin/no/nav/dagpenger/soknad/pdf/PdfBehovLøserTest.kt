@@ -18,7 +18,7 @@ internal class PdfBehovLøserTest {
     }
 
     @Test
-    fun `besvarr ikke behov hvis løsning er besvart`() {
+    fun `besvarer ikke behov hvis løsning er besvart`() {
         testRapid.sendTestMessage(testMessageMedLøsning)
         assertEquals(0, testRapid.inspektør.size)
     }

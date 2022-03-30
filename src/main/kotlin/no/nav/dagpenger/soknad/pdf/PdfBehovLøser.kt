@@ -24,6 +24,11 @@ internal class PdfBehovLøser(
 
     override fun onPacket(packet: JsonMessage, context: MessageContext) {
         logg.info("Mottok behov for søknadspdf med uuid ${packet["søknad_uuid"].asText()}")
+        /*
+         2. Lagre pdfen (med dp-mellomlagring)
+        3. Svare med en løsning med urn på behovet
+        */
+
         packet["@løsning"] = mapOf(BEHOV to "urn:dokument:wattevs")
         context.publish(packet.toJson())
     }

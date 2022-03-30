@@ -1,10 +1,16 @@
 package no.nav.dagpenger.soknad.pdf
 
-import no.nav.helse.rapids_rivers.JsonMessage
+import java.io.FileNotFoundException
+import java.io.InputStream
 
-internal class PdfBuilder(packet: JsonMessage) {
+internal class PdfBuilder() {
 
-    fun lagPdf(): ByteArray {
-        return "Hello world!".toByteArray()
+    internal fun lagPdf(): ByteArray = "/søknad.pdf".fileAsByteArray()
+
+    private fun String.fileAsInputStream(): InputStream {
+        return object {}.javaClass.getResource(this)?.openStream()
+            ?: throw FileNotFoundException()
     }
+
+    private fun String.fileAsByteArray(): ByteArray = this.fileAsInputStream().use { it.readAllBytes() }
 }
