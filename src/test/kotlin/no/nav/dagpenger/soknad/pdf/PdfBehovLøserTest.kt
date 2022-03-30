@@ -8,13 +8,14 @@ import kotlin.test.assertEquals
 
 internal class PdfBehovLøserTest {
     val testRapid = TestRapid().also {
-        PdfBehovLøser(it)
+        PdfBehovLøser(it, PdfBuilder(), PdfLagring())
     }
 
     @Test
     fun `besvarer pdf behov`() {
         testRapid.sendTestMessage(testMessage)
         assertEquals(1, testRapid.inspektør.size)
+        assertEquals("urn:document:id/søknad.pdf", testRapid.inspektør.message(0)["@løsning"][PdfBehovLøser.BEHOV].asText())
     }
 
     @Test

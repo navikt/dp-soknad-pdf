@@ -1,15 +1,19 @@
 package no.nav.dagpenger.mottak.tjenester
 
 import mu.KotlinLogging
+import no.nav.dagpenger.soknad.pdf.PdfBuilder
+import no.nav.dagpenger.soknad.pdf.PdfLagring
 import no.nav.helse.rapids_rivers.JsonMessage
 import no.nav.helse.rapids_rivers.MessageContext
 import no.nav.helse.rapids_rivers.RapidsConnection
 import no.nav.helse.rapids_rivers.River
 
 internal class PdfBehovLøser(
-    rapidsConnection: RapidsConnection
+    rapidsConnection: RapidsConnection,
+    private val pdfBuilder: PdfBuilder,
+    private val pdfLagring: PdfLagring
 ) : River.PacketListener {
-    private companion object {
+    companion object {
         private val logg = KotlinLogging.logger {}
         const val BEHOV = "arkiverbarSøknad"
     }
@@ -23,13 +27,21 @@ internal class PdfBehovLøser(
     }
 
     override fun onPacket(packet: JsonMessage, context: MessageContext) {
-        logg.info("Mottok behov for søknadspdf med uuid ${packet["søknad_uuid"].asText()}")
+        logg.info("Mottok behov for søknadspdf med uuid ${packet.søknadUuid()}")
         /*
          2. Lagre pdfen (med dp-mellomlagring)
         3. Svare med en løsning med urn på behovet
         */
 
-        packet["@løsning"] = mapOf(BEHOV to "urn:dokument:wattevs")
+        pdfLagring.lagrePdf(
+            søknadUUid = packet.søknadUuid(),
+            pdf = pdfBuilder.lagPdf()
+        ).also {
+            packet["@løsning"] = mapOf(BEHOV to it)
+        }
+
         context.publish(packet.toJson())
     }
 }
+
+private fun JsonMessage.søknadUuid(): String = this["søknad_uuid"].asText()
