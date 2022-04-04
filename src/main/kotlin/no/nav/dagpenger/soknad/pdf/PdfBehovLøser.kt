@@ -1,5 +1,6 @@
 package no.nav.dagpenger.mottak.tjenester
 
+import kotlinx.coroutines.runBlocking
 import mu.KotlinLogging
 import no.nav.dagpenger.soknad.pdf.PdfBuilder
 import no.nav.dagpenger.soknad.pdf.PdfLagring
@@ -33,14 +34,16 @@ internal class PdfBehovLøser(
         3. Svare med en løsning med urn på behovet
         */
 
-        pdfLagring.lagrePdf(
-            søknadUUid = packet.søknadUuid(),
-            pdf = pdfBuilder.lagPdf()
-        ).also {
-            packet["@løsning"] = mapOf(BEHOV to it)
-        }
+        runBlocking {
+            pdfLagring.lagrePdf(
+                søknadUUid = packet.søknadUuid(),
+                pdf = pdfBuilder.lagPdf()
+            ).also {
+                packet["@løsning"] = mapOf(BEHOV to it)
+            }
 
-        context.publish(packet.toJson())
+            context.publish(packet.toJson())
+        }
     }
 }
 

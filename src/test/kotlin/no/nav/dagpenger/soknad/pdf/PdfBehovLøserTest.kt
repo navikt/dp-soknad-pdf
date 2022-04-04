@@ -1,5 +1,7 @@
 package no.nav.dagpenger.soknad.pdf
 
+import io.mockk.coEvery
+import io.mockk.mockk
 import no.nav.dagpenger.mottak.tjenester.PdfBehovLøser
 import no.nav.helse.rapids_rivers.testsupport.TestRapid
 import org.intellij.lang.annotations.Language
@@ -8,7 +10,12 @@ import kotlin.test.assertEquals
 
 internal class PdfBehovLøserTest {
     val testRapid = TestRapid().also {
-        PdfBehovLøser(it, PdfBuilder(), PdfLagring())
+        PdfBehovLøser(
+            it, PdfBuilder(),
+            mockk<PdfLagring>().also {
+                coEvery { it.lagrePdf(any(), any()) } returns "urn:document:id/søknad.pdf"
+            }
+        )
     }
 
     @Test

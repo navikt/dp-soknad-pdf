@@ -65,14 +65,12 @@ dependencies {
     implementation(Ktor.library("client-core"))
     implementation(Ktor.library("client-jackson"))
 
-
     testImplementation(kotlin("test"))
+    testImplementation(Mockk.mockk)
     testImplementation(Junit5.api)
     testImplementation(KoTest.runner)
     testImplementation(Ktor.library("client-mock"))
     testRuntimeOnly(Junit5.engine)
-
-
 }
 
 spotless {
