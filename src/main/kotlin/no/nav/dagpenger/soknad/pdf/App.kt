@@ -17,7 +17,7 @@ internal object App : RapidsConnection.StatusListener {
             rapidsConnection = rapidsConnection,
             pdfBuilder = PdfBuilder(),
             pdfLagring = PdfLagring(
-                baseUrl = Configuration.dpMellomlagringBaseUrl, tokenSupplier = Configuration.azureAdTokenSupplier
+                baseUrl = Configuration.dpMellomlagringBaseUrl, tokenSupplier = Configuration.azureAdTokenSupplier()
             )
         )
     }

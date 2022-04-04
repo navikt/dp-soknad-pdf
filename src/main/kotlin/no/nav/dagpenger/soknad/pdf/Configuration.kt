@@ -8,7 +8,7 @@ import com.natpryce.konfig.Key
 import com.natpryce.konfig.overriding
 import com.natpryce.konfig.stringType
 import kotlinx.coroutines.runBlocking
-import no.nav.dagpenger.oauth2.OAuth2Client
+import no.nav.dagpenger.oauth2.CachedOauth2Client
 import no.nav.dagpenger.oauth2.OAuth2Config
 
 internal object Configuration {
@@ -31,14 +31,24 @@ internal object Configuration {
 
     val dpMellomlagringBaseUrl = properties[Key("DP_MELLOMLAGRING_BASE_URL", stringType)]
 
-    val azureAdTokenSupplier by lazy {
-        val azureAd = with(OAuth2Config.AzureAd(properties)) {
-            OAuth2Client(
-                tokenEndpointUrl = tokenEndpointUrl,
-                authType = clientSecret()
-            )
-        };
-        { runBlocking { azureAd.clientCredentials(properties[Key("DP_MELLOMLAGRING_SCOPE", stringType)]).accessToken } }
+    fun azureAdTokenSupplier(): () -> String {
+        val azureAdConfig = OAuth2Config.AzureAd(properties)
+        val azureAdClient = CachedOauth2Client(
+            tokenEndpointUrl = azureAdConfig.tokenEndpointUrl,
+            authType = azureAdConfig.clientSecret()
+        )
+        return {
+            runBlocking {
+                azureAdClient.clientCredentials(
+                    properties[
+                        Key(
+                            "DP_MELLOMLAGRING_SCOPE",
+                            stringType
+                        )
+                    ]
+                ).accessToken
+            }
+        }
     }
 
     val config: Map<String, String> = properties.list().reversed().fold(emptyMap()) { map, pair ->
