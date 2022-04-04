@@ -60,11 +60,19 @@ dependencies {
 
     implementation(Konfig.konfig)
     implementation(Kotlin.Logging.kotlinLogging)
+    implementation("com.github.navikt.dp-biblioteker:oauth2-klient:2022.02.09-13.02.a909744df89a")
+    implementation(Ktor.library("client-cio-jvm"))
+    implementation(Ktor.library("client-core"))
+    implementation(Ktor.library("client-jackson"))
+
 
     testImplementation(kotlin("test"))
     testImplementation(Junit5.api)
     testImplementation(KoTest.runner)
+    testImplementation(Ktor.library("client-mock"))
     testRuntimeOnly(Junit5.engine)
+
+
 }
 
 spotless {
