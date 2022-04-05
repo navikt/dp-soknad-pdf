@@ -22,19 +22,20 @@ internal class PdfLagringTest {
             assertEquals(request.headers["Authorization"], "Bearer token")
 
             respond(
-                content = "a string",
+                //language=JSON
+                content = """[{"urn":"urn:vedlegg:id/soknad.pdf"}]""",
                 status = HttpStatusCode.Created,
                 headers = headersOf(HttpHeaders.ContentType, "application/json")
             )
         }
         runBlocking {
-            val lagrePdf = PdfLagring(
+            val urn = PdfLagring(
                 baseUrl = "http://dp-mellomlagring/v1/azuread/ve",
                 tokenSupplier = { "token" },
                 engine = mockEngine
             ).lagrePdf("uuud", "".toByteArray())
 
-            assertEquals(lagrePdf, "a string")
+            assertEquals(urn.urn, """urn:vedlegg:id/soknad.pdf""")
         }
     }
 }

@@ -13,7 +13,7 @@ internal class PdfBehovLøserTest {
         PdfBehovLøser(
             it, PdfBuilder(),
             mockk<PdfLagring>().also {
-                coEvery { it.lagrePdf(any(), any()) } returns "urn:document:id/søknad.pdf"
+                coEvery { it.lagrePdf(any(), any()) } returns URNResponse("urn:document:id/søknad.pdf")
             }
         )
     }
@@ -22,7 +22,10 @@ internal class PdfBehovLøserTest {
     fun `besvarer pdf behov`() {
         testRapid.sendTestMessage(testMessage)
         assertEquals(1, testRapid.inspektør.size)
-        assertEquals("urn:document:id/søknad.pdf", testRapid.inspektør.message(0)["@løsning"][PdfBehovLøser.BEHOV].asText())
+        assertEquals(
+            "urn:document:id/søknad.pdf",
+            testRapid.inspektør.message(0)["@løsning"][PdfBehovLøser.BEHOV].asText()
+        )
     }
 
     @Test

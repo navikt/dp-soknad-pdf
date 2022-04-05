@@ -4,6 +4,8 @@ import io.ktor.client.HttpClient
 import io.ktor.client.engine.HttpClientEngine
 import io.ktor.client.engine.cio.CIO
 import io.ktor.client.features.defaultRequest
+import io.ktor.client.features.json.JacksonSerializer
+import io.ktor.client.features.json.JsonFeature
 import io.ktor.client.request.forms.MultiPartFormDataContent
 import io.ktor.client.request.forms.formData
 import io.ktor.client.request.header
@@ -23,18 +25,14 @@ class PdfLagring(
         defaultRequest {
             header("Authorization", "Bearer ${tokenSupplier.invoke()}")
         }
+        install(JsonFeature) {
+            serializer = JacksonSerializer()
+        }
     }
 
-    internal suspend fun lagrePdf(søknadUUid: String, pdf: ByteArray): String {
-        /*
-        1. http klient
-        2. azure ad access token
-        3. Lage request
-        4.Post request
-        */
-
+    internal suspend fun lagrePdf(søknadUUid: String, pdf: ByteArray): URNResponse {
         return ByteArrayInputStream(pdf).asInput().use {
-            httpKlient.post("$baseUrl/$søknadUUid") {
+            httpKlient.post<List<URNResponse>>("$baseUrl/$søknadUUid") {
                 body = MultiPartFormDataContent(
                     formData {
                         appendInput(
@@ -48,6 +46,8 @@ class PdfLagring(
                     }
                 )
             }
-        }
+        }.first()
     }
 }
+
+internal data class URNResponse(val urn: String)

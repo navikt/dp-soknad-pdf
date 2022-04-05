@@ -64,6 +64,7 @@ dependencies {
     implementation(Ktor.library("client-cio-jvm"))
     implementation(Ktor.library("client-core"))
     implementation(Ktor.library("client-jackson"))
+    implementation(Ktor.library("client-serialization"))
 
     testImplementation(kotlin("test"))
     testImplementation(Mockk.mockk)

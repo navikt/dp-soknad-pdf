@@ -39,7 +39,7 @@ internal class PdfBehovLøser(
                 søknadUUid = packet.søknadUuid(),
                 pdf = pdfBuilder.lagPdf()
             ).also {
-                packet["@løsning"] = mapOf(BEHOV to it)
+                packet["@løsning"] = mapOf(BEHOV to it.urn)
             }
 
             context.publish(packet.toJson())
