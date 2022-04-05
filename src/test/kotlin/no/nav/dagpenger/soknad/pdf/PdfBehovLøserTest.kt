@@ -37,7 +37,7 @@ internal class PdfBehovLøserTest {
 
 @Language("JSON")
 val testMessage = """ {
-        "@behov": ["arkiverbarSøknad"],
+        "@behov": ["ArkiverbarSøknad"],
         "søknad_uuid": "hasfakfhajkfhkasjfhk",
         "ident": "12345678910"
             }
@@ -45,7 +45,7 @@ val testMessage = """ {
 
 @Language("JSON")
 val testMessageMedLøsning = """ {
-        "@behov": ["arkiverbarSøknad"],
+        "@behov": ["ArkiverbarSøknad"],
         "@løsning": "something",
         "søknad_uuid": "hasfakfhajkfhkasjfhk",
         "ident": "12345678910"

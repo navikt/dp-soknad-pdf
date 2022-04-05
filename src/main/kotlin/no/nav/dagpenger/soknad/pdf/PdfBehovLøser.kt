@@ -16,7 +16,7 @@ internal class PdfBehovLøser(
 ) : River.PacketListener {
     companion object {
         private val logg = KotlinLogging.logger {}
-        const val BEHOV = "arkiverbarSøknad"
+        const val BEHOV = "ArkiverbarSøknad"
     }
 
     init {
