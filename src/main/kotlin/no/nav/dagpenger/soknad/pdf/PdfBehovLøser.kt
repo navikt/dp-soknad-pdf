@@ -21,6 +21,7 @@ internal class PdfBehovLøser(
 
     init {
         River(rapidsConnection).apply {
+            validate { it.demandValue("@event_name", "behov") }
             validate { it.demandAll("@behov", listOf(BEHOV)) }
             validate { it.rejectKey("@løsning") }
             validate { it.requireKey("søknad_uuid", "ident") }

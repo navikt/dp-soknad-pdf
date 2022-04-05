@@ -22,6 +22,7 @@ internal class PdfBehovLøserTest {
     fun `besvarer pdf behov`() {
         testRapid.sendTestMessage(testMessage)
         assertEquals(1, testRapid.inspektør.size)
+
         assertEquals(
             "urn:document:id/søknad.pdf",
             testRapid.inspektør.message(0)["@løsning"][PdfBehovLøser.BEHOV].asText()
@@ -37,6 +38,7 @@ internal class PdfBehovLøserTest {
 
 @Language("JSON")
 val testMessage = """ {
+        "@event_name": "behov",
         "@behov": ["ArkiverbarSøknad"],
         "søknad_uuid": "hasfakfhajkfhkasjfhk",
         "ident": "12345678910"
@@ -45,6 +47,7 @@ val testMessage = """ {
 
 @Language("JSON")
 val testMessageMedLøsning = """ {
+        "@event_name": "behov",
         "@behov": ["ArkiverbarSøknad"],
         "@løsning": "something",
         "søknad_uuid": "hasfakfhajkfhkasjfhk",
