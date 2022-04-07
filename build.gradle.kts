@@ -1,5 +1,4 @@
 import org.gradle.api.JavaVersion.VERSION_17
-import org.gradle.api.JavaVersion.VERSION_1_8
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.gradle.api.tasks.testing.logging.TestLogEvent
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
@@ -50,10 +49,11 @@ tasks.withType<Jar>().configureEach {
 }
 
 tasks.withType<KotlinCompile>() {
-    kotlinOptions.jvmTarget = VERSION_1_8.toString()
+    kotlinOptions.jvmTarget = VERSION_17.toString()
 }
 
 dependencies {
+    val openHtmlToPdfVersion = "1.0.10"
     implementation(kotlin("stdlib"))
 
     implementation(RapidAndRivers)
@@ -65,6 +65,9 @@ dependencies {
     implementation(Ktor.library("client-core"))
     implementation(Ktor.library("client-jackson"))
     implementation(Ktor.library("client-serialization"))
+    implementation("com.openhtmltopdf:openhtmltopdf-pdfbox:$openHtmlToPdfVersion")
+    implementation("com.openhtmltopdf:openhtmltopdf-slf4j:$openHtmlToPdfVersion")
+    implementation("com.openhtmltopdf:openhtmltopdf-svg-support:$openHtmlToPdfVersion")
 
     testImplementation(kotlin("test"))
     testImplementation(Mockk.mockk)
