@@ -32,7 +32,7 @@ class PdfLagring(
 
     internal suspend fun lagrePdf(søknadUUid: String, pdf: ByteArray): URNResponse {
         return ByteArrayInputStream(pdf).asInput().use {
-            httpKlient.post<List<URNResponse>>("$baseUrl/$søknadUUid") {
+            httpKlient.post<URNResponse>("$baseUrl/$søknadUUid") {
                 body = MultiPartFormDataContent(
                     formData {
                         appendInput(
@@ -46,7 +46,7 @@ class PdfLagring(
                     }
                 )
             }
-        }.first()
+        }
     }
 }
 

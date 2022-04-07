@@ -23,7 +23,7 @@ internal class PdfLagringTest {
 
             respond(
                 //language=JSON
-                content = """[{"urn":"urn:vedlegg:id/soknad.pdf"}]""",
+                content = """{"urn":"urn:vedlegg:id/soknad.pdf"}""",
                 status = HttpStatusCode.Created,
                 headers = headersOf(HttpHeaders.ContentType, "application/json")
             )
