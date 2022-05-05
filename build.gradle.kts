@@ -69,6 +69,7 @@ dependencies {
     implementation("com.openhtmltopdf:openhtmltopdf-slf4j:$openHtmlToPdfVersion")
     implementation("com.openhtmltopdf:openhtmltopdf-svg-support:$openHtmlToPdfVersion")
     implementation("org.jsoup:jsoup:1.14.3")
+    implementation("org.jetbrains.kotlinx:kotlinx-html-jvm:0.7.5")
 
     testImplementation(kotlin("test"))
     testImplementation(Mockk.mockk)
