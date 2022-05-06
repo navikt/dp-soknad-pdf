@@ -8,11 +8,7 @@ internal class PdfBuilder {
 
     internal fun lagPdf(html: String): ByteArray {
         return ByteArrayOutputStream().use {
-            PdfRendererBuilder()/*.apply {
-                for (font in fonts) {
-                    useFont({ ByteArrayInputStream(font.bytes) }, font.family, font.weight, font.style, font.subset)
-                }
-            }*/
+            PdfRendererBuilder()
                 .usePdfAConformance(PdfRendererBuilder.PdfAConformance.PDFA_2_U)
                 .usePdfUaAccessbility(true)
                 .withHtmlContent(html, null)

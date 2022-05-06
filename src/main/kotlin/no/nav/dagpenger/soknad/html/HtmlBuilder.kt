@@ -1,7 +1,5 @@
 package no.nav.dagpenger.soknad.html
 
-import kotlinx.html.HEAD
-import kotlinx.html.STYLE
 import kotlinx.html.body
 import kotlinx.html.div
 import kotlinx.html.dom.createHTMLDocument
@@ -12,20 +10,20 @@ import kotlinx.html.h3
 import kotlinx.html.head
 import kotlinx.html.html
 import kotlinx.html.lang
-import kotlinx.html.link
 import kotlinx.html.p
 import kotlinx.html.style
 import kotlinx.html.title
-import kotlinx.html.unsafe
 import no.nav.dagpenger.soknad.pdf.PdfBuilder
 import java.io.File
 
 internal object HtmlBuilder {
     fun lagHtml(htmlModell: HtmlModell): String {
+        val språk = htmlModell.metaInfo.språk
         return createHTMLDocument().html {
-            lang = htmlModell.metaInfo.språk.langAtributt
+            lang = språk.langAtributt
             head {
                 title(htmlModell.metaInfo.tittel)
+                pdfa(htmlModell.pdfAKrav)
                 fontimports()
                 style {
                     søknadPdfStyle()
@@ -35,12 +33,16 @@ internal object HtmlBuilder {
                 h1 {
                     +htmlModell.metaInfo.hovedOverskrift
                 }
+                div(classes = "infoblokk") {
+                    boldSpanP(boldTekst= språk.fødselsnummer, vanligTekst=htmlModell.infoBlokk.fødselsnummer)
+                    boldSpanP(boldTekst = språk.datoSendt, vanligTekst = htmlModell.infoBlokk.fødselsnummer)
+                }
                 htmlModell.seksjoner.forEach { seksjon ->
                     div(classes = "seksjon") {
                         h2 { +seksjon.overskrift }
                         seksjon.spmSvar.forEach { ss ->
                             h3 { +ss.sporsmal }
-                            p { +"${htmlModell.metaInfo.språk.svar}: ${ss.svar}" }
+                            boldSpanP(htmlModell.metaInfo.språk.svar, ss.svar)
                         }
                     }
                 }
@@ -49,53 +51,14 @@ internal object HtmlBuilder {
     }
 }
 
-private fun STYLE.søknadPdfStyle() {
-    unsafe {
-        //language=CSS
-        raw(
-            """
-                     body{
-                         font-family: 'Source Sans Pro';
-                         padding: 5px;
-                         
-                     }
-                     .seksjon{
-                     }
-
-                            """.trimIndent()
-        )
-    }
-}
-
-private fun HEAD.fontimports() {
-    link {
-        rel = "preconnect"
-        href = "https://fonts.googleapis.com"
-    }
-    link {
-        rel = "preconnect"
-        href = "https://fonts.gstatic.com"
-    }
-    link {
-        href = "https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,300;0,400;0,600;1,400&display=swap"
-        rel = "stylesheet"
-    }
-}
-
 fun main() {
-     testHtml.also { generertHtml ->
-         File("soknad.html").writeText(generertHtml)
-         PdfBuilder().lagPdf(generertHtml).also {
-             File("søknad.pdf").writeBytes(it)
-         }
-     }
-   /* "<link href=\"https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,300;0,400;0,600;1,400&amp;display=swap\" rel=\"stylesheet\">".replace(
-        Regex(pattern = "(?<=(link[\\sa-zA-ZæøåÆØÅ=\\\"\\:\\/\\.0-9\\?\\+\\,@\\;\\&]{1,1000}))>"),
-        replacement = "/>"
-    ).also {
-        print(it)
-    }*/
-
+    testHtml.also { generertHtml ->
+        print(generertHtml)
+        File("soknad.html").writeText(generertHtml)
+        PdfBuilder().lagPdf(generertHtml).also {
+            File("søknad.pdf").writeBytes(it)
+        }
+    }
 }
 
 val testHtml = HtmlBuilder.lagHtml(
@@ -121,6 +84,8 @@ val testHtml = HtmlBuilder.lagHtml(
             )
         ), metaInfo = HtmlModell.MetaInfo(
             hovedOverskrift = "Søknad om dagpenger"
-        )
+        ),
+        pdfAKrav = HtmlModell.PdfAKrav("Søknad om dagpenger"),
+        infoBlokk = HtmlModell.InfoBlokk("12345678910", "24.03.2022 11.34")
     )
 )
