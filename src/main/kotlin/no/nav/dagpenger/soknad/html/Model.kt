@@ -14,7 +14,7 @@ internal data class HtmlModell(
         val tittel: String = hovedOverskrift,
         val språk: SøknadSpråk = SøknadSpråk.BOKMÅL
     )
-    data class PdfAKrav(val description: String)
+    data class PdfAKrav(val description: String, val subject: String, val author: String)
     data class InfoBlokk(val fødselsnummer: String, val datoSendt: String) {
     }
     enum class SøknadSpråk(

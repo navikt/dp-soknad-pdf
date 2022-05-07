@@ -95,7 +95,7 @@ val testHtml = HtmlBuilder.lagHtml(
         ), metaInfo = HtmlModell.MetaInfo(
             hovedOverskrift = "Søknad om dagpenger"
         ),
-        pdfAKrav = HtmlModell.PdfAKrav("Søknad om dagpenger"),
+        pdfAKrav = HtmlModell.PdfAKrav("Søknad om dagpenger","dagpenger","NAV"),
         infoBlokk = HtmlModell.InfoBlokk("12345678910", "24.03.2022 11.34")
     )
 )

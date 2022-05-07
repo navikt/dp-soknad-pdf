@@ -27,6 +27,15 @@ internal fun HEAD.pdfa(pdfAKrav: HtmlModell.PdfAKrav) {
         name = "description"
         content = pdfAKrav.description
     }
+    meta {
+        name = "subject"
+        content = pdfAKrav.subject
+    }
+
+    meta {
+        name = "author"
+        content = pdfAKrav.author
+    }
 }
 
 internal fun HEAD.bookmarks(htmlModell: HtmlModell) {
