@@ -8,11 +8,13 @@ import kotlinx.html.meta
 import kotlinx.html.p
 import kotlinx.html.span
 import kotlinx.html.unsafe
+import no.nav.dagpenger.soknad.html.HtmlModell.*
 
 
 internal fun String.xhtmlCompliant() = this
     .replace("&oslash;", "ø")
     .replace("&aring;", "å")
+    .replace("&aelig;", "æ")
     .replace(
         Regex("(?<=<(meta|META)[a-zA-ZæøåÆØÅ=\\\"\\/\\s\\-\\.\\;0-9]{1,1000})>"),
         replacement = "/>"
@@ -22,7 +24,7 @@ internal fun String.xhtmlCompliant() = this
         replacement = "/>"
     )
 
-internal fun HEAD.pdfa(pdfAKrav: HtmlModell.PdfAKrav) {
+internal fun HEAD.pdfa(pdfAKrav: PdfAKrav) {
     meta {
         name = "description"
         content = pdfAKrav.description
@@ -59,7 +61,7 @@ internal fun DIV.boldSpanP(boldTekst: String, vanligTekst: String, divider: Stri
     }
 }
 
-internal fun DIV.spmDiv(spmSvar: HtmlModell.SporsmalSvar, språk: HtmlModell.SøknadSpråk) {
+internal fun DIV.spmDiv(spmSvar: SporsmalSvar, språk: SøknadSpråk) {
     div {
         h3 { +spmSvar.sporsmal }
         if (spmSvar.infotekst != null) {
@@ -71,6 +73,9 @@ internal fun DIV.spmDiv(spmSvar: HtmlModell.SporsmalSvar, språk: HtmlModell.Sø
             }
         }
         boldSpanP(språk.svar, spmSvar.svar)
+        spmSvar.oppfølgingspørmål?.forEach { oppfølging ->
+            spmDiv(oppfølging, språk)
+        }
     }
 }
 

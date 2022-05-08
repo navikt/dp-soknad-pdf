@@ -8,7 +8,13 @@ internal data class HtmlModell(
     val infoBlokk: InfoBlokk
 ) {
     data class Seksjon(val overskrift: String, val spmSvar: List<SporsmalSvar>)
-    data class SporsmalSvar(val sporsmal: String, val svar: String, val infotekst: String?=null, val hjelpeTekst: String?=null)
+    data class SporsmalSvar(
+        val sporsmal: String,
+        val svar: String,
+        val infotekst: String? = null,
+        val hjelpeTekst: String? = null,
+        val oppfølgingspørmål: List<SporsmalSvar>? = null
+    )
     data class MetaInfo(
         val hovedOverskrift: String,
         val tittel: String = hovedOverskrift,
