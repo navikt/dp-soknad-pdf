@@ -56,15 +56,14 @@ dependencies {
     val openHtmlToPdfVersion = "1.0.10"
     implementation(kotlin("stdlib"))
 
-    implementation(RapidAndRivers)
+    implementation("com.github.navikt:rapids-and-rivers:2022.05.02-13.49.ee057492fb1a")
 
     implementation(Konfig.konfig)
     implementation(Kotlin.Logging.kotlinLogging)
-    implementation("com.github.navikt.dp-biblioteker:oauth2-klient:2022.02.09-13.02.a909744df89a")
-    implementation(Ktor.library("client-cio-jvm"))
-    implementation(Ktor.library("client-core"))
-    implementation(Ktor.library("client-jackson"))
-    implementation(Ktor.library("client-serialization"))
+    implementation("com.github.navikt.dp-biblioteker:oauth2-klient:2022.05.02-14.21.f4e9d6da3fa8")
+    implementation(Ktor2.Client.library("cio"))
+    implementation(Ktor2.Client.library("content-negotiation"))
+    implementation("io.ktor:ktor-serialization-jackson:${Ktor2.version}")
     implementation("com.openhtmltopdf:openhtmltopdf-pdfbox:$openHtmlToPdfVersion")
     implementation("com.openhtmltopdf:openhtmltopdf-slf4j:$openHtmlToPdfVersion")
     implementation("com.openhtmltopdf:openhtmltopdf-svg-support:$openHtmlToPdfVersion")
@@ -75,7 +74,7 @@ dependencies {
     testImplementation(Mockk.mockk)
     testImplementation(Junit5.api)
     testImplementation(KoTest.runner)
-    testImplementation(Ktor.library("client-mock"))
+    testImplementation(Ktor2.Client.library("mock"))
     testRuntimeOnly(Junit5.engine)
 }
 
