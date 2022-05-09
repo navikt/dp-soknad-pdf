@@ -11,7 +11,10 @@ import kotlin.test.assertEquals
 internal class PdfBehovLøserTest {
     val testRapid = TestRapid().also {
         PdfBehovLøser(
-            it, PdfBuilder(),
+            it,
+            mockk<PdfBuilder>().also {
+                coEvery { it.lagPdf() } returns "/søknad.html".fileAsString().toByteArray()
+            },
             mockk<PdfLagring>().also {
                 coEvery { it.lagrePdf(any(), any()) } returns URNResponse("urn:document:id/søknad.pdf")
             }
