@@ -8,8 +8,9 @@ import kotlinx.html.meta
 import kotlinx.html.p
 import kotlinx.html.span
 import kotlinx.html.unsafe
-import no.nav.dagpenger.soknad.html.HtmlModell.*
-
+import no.nav.dagpenger.soknad.html.HtmlModell.PdfAKrav
+import no.nav.dagpenger.soknad.html.HtmlModell.SporsmalSvar
+import no.nav.dagpenger.soknad.html.HtmlModell.SøknadSpråk
 
 internal fun String.xhtmlCompliant() = this
     .replace("&oslash;", "ø")
@@ -51,7 +52,6 @@ internal fun HEAD.bookmarks(htmlModell: HtmlModell) {
             """.trimIndent()
         )
     }
-
 }
 
 internal fun DIV.boldSpanP(boldTekst: String, vanligTekst: String, divider: String = ":") {

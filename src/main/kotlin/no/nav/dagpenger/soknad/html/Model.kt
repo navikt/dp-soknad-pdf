@@ -1,6 +1,5 @@
 package no.nav.dagpenger.soknad.html
 
-
 internal data class HtmlModell(
     val seksjoner: List<Seksjon>,
     val metaInfo: MetaInfo,
@@ -21,8 +20,7 @@ internal data class HtmlModell(
         val språk: SøknadSpråk = SøknadSpråk.BOKMÅL
     )
     data class PdfAKrav(val description: String, val subject: String, val author: String)
-    data class InfoBlokk(val fødselsnummer: String, val datoSendt: String) {
-    }
+    data class InfoBlokk(val fødselsnummer: String, val datoSendt: String)
     enum class SøknadSpråk(
         val langAtributt: String,
         val svar: String,
@@ -32,4 +30,3 @@ internal data class HtmlModell(
         BOKMÅL("no", "Svar", "Fødselsnummer", "Dato sendt")
     }
 }
-

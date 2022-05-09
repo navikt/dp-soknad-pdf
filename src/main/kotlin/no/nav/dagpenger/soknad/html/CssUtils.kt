@@ -29,4 +29,4 @@ internal fun STYLE.søknadPdfStyle() {
     }
 }
 
-internal fun hentCss()= CSSUtilities::class.java.getResource("/pdf.css").readText()
+internal fun hentCss() = CSSUtilities::class.java.getResource("/pdf.css").readText()
