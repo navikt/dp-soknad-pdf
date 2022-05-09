@@ -1,18 +1,21 @@
-package no.nav.dagpenger.mottak.tjenester
+package no.nav.dagpenger.soknad.pdf
 
 import kotlinx.coroutines.runBlocking
 import mu.KotlinLogging
-import no.nav.dagpenger.soknad.pdf.PdfBuilder
-import no.nav.dagpenger.soknad.pdf.PdfLagring
+import no.nav.dagpenger.soknad.html.HtmlBuilder
+import no.nav.dagpenger.soknad.html.HtmlModell
 import no.nav.helse.rapids_rivers.JsonMessage
 import no.nav.helse.rapids_rivers.MessageContext
 import no.nav.helse.rapids_rivers.RapidsConnection
 import no.nav.helse.rapids_rivers.River
+import java.util.UUID
 
 internal class PdfBehovLøser(
     rapidsConnection: RapidsConnection,
     private val pdfBuilder: PdfBuilder,
-    private val pdfLagring: PdfLagring
+    private val pdfLagring: PdfLagring,
+    private val soknadSupplier: suspend (soknadId: UUID) -> HtmlModell,
+    private val htmlBuilder: (modell: HtmlModell) -> String = HtmlBuilder::lagHtml
 ) : River.PacketListener {
     companion object {
         private val logg = KotlinLogging.logger {}
@@ -29,23 +32,20 @@ internal class PdfBehovLøser(
     }
 
     override fun onPacket(packet: JsonMessage, context: MessageContext) {
-        logg.info("Mottok behov for søknadspdf med uuid ${packet.søknadUuid()}")
-        /*
-         2. Lagre pdfen (med dp-mellomlagring)
-        3. Svare med en løsning med urn på behovet
-        */
-
+        val soknadId = packet.søknadUuid()
+        logg.info("Mottok behov for søknadspdf med uuid $soknadId")
         runBlocking {
-            pdfLagring.lagrePdf(
-                søknadUUid = packet.søknadUuid(),
-                pdf = pdfBuilder.lagPdf()
-            ).also {
-                packet["@løsning"] = mapOf(BEHOV to it.urn)
+            soknadSupplier(soknadId).let(htmlBuilder).let { pdfBuilder.lagPdf(it) }.let { pdf ->
+                pdfLagring.lagrePdf(
+                    søknadUUid = soknadId.toString(),
+                    pdf = pdf
+                ).also {
+                    packet["@løsning"] = mapOf(BEHOV to it.urn)
+                }
             }
-
             context.publish(packet.toJson())
         }
     }
 }
 
-private fun JsonMessage.søknadUuid(): String = this["søknad_uuid"].asText()
+private fun JsonMessage.søknadUuid(): UUID = this["søknad_uuid"].asText().let { UUID.fromString(it) }

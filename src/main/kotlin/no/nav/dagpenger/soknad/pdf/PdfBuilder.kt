@@ -1,10 +1,9 @@
 package no.nav.dagpenger.soknad.pdf
+
 import com.openhtmltopdf.pdfboxout.PdfRendererBuilder
 import java.io.ByteArrayOutputStream
 
-internal class PdfBuilder {
-
-    internal fun lagPdf(): ByteArray = lagPdf("/søknad.html".fileAsString())
+internal object PdfBuilder {
 
     internal fun lagPdf(html: String): ByteArray {
         return ByteArrayOutputStream().use {

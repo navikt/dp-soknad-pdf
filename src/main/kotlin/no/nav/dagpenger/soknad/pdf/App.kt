@@ -1,6 +1,7 @@
 package no.nav.dagpenger.soknad.pdf
 
-import no.nav.dagpenger.mottak.tjenester.PdfBehovLøser
+import no.nav.dagpenger.soknad.html.HtmlBuilder
+import no.nav.dagpenger.soknad.html.SoknadSupplier
 import no.nav.helse.rapids_rivers.RapidApplication
 import no.nav.helse.rapids_rivers.RapidsConnection
 
@@ -15,10 +16,12 @@ internal object App : RapidsConnection.StatusListener {
         rapidsConnection.register(this)
         PdfBehovLøser(
             rapidsConnection = rapidsConnection,
-            pdfBuilder = PdfBuilder(),
+            pdfBuilder = PdfBuilder,
             pdfLagring = PdfLagring(
-                baseUrl = Configuration.dpMellomlagringBaseUrl, tokenSupplier = Configuration.azureAdTokenSupplier()
-            )
+                baseUrl = Configuration.dpMellomlagringBaseUrl, tokenSupplier = Configuration.mellomlagringTokenSupplier
+            ),
+            htmlBuilder = HtmlBuilder::lagHtml,
+            soknadSupplier = SoknadSupplier(Configuration.dpSoknadUrl, Configuration.soknadTokenSupplier)::hentSoknad,
         )
     }
 

@@ -1,6 +1,6 @@
 package no.nav.dagpenger.soknad.html
 
-object TestHtml {
+object TestModellHtml {
     internal val spmOgSvarSeksjon = HtmlModell.Seksjon(
         overskrift = "Reel arbeidsøker",
         spmSvar = listOf(
@@ -112,19 +112,17 @@ object TestHtml {
         )
     )
 
-    val testHtml = HtmlBuilder.lagHtml(
-        htmlModell = HtmlModell(
-            seksjoner = listOf(
-                spmOgSvarSeksjon,
-                spmOgSvarMedBarnSeksjon,
-                spmOgSvarMedHjelpetekstSeksjon,
-                spmOgSvarMedHjelpetekstOgOppfølgingSeksjon
-            ),
-            metaInfo = HtmlModell.MetaInfo(
-                hovedOverskrift = "Søknad om dagpenger"
-            ),
-            pdfAKrav = HtmlModell.PdfAKrav("Søknad om dagpenger", "dagpenger", "NAV"),
-            infoBlokk = HtmlModell.InfoBlokk("12345678910", "24.03.2022 11.34")
-        )
+    internal val htmlModell = HtmlModell(
+        seksjoner = listOf(
+            spmOgSvarSeksjon,
+            spmOgSvarMedBarnSeksjon,
+            spmOgSvarMedHjelpetekstSeksjon,
+            spmOgSvarMedHjelpetekstOgOppfølgingSeksjon
+        ),
+        metaInfo = HtmlModell.MetaInfo(
+            hovedOverskrift = "Søknad om dagpenger"
+        ),
+        pdfAKrav = HtmlModell.PdfAKrav("Søknad om dagpenger", "dagpenger", "NAV"),
+        infoBlokk = HtmlModell.InfoBlokk("12345678910", "24.03.2022 11.34")
     )
 }

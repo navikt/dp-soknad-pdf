@@ -22,7 +22,9 @@ internal object Configuration {
             "KAFKA_RAPID_TOPIC" to "teamdagpenger.rapid.v1",
             "KAFKA_RESET_POLICY" to "latest",
             "DP_MELLOMLAGRING_BASE_URL" to "http://dp-mellomlagring/v1/azuread/mellomlagring/vedlegg",
-            "DP_MELLOMLAGRING_SCOPE" to "api://dev-gcp.teamdagpenger.dp-mellomlagring/.default"
+            "DP_MELLOMLAGRING_SCOPE" to "api://dev-gcp.teamdagpenger.dp-mellomlagring/.default",
+            "DP_SOKNAD_BASE_URL" to "http://dp-soknad/v1/fixme", // todo,
+            "DP_SOKNAD_SCOPE" to "api://dev-gcp.teamdagpenger.dp-soknad/.default",
         )
     )
 
@@ -30,28 +32,29 @@ internal object Configuration {
         ConfigurationProperties.systemProperties() overriding EnvironmentVariables() overriding defaultProperties
 
     val dpMellomlagringBaseUrl = properties[Key("DP_MELLOMLAGRING_BASE_URL", stringType)]
+    val dpSoknadUrl = properties[Key("DP_SOKNAD_BASE_URL", stringType)]
 
-    fun azureAdTokenSupplier(): () -> String {
-        val azureAdConfig = OAuth2Config.AzureAd(properties)
-        val azureAdClient = CachedOauth2Client(
-            tokenEndpointUrl = azureAdConfig.tokenEndpointUrl,
-            authType = azureAdConfig.clientSecret()
-        )
-        return {
-            runBlocking {
-                azureAdClient.clientCredentials(
-                    properties[
-                        Key(
-                            "DP_MELLOMLAGRING_SCOPE",
-                            stringType
-                        )
-                    ]
-                ).accessToken
-            }
-        }
+    val mellomlagringTokenSupplier: () -> String by lazy {
+        azureAdTokenSupplier(properties[Key("DP_MELLOMLAGRING_SCOPE", stringType)])
+    }
+
+    val soknadTokenSupplier: () -> String by lazy {
+        azureAdTokenSupplier(properties[Key("DP_MELLOMLAGRING_SCOPE", stringType)])
     }
 
     val config: Map<String, String> = properties.list().reversed().fold(emptyMap()) { map, pair ->
         map + pair.second
+    }
+
+    private val azureAdClient: CachedOauth2Client by lazy {
+        val azureAdConfig = OAuth2Config.AzureAd(properties)
+        CachedOauth2Client(
+            tokenEndpointUrl = azureAdConfig.tokenEndpointUrl,
+            authType = azureAdConfig.clientSecret()
+        )
+    }
+
+    private fun azureAdTokenSupplier(scope: String): () -> String = {
+        runBlocking { azureAdClient.clientCredentials(scope).accessToken }
     }
 }
