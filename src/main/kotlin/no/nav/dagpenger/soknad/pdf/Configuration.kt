@@ -39,7 +39,7 @@ internal object Configuration {
     }
 
     val soknadTokenSupplier: () -> String by lazy {
-        azureAdTokenSupplier(properties[Key("DP_MELLOMLAGRING_SCOPE", stringType)])
+        azureAdTokenSupplier(properties[Key("DP_SOKNAD_SCOPE", stringType)])
     }
 
     val config: Map<String, String> = properties.list().reversed().fold(emptyMap()) { map, pair ->

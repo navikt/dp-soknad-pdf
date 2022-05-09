@@ -1,2 +1,4 @@
 kafka_pool: nav-prod
 DP_MELLOMLAGRING_SCOPE: "api://prod-gcp.teamdagpenger.dp-mellomlagring/.default"
+DP_SOKNAD_SCOPE: "api://prod-gcp.teamdagpenger.dp-soknad/.default"
+
