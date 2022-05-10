@@ -35,7 +35,7 @@ internal object HtmlBuilder {
                 div(classes = "infoblokk") {
                     id = "infoblokk"
                     boldSpanP(boldTekst = språk.fødselsnummer, vanligTekst = htmlModell.infoBlokk.fødselsnummer)
-                    boldSpanP(boldTekst = språk.datoSendt, vanligTekst = htmlModell.infoBlokk.fødselsnummer)
+                    boldSpanP(boldTekst = språk.datoSendt, vanligTekst = htmlModell.infoBlokk.datoSendt)
                 }
                 htmlModell.seksjoner.forEach { seksjon ->
                     div(classes = "seksjon") {
