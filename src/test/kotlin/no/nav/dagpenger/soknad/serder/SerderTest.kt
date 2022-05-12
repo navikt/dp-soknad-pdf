@@ -31,7 +31,7 @@ internal class SerderTest {
             require(it is FaktaTekstObjekt)
             assertEquals("f3", it.textId)
             assertEquals(
-                "Her blir det spurt om noe som du kan svar ja eller nei på. Svarer du ja eller nei?",
+                "Her blir det spurt om noe som du kan svare ja eller nei på. Svarer du ja eller nei?",
                 it.text
             )
             assertEquals("Hjelpetekst", it.helpText)

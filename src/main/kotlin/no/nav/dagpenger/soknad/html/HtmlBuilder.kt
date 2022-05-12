@@ -10,7 +10,6 @@ import kotlinx.html.head
 import kotlinx.html.html
 import kotlinx.html.id
 import kotlinx.html.lang
-import kotlinx.html.style
 import kotlinx.html.title
 
 internal object HtmlBuilder {
@@ -20,12 +19,10 @@ internal object HtmlBuilder {
             lang = språk.langAtributt
             head {
                 title(htmlModell.metaInfo.tittel)
-                pdfa(htmlModell.pdfAKrav)
+                pdfaMetaTags(htmlModell.pdfAKrav)
                 fontimports()
                 bookmarks(htmlModell.seksjoner)
-                style {
-                    søknadPdfStyle()
-                }
+                søknadPdfStyle()
             }
             body {
                 h1 {

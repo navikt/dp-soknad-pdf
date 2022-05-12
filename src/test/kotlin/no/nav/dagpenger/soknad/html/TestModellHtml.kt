@@ -1,5 +1,7 @@
 package no.nav.dagpenger.soknad.html
 
+import java.time.LocalDateTime
+
 object TestModellHtml {
     internal val spmOgSvarSeksjon = HtmlModell.Seksjon(
         overskrift = "Reel arbeidsøker",
@@ -123,6 +125,6 @@ object TestModellHtml {
             hovedOverskrift = "Søknad om dagpenger"
         ),
         pdfAKrav = HtmlModell.PdfAKrav("Søknad om dagpenger", "dagpenger", "NAV"),
-        infoBlokk = HtmlModell.InfoBlokk("12345678910", "24.03.2022 11.34")
+        infoBlokk = HtmlModell.InfoBlokk("12345678910", LocalDateTime.now())
     )
 }

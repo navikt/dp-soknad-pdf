@@ -3,6 +3,7 @@ package no.nav.dagpenger.soknad.html
 import kotlinx.html.HEAD
 import kotlinx.html.STYLE
 import kotlinx.html.link
+import kotlinx.html.style
 import kotlinx.html.unsafe
 import org.apache.batik.bridge.CSSUtilities
 
@@ -21,11 +22,13 @@ internal fun HEAD.fontimports() {
     }
 }
 
-internal fun STYLE.søknadPdfStyle() {
-    unsafe {
-        raw(
-            hentCss()
-        )
+internal fun HEAD.søknadPdfStyle() {
+    style {
+        unsafe {
+            raw(
+                hentCss()
+            )
+        }
     }
 }
 

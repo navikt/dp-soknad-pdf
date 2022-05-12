@@ -1,5 +1,8 @@
 package no.nav.dagpenger.soknad.html
 
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+
 internal data class HtmlModell(
     val seksjoner: List<Seksjon>,
     val metaInfo: MetaInfo,
@@ -28,7 +31,11 @@ internal data class HtmlModell(
     )
 
     data class PdfAKrav(val description: String, val subject: String, val author: String)
-    data class InfoBlokk(val fødselsnummer: String, val datoSendt: String)
+    data class InfoBlokk(val fødselsnummer: String, val datoFerdigstilt: LocalDateTime) {
+        val datoSendt = datoFerdigstilt.format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"))
+
+        // todo: referansenummer
+    }
     enum class SøknadSpråk(
         val langAtributt: String,
         val svar: String,

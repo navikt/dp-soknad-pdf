@@ -3,7 +3,7 @@ package no.nav.dagpenger.soknad.serder
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import no.nav.dagpenger.soknad.html.HtmlModell
-import java.time.LocalDate
+import java.time.LocalDateTime
 
 internal class JsonHtmlMapper(
     private val ident: String,
@@ -55,8 +55,8 @@ internal class JsonHtmlMapper(
             pdfAKrav = HtmlModell.PdfAKrav(description = "description", subject = "subject", author = "author"),
             infoBlokk = HtmlModell.InfoBlokk(
                 fødselsnummer = this.ident,
-                datoSendt = "${LocalDate.now()}"
-            ) // todo finne ut hvordan vi får tak i innsendt dato.
+                datoFerdigstilt = LocalDateTime.now()
+            ) // todo finne ut hvordan vi får tak i innsendt dato, kan ikke dette bare legges på behovet?
         )
     }
 }
