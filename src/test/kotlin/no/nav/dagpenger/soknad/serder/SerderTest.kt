@@ -2,17 +2,20 @@ package no.nav.dagpenger.soknad.serder
 
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import io.ktor.util.reflect.instanceOf
+import kotlinx.html.InputType
 import no.nav.dagpenger.soknad.html.HtmlBuilder
 import no.nav.dagpenger.soknad.html.HtmlModell
 import no.nav.dagpenger.soknad.pdf.PdfBuilder
+import no.nav.dagpenger.soknad.serder.Oppslag.TekstObjekt.FaktaTekstObjekt
 import no.nav.dagpenger.soknad.serder.Oppslag.TekstObjekt.SeksjonTekstObjekt
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import java.io.File
 import java.time.LocalDate
-import kotlin.test.assertEquals
-import kotlin.test.assertIs
-import kotlin.test.assertNull
+
 
 internal class SerderTest {
     val faktaJson = object {}.javaClass.getResource("/fakta.json")?.readText()!!
@@ -23,7 +26,7 @@ internal class SerderTest {
         val oppslag = Oppslag(tekstJson)
 
         oppslag.lookup("seksjon1").also {
-            assertIs<SeksjonTekstObjekt>(it)
+            require(it is SeksjonTekstObjekt)
             assertEquals("seksjon1", it.textId)
             assertEquals("Tittel for seksjon 1", it.title)
             assertEquals("Hjelpetekst for seksjon", it.helpText)
@@ -31,9 +34,11 @@ internal class SerderTest {
         }
 
         oppslag.lookup("f3").also {
-            assertIs<Oppslag.TekstObjekt.FaktaTekstObjekt>(it)
+            require(it is FaktaTekstObjekt)
             assertEquals("f3", it.textId)
-            assertEquals("Her blir det spurt om noe som du kan svar ja eller nei på. Svarer du ja eller nei?", it.text)
+            assertEquals("Her blir det spurt om noe som du kan svar ja eller nei på. Svarer du ja eller nei?",
+                it.text
+            )
             assertEquals("Hjelpetekst", it.helpText)
             assertNull(it.description)
         }
@@ -89,7 +94,7 @@ internal class SerderTest {
 
         private fun JsonNode.fakta(): List<HtmlModell.SporsmalSvar> {
             return this["fakta"].map { node ->
-                val tekstObjekt = oppslag.lookup(node["beskrivendeId"].asText()) as Oppslag.TekstObjekt.FaktaTekstObjekt
+                val tekstObjekt = oppslag.lookup(node["beskrivendeId"].asText()) as FaktaTekstObjekt
                 HtmlModell.SporsmalSvar(
                     sporsmal = tekstObjekt.text,
                     svar = node.svar(),
