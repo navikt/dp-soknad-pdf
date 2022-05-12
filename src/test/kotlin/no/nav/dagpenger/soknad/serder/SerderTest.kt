@@ -93,8 +93,8 @@ internal class SerderTest {
                 HtmlModell.SporsmalSvar(
                     sporsmal = tekstObjekt.text,
                     svar = node.svar(),
-                    infotekst = null,
-                    hjelpeTekst = null,
+                    infotekst = tekstObjekt.description,
+                    hjelpeTekst = tekstObjekt.helpText,
                     oppfølgingspørmål = listOf()
                 )
             }
