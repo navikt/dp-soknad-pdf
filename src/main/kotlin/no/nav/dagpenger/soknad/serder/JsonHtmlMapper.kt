@@ -1,0 +1,62 @@
+package no.nav.dagpenger.soknad.serder
+
+import com.fasterxml.jackson.databind.JsonNode
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import no.nav.dagpenger.soknad.html.HtmlModell
+import java.time.LocalDate
+
+internal class JsonHtmlMapper(
+    private val ident: String,
+    private val søknadsData: String,
+    tekst: String,
+    private val språk: HtmlModell.SøknadSpråk
+) {
+    private val oppslag = Oppslag(tekst)
+    private val objectMapper = jacksonObjectMapper()
+
+    private fun parse(søknadsData: String): List<HtmlModell.Seksjon> {
+        return objectMapper.readTree(søknadsData)["seksjoner"].map {
+            val tekstObjekt = oppslag.lookup(it["beskrivendeId"].asText()) as Oppslag.TekstObjekt.SeksjonTekstObjekt
+            HtmlModell.Seksjon(
+                overskrift = tekstObjekt.title,
+                description = tekstObjekt.description,
+                helpText = tekstObjekt.helpText,
+                spmSvar = it.fakta()
+            )
+        }
+    }
+
+    private fun JsonNode.svar(): String {
+        return when (this["type"].asText()) {
+            "string" -> this["svar"].asText()
+            "boolean" -> språk.boolean(this["svar"].asBoolean())
+            "generator" -> "generator"
+            else -> throw IllegalArgumentException("hubba")
+        }
+    }
+
+    private fun JsonNode.fakta(): List<HtmlModell.SporsmalSvar> {
+        return this["fakta"].map { node ->
+            val tekstObjekt = oppslag.lookup(node["beskrivendeId"].asText()) as Oppslag.TekstObjekt.FaktaTekstObjekt
+            HtmlModell.SporsmalSvar(
+                sporsmal = tekstObjekt.text,
+                svar = node.svar(),
+                infotekst = tekstObjekt.description,
+                hjelpeTekst = tekstObjekt.helpText,
+                oppfølgingspørmål = listOf()
+            )
+        }
+    }
+
+    fun parse(): HtmlModell {
+        return HtmlModell(
+            seksjoner = parse(søknadsData),
+            metaInfo = HtmlModell.MetaInfo(språk = HtmlModell.SøknadSpråk.BOKMÅL),
+            pdfAKrav = HtmlModell.PdfAKrav(description = "description", subject = "subject", author = "author"),
+            infoBlokk = HtmlModell.InfoBlokk(
+                fødselsnummer = this.ident,
+                datoSendt = "${LocalDate.now()}"
+            ) // todo finne ut hvordan vi får tak i innsendt dato.
+        )
+    }
+}
