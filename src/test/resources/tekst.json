@@ -10,7 +10,7 @@
       {
         "textId" : "f3",
         "text": "Her blir det spurt om noe som du kan svar ja eller nei på. Svarer du ja eller nei?",
-        "helpText": "Og her forklares det enda litt mer hva ja eller nei betyr.I dette tilfellet betyr ja JA!(altså at du roper ja!) og nei NEI!(altså at du roper nei!) "
+        "helpText": "Hjelpetekst"
       },
       {
         "textId" : "f5",
@@ -27,11 +27,11 @@
       {
         "textId" : "seksjon1",
         "title": "Tittel for seksjon 1",
-        "description": "Seksjon 1 beskrivelse som kanskje kan være lang eller kort eller ingenting, må testes bedre etterhvert",
-        "helpText": "En hjelpetekst som også er noe en må huske at det er mulig at finnes på Seksjoner (husk husk husk og fiks)"
+        "description": "description for seksjon",
+        "helpText": "Hjelpetekst for seksjon"
       },
       {
-        "textId": "seksjon 2 - Har ikke beskrivelse",
+        "textId": "seksjon2",
         "title": "Tittel for seksjon 2"
       }
     ],

@@ -22,9 +22,9 @@ internal data class HtmlModell(
     )
 
     data class MetaInfo(
-        val hovedOverskrift: String,
-        val tittel: String = hovedOverskrift,
-        val språk: SøknadSpråk = SøknadSpråk.BOKMÅL
+        val språk: SøknadSpråk = SøknadSpråk.BOKMÅL,
+        val hovedOverskrift: String = språk.hovedOverskrift,
+        val tittel: String = språk.tittel,
     )
 
     data class PdfAKrav(val description: String, val subject: String, val author: String)
@@ -33,8 +33,21 @@ internal data class HtmlModell(
         val langAtributt: String,
         val svar: String,
         val fødselsnummer: String,
-        val datoSendt: String
+        val datoSendt: String,
+        val hovedOverskrift: String,
+        val tittel: String,
+        val boolean: (Boolean) -> String
     ) {
-        BOKMÅL("no", "Svar", "Fødselsnummer", "Dato sendt")
+        BOKMÅL(
+            "no",
+            "Svar",
+            "Fødselsnummer",
+            "Dato sendt",
+            "Søknad om dagpenger",
+            "Søknad om dagpenger",
+            { b: Boolean ->
+                if (b) "Ja" else "Nei"
+            }
+        )
     }
 }
