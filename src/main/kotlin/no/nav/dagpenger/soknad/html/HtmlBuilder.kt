@@ -1,11 +1,11 @@
 package no.nav.dagpenger.soknad.html
 
 import kotlinx.html.body
+import kotlinx.html.classes
 import kotlinx.html.div
 import kotlinx.html.dom.createHTMLDocument
 import kotlinx.html.dom.serialize
 import kotlinx.html.h1
-import kotlinx.html.h2
 import kotlinx.html.head
 import kotlinx.html.html
 import kotlinx.html.id
@@ -36,9 +36,7 @@ internal object HtmlBuilder {
                 }
                 htmlModell.seksjoner.forEach { seksjon ->
                     div(classes = "seksjon") {
-                        id = seksjonId(seksjon.overskrift)
-                        h2 { +seksjon.overskrift }
-                        seksjon.spmSvar.forEach { spmDiv(it, språk) }
+                        seksjonsDiv(seksjon, språk)
                     }
                 }
             }

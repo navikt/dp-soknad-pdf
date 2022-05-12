@@ -1,7 +1,6 @@
 package no.nav.dagpenger.soknad.html
 
 import kotlinx.html.HEAD
-import kotlinx.html.STYLE
 import kotlinx.html.link
 import kotlinx.html.style
 import kotlinx.html.unsafe

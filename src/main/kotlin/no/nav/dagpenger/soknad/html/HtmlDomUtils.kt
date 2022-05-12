@@ -3,7 +3,9 @@ package no.nav.dagpenger.soknad.html
 import kotlinx.html.DIV
 import kotlinx.html.HEAD
 import kotlinx.html.div
+import kotlinx.html.h2
 import kotlinx.html.h3
+import kotlinx.html.id
 import kotlinx.html.meta
 import kotlinx.html.p
 import kotlinx.html.span
@@ -70,7 +72,23 @@ internal fun DIV.boldSpanP(boldTekst: String, vanligTekst: String) {
     }
 }
 
-internal fun DIV.spmDiv(spmSvar: SporsmalSvar, språk: SøknadSpråk) {
+internal fun DIV.seksjonsDiv(seksjon: HtmlModell.Seksjon, språk: SøknadSpråk) {
+    id = seksjonId(seksjon.overskrift)
+    h2 { +seksjon.overskrift }
+    if (seksjon.description != null) {
+        p(classes = "infotekst") {
+            +seksjon.description
+        }
+    }
+    if (seksjon.helpText != null) {
+        p(classes = "hjelpetekst") {
+            +seksjon.helpText
+        }
+    }
+    seksjon.spmSvar.forEach { spmDiv(it, språk) }
+}
+
+private fun DIV.spmDiv(spmSvar: SporsmalSvar, språk: SøknadSpråk) {
     div {
         h3 { +spmSvar.sporsmal }
         if (spmSvar.infotekst != null) {
@@ -88,4 +106,4 @@ internal fun DIV.spmDiv(spmSvar: SporsmalSvar, språk: SøknadSpråk) {
     }
 }
 
-internal fun seksjonId(overskrift: String) = "seksjon-${overskrift.replace(" ","-").lowercase()}"
+private fun seksjonId(overskrift: String) = "seksjon-${overskrift.replace(" ", "-").lowercase()}"
