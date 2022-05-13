@@ -26,6 +26,7 @@ internal class JsonHtmlMapper(
         }
     }
 
+    //TODO andre fakatyper
     private fun JsonNode.svar(): String {
         return when (this["type"].asText()) {
             "string" -> this["svar"].asText()
