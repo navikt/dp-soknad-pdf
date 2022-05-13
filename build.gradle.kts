@@ -75,6 +75,7 @@ dependencies {
     testImplementation(Junit5.api)
     testImplementation(KoTest.runner)
     testImplementation(Ktor2.Client.library("mock"))
+    testImplementation("org.verapdf:validation-model:1.20.1")
     testRuntimeOnly(Junit5.engine)
 }
 

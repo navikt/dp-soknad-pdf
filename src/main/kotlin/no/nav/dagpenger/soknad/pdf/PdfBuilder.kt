@@ -13,6 +13,7 @@ internal object PdfBuilder {
             PdfRendererBuilder()
                 .usePdfAConformance(PdfRendererBuilder.PdfAConformance.PDFA_2_U)
                 .usePdfUaAccessbility(true)
+                .useColorProfile("/sRGB2014.icc".fileAsByteArray())
                 .defaultTextDirection(BaseRendererBuilder.TextDirection.LTR)
                 .withHtmlContent(html, null)
                 .toStream(it)
