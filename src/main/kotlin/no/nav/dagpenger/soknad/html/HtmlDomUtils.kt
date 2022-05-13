@@ -90,7 +90,12 @@ internal fun DIV.bruttoSeksjon(seksjon: HtmlModell.Seksjon, språk: SøknadSprå
     id = seksjonId(seksjon.overskrift)
     h2 { +seksjon.overskrift }
     seksjon.beskrivelse?.also { p(classes = "infotekst") { +seksjon.beskrivelse } }
-    seksjon.hjelpetekst?.also { p(classes = "hjelpetekst") { +seksjon.hjelpetekst } }
+    seksjon.hjelpetekst?.also {
+        div(classes = "hjelpetekst") {
+            seksjon.hjelpetekst.tittel?.also { tittel -> h3 { +tittel } }
+            p { +seksjon.hjelpetekst.tekst }
+        }
+    }
     seksjon.spmSvar.forEach {
         bruttoSpørsmål(it, språk)
     }
@@ -100,7 +105,12 @@ private fun DIV.bruttoSpørsmål(spmSvar: SporsmalSvar, språk: SøknadSpråk) {
     div {
         h3 { +spmSvar.sporsmal }
         spmSvar.beskrivelse?.also { p(classes = "infotekst") { +spmSvar.beskrivelse } }
-        spmSvar.hjelpeTekst?.also { p(classes = "hjelpetekst") { +spmSvar.hjelpeTekst } }
+        spmSvar.hjelpeTekst?.also {
+            div(classes = "hjelpetekst") {
+                spmSvar.hjelpeTekst.tittel?.also { tittel -> h3 { +tittel } }
+                p { +spmSvar.hjelpeTekst.tekst }
+            }
+        }
         boldSpanP(språk.svar, spmSvar.svar)
         spmSvar.oppfølgingspørmål?.forEach { oppfølging -> bruttoSpørsmål(oppfølging, språk) }
     }

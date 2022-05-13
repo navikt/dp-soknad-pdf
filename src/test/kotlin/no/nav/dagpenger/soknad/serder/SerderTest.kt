@@ -23,7 +23,8 @@ internal class SerderTest {
             require(it is SeksjonTekstObjekt)
             assertEquals("seksjon1", it.textId)
             assertEquals("Tittel for seksjon 1", it.title)
-            assertEquals("Hjelpetekst for seksjon", it.helpText)
+            assertEquals("Hjelpetekst med overskrift til seksjon", it.helpText?.title)
+            assertEquals("Her er en hjelpetekst tekst som hjelper veldig mye når en trenger hjelp", it.helpText?.body)
             assertEquals("description for seksjon", it.description)
         }
 
@@ -34,7 +35,7 @@ internal class SerderTest {
                 "Her blir det spurt om noe som du kan svare ja eller nei på. Svarer du ja eller nei?",
                 it.text
             )
-            assertEquals("Hjelpetekst", it.helpText)
+            assertEquals("Hjelpetekst", it.helpText?.body)
             assertNull(it.description)
         }
     }

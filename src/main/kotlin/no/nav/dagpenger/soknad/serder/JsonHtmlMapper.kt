@@ -20,7 +20,7 @@ internal class JsonHtmlMapper(
             HtmlModell.Seksjon(
                 overskrift = tekstObjekt.title,
                 beskrivelse = tekstObjekt.description,
-                hjelpetekst = tekstObjekt.helpText,
+                hjelpetekst = tekstObjekt.helpText(),
                 spmSvar = it.fakta()
             )
         }
@@ -43,7 +43,7 @@ internal class JsonHtmlMapper(
                 sporsmal = tekstObjekt.text,
                 svar = node.svar(),
                 beskrivelse = tekstObjekt.description,
-                hjelpeTekst = tekstObjekt.helpText,
+                hjelpeTekst = tekstObjekt.helpText(),
                 oppfølgingspørmål = listOf()
             )
         }
@@ -60,4 +60,8 @@ internal class JsonHtmlMapper(
             ) // todo finne ut hvordan vi får tak i innsendt dato, kan ikke dette bare legges på behovet?
         )
     }
+}
+
+private fun Oppslag.TekstObjekt.helpText(): HtmlModell.HjelpeTekst? {
+    return this.helpText?.let { HtmlModell.HjelpeTekst(it.body, it.title) }
 }

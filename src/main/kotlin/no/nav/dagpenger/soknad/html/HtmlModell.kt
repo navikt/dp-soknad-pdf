@@ -14,7 +14,7 @@ internal data class HtmlModell(
     data class Seksjon(
         val overskrift: String,
         val beskrivelse: String? = null,
-        val hjelpetekst: String? = null,
+        val hjelpetekst: HjelpeTekst? = null,
         val spmSvar: List<SporsmalSvar>
     )
 
@@ -22,9 +22,11 @@ internal data class HtmlModell(
         val sporsmal: String,
         val svar: String,
         val beskrivelse: String? = null,
-        val hjelpeTekst: String? = null,
+        val hjelpeTekst: HjelpeTekst? = null,
         val oppfølgingspørmål: List<SporsmalSvar>? = null
     )
+
+    data class HjelpeTekst(val tekst: String, val tittel: String? = null,)
 
     data class MetaInfo(
         val språk: SøknadSpråk = SøknadSpråk.BOKMÅL,
@@ -36,6 +38,7 @@ internal data class HtmlModell(
     data class InfoBlokk(val fødselsnummer: String, val datoFerdigstilt: LocalDateTime) {
         val datoSendt = datoFerdigstilt.format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"))
     }
+
     enum class SøknadSpråk(
         val langAtributt: String,
         val svar: String,

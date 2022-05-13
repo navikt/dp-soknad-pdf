@@ -27,6 +27,7 @@ class ManualHtmlBuilderTest {
             assertEquals(0, "class=\"infotekst\"".toRegex().findAll(it).count())
             assertEquals(0, "class=\"hjelpetekst\"".toRegex().findAll(it).count())
             assertEquals(4, "class=\"seksjon\"".toRegex().findAll(it).count())
+            //     File("build/tmp/test/netto.html").writeBytes(it.toByteArray())
         }
     }
 
@@ -36,6 +37,7 @@ class ManualHtmlBuilderTest {
             assertEquals(6, "class=\"infotekst\"".toRegex().findAll(it).count())
             assertEquals(6, "class=\"hjelpetekst\"".toRegex().findAll(it).count())
             assertEquals(4, "class=\"seksjon\"".toRegex().findAll(it).count())
+            //    File("build/tmp/test/brutto.html").writeBytes(it.toByteArray())
         }
     }
 }
