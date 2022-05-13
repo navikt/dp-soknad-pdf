@@ -9,7 +9,7 @@ internal class JsonHtmlMapper(
     private val ident: String,
     private val søknadsData: String,
     tekst: String,
-    private val språk: HtmlModell.SøknadSpråk
+    private val språk: HtmlModell.SøknadSpråk = HtmlModell.SøknadSpråk.BOKMÅL
 ) {
     private val oppslag = Oppslag(tekst)
     private val objectMapper = jacksonObjectMapper()

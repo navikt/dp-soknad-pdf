@@ -21,11 +21,11 @@ internal class PdfBehovLøserTest {
                 coEvery {
                     it.lagrePdf(
                         soknadId.toString(),
-                        any() // todo capture and equals on bytearray?
+                        any()
                     )
                 } returns URNResponse("urn:document:id/søknad.pdf")
             },
-            soknadSupplier = { _ -> htmlModell },
+            soknadSupplier = { _, _ -> htmlModell },
         )
     }
 

@@ -16,7 +16,7 @@ internal class PdfBehovLøser(
     rapidsConnection: RapidsConnection,
     private val pdfBuilder: PdfBuilder,
     private val pdfLagring: PdfLagring,
-    private val soknadSupplier: suspend (soknadId: UUID) -> HtmlModell,
+    private val soknadSupplier: suspend (soknadId: UUID, ident: String) -> HtmlModell,
     private val htmlBuilder: (modell: HtmlModell) -> String = HtmlBuilder::lagBruttoHtml
 ) : River.PacketListener {
     companion object {
@@ -34,17 +34,21 @@ internal class PdfBehovLøser(
     }
 
     override fun onPacket(packet: JsonMessage, context: MessageContext) {
+        // TODO: Hva skal vi gjøre med brutto og netto?
         val soknadId = packet.søknadUuid()
         logg.info("Mottok behov for søknadspdf med uuid $soknadId")
         runBlocking {
-            soknadSupplier(soknadId).let(htmlBuilder).let { pdfBuilder.lagPdf(it) }.let { pdf ->
-                pdfLagring.lagrePdf(
-                    søknadUUid = soknadId.toString(),
-                    pdf = pdf
-                ).also {
-                    packet["@løsning"] = mapOf(BEHOV to it.urn)
+            soknadSupplier(soknadId, packet["ident"].asText())
+                .let(htmlBuilder)
+                .let { pdfBuilder.lagPdf(it) }
+                .let { pdf ->
+                    pdfLagring.lagrePdf(
+                        søknadUUid = soknadId.toString(),
+                        pdf = pdf
+                    ).also {
+                        packet["@løsning"] = mapOf(BEHOV to it.urn)
+                    }
                 }
-            }
             context.publish(packet.toJson())
         }
     }

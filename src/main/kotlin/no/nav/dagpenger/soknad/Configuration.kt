@@ -23,7 +23,7 @@ internal object Configuration {
             "KAFKA_RESET_POLICY" to "latest",
             "DP_MELLOMLAGRING_BASE_URL" to "http://dp-mellomlagring/v1/azuread/mellomlagring/vedlegg",
             "DP_MELLOMLAGRING_SCOPE" to "api://dev-gcp.teamdagpenger.dp-mellomlagring/.default",
-            "DP_SOKNAD_BASE_URL" to "http://dp-soknad/v1/fixme", // todo,
+            "DP_SOKNAD_BASE_URL" to "http://dp-soknad/arbeid/dagpenger/soknadapi",
             "DP_SOKNAD_SCOPE" to "api://dev-gcp.teamdagpenger.dp-soknad/.default",
         )
     )

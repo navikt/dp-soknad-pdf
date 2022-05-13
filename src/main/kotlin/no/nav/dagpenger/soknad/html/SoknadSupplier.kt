@@ -1,21 +1,22 @@
 package no.nav.dagpenger.soknad.html
 
-import com.fasterxml.jackson.databind.JsonNode
 import io.ktor.client.HttpClient
-import io.ktor.client.call.body
 import io.ktor.client.engine.HttpClientEngine
 import io.ktor.client.engine.cio.CIO
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.defaultRequest
 import io.ktor.client.request.get
 import io.ktor.client.request.header
-import io.ktor.client.request.url
+import io.ktor.client.statement.bodyAsText
 import io.ktor.serialization.jackson.jackson
-import java.time.LocalDateTime
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.withContext
+import no.nav.dagpenger.soknad.serder.JsonHtmlMapper
 import java.util.UUID
 
 internal class SoknadSupplier(
-    private val dpSoknadUrl: String,
+    private val dpSoknadBaseUrl: String,
     tokenSupplier: () -> String,
     engine: HttpClientEngine = CIO.create()
 ) {
@@ -29,21 +30,15 @@ internal class SoknadSupplier(
         }
     }
 
-    suspend fun hentSoknad(id: UUID): HtmlModell {
-        return httpKlient.get() {
-            url("$dpSoknadUrl/$id")
-        }.body<JsonNode>().let(Mapper::toModel)
-    }
-}
-
-internal object Mapper {
-    // todo fixme
-    fun toModel(json: JsonNode): HtmlModell {
-        return HtmlModell(
-            seksjoner = listOf(),
-            metaInfo = HtmlModell.MetaInfo(hovedOverskrift = "", tittel = ""),
-            pdfAKrav = HtmlModell.PdfAKrav(description = "todo", subject = "todo", author = "todo"),
-            infoBlokk = HtmlModell.InfoBlokk(fødselsnummer = "todo", datoFerdigstilt = LocalDateTime.now())
-        )
+    suspend fun hentSoknad(id: UUID, ident: String): HtmlModell {
+        return withContext(Dispatchers.IO) {
+            val fakta = async {
+                httpKlient.get("$dpSoknadBaseUrl/$id/fakta").bodyAsText()
+            }
+            val tekst = async {
+                httpKlient.get("$dpSoknadBaseUrl/$id/tekst").bodyAsText()
+            }
+            JsonHtmlMapper(ident = ident, søknadsData = fakta.await(), tekst = tekst.await()).parse()
+        }
     }
 }
