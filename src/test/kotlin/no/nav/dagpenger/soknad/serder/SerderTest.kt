@@ -48,7 +48,7 @@ internal class SerderTest {
                 tekst = tekstJson,
                 språk = HtmlModell.SøknadSpråk.BOKMÅL
             ).parse()
-            HtmlBuilder.lagHtml(h).also {
+            HtmlBuilder.lagBruttoHtml(h).also {
                 File("build/tmp/test/søknad2.html").writeText(it)
                 PdfBuilder.lagPdf(it).also { generertPdf ->
                     File("build/tmp/test/søknad2.pdf").writeBytes(generertPdf)

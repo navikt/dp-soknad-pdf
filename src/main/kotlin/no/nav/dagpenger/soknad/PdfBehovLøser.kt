@@ -17,7 +17,7 @@ internal class PdfBehovLøser(
     private val pdfBuilder: PdfBuilder,
     private val pdfLagring: PdfLagring,
     private val soknadSupplier: suspend (soknadId: UUID) -> HtmlModell,
-    private val htmlBuilder: (modell: HtmlModell) -> String = HtmlBuilder::lagHtml
+    private val htmlBuilder: (modell: HtmlModell) -> String = HtmlBuilder::lagBruttoHtml
 ) : River.PacketListener {
     companion object {
         private val logg = KotlinLogging.logger {}

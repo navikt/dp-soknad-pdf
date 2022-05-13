@@ -1,7 +1,7 @@
 package no.nav.dagpenger.soknad.html
 
+import kotlinx.html.DIV
 import kotlinx.html.body
-import kotlinx.html.classes
 import kotlinx.html.div
 import kotlinx.html.dom.createHTMLDocument
 import kotlinx.html.dom.serialize
@@ -13,7 +13,10 @@ import kotlinx.html.lang
 import kotlinx.html.title
 
 internal object HtmlBuilder {
-    fun lagHtml(htmlModell: HtmlModell): String {
+    fun lagNettoHtml(htmlModell: HtmlModell) = lagHtml(htmlModell, DIV::nettoSeksjon)
+    fun lagBruttoHtml(htmlModell: HtmlModell) = lagHtml(htmlModell, DIV::bruttoSeksjon)
+
+    private fun lagHtml(htmlModell: HtmlModell, seksjonFunksjon: DIV.(HtmlModell.Seksjon, HtmlModell.SøknadSpråk) -> Unit = DIV::nettoSeksjon): String {
         val språk = htmlModell.metaInfo.språk
         return createHTMLDocument().html {
             lang = språk.langAtributt
@@ -36,7 +39,7 @@ internal object HtmlBuilder {
                 }
                 htmlModell.seksjoner.forEach { seksjon ->
                     div(classes = "seksjon") {
-                        seksjonsDiv(seksjon, språk)
+                        seksjonFunksjon(seksjon, språk)
                     }
                 }
             }

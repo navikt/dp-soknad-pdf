@@ -11,7 +11,7 @@ internal class PdfBuilderTest {
     @Test
     fun `Kan lage PDF fra HTML`() {
         assertDoesNotThrow {
-            PdfBuilder.lagPdf(HtmlBuilder.lagHtml(TestModellHtml.htmlModell)).also {
+            PdfBuilder.lagPdf(HtmlBuilder.lagBruttoHtml(TestModellHtml.htmlModell)).also {
                 File("build/tmp/test/søknad.pdf").writeBytes(it)
             }
         }

@@ -22,7 +22,7 @@ internal object App : RapidsConnection.StatusListener {
             pdfLagring = PdfLagring(
                 baseUrl = Configuration.dpMellomlagringBaseUrl, tokenSupplier = Configuration.mellomlagringTokenSupplier
             ),
-            htmlBuilder = HtmlBuilder::lagHtml,
+            htmlBuilder = HtmlBuilder::lagBruttoHtml,
             soknadSupplier = SoknadSupplier(Configuration.dpSoknadUrl, Configuration.soknadTokenSupplier)::hentSoknad,
         )
     }

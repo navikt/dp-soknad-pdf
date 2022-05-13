@@ -61,8 +61,6 @@ internal fun HEAD.bookmarks(seksjoner: List<HtmlModell.Seksjon>) {
             """.trimIndent()
         )
     }
-
-    /*                      */
 }
 
 internal fun DIV.boldSpanP(boldTekst: String, vanligTekst: String) {
@@ -72,7 +70,23 @@ internal fun DIV.boldSpanP(boldTekst: String, vanligTekst: String) {
     }
 }
 
-internal fun DIV.seksjonsDiv(seksjon: HtmlModell.Seksjon, språk: SøknadSpråk) {
+internal fun DIV.nettoSeksjon(seksjon: HtmlModell.Seksjon, språk: SøknadSpråk) {
+    id = seksjonId(seksjon.overskrift)
+    h2 { +seksjon.overskrift }
+    seksjon.spmSvar.forEach { nettoSpørsmål(it, språk) }
+}
+
+private fun DIV.nettoSpørsmål(spmSvar: SporsmalSvar, språk: SøknadSpråk) {
+    div {
+        h3 { +spmSvar.sporsmal }
+        boldSpanP(språk.svar, spmSvar.svar)
+        spmSvar.oppfølgingspørmål?.forEach { oppfølging ->
+            nettoSpørsmål(oppfølging, språk)
+        }
+    }
+}
+
+internal fun DIV.bruttoSeksjon(seksjon: HtmlModell.Seksjon, språk: SøknadSpråk) {
     id = seksjonId(seksjon.overskrift)
     h2 { +seksjon.overskrift }
     if (seksjon.description != null) {
@@ -85,10 +99,10 @@ internal fun DIV.seksjonsDiv(seksjon: HtmlModell.Seksjon, språk: SøknadSpråk)
             +seksjon.helpText
         }
     }
-    seksjon.spmSvar.forEach { spmDiv(it, språk) }
+    seksjon.spmSvar.forEach { bruttoSpørsmål(it, språk) }
 }
 
-private fun DIV.spmDiv(spmSvar: SporsmalSvar, språk: SøknadSpråk) {
+private fun DIV.bruttoSpørsmål(spmSvar: SporsmalSvar, språk: SøknadSpråk) {
     div {
         h3 { +spmSvar.sporsmal }
         if (spmSvar.infotekst != null) {
@@ -101,7 +115,7 @@ private fun DIV.spmDiv(spmSvar: SporsmalSvar, språk: SøknadSpråk) {
         }
         boldSpanP(språk.svar, spmSvar.svar)
         spmSvar.oppfølgingspørmål?.forEach { oppfølging ->
-            spmDiv(oppfølging, språk)
+            bruttoSpørsmål(oppfølging, språk)
         }
     }
 }
