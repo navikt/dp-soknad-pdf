@@ -44,11 +44,11 @@ internal fun HEAD.pdfaMetaTags(pdfAKrav: PdfAKrav) {
 }
 
 internal fun HEAD.bookmarks(seksjoner: List<HtmlModell.Seksjon>) {
-
+// TODO: Språktilpassning på statiske bokmerker
     val seksjonBokmerker = seksjoner.map {
         """<bookmark name = "${it.overskrift}" href="#${seksjonId(it.overskrift)}"></bookmark>"""
     }.joinToString("")
-    print(seksjonBokmerker)
+
     unsafe {
         //language=HTML
         raw(
@@ -89,34 +89,20 @@ private fun DIV.nettoSpørsmål(spmSvar: SporsmalSvar, språk: SøknadSpråk) {
 internal fun DIV.bruttoSeksjon(seksjon: HtmlModell.Seksjon, språk: SøknadSpråk) {
     id = seksjonId(seksjon.overskrift)
     h2 { +seksjon.overskrift }
-    if (seksjon.description != null) {
-        p(classes = "infotekst") {
-            +seksjon.description
-        }
+    seksjon.beskrivelse?.also { p(classes = "infotekst") { +seksjon.beskrivelse } }
+    seksjon.hjelpetekst?.also { p(classes = "hjelpetekst") { +seksjon.hjelpetekst } }
+    seksjon.spmSvar.forEach {
+        bruttoSpørsmål(it, språk)
     }
-    if (seksjon.helpText != null) {
-        p(classes = "hjelpetekst") {
-            +seksjon.helpText
-        }
-    }
-    seksjon.spmSvar.forEach { bruttoSpørsmål(it, språk) }
 }
 
 private fun DIV.bruttoSpørsmål(spmSvar: SporsmalSvar, språk: SøknadSpråk) {
     div {
         h3 { +spmSvar.sporsmal }
-        if (spmSvar.infotekst != null) {
-            p(classes = "infotekst") { +spmSvar.infotekst }
-        }
-        if (spmSvar.hjelpeTekst != null) {
-            p(classes = "hjelpetekst") {
-                +spmSvar.hjelpeTekst
-            }
-        }
+        spmSvar.beskrivelse?.also { p(classes = "infotekst") { +spmSvar.beskrivelse } }
+        spmSvar.hjelpeTekst?.also { p(classes = "hjelpetekst") { +spmSvar.hjelpeTekst } }
         boldSpanP(språk.svar, spmSvar.svar)
-        spmSvar.oppfølgingspørmål?.forEach { oppfølging ->
-            bruttoSpørsmål(oppfølging, språk)
-        }
+        spmSvar.oppfølgingspørmål?.forEach { oppfølging -> bruttoSpørsmål(oppfølging, språk) }
     }
 }
 

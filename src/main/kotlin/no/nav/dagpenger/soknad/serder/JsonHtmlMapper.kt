@@ -19,8 +19,8 @@ internal class JsonHtmlMapper(
             val tekstObjekt = oppslag.lookup(it["beskrivendeId"].asText()) as Oppslag.TekstObjekt.SeksjonTekstObjekt
             HtmlModell.Seksjon(
                 overskrift = tekstObjekt.title,
-                description = tekstObjekt.description,
-                helpText = tekstObjekt.helpText,
+                beskrivelse = tekstObjekt.description,
+                hjelpetekst = tekstObjekt.helpText,
                 spmSvar = it.fakta()
             )
         }
@@ -41,7 +41,7 @@ internal class JsonHtmlMapper(
             HtmlModell.SporsmalSvar(
                 sporsmal = tekstObjekt.text,
                 svar = node.svar(),
-                infotekst = tekstObjekt.description,
+                beskrivelse = tekstObjekt.description,
                 hjelpeTekst = tekstObjekt.helpText,
                 oppfølgingspørmål = listOf()
             )

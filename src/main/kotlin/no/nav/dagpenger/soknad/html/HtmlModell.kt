@@ -11,15 +11,15 @@ internal data class HtmlModell(
 ) {
     data class Seksjon(
         val overskrift: String,
-        val description: String? = null,
-        val helpText: String? = null,
+        val beskrivelse: String? = null,
+        val hjelpetekst: String? = null,
         val spmSvar: List<SporsmalSvar>
     )
 
     data class SporsmalSvar(
         val sporsmal: String,
         val svar: String,
-        val infotekst: String? = null,
+        val beskrivelse: String? = null,
         val hjelpeTekst: String? = null,
         val oppfølgingspørmål: List<SporsmalSvar>? = null
     )
@@ -33,8 +33,6 @@ internal data class HtmlModell(
     data class PdfAKrav(val description: String, val subject: String, val author: String)
     data class InfoBlokk(val fødselsnummer: String, val datoFerdigstilt: LocalDateTime) {
         val datoSendt = datoFerdigstilt.format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"))
-
-        // todo: referansenummer
     }
     enum class SøknadSpråk(
         val langAtributt: String,
