@@ -16,8 +16,8 @@ internal fun HEAD.fontimports() {
         href = "https://fonts.gstatic.com"
     }
     link {
-        href = "https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,400;0,600;1,300&display=swap"
         rel = "stylesheet"
+        href = "https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,400;0,600;1,300&display=swap"
     }
 }
 
@@ -25,10 +25,12 @@ internal fun HEAD.søknadPdfStyle() {
     style {
         unsafe {
             raw(
-                hentCss()
+                hentCss("/pdf.css")
             )
         }
     }
 }
 
-internal fun hentCss() = CSSUtilities::class.java.getResource("/pdf.css").readText()
+internal fun hentCss(cssFilnavn: String): String =
+    CSSUtilities::class.java.getResource(cssFilnavn)?.readText()
+        ?: throw IllegalArgumentException("Fant ikke css fil $cssFilnavn")
