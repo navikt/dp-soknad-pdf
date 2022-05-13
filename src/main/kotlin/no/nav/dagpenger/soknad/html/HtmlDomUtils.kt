@@ -105,10 +105,10 @@ private fun DIV.bruttoSpørsmål(spmSvar: SporsmalSvar, språk: SøknadSpråk) {
     div {
         h3 { +spmSvar.sporsmal }
         spmSvar.beskrivelse?.also { p(classes = "infotekst") { +spmSvar.beskrivelse } }
-        spmSvar.hjelpeTekst?.also {
+        spmSvar.hjelpetekst?.also {
             div(classes = "hjelpetekst") {
-                spmSvar.hjelpeTekst.tittel?.also { tittel -> h3 { +tittel } }
-                p { +spmSvar.hjelpeTekst.tekst }
+                spmSvar.hjelpetekst.tittel?.also { tittel -> h3 { +tittel } }
+                p { +spmSvar.hjelpetekst.tekst }
             }
         }
         boldSpanP(språk.svar, spmSvar.svar)

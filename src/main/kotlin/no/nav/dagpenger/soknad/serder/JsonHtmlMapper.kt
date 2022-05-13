@@ -43,7 +43,7 @@ internal class JsonHtmlMapper(
                 sporsmal = tekstObjekt.text,
                 svar = node.svar(),
                 beskrivelse = tekstObjekt.description,
-                hjelpeTekst = tekstObjekt.helpText(),
+                hjelpetekst = tekstObjekt.helpText(),
                 oppfølgingspørmål = listOf()
             )
         }
@@ -62,6 +62,6 @@ internal class JsonHtmlMapper(
     }
 }
 
-private fun Oppslag.TekstObjekt.helpText(): HtmlModell.HjelpeTekst? {
-    return this.helpText?.let { HtmlModell.HjelpeTekst(it.body, it.title) }
+private fun Oppslag.TekstObjekt.helpText(): HtmlModell.Hjelpetekst? {
+    return this.helpText?.let { HtmlModell.Hjelpetekst(it.body, it.title) }
 }

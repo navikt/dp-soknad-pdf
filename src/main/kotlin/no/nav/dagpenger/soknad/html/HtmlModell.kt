@@ -9,12 +9,11 @@ internal data class HtmlModell(
     val pdfAKrav: PdfAKrav,
     val infoBlokk: InfoBlokk
 ) {
-    // TODO: Både beskrivelse og hjelpetekst kan ha tittel
 
     data class Seksjon(
         val overskrift: String,
         val beskrivelse: String? = null,
-        val hjelpetekst: HjelpeTekst? = null,
+        val hjelpetekst: Hjelpetekst? = null,
         val spmSvar: List<SporsmalSvar>
     )
 
@@ -22,11 +21,11 @@ internal data class HtmlModell(
         val sporsmal: String,
         val svar: String,
         val beskrivelse: String? = null,
-        val hjelpeTekst: HjelpeTekst? = null,
+        val hjelpetekst: Hjelpetekst? = null,
         val oppfølgingspørmål: List<SporsmalSvar>? = null
     )
 
-    data class HjelpeTekst(val tekst: String, val tittel: String? = null,)
+    data class Hjelpetekst(val tekst: String, val tittel: String? = null)
 
     data class MetaInfo(
         val språk: SøknadSpråk = SøknadSpråk.BOKMÅL,
