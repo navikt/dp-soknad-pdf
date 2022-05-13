@@ -1,9 +1,11 @@
-package no.nav.dagpenger.soknad.pdf
+package no.nav.dagpenger.soknad
 
 import kotlinx.coroutines.runBlocking
 import mu.KotlinLogging
 import no.nav.dagpenger.soknad.html.HtmlBuilder
 import no.nav.dagpenger.soknad.html.HtmlModell
+import no.nav.dagpenger.soknad.pdf.PdfBuilder
+import no.nav.dagpenger.soknad.pdf.PdfLagring
 import no.nav.helse.rapids_rivers.JsonMessage
 import no.nav.helse.rapids_rivers.MessageContext
 import no.nav.helse.rapids_rivers.RapidsConnection

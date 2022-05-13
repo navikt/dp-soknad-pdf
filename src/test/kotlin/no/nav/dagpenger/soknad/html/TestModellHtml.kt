@@ -3,7 +3,7 @@ package no.nav.dagpenger.soknad.html
 import java.time.LocalDateTime
 
 object TestModellHtml {
-    internal val spmOgSvarSeksjon = HtmlModell.Seksjon(
+    private val spmOgSvarSeksjon = HtmlModell.Seksjon(
         overskrift = "Reel arbeidsøker",
         spmSvar = listOf(
             HtmlModell.SporsmalSvar(
@@ -26,7 +26,7 @@ object TestModellHtml {
 
     )
 
-    internal val oppfølgingspørmål = listOf(
+    private val oppfølgingspørmål = listOf(
         HtmlModell.SporsmalSvar(
             "Hvorfor ikke?",
             "Fordi sånn kan det være att det er at det er noen ganger at sånn kan det være"
@@ -89,7 +89,7 @@ object TestModellHtml {
         )
     )
 
-    internal val spmOgSvarMedHjelpetekstOgOppfølgingSeksjon = HtmlModell.Seksjon(
+    private val spmOgSvarMedHjelpetekstOgOppfølgingSeksjon = HtmlModell.Seksjon(
         overskrift = "Seksjon 2 med oppfølgingspørmsål",
         spmSvar = listOf(
             HtmlModell.SporsmalSvar(

@@ -2,6 +2,7 @@ package no.nav.dagpenger.soknad.pdf
 
 import io.mockk.coEvery
 import io.mockk.mockk
+import no.nav.dagpenger.soknad.PdfBehovLøser
 import no.nav.dagpenger.soknad.html.TestModellHtml.htmlModell
 import no.nav.helse.rapids_rivers.testsupport.TestRapid
 import org.intellij.lang.annotations.Language
