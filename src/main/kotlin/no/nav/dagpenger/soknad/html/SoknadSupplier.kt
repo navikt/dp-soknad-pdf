@@ -11,7 +11,7 @@ import io.ktor.client.request.get
 import io.ktor.client.request.header
 import io.ktor.client.request.url
 import io.ktor.serialization.jackson.jackson
-import java.time.LocalDate
+import java.time.LocalDateTime
 import java.util.UUID
 
 internal class SoknadSupplier(
@@ -43,7 +43,7 @@ internal object Mapper {
             seksjoner = listOf(),
             metaInfo = HtmlModell.MetaInfo(hovedOverskrift = "", tittel = ""),
             pdfAKrav = HtmlModell.PdfAKrav(description = "todo", subject = "todo", author = "todo"),
-            infoBlokk = HtmlModell.InfoBlokk(fødselsnummer = "todo", datoSendt = LocalDate.now().toString())
+            infoBlokk = HtmlModell.InfoBlokk(fødselsnummer = "todo", datoFerdigstilt = LocalDateTime.now())
         )
     }
 }

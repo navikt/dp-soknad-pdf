@@ -3,12 +3,13 @@ package no.nav.dagpenger.soknad.html
 import kotlinx.html.DIV
 import kotlinx.html.HEAD
 import kotlinx.html.div
+import kotlinx.html.h2
 import kotlinx.html.h3
+import kotlinx.html.id
 import kotlinx.html.meta
 import kotlinx.html.p
 import kotlinx.html.span
 import kotlinx.html.unsafe
-import net.logstash.logback.argument.StructuredArguments.raw
 import no.nav.dagpenger.soknad.html.HtmlModell.PdfAKrav
 import no.nav.dagpenger.soknad.html.HtmlModell.SporsmalSvar
 import no.nav.dagpenger.soknad.html.HtmlModell.SøknadSpråk
@@ -26,7 +27,7 @@ internal fun String.xhtmlCompliant() = this
         replacement = "/>"
     )
 
-internal fun HEAD.pdfa(pdfAKrav: PdfAKrav) {
+internal fun HEAD.pdfaMetaTags(pdfAKrav: PdfAKrav) {
     meta {
         name = "description"
         content = pdfAKrav.description
@@ -44,34 +45,64 @@ internal fun HEAD.pdfa(pdfAKrav: PdfAKrav) {
 
 internal fun HEAD.bookmarks(seksjoner: List<HtmlModell.Seksjon>) {
 
-    val seksjoner = seksjoner.map {
+    val seksjonBokmerker = seksjoner.map {
         """<bookmark name = "${it.overskrift}" href="#${seksjonId(it.overskrift)}"></bookmark>"""
     }.joinToString("")
-    print(seksjoner)
+    print(seksjonBokmerker)
     unsafe {
         //language=HTML
         raw(
             """
                 <bookmarks>
                     <bookmark name="Søknad om dagpenger" href="#hovedoverskrift"></bookmark>
-                    $seksjoner
                     <bookmark name="Info om søknad" href="#infoblokk"></bookmark>
+                    $seksjonBokmerker
                 </bookmarks>
             """.trimIndent()
         )
     }
-
-    /*                      */
 }
 
-internal fun DIV.boldSpanP(boldTekst: String, vanligTekst: String, divider: String = ":") {
+internal fun DIV.boldSpanP(boldTekst: String, vanligTekst: String) {
     p {
         span(classes = "boldSpan") { +"$boldTekst: " }
         +vanligTekst
     }
 }
 
-internal fun DIV.spmDiv(spmSvar: SporsmalSvar, språk: SøknadSpråk) {
+internal fun DIV.nettoSeksjon(seksjon: HtmlModell.Seksjon, språk: SøknadSpråk) {
+    id = seksjonId(seksjon.overskrift)
+    h2 { +seksjon.overskrift }
+    seksjon.spmSvar.forEach { nettoSpørsmål(it, språk) }
+}
+
+private fun DIV.nettoSpørsmål(spmSvar: SporsmalSvar, språk: SøknadSpråk) {
+    div {
+        h3 { +spmSvar.sporsmal }
+        boldSpanP(språk.svar, spmSvar.svar)
+        spmSvar.oppfølgingspørmål?.forEach { oppfølging ->
+            nettoSpørsmål(oppfølging, språk)
+        }
+    }
+}
+
+internal fun DIV.bruttoSeksjon(seksjon: HtmlModell.Seksjon, språk: SøknadSpråk) {
+    id = seksjonId(seksjon.overskrift)
+    h2 { +seksjon.overskrift }
+    if (seksjon.description != null) {
+        p(classes = "infotekst") {
+            +seksjon.description
+        }
+    }
+    if (seksjon.helpText != null) {
+        p(classes = "hjelpetekst") {
+            +seksjon.helpText
+        }
+    }
+    seksjon.spmSvar.forEach { bruttoSpørsmål(it, språk) }
+}
+
+private fun DIV.bruttoSpørsmål(spmSvar: SporsmalSvar, språk: SøknadSpråk) {
     div {
         h3 { +spmSvar.sporsmal }
         if (spmSvar.infotekst != null) {
@@ -84,9 +115,9 @@ internal fun DIV.spmDiv(spmSvar: SporsmalSvar, språk: SøknadSpråk) {
         }
         boldSpanP(språk.svar, spmSvar.svar)
         spmSvar.oppfølgingspørmål?.forEach { oppfølging ->
-            spmDiv(oppfølging, språk)
+            bruttoSpørsmål(oppfølging, språk)
         }
     }
 }
 
-internal fun seksjonId(overskrift: String) = "seksjon-${overskrift.replace(" ","-").toLowerCase()}"
+private fun seksjonId(overskrift: String) = "seksjon-${overskrift.replace(" ", "-").lowercase()}"

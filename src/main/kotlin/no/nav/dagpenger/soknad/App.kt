@@ -1,7 +1,9 @@
-package no.nav.dagpenger.soknad.pdf
+package no.nav.dagpenger.soknad
 
 import no.nav.dagpenger.soknad.html.HtmlBuilder
 import no.nav.dagpenger.soknad.html.SoknadSupplier
+import no.nav.dagpenger.soknad.pdf.PdfBuilder
+import no.nav.dagpenger.soknad.pdf.PdfLagring
 import no.nav.helse.rapids_rivers.RapidApplication
 import no.nav.helse.rapids_rivers.RapidsConnection
 
@@ -20,7 +22,7 @@ internal object App : RapidsConnection.StatusListener {
             pdfLagring = PdfLagring(
                 baseUrl = Configuration.dpMellomlagringBaseUrl, tokenSupplier = Configuration.mellomlagringTokenSupplier
             ),
-            htmlBuilder = HtmlBuilder::lagHtml,
+            htmlBuilder = HtmlBuilder::lagBruttoHtml,
             soknadSupplier = SoknadSupplier(Configuration.dpSoknadUrl, Configuration.soknadTokenSupplier)::hentSoknad,
         )
     }

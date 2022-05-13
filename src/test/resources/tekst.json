@@ -1,0 +1,43 @@
+{
+  "SanityTexts": {
+    "fakta": [
+      {
+        "textId" : "f1",
+        "text": "Her blir det spurt om noe som du kan svar ja eller nei på. Svarer du ja eller nei?",
+        "description": "Og her beskrive det hva ja eller nei betyr.I dette tilfellet betyr ja JA og nei NEI",
+        "helpText": "Og her forklares det enda litt mer hva ja eller nei betyr.I dette tilfellet betyr ja JA!(altså at du roper ja!) og nei NEI!(altså at du roper nei!) "
+      },
+      {
+        "textId" : "f3",
+        "text": "Her blir det spurt om noe som du kan svare ja eller nei på. Svarer du ja eller nei?",
+        "helpText": "Hjelpetekst"
+      },
+      {
+        "textId" : "f5",
+        "text": "Her blir det spurt om noe som du kan svar ja eller nei på. Svarer du ja eller nei?"
+      },
+      {
+        "textId" : "f67",
+        "text": "Her blir det spurt om å oppgi ett tall, hvilket tall velger du?",
+        "description": "Viser seg at dette faktumet er ett generatorfaktum, med masse faktum i seg. Det er jeg fryktelig usikker på hvordan blir gitt. Oi, og pluss; hvordan vet vi om noe er ett oppfølgingspørsmål? :exploding_head",
+        "helpText": "Folka som jobber med Sanity har helt sikkert et godt svar på det her"
+      }
+    ],
+    "seksjoner": [
+      {
+        "textId" : "seksjon1",
+        "title": "Tittel for seksjon 1",
+        "description": "description for seksjon",
+        "helpText": "Hjelpetekst for seksjon"
+      },
+      {
+        "textId": "seksjon2",
+        "title": "Tittel for seksjon 2"
+      }
+    ],
+    "svaralternativer": [{
+      "textId": "svaralternativ1",
+      "text": "Vet ikke helt hva dte her skal brukes til enda, men gjetter på at vi finner det ut"
+    }]
+  }
+}

@@ -1,9 +1,11 @@
-package no.nav.dagpenger.soknad.pdf
+package no.nav.dagpenger.soknad
 
 import kotlinx.coroutines.runBlocking
 import mu.KotlinLogging
 import no.nav.dagpenger.soknad.html.HtmlBuilder
 import no.nav.dagpenger.soknad.html.HtmlModell
+import no.nav.dagpenger.soknad.pdf.PdfBuilder
+import no.nav.dagpenger.soknad.pdf.PdfLagring
 import no.nav.helse.rapids_rivers.JsonMessage
 import no.nav.helse.rapids_rivers.MessageContext
 import no.nav.helse.rapids_rivers.RapidsConnection
@@ -15,7 +17,7 @@ internal class PdfBehovLøser(
     private val pdfBuilder: PdfBuilder,
     private val pdfLagring: PdfLagring,
     private val soknadSupplier: suspend (soknadId: UUID) -> HtmlModell,
-    private val htmlBuilder: (modell: HtmlModell) -> String = HtmlBuilder::lagHtml
+    private val htmlBuilder: (modell: HtmlModell) -> String = HtmlBuilder::lagBruttoHtml
 ) : River.PacketListener {
     companion object {
         private val logg = KotlinLogging.logger {}
