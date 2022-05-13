@@ -9,7 +9,7 @@ internal data class HtmlModell(
     val pdfAKrav: PdfAKrav,
     val infoBlokk: InfoBlokk
 ) {
-    //TODO: Både beskrivelse og hjelpetekst kan ha tittel
+    // TODO: Både beskrivelse og hjelpetekst kan ha tittel
 
     data class Seksjon(
         val overskrift: String,

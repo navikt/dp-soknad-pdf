@@ -8,9 +8,14 @@ internal class Oppslag(tekstJson: String) {
     private val tekstMap = parse(tekstJson)
     fun lookup(id: String): TekstObjekt = tekstMap[id] ?: throw IllegalArgumentException("Fant ikke tekst til id $id")
 
+    private fun parse(tekstJson: String): Map<String, TekstObjekt> =
+        objectMapper.readTree(tekstJson).let {
+            it.tilFaktaTekstObjekt() + it.tilSeksjonTekstObjekt()
+        }
+
     private fun JsonNode.tilFaktaTekstObjekt(): Map<String, TekstObjekt> {
         val map = mutableMapOf<String, TekstObjekt>()
-        this["SanityTexts"]["fakta"].forEach { tekst ->
+        fakta().forEach { tekst ->
             val textId = tekst["textId"].asText()
             map[textId] = TekstObjekt.FaktaTekstObjekt(
                 textId = textId,
@@ -25,7 +30,7 @@ internal class Oppslag(tekstJson: String) {
 
     private fun JsonNode.tilSeksjonTekstObjekt(): Map<String, TekstObjekt> {
         val map = mutableMapOf<String, TekstObjekt>()
-        this["SanityTexts"]["seksjoner"].forEach { tekst ->
+        seksjoner().forEach { tekst ->
             val textId = tekst["textId"].asText()
             map[textId] = TekstObjekt.SeksjonTekstObjekt(
                 textId = textId,
@@ -37,13 +42,9 @@ internal class Oppslag(tekstJson: String) {
         return map
     }
 
-    private fun parse(tekstJson: String): Map<String, TekstObjekt> =
-        objectMapper.readTree(tekstJson).let {
-            it.tilFaktaTekstObjekt() + it.tilSeksjonTekstObjekt()
-        }
-
     sealed class TekstObjekt(val textId: String, val description: String?, val helpText: String?) {
         class FaktaTekstObjekt(
+            // todo: kan vi fjerne unit?
             val unit: String? = null,
             val text: String,
             textId: String,
@@ -59,3 +60,6 @@ internal class Oppslag(tekstJson: String) {
         ) : TekstObjekt(textId, description, helpText)
     }
 }
+
+private fun JsonNode.seksjoner() = this["SanityTexts"]["seksjoner"]
+private fun JsonNode.fakta() = this["SanityTexts"]["fakta"]
