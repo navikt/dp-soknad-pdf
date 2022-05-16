@@ -26,7 +26,8 @@ class ManualHtmlBuilderTest {
         HtmlBuilder.lagNettoHtml(TestModellHtml.htmlModell).also {
             assertEquals(0, "class=\"infotekst\"".toRegex().findAll(it).count())
             assertEquals(0, "class=\"hjelpetekst\"".toRegex().findAll(it).count())
-            File("build/tmp/test/netto-søknad.html").writeText(it)
+            assertEquals(4, "class=\"seksjon\"".toRegex().findAll(it).count())
+            //     File("build/tmp/test/netto.html").writeBytes(it.toByteArray())
         }
     }
 
@@ -35,7 +36,8 @@ class ManualHtmlBuilderTest {
         HtmlBuilder.lagBruttoHtml(TestModellHtml.htmlModell).also {
             assertEquals(6, "class=\"infotekst\"".toRegex().findAll(it).count())
             assertEquals(6, "class=\"hjelpetekst\"".toRegex().findAll(it).count())
-            File("build/tmp/test/brutto-søknad.html").writeText(it)
+            assertEquals(4, "class=\"seksjon\"".toRegex().findAll(it).count())
+            //    File("build/tmp/test/brutto.html").writeBytes(it.toByteArray())
         }
     }
 }

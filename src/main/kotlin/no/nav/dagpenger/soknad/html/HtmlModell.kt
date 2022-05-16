@@ -9,20 +9,23 @@ internal data class HtmlModell(
     val pdfAKrav: PdfAKrav,
     val infoBlokk: InfoBlokk
 ) {
+
     data class Seksjon(
         val overskrift: String,
-        val description: String? = null,
-        val helpText: String? = null,
+        val beskrivelse: String? = null,
+        val hjelpetekst: Hjelpetekst? = null,
         val spmSvar: List<SporsmalSvar>
     )
 
     data class SporsmalSvar(
         val sporsmal: String,
         val svar: String,
-        val infotekst: String? = null,
-        val hjelpeTekst: String? = null,
+        val beskrivelse: String? = null,
+        val hjelpetekst: Hjelpetekst? = null,
         val oppfølgingspørmål: List<SporsmalSvar>? = null
     )
+
+    data class Hjelpetekst(val tekst: String, val tittel: String? = null)
 
     data class MetaInfo(
         val språk: SøknadSpråk = SøknadSpråk.BOKMÅL,
@@ -33,9 +36,8 @@ internal data class HtmlModell(
     data class PdfAKrav(val description: String, val subject: String, val author: String)
     data class InfoBlokk(val fødselsnummer: String, val datoFerdigstilt: LocalDateTime) {
         val datoSendt = datoFerdigstilt.format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"))
-
-        // todo: referansenummer
     }
+
     enum class SøknadSpråk(
         val langAtributt: String,
         val svar: String,

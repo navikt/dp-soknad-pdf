@@ -8,15 +8,20 @@ internal class Oppslag(tekstJson: String) {
     private val tekstMap = parse(tekstJson)
     fun lookup(id: String): TekstObjekt = tekstMap[id] ?: throw IllegalArgumentException("Fant ikke tekst til id $id")
 
+    private fun parse(tekstJson: String): Map<String, TekstObjekt> =
+        objectMapper.readTree(tekstJson).let {
+            it.tilFaktaTekstObjekt() + it.tilSeksjonTekstObjekt()
+        }
+
     private fun JsonNode.tilFaktaTekstObjekt(): Map<String, TekstObjekt> {
         val map = mutableMapOf<String, TekstObjekt>()
-        this["SanityTexts"]["fakta"].forEach { tekst ->
+        fakta().forEach { tekst ->
             val textId = tekst["textId"].asText()
             map[textId] = TekstObjekt.FaktaTekstObjekt(
                 textId = textId,
                 text = tekst["text"].asText(),
                 description = tekst.get("description")?.asText(),
-                helpText = tekst.get("helpText")?.asText(),
+                helpText = tekst.helpText(),
                 unit = tekst.get("unit")?.asText()
             )
         }
@@ -25,37 +30,43 @@ internal class Oppslag(tekstJson: String) {
 
     private fun JsonNode.tilSeksjonTekstObjekt(): Map<String, TekstObjekt> {
         val map = mutableMapOf<String, TekstObjekt>()
-        this["SanityTexts"]["seksjoner"].forEach { tekst ->
+        seksjoner().forEach { tekst ->
             val textId = tekst["textId"].asText()
             map[textId] = TekstObjekt.SeksjonTekstObjekt(
                 textId = textId,
                 title = tekst["title"].asText(),
                 description = tekst.get("description")?.asText(),
-                helpText = tekst.get("helpText")?.asText()
+                helpText = tekst.helpText()
             )
         }
         return map
     }
 
-    private fun parse(tekstJson: String): Map<String, TekstObjekt> =
-        objectMapper.readTree(tekstJson).let {
-            it.tilFaktaTekstObjekt() + it.tilSeksjonTekstObjekt()
-        }
+    sealed class TekstObjekt(val textId: String, val description: String?, val helpText: HelpText?) {
 
-    sealed class TekstObjekt(val textId: String, val description: String?, val helpText: String?) {
         class FaktaTekstObjekt(
+            // todo: kan vi fjerne unit?
             val unit: String? = null,
             val text: String,
             textId: String,
             description: String? = null,
-            helpText: String? = null,
+            helpText: HelpText? = null,
         ) : TekstObjekt(textId, description, helpText)
 
         class SeksjonTekstObjekt(
             val title: String,
             textId: String,
             description: String? = null,
-            helpText: String? = null,
+            helpText: HelpText? = null,
         ) : TekstObjekt(textId, description, helpText)
+
+        class HelpText(val title: String?, val body: String)
     }
 }
+
+private fun JsonNode.helpText(): Oppslag.TekstObjekt.HelpText? =
+    get("helpText")?.let {
+        Oppslag.TekstObjekt.HelpText(it.get("title")?.asText(), it.get("body").asText())
+    }
+private fun JsonNode.seksjoner() = this["SanityTexts"]["seksjoner"]
+private fun JsonNode.fakta() = this["SanityTexts"]["fakta"]

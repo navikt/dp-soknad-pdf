@@ -19,13 +19,14 @@ internal class JsonHtmlMapper(
             val tekstObjekt = oppslag.lookup(it["beskrivendeId"].asText()) as Oppslag.TekstObjekt.SeksjonTekstObjekt
             HtmlModell.Seksjon(
                 overskrift = tekstObjekt.title,
-                description = tekstObjekt.description,
-                helpText = tekstObjekt.helpText,
+                beskrivelse = tekstObjekt.description,
+                hjelpetekst = tekstObjekt.helpText(),
                 spmSvar = it.fakta()
             )
         }
     }
 
+    // TODO andre fakatyper
     private fun JsonNode.svar(): String {
         return when (this["type"].asText()) {
             "string" -> this["svar"].asText()
@@ -41,8 +42,8 @@ internal class JsonHtmlMapper(
             HtmlModell.SporsmalSvar(
                 sporsmal = tekstObjekt.text,
                 svar = node.svar(),
-                infotekst = tekstObjekt.description,
-                hjelpeTekst = tekstObjekt.helpText,
+                beskrivelse = tekstObjekt.description,
+                hjelpetekst = tekstObjekt.helpText(),
                 oppfølgingspørmål = listOf()
             )
         }
@@ -59,4 +60,8 @@ internal class JsonHtmlMapper(
             ) // todo finne ut hvordan vi får tak i innsendt dato, kan ikke dette bare legges på behovet?
         )
     }
+}
+
+private fun Oppslag.TekstObjekt.helpText(): HtmlModell.Hjelpetekst? {
+    return this.helpText?.let { HtmlModell.Hjelpetekst(it.body, it.title) }
 }

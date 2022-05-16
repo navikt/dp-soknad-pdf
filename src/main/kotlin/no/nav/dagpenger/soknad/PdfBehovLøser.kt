@@ -34,7 +34,7 @@ internal class PdfBehovLøser(
     }
 
     override fun onPacket(packet: JsonMessage, context: MessageContext) {
-        // TODO: Hva skal vi gjøre med brutto og netto?
+        // TODO: brutto og netto urn-er
         val soknadId = packet.søknadUuid()
         logg.info("Mottok behov for søknadspdf med uuid $soknadId")
         runBlocking {

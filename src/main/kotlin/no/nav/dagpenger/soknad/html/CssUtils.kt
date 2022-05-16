@@ -4,7 +4,7 @@ import kotlinx.html.HEAD
 import kotlinx.html.link
 import kotlinx.html.style
 import kotlinx.html.unsafe
-import org.apache.batik.bridge.CSSUtilities
+import no.nav.dagpenger.soknad.pdf.fileAsString
 
 internal fun HEAD.fontimports() {
     link {
@@ -16,8 +16,8 @@ internal fun HEAD.fontimports() {
         href = "https://fonts.gstatic.com"
     }
     link {
-        href = "https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,400;0,600;1,300&display=swap"
         rel = "stylesheet"
+        href = "https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,400;0,600;1,300&display=swap"
     }
 }
 
@@ -25,10 +25,8 @@ internal fun HEAD.søknadPdfStyle() {
     style {
         unsafe {
             raw(
-                hentCss()
+                "/pdf.css".fileAsString()
             )
         }
     }
 }
-
-internal fun hentCss() = CSSUtilities::class.java.getResource("/pdf.css").readText()
