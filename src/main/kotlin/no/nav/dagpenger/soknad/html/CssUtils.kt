@@ -4,7 +4,7 @@ import kotlinx.html.HEAD
 import kotlinx.html.link
 import kotlinx.html.style
 import kotlinx.html.unsafe
-import org.apache.batik.bridge.CSSUtilities
+import no.nav.dagpenger.soknad.pdf.fileAsString
 
 internal fun HEAD.fontimports() {
     link {
@@ -25,12 +25,8 @@ internal fun HEAD.søknadPdfStyle() {
     style {
         unsafe {
             raw(
-                hentCss("/pdf.css")
+                "/pdf.css".fileAsString()
             )
         }
     }
 }
-
-internal fun hentCss(cssFilnavn: String): String =
-    CSSUtilities::class.java.getResource(cssFilnavn)?.readText()
-        ?: throw IllegalArgumentException("Fant ikke css fil $cssFilnavn")
