@@ -7,6 +7,7 @@ import no.nav.dagpenger.soknad.html.TestModellHtml.htmlModell
 import no.nav.helse.rapids_rivers.testsupport.TestRapid
 import org.intellij.lang.annotations.Language
 import org.junit.jupiter.api.Test
+import java.time.LocalDateTime
 import java.util.UUID
 import kotlin.test.assertEquals
 
@@ -38,8 +39,6 @@ internal class PdfBehovLøserTest {
             "urn:document:id/søknad.pdf",
             testRapid.inspektør.message(0)["@løsning"][PdfBehovLøser.BEHOV].asText()
         )
-
-//        assertEquals(expectedPdf, slot.captured)
     }
 
     @Test
@@ -53,7 +52,8 @@ internal class PdfBehovLøserTest {
         "@event_name": "behov",
         "@behov": ["ArkiverbarSøknad"],
         "søknad_uuid": "$soknadId",
-        "ident": "12345678910"
+        "ident": "12345678910",
+        "innsendtTidspunkt": "${LocalDateTime.now()}"
             }
     """.trimIndent()
 
@@ -63,7 +63,8 @@ internal class PdfBehovLøserTest {
         "@behov": ["ArkiverbarSøknad"],
         "@løsning": "something",
         "søknad_uuid": "$soknadId",
-        "ident": "12345678910"
+        "ident": "12345678910",
+        "innsendtTidspunkt": ${LocalDateTime.now()}
             }
     """.trimIndent()
 }

@@ -125,7 +125,8 @@ object TestModellHtml {
         metaInfo = HtmlModell.MetaInfo(
             hovedOverskrift = "Søknad om dagpenger"
         ),
-        pdfAKrav = HtmlModell.PdfAKrav("Søknad om dagpenger", "dagpenger", "NAV"),
+        pdfAKrav = HtmlModell.PdfAKrav("Søknad om dagpenger", "dagpenger", "NAV")
+    ).apply {
         infoBlokk = HtmlModell.InfoBlokk("12345678910", LocalDateTime.now())
-    )
+    }
 }

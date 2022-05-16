@@ -10,6 +10,8 @@ import no.nav.helse.rapids_rivers.JsonMessage
 import no.nav.helse.rapids_rivers.MessageContext
 import no.nav.helse.rapids_rivers.RapidsConnection
 import no.nav.helse.rapids_rivers.River
+import no.nav.helse.rapids_rivers.asLocalDateTime
+import java.time.LocalDateTime
 import java.util.UUID
 
 internal class PdfBehovLøser(
@@ -29,16 +31,21 @@ internal class PdfBehovLøser(
             validate { it.demandValue("@event_name", "behov") }
             validate { it.demandAll("@behov", listOf(BEHOV)) }
             validate { it.rejectKey("@løsning") }
-            validate { it.requireKey("søknad_uuid", "ident") }
+            validate { it.requireKey("søknad_uuid", "ident", "innsendtTidspunkt") }
         }.register(this)
     }
 
     override fun onPacket(packet: JsonMessage, context: MessageContext) {
         // TODO: brutto og netto urn-er
         val soknadId = packet.søknadUuid()
+        val ident = packet.ident()
         logg.info("Mottok behov for søknadspdf med uuid $soknadId")
         runBlocking {
-            soknadSupplier(soknadId, packet["ident"].asText())
+            soknadSupplier(soknadId, ident)
+                .apply {
+                    infoBlokk =
+                        HtmlModell.InfoBlokk(fødselsnummer = ident, innsendtTidspunkt = packet.innsendtTidspunkt())
+                }
                 .let(htmlBuilder)
                 .let { pdfBuilder.lagPdf(it) }
                 .let { pdf ->
@@ -54,4 +61,6 @@ internal class PdfBehovLøser(
     }
 }
 
+private fun JsonMessage.ident() = this["ident"].asText()
+private fun JsonMessage.innsendtTidspunkt(): LocalDateTime = this["innsendtTidspunkt"].asLocalDateTime()
 private fun JsonMessage.søknadUuid(): UUID = this["søknad_uuid"].asText().let { UUID.fromString(it) }

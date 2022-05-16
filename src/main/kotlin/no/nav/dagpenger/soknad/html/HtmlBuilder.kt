@@ -16,7 +16,10 @@ internal object HtmlBuilder {
     fun lagNettoHtml(htmlModell: HtmlModell) = lagHtml(htmlModell, DIV::nettoSeksjon)
     fun lagBruttoHtml(htmlModell: HtmlModell) = lagHtml(htmlModell, DIV::bruttoSeksjon)
 
-    private fun lagHtml(htmlModell: HtmlModell, seksjonFunksjon: DIV.(HtmlModell.Seksjon, HtmlModell.SøknadSpråk) -> Unit = DIV::nettoSeksjon): String {
+    private fun lagHtml(
+        htmlModell: HtmlModell,
+        seksjonFunksjon: DIV.(HtmlModell.Seksjon, HtmlModell.SøknadSpråk) -> Unit = DIV::nettoSeksjon
+    ): String {
         val språk = htmlModell.metaInfo.språk
         return createHTMLDocument().html {
             lang = språk.langAtributt

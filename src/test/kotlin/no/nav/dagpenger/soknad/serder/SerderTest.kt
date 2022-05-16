@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import java.io.File
+import java.time.LocalDateTime
 
 internal class SerderTest {
     val faktaJson = object {}.javaClass.getResource("/fakta.json")?.readText()!!
@@ -44,11 +45,12 @@ internal class SerderTest {
     fun `lager riktig html og pfd fra json`() {
         assertDoesNotThrow {
             val h = JsonHtmlMapper(
-                "ident",
                 søknadsData = faktaJson,
                 tekst = tekstJson,
                 språk = HtmlModell.SøknadSpråk.BOKMÅL
-            ).parse()
+            ).parse().apply {
+                infoBlokk = HtmlModell.InfoBlokk("ident", innsendtTidspunkt = LocalDateTime.now())
+            }
             HtmlBuilder.lagBruttoHtml(h).also {
                 File("build/tmp/test/søknad2.html").writeText(it)
                 PdfBuilder.lagPdf(it).also { generertPdf ->

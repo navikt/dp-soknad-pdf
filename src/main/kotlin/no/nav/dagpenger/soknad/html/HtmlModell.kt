@@ -6,9 +6,10 @@ import java.time.format.DateTimeFormatter
 internal data class HtmlModell(
     val seksjoner: List<Seksjon>,
     val metaInfo: MetaInfo,
-    val pdfAKrav: PdfAKrav,
-    val infoBlokk: InfoBlokk
+    val pdfAKrav: PdfAKrav
 ) {
+
+    lateinit var infoBlokk: InfoBlokk
 
     data class Seksjon(
         val overskrift: String,
@@ -34,8 +35,8 @@ internal data class HtmlModell(
     )
 
     data class PdfAKrav(val description: String, val subject: String, val author: String)
-    data class InfoBlokk(val fødselsnummer: String, val datoFerdigstilt: LocalDateTime) {
-        val datoSendt = datoFerdigstilt.format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"))
+    data class InfoBlokk(val fødselsnummer: String, val innsendtTidspunkt: LocalDateTime) {
+        val datoSendt = innsendtTidspunkt.format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"))
     }
 
     enum class SøknadSpråk(

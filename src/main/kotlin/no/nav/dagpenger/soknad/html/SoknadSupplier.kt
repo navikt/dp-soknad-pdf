@@ -38,7 +38,7 @@ internal class SoknadSupplier(
             val tekst = async {
                 httpKlient.get("$dpSoknadBaseUrl/$id/tekst").bodyAsText()
             }
-            JsonHtmlMapper(ident = ident, søknadsData = fakta.await(), tekst = tekst.await()).parse()
+            JsonHtmlMapper(søknadsData = fakta.await(), tekst = tekst.await()).parse()
         }
     }
 }
