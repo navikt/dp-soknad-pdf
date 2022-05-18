@@ -23,19 +23,25 @@ internal class PdfLagringTest {
 
             respond(
                 //language=JSON
-                content = """{"urn":"urn:vedlegg:id/soknad.pdf"}""",
+                content = """[{"filnavn":"netto.pdf","urn":"urn:vedlegg:id/netto.pdf"},{"filnavn":"brutto.pdf","urn":"urn:vedlegg:id/brutto.pdf"}]""",
                 status = HttpStatusCode.Created,
                 headers = headersOf(HttpHeaders.ContentType, "application/json")
             )
         }
         runBlocking {
-            val urn = PdfLagring(
+            val urnListe = PdfLagring(
                 baseUrl = "http://dp-mellomlagring/v1/azuread/ve",
                 tokenSupplier = { "token" },
                 engine = mockEngine
-            ).lagrePdf("uuud", "".toByteArray())
+            ).lagrePdf("uuud", mapOf("soknad" to "".toByteArray()))
 
-            assertEquals(urn.urn, """urn:vedlegg:id/soknad.pdf""")
+            assertEquals(
+                listOf(
+                    URNResponse("netto.pdf", urn = "urn:vedlegg:id/netto.pdf"),
+                    URNResponse("brutto.pdf", urn = "urn:vedlegg:id/brutto.pdf")
+                ),
+                urnListe
+            )
         }
     }
 }

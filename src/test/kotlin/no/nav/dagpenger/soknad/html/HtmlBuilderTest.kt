@@ -1,12 +1,13 @@
 package no.nav.dagpenger.soknad.html
 
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import java.io.File
 
-class ManualHtmlBuilderTest {
+class HtmlBuilderTest {
 
     @Disabled
     @Test
@@ -38,6 +39,15 @@ class ManualHtmlBuilderTest {
             assertEquals(6, "class=\"hjelpetekst\"".toRegex().findAll(it).count())
             assertEquals(4, "class=\"seksjon\"".toRegex().findAll(it).count())
             //    File("build/tmp/test/brutto.html").writeBytes(it.toByteArray())
+        }
+    }
+
+    @Test
+    fun `lager brutto og netto html`() {
+        HtmlBuilder.lagBruttoOgNettoHtml(TestModellHtml.htmlModell).also {
+            assertEquals(2, it.size)
+            assertNotNull(it["netto"])
+            assertNotNull(it["brutto"])
         }
     }
 }

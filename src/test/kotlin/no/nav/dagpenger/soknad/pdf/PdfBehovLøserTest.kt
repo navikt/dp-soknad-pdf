@@ -1,5 +1,7 @@
 package no.nav.dagpenger.soknad.pdf
 
+import com.fasterxml.jackson.databind.JsonNode
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import io.mockk.coEvery
 import io.mockk.mockk
 import no.nav.dagpenger.soknad.PdfBehovLøser
@@ -24,7 +26,10 @@ internal class PdfBehovLøserTest {
                         soknadId.toString(),
                         any()
                     )
-                } returns URNResponse("urn:document:id/søknad.pdf")
+                } returns listOf(
+                    URNResponse("brutto.pdf", "urn:vedlegg:soknadId/brutto.pdf"),
+                    URNResponse("netto.pdf", "urn:vedlegg:soknadId/netto.pdf")
+                )
             },
             soknadSupplier = { _, _ -> htmlModell },
         )
@@ -34,11 +39,35 @@ internal class PdfBehovLøserTest {
     fun `besvarer pdf behov`() {
         testRapid.sendTestMessage(testMessage)
         assertEquals(1, testRapid.inspektør.size)
+        @Language("JSON")
+        val expectedLøsning = """
+           [
+                  {
+                    "metainfo": {
+                      "innhold": "brutto.pdf",
+                      "filtype": "PDF"
+                    },
+                    "urn": "urn:vedlegg:soknadId/brutto.pdf"
+                  },
+                  {
+                    "metainfo": {
+                      "innhold": "netto.pdf",
+                      "filtype": "PDF"
+                    },
+                    "urn": "urn:vedlegg:soknadId/netto.pdf"
+                  }
+                ]
+            """
 
-        assertEquals(
-            "urn:document:id/søknad.pdf",
-            testRapid.inspektør.message(0)["@løsning"][PdfBehovLøser.BEHOV].asText()
+        assertJsonEquals(
+            expectedLøsning,
+            testRapid.inspektør.message(0)["@løsning"][PdfBehovLøser.BEHOV]
         )
+    }
+
+    private fun assertJsonEquals(expected: String, actual: JsonNode) {
+        val objectMapper = jacksonObjectMapper()
+        assertEquals(objectMapper.readTree(expected), actual)
     }
 
     @Test

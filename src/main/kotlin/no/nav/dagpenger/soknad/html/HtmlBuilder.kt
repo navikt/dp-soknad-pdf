@@ -13,6 +13,7 @@ import kotlinx.html.lang
 import kotlinx.html.title
 
 internal object HtmlBuilder {
+    fun lagBruttoOgNettoHtml(htmlModell: HtmlModell): Map<String, String> = mapOf("netto" to lagNettoHtml(htmlModell), "brutto" to lagBruttoHtml(htmlModell))
     fun lagNettoHtml(htmlModell: HtmlModell) = lagHtml(htmlModell, DIV::nettoSeksjon)
     fun lagBruttoHtml(htmlModell: HtmlModell) = lagHtml(htmlModell, DIV::bruttoSeksjon)
 

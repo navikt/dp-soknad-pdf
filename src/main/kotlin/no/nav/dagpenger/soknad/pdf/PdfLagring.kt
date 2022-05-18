@@ -15,7 +15,6 @@ import io.ktor.http.Headers
 import io.ktor.http.HttpHeaders
 import io.ktor.serialization.jackson.jackson
 import io.ktor.utils.io.streams.asInput
-import java.io.ByteArrayInputStream
 
 class PdfLagring(
     private val baseUrl: String,
@@ -32,22 +31,21 @@ class PdfLagring(
         }
     }
 
-    internal suspend fun lagrePdf(søknadUUid: String, pdf: ByteArray): URNResponse {
-        return ByteArrayInputStream(pdf).asInput().use { input ->
-            httpKlient.post("$baseUrl/$søknadUUid") {
-                setBody(
-                    MultiPartFormDataContent(
-                        formData {
-                            appendInput("soknad") { input }
+    internal suspend fun lagrePdf(søknadUUid: String, pdfs: Map<String, ByteArray>): List<URNResponse> =
+        httpKlient.post("$baseUrl/$søknadUUid") {
+            setBody(
+                MultiPartFormDataContent(
+                    formData {
+                        pdfs.forEach {
+                            appendInput("soknad") { it.value.inputStream().asInput() }
                             Headers.build {
-                                append(HttpHeaders.ContentDisposition, "filename=soknad.pdf")
+                                append(HttpHeaders.ContentDisposition, "filename=${it.key}.pdf") // TODO: fiks filnavn
                             }
                         }
-                    )
+                    }
                 )
-            }.body()
-        }
-    }
+            )
+        }.body()
 }
 
-internal data class URNResponse(val urn: String)
+internal data class URNResponse(val filnavn: String, val urn: String)
