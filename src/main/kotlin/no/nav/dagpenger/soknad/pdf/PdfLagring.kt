@@ -6,6 +6,8 @@ import io.ktor.client.engine.HttpClientEngine
 import io.ktor.client.engine.cio.CIO
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.defaultRequest
+import io.ktor.client.plugins.logging.LogLevel
+import io.ktor.client.plugins.logging.Logging
 import io.ktor.client.request.forms.MultiPartFormDataContent
 import io.ktor.client.request.forms.formData
 import io.ktor.client.request.header
@@ -28,6 +30,9 @@ class PdfLagring(
         }
         install(ContentNegotiation) {
             jackson { }
+        }
+        install(Logging) {
+            level = LogLevel.ALL
         }
     }
 
