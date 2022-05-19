@@ -1,5 +1,6 @@
 package no.nav.dagpenger.soknad.html
 
+import no.nav.dagpenger.soknad.pdf.PdfBuilder.lagPdf
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Disabled
@@ -15,7 +16,7 @@ class HtmlBuilderTest {
         assertDoesNotThrow {
             HtmlBuilder.lagBruttoHtml(TestModellHtml.htmlModell).also {
                 File("build/tmp/test/søknad.html").writeText(it)
-                no.nav.dagpenger.soknad.pdf.PdfBuilder.lagPdf(it).also { generertPdf ->
+                lagPdf(it).also { generertPdf ->
                     File("build/tmp/test/søknad.pdf").writeBytes(generertPdf)
                 }
             }
