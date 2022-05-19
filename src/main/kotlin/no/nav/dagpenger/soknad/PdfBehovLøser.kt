@@ -65,7 +65,6 @@ private data class ArkiverbarSøknad(val metainfo: ArkiverbarSøknad.MetaInfo, v
     data class MetaInfo(val innhold: String, val filtype: String = "PDF")
 }
 
-
 private fun List<URNResponse>.løsning(): List<ArkiverbarSøknad> =
     this.map {
         ArkiverbarSøknad(

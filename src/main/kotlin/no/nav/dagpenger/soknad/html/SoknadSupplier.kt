@@ -29,19 +29,20 @@ internal class SoknadSupplier(
         install(ContentNegotiation) {
             jackson { }
         }
-        install(Logging){
+        install(Logging) {
         }
     }
 
     suspend fun hentSoknad(id: UUID, ident: String): HtmlModell {
         return withContext(Dispatchers.IO) {
-            val fakta = async {
-                httpKlient.get("$dpSoknadBaseUrl/$id/fakta").bodyAsText()
-            }
+            val fakta = object {}.javaClass.getResource("/fakta.json")?.readText()!!
+//            val fakta = async {
+//                httpKlient.get("$dpSoknadBaseUrl/$id/fakta").bodyAsText()
+//            }
             val tekst = async {
                 httpKlient.get("$dpSoknadBaseUrl/$id/tekst").bodyAsText()
             }
-            JsonHtmlMapper(søknadsData = fakta.await(), tekst = tekst.await()).parse()
+            JsonHtmlMapper(søknadsData = fakta, tekst = tekst.await()).parse()
         }
     }
 }
