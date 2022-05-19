@@ -9,7 +9,8 @@ import no.nav.dagpenger.soknad.html.TestModellHtml.htmlModell
 import no.nav.helse.rapids_rivers.testsupport.TestRapid
 import org.intellij.lang.annotations.Language
 import org.junit.jupiter.api.Test
-import java.time.LocalDateTime
+import java.time.ZoneId
+import java.time.ZonedDateTime
 import java.util.UUID
 import kotlin.test.assertEquals
 
@@ -82,7 +83,7 @@ internal class PdfBehovLøserTest {
         "@behov": ["ArkiverbarSøknad"],
         "søknad_uuid": "$soknadId",
         "ident": "12345678910",
-        "innsendtTidspunkt": "${LocalDateTime.now()}"
+        "innsendtTidspunkt": "${ZonedDateTime.now(ZoneId.of("Europe/Oslo"))}"
             }
     """.trimIndent()
 
@@ -93,7 +94,6 @@ internal class PdfBehovLøserTest {
         "@løsning": "something",
         "søknad_uuid": "$soknadId",
         "ident": "12345678910",
-        "innsendtTidspunkt": ${LocalDateTime.now()}
-            }
+        "innsendtTidspunkt": "${ZonedDateTime.now(ZoneId.of("Europe/Oslo"))}}"
     """.trimIndent()
 }

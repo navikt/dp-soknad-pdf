@@ -1,5 +1,6 @@
 package no.nav.dagpenger.soknad
 
+import com.fasterxml.jackson.databind.JsonNode
 import kotlinx.coroutines.runBlocking
 import mu.KotlinLogging
 import no.nav.dagpenger.soknad.html.HtmlBuilder
@@ -11,8 +12,8 @@ import no.nav.helse.rapids_rivers.JsonMessage
 import no.nav.helse.rapids_rivers.MessageContext
 import no.nav.helse.rapids_rivers.RapidsConnection
 import no.nav.helse.rapids_rivers.River
-import no.nav.helse.rapids_rivers.asLocalDateTime
 import java.time.LocalDateTime
+import java.time.ZonedDateTime
 import java.util.UUID
 
 internal class PdfBehovLøser(
@@ -74,5 +75,8 @@ private fun List<URNResponse>.løsning(): List<ArkiverbarSøknad> =
     }
 
 private fun JsonMessage.ident() = this["ident"].asText()
-private fun JsonMessage.innsendtTidspunkt(): LocalDateTime = this["innsendtTidspunkt"].asLocalDateTime()
+private fun JsonMessage.innsendtTidspunkt(): LocalDateTime =
+    this["innsendtTidspunkt"].asZonedDateTime().toLocalDateTime()
+
 private fun JsonMessage.søknadUuid(): UUID = this["søknad_uuid"].asText().let { UUID.fromString(it) }
+private fun JsonNode.asZonedDateTime(): ZonedDateTime = asText().let { ZonedDateTime.parse(it) }
