@@ -13,6 +13,7 @@ import io.ktor.client.request.forms.formData
 import io.ktor.client.request.header
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
+import io.ktor.http.ContentType
 import io.ktor.http.Headers
 import io.ktor.http.HttpHeaders
 import io.ktor.serialization.jackson.jackson
@@ -45,6 +46,7 @@ class PdfLagring(
                             appendInput("soknad") { it.value.inputStream().asInput() }
                             Headers.build {
                                 append(HttpHeaders.ContentDisposition, "filename=${it.key}.pdf") // TODO: fiks filnavn
+                                append(HttpHeaders.ContentType, ContentType.Application.Pdf.toString())
                             }
                         }
                     }
