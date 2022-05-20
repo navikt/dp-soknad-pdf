@@ -54,6 +54,8 @@ internal class PdfBehovLøser(
                         søknadUUid = soknadId.toString(),
                         pdfs = pdf
                     ).also {
+                        logg.info { "Svar fra dp-mellomlagring: $it" }
+                        logg.info { "Mappet til packet: ${it.løsning()}" }
                         packet["@løsning"] = mapOf(BEHOV to it.løsning())
                     }
                 }
