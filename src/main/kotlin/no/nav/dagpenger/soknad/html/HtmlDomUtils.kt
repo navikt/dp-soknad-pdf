@@ -10,7 +10,7 @@ import kotlinx.html.meta
 import kotlinx.html.p
 import kotlinx.html.span
 import kotlinx.html.unsafe
-import no.nav.dagpenger.soknad.html.HtmlModell.PdfAKrav
+import no.nav.dagpenger.soknad.html.HtmlModell.PdfAMetaTagger
 import no.nav.dagpenger.soknad.html.HtmlModell.SporsmalSvar
 import no.nav.dagpenger.soknad.html.HtmlModell.SøknadSpråk
 
@@ -27,19 +27,19 @@ internal fun String.xhtmlCompliant() = this
         replacement = "/>"
     )
 
-internal fun HEAD.pdfaMetaTags(pdfAKrav: PdfAKrav) {
+internal fun HEAD.pdfaMetaTags() {
     meta {
         name = "description"
-        content = pdfAKrav.description
+        content = PdfAMetaTagger.description
     }
     meta {
         name = "subject"
-        content = pdfAKrav.subject
+        content = PdfAMetaTagger.subject
     }
 
     meta {
         name = "author"
-        content = pdfAKrav.author
+        content = PdfAMetaTagger.author
     }
 }
 

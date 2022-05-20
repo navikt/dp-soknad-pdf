@@ -5,11 +5,16 @@ import java.time.format.DateTimeFormatter
 
 internal data class HtmlModell(
     val seksjoner: List<Seksjon>,
-    val metaInfo: MetaInfo,
-    val pdfAKrav: PdfAKrav
+    val metaInfo: MetaInfo
 ) {
 
     lateinit var infoBlokk: InfoBlokk
+
+    object PdfAMetaTagger {
+        const val description: String = "Søknad om dagpenger"
+        const val subject: String = "Dagpenger"
+        const val author: String = "NAV"
+    }
 
     data class Seksjon(
         val overskrift: String,
@@ -34,7 +39,6 @@ internal data class HtmlModell(
         val tittel: String = språk.tittel,
     )
 
-    data class PdfAKrav(val description: String, val subject: String, val author: String)
     data class InfoBlokk(val fødselsnummer: String, val innsendtTidspunkt: LocalDateTime) {
         val datoSendt = innsendtTidspunkt.format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"))
     }

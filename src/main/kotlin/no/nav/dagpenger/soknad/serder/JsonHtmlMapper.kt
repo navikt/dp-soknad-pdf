@@ -51,7 +51,6 @@ internal class JsonHtmlMapper(
         return HtmlModell(
             seksjoner = parse(søknadsData),
             metaInfo = HtmlModell.MetaInfo(språk = HtmlModell.SøknadSpråk.BOKMÅL),
-            pdfAKrav = HtmlModell.PdfAKrav(description = "description", subject = "subject", author = "author")
         )
     }
 }
