@@ -4,6 +4,7 @@ import no.nav.dagpenger.soknad.ArkiverbartDokument.DokumentVariant.BRUTTO
 import no.nav.dagpenger.soknad.ArkiverbartDokument.DokumentVariant.NETTO
 import no.nav.dagpenger.soknad.pdf.URNResponse
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
@@ -27,6 +28,18 @@ internal class ArkiverbartDokumentTest {
         assertThrows<IllegalArgumentException> {
             ArkiverbartDokument.brutto("noe som ikke er html")
             ArkiverbartDokument.netto("noe som ikke er html")
+        }
+    }
+
+    @Test
+    fun `legger til URN`() {
+        val urnResponse = listOf(
+            URNResponse("brutto.pdf", "urn:noe:vedlegg:brutto.pdf"),
+            URNResponse("netto.pdf", "urn:noe:vedlegg:netto.pdf")
+        )
+        listOf(nettoTestDokuemnt(), bruttoTestDokuemnt()).leggTilUrn(urnResponse).also { dokumentListe ->
+            assertNotNull(dokumentListe.find { it.variant == NETTO && it.urn.endsWith(":netto.pdf") })
+            assertNotNull(dokumentListe.find { it.variant == BRUTTO && it.urn.endsWith(":brutto.pdf") })
         }
     }
 
