@@ -15,6 +15,8 @@ import io.ktor.http.ContentType
 import io.ktor.http.Headers
 import io.ktor.http.HttpHeaders
 import io.ktor.serialization.jackson.jackson
+import no.nav.dagpenger.soknad.ArkiverbartDokument
+import no.nav.dagpenger.soknad.leggTilUrn
 
 class PdfLagring(
     private val baseUrl: String,
@@ -34,21 +36,23 @@ class PdfLagring(
         }
     }
 
-    internal suspend fun lagrePdf(søknadUUid: String, pdfs: Map<String, ByteArray>): List<URNResponse> =
+    internal suspend fun lagrePdf(søknadUUid: String, arkiverbartDokument: List<ArkiverbartDokument>): List<ArkiverbartDokument> =
         httpKlient.submitFormWithBinaryData(
             url = "$baseUrl/$søknadUUid",
             formData = formData {
-                pdfs.forEach {
+                arkiverbartDokument.forEach {
                     append(
-                        it.key, it.value,
+                        it.filnavn, it.pdfByteSteam,
                         Headers.build {
                             append(HttpHeaders.ContentType, ContentType.Application.Pdf.toString())
-                            append(HttpHeaders.ContentDisposition, "filename=${it.key}.pdf")
+                            append(HttpHeaders.ContentDisposition, "filename=${it.filnavn}")
                         }
                     )
                 }
             }
-        ).body()
+        ).body<List<URNResponse>>().let {
+            arkiverbartDokument.leggTilUrn(it)
+        }
 }
 
 internal data class URNResponse(val filnavn: String, val urn: String)

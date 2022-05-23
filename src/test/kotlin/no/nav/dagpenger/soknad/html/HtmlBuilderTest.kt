@@ -15,7 +15,7 @@ class HtmlBuilderTest {
     fun manuellTest() {
         assertDoesNotThrow {
             HtmlBuilder.lagBruttoHtml(TestModellHtml.htmlModell).also {
-                File("build/tmp/test/søknad.html").writeText(it)
+                File("build/tmp/test/søknad.html").writeText(it.html)
                 lagPdf(it).also { generertPdf ->
                     File("build/tmp/test/søknad.pdf").writeBytes(generertPdf)
                 }
@@ -26,16 +26,16 @@ class HtmlBuilderTest {
     @Test
     fun `lager netto html`() {
         HtmlBuilder.lagNettoHtml(TestModellHtml.htmlModell).also {
-            assertEquals(0, "class=\"infotekst\"".toRegex().findAll(it).count())
-            assertEquals(0, "class=\"hjelpetekst\"".toRegex().findAll(it).count())
-            assertEquals(4, "class=\"seksjon\"".toRegex().findAll(it).count())
+            assertEquals(0, "class=\"infotekst\"".toRegex().findAll(it.html).count())
+            assertEquals(0, "class=\"hjelpetekst\"".toRegex().findAll(it.html).count())
+            assertEquals(4, "class=\"seksjon\"".toRegex().findAll(it.html).count())
             //     File("build/tmp/test/netto.html").writeBytes(it.toByteArray())
         }
     }
 
     @Test
     fun `lager brutto html`() {
-        HtmlBuilder.lagBruttoHtml(TestModellHtml.htmlModell).also {
+        HtmlBuilder.lagBruttoHtml(TestModellHtml.htmlModell).html.also {
             assertEquals(6, "class=\"infotekst\"".toRegex().findAll(it).count())
             assertEquals(6, "class=\"hjelpetekst\"".toRegex().findAll(it).count())
             assertEquals(4, "class=\"seksjon\"".toRegex().findAll(it).count())
@@ -45,10 +45,10 @@ class HtmlBuilderTest {
 
     @Test
     fun `lager brutto og netto html`() {
-        HtmlBuilder.lagBruttoOgNettoHtml(TestModellHtml.htmlModell).also {
-            assertEquals(2, it.size)
-            assertNotNull(it["netto"])
-            assertNotNull(it["brutto"])
+        HtmlBuilder.lagBruttoOgNettoHtml(TestModellHtml.htmlModell).also { arkiverbareDokumenter ->
+            assertEquals(2, arkiverbareDokumenter.size)
+            assertNotNull(arkiverbareDokumenter.single { it.filnavn == "netto.pdf" })
+            assertNotNull(arkiverbareDokumenter.single { it.filnavn == "brutto.pdf" })
         }
     }
 }

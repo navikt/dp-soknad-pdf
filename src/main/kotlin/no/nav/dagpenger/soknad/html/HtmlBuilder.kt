@@ -11,11 +11,12 @@ import kotlinx.html.html
 import kotlinx.html.id
 import kotlinx.html.lang
 import kotlinx.html.title
+import no.nav.dagpenger.soknad.ArkiverbartDokument
 
 internal object HtmlBuilder {
-    fun lagBruttoOgNettoHtml(htmlModell: HtmlModell): Map<String, String> = mapOf("netto" to lagNettoHtml(htmlModell), "brutto" to lagBruttoHtml(htmlModell))
-    fun lagNettoHtml(htmlModell: HtmlModell) = lagHtml(htmlModell, DIV::nettoSeksjon)
-    fun lagBruttoHtml(htmlModell: HtmlModell) = lagHtml(htmlModell, DIV::bruttoSeksjon)
+    fun lagBruttoOgNettoHtml(htmlModell: HtmlModell): List<ArkiverbartDokument> = listOf(lagNettoHtml(htmlModell), lagBruttoHtml(htmlModell))
+    fun lagNettoHtml(htmlModell: HtmlModell) = lagHtml(htmlModell, DIV::nettoSeksjon).let { ArkiverbartDokument.netto(it) }
+    fun lagBruttoHtml(htmlModell: HtmlModell) = lagHtml(htmlModell, DIV::bruttoSeksjon).let { ArkiverbartDokument.brutto(it) }
 
     private fun lagHtml(
         htmlModell: HtmlModell,

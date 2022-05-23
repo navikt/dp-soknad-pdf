@@ -7,6 +7,7 @@ import io.ktor.http.HttpMethod
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.headersOf
 import kotlinx.coroutines.runBlocking
+import no.nav.dagpenger.soknad.ArkiverbartDokument
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
@@ -29,19 +30,25 @@ internal class PdfLagringTest {
             )
         }
         runBlocking {
-            val urnListe = PdfLagring(
+            val dokumentliste = PdfLagring(
                 baseUrl = "http://dp-mellomlagring/v1/azuread/ve",
                 tokenSupplier = { "token" },
                 engine = mockEngine
-            ).lagrePdf("uuud", mapOf("soknad" to "".toByteArray()))
-
-            assertEquals(
+            ).lagrePdf(
+                "uuid",
                 listOf(
-                    URNResponse("netto.pdf", urn = "urn:vedlegg:id/netto.pdf"),
-                    URNResponse("brutto.pdf", urn = "urn:vedlegg:id/brutto.pdf")
-                ),
-                urnListe
+                    ArkiverbartDokument.netto("<!DOCTYPE html>").apply { pdfByteSteam = "søknad".toByteArray() },
+                    ArkiverbartDokument.brutto("<!DOCTYPE html>").apply { pdfByteSteam = "søknad".toByteArray() }
+                )
             )
+            dokumentliste.single { it.variant == ArkiverbartDokument.DokumentVariant.BRUTTO }.also {
+                assertEquals("brutto.pdf", it.filnavn)
+                assertEquals("urn:vedlegg:id/brutto.pdf", it.urn)
+            }
+            dokumentliste.single { it.variant == ArkiverbartDokument.DokumentVariant.NETTO }.also {
+                assertEquals("netto.pdf", it.filnavn)
+                assertEquals("urn:vedlegg:id/netto.pdf", it.urn)
+            }
         }
     }
 }

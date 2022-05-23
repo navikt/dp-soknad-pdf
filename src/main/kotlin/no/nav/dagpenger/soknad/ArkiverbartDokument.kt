@@ -2,19 +2,20 @@ package no.nav.dagpenger.soknad
 
 import no.nav.dagpenger.soknad.pdf.URNResponse
 
-internal class ArkiverbartDokument private constructor(val variant: DokumentVariant) {
+internal class ArkiverbartDokument private constructor(val variant: DokumentVariant, html: String) {
     internal val filnavn = "${variant.name.lowercase()}.pdf"
-    private lateinit var htmlModell: String
+    lateinit var pdfByteSteam: ByteArray
+    internal val html: String
     internal lateinit var urn: String
 
-    internal fun htmlModell(model: String) {
-        require(model.startsWith("<!DOCTYPE html>")) { "modell-string må inneholde HTML" }
-        this.htmlModell = model
+    init {
+        require(html.startsWith("<!DOCTYPE html>")) { "stringen må inneholde HTML" }
+        this.html = html
     }
 
     companion object {
-        internal fun netto(html: String) = ArkiverbartDokument(DokumentVariant.NETTO).apply { htmlModell(html) }
-        internal fun brutto(html: String) = ArkiverbartDokument(DokumentVariant.BRUTTO).apply { htmlModell(html) }
+        internal fun netto(generertHtml: String) = ArkiverbartDokument(DokumentVariant.NETTO, generertHtml)
+        internal fun brutto(generertHtml: String) = ArkiverbartDokument(DokumentVariant.BRUTTO, generertHtml)
     }
 
     enum class DokumentVariant {
