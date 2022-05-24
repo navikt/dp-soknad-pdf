@@ -1,5 +1,9 @@
 package no.nav.dagpenger.soknad
 
+import no.nav.dagpenger.soknad.html.HtmlBuilder
+import no.nav.dagpenger.soknad.html.InnsendtSøknad
+import no.nav.dagpenger.soknad.pdf.PdfBuilder
+
 internal class ArkiverbartDokument private constructor(val variant: DokumentVariant, val pdf: ByteArray) {
     internal val filnavn = "${variant.name.lowercase()}.pdf"
 
@@ -18,3 +22,12 @@ internal class LagretDokument(
     val variant: ArkiverbartDokument.DokumentVariant,
     val filnavn: String
 )
+
+internal fun lagArkiverbartDokument(innsendSøknad: InnsendtSøknad): List<ArkiverbartDokument> {
+    return listOf(
+        ArkiverbartDokument.netto(HtmlBuilder.lagNettoHtml(innsendSøknad).let { PdfBuilder.lagPdf(it) }),
+        ArkiverbartDokument.brutto(
+            HtmlBuilder.lagBruttoHtml(innsendSøknad).let { PdfBuilder.lagPdf(it) }
+        )
+    )
+}

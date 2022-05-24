@@ -10,9 +10,9 @@ import kotlinx.html.meta
 import kotlinx.html.p
 import kotlinx.html.span
 import kotlinx.html.unsafe
-import no.nav.dagpenger.soknad.html.HtmlModell.PdfAMetaTagger
-import no.nav.dagpenger.soknad.html.HtmlModell.SporsmalSvar
-import no.nav.dagpenger.soknad.html.HtmlModell.SøknadSpråk
+import no.nav.dagpenger.soknad.html.InnsendtSøknad.PdfAMetaTagger
+import no.nav.dagpenger.soknad.html.InnsendtSøknad.SporsmalSvar
+import no.nav.dagpenger.soknad.html.InnsendtSøknad.SøknadSpråk
 
 internal fun String.xhtmlCompliant() = this
     .replace("&oslash;", "ø")
@@ -43,7 +43,7 @@ internal fun HEAD.pdfaMetaTags() {
     }
 }
 
-internal fun HEAD.bookmarks(seksjoner: List<HtmlModell.Seksjon>) {
+internal fun HEAD.bookmarks(seksjoner: List<InnsendtSøknad.Seksjon>) {
 // TODO: Språktilpassning på statiske bokmerker
     val seksjonBokmerker = seksjoner.map {
         """<bookmark name = "${it.overskrift}" href="#${seksjonId(it.overskrift)}"></bookmark>"""
@@ -70,7 +70,7 @@ internal fun DIV.boldSpanP(boldTekst: String, vanligTekst: String) {
     }
 }
 
-internal fun DIV.nettoSeksjon(seksjon: HtmlModell.Seksjon, språk: SøknadSpråk) {
+internal fun DIV.nettoSeksjon(seksjon: InnsendtSøknad.Seksjon, språk: SøknadSpråk) {
     id = seksjonId(seksjon.overskrift)
     h2 { +seksjon.overskrift }
     seksjon.spmSvar.forEach { nettoSpørsmål(it, språk) }
@@ -86,7 +86,7 @@ private fun DIV.nettoSpørsmål(spmSvar: SporsmalSvar, språk: SøknadSpråk) {
     }
 }
 
-internal fun DIV.bruttoSeksjon(seksjon: HtmlModell.Seksjon, språk: SøknadSpråk) {
+internal fun DIV.bruttoSeksjon(seksjon: InnsendtSøknad.Seksjon, språk: SøknadSpråk) {
     id = seksjonId(seksjon.overskrift)
     h2 { +seksjon.overskrift }
     seksjon.beskrivelse?.also { p(classes = "infotekst") { +seksjon.beskrivelse } }

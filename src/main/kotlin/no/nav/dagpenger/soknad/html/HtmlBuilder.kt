@@ -13,34 +13,34 @@ import kotlinx.html.lang
 import kotlinx.html.title
 
 internal object HtmlBuilder {
-    fun lagNettoHtml(htmlModell: HtmlModell) = lagHtml(htmlModell, DIV::nettoSeksjon)
-    fun lagBruttoHtml(htmlModell: HtmlModell) = lagHtml(htmlModell, DIV::bruttoSeksjon)
+    fun lagNettoHtml(innsendtSøknad: InnsendtSøknad) = lagHtml(innsendtSøknad, DIV::nettoSeksjon)
+    fun lagBruttoHtml(innsendtSøknad: InnsendtSøknad) = lagHtml(innsendtSøknad, DIV::bruttoSeksjon)
 
     private fun lagHtml(
-        htmlModell: HtmlModell,
-        seksjonFunksjon: DIV.(HtmlModell.Seksjon, HtmlModell.SøknadSpråk) -> Unit = DIV::nettoSeksjon
+        innsendtSøknad: InnsendtSøknad,
+        seksjonFunksjon: DIV.(InnsendtSøknad.Seksjon, InnsendtSøknad.SøknadSpråk) -> Unit = DIV::nettoSeksjon
     ): String {
-        val språk = htmlModell.metaInfo.språk
+        val språk = innsendtSøknad.metaInfo.språk
         return createHTMLDocument().html {
             lang = språk.langAtributt
             head {
-                title(htmlModell.metaInfo.tittel)
+                title(innsendtSøknad.metaInfo.tittel)
                 pdfaMetaTags()
                 fontimports()
-                bookmarks(htmlModell.seksjoner)
+                bookmarks(innsendtSøknad.seksjoner)
                 søknadPdfStyle()
             }
             body {
                 h1 {
                     id = "hovedoverskrift"
-                    +htmlModell.metaInfo.hovedOverskrift
+                    +innsendtSøknad.metaInfo.hovedOverskrift
                 }
                 div(classes = "infoblokk") {
                     id = "infoblokk"
-                    boldSpanP(boldTekst = språk.fødselsnummer, vanligTekst = htmlModell.infoBlokk.fødselsnummer)
-                    boldSpanP(boldTekst = språk.datoSendt, vanligTekst = htmlModell.infoBlokk.datoSendt)
+                    boldSpanP(boldTekst = språk.fødselsnummer, vanligTekst = innsendtSøknad.infoBlokk.fødselsnummer)
+                    boldSpanP(boldTekst = språk.datoSendt, vanligTekst = innsendtSøknad.infoBlokk.datoSendt)
                 }
-                htmlModell.seksjoner.forEach { seksjon ->
+                innsendtSøknad.seksjoner.forEach { seksjon ->
                     div(classes = "seksjon") {
                         seksjonFunksjon(seksjon, språk)
                     }

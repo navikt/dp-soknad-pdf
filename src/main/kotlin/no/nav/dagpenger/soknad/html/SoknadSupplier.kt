@@ -33,7 +33,7 @@ internal class SoknadSupplier(
         }
     }
 
-    suspend fun hentSoknad(id: UUID, ident: String): HtmlModell {
+    suspend fun hentSoknad(id: UUID, ident: String): InnsendtSøknad {
         return withContext(Dispatchers.IO) {
             val fakta = object {}.javaClass.getResource("/fakta.json")?.readText()!!
 //            val fakta = async {

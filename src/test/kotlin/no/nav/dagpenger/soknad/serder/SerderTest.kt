@@ -1,7 +1,7 @@
 package no.nav.dagpenger.soknad.serder
 
 import no.nav.dagpenger.soknad.html.HtmlBuilder
-import no.nav.dagpenger.soknad.html.HtmlModell
+import no.nav.dagpenger.soknad.html.InnsendtSøknad
 import no.nav.dagpenger.soknad.pdf.PdfBuilder
 import no.nav.dagpenger.soknad.serder.Oppslag.TekstObjekt.FaktaTekstObjekt
 import no.nav.dagpenger.soknad.serder.Oppslag.TekstObjekt.SeksjonTekstObjekt
@@ -47,9 +47,9 @@ internal class SerderTest {
             val h = JsonHtmlMapper(
                 søknadsData = faktaJson,
                 tekst = tekstJson,
-                språk = HtmlModell.SøknadSpråk.BOKMÅL
+                språk = InnsendtSøknad.SøknadSpråk.BOKMÅL
             ).parse().apply {
-                infoBlokk = HtmlModell.InfoBlokk("ident", innsendtTidspunkt = LocalDateTime.now())
+                infoBlokk = InnsendtSøknad.InfoBlokk("ident", innsendtTidspunkt = LocalDateTime.now())
             }
             HtmlBuilder.lagBruttoHtml(h).also {
                 File("build/tmp/test/søknad2.html").writeText(it)

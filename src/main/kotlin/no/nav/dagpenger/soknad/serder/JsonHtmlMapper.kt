@@ -2,20 +2,20 @@ package no.nav.dagpenger.soknad.serder
 
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import no.nav.dagpenger.soknad.html.HtmlModell
+import no.nav.dagpenger.soknad.html.InnsendtSøknad
 
 internal class JsonHtmlMapper(
     private val søknadsData: String,
     tekst: String,
-    private val språk: HtmlModell.SøknadSpråk = HtmlModell.SøknadSpråk.BOKMÅL
+    private val språk: InnsendtSøknad.SøknadSpråk = InnsendtSøknad.SøknadSpråk.BOKMÅL
 ) {
     private val oppslag = Oppslag(tekst)
     private val objectMapper = jacksonObjectMapper()
 
-    private fun parse(søknadsData: String): List<HtmlModell.Seksjon> {
+    private fun parse(søknadsData: String): List<InnsendtSøknad.Seksjon> {
         return objectMapper.readTree(søknadsData)["seksjoner"].map {
             val tekstObjekt = oppslag.lookup(it["beskrivendeId"].asText()) as Oppslag.TekstObjekt.SeksjonTekstObjekt
-            HtmlModell.Seksjon(
+            InnsendtSøknad.Seksjon(
                 overskrift = tekstObjekt.title,
                 beskrivelse = tekstObjekt.description,
                 hjelpetekst = tekstObjekt.helpText(),
@@ -34,10 +34,10 @@ internal class JsonHtmlMapper(
         }
     }
 
-    private fun JsonNode.fakta(): List<HtmlModell.SporsmalSvar> {
+    private fun JsonNode.fakta(): List<InnsendtSøknad.SporsmalSvar> {
         return this["fakta"].map { node ->
             val tekstObjekt = oppslag.lookup(node["beskrivendeId"].asText()) as Oppslag.TekstObjekt.FaktaTekstObjekt
-            HtmlModell.SporsmalSvar(
+            InnsendtSøknad.SporsmalSvar(
                 sporsmal = tekstObjekt.text,
                 svar = node.svar(),
                 beskrivelse = tekstObjekt.description,
@@ -47,14 +47,14 @@ internal class JsonHtmlMapper(
         }
     }
 
-    fun parse(): HtmlModell {
-        return HtmlModell(
+    fun parse(): InnsendtSøknad {
+        return InnsendtSøknad(
             seksjoner = parse(søknadsData),
-            metaInfo = HtmlModell.MetaInfo(språk = HtmlModell.SøknadSpråk.BOKMÅL),
+            metaInfo = InnsendtSøknad.MetaInfo(språk = InnsendtSøknad.SøknadSpråk.BOKMÅL),
         )
     }
 }
 
-private fun Oppslag.TekstObjekt.helpText(): HtmlModell.Hjelpetekst? {
-    return this.helpText?.let { HtmlModell.Hjelpetekst(it.body, it.title) }
+private fun Oppslag.TekstObjekt.helpText(): InnsendtSøknad.Hjelpetekst? {
+    return this.helpText?.let { InnsendtSøknad.Hjelpetekst(it.body, it.title) }
 }

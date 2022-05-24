@@ -3,7 +3,7 @@ package no.nav.dagpenger.soknad.html
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-internal data class HtmlModell(
+internal data class InnsendtSøknad(
     val seksjoner: List<Seksjon>,
     val metaInfo: MetaInfo
 ) {

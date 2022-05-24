@@ -3,7 +3,7 @@ package no.nav.dagpenger.soknad
 import com.fasterxml.jackson.databind.JsonNode
 import kotlinx.coroutines.runBlocking
 import mu.KotlinLogging
-import no.nav.dagpenger.soknad.html.HtmlModell
+import no.nav.dagpenger.soknad.html.InnsendtSøknad
 import no.nav.dagpenger.soknad.pdf.PdfLagring
 import no.nav.helse.rapids_rivers.JsonMessage
 import no.nav.helse.rapids_rivers.MessageContext
@@ -16,7 +16,7 @@ import java.util.UUID
 internal class PdfBehovLøser(
     rapidsConnection: RapidsConnection,
     private val pdfLagring: PdfLagring,
-    private val soknadSupplier: suspend (soknadId: UUID, ident: String) -> HtmlModell,
+    private val soknadSupplier: suspend (soknadId: UUID, ident: String) -> InnsendtSøknad,
 ) : River.PacketListener {
     companion object {
         private val logg = KotlinLogging.logger {}
@@ -40,9 +40,9 @@ internal class PdfBehovLøser(
             soknadSupplier(soknadId, ident)
                 .apply {
                     infoBlokk =
-                        HtmlModell.InfoBlokk(fødselsnummer = ident, innsendtTidspunkt = packet.innsendtTidspunkt())
+                        InnsendtSøknad.InfoBlokk(fødselsnummer = ident, innsendtTidspunkt = packet.innsendtTidspunkt())
                 }
-                .let { Hubba.hubba(it) }
+                .let { lagArkiverbartDokument(it) }
                 .let { dokumenter ->
                     pdfLagring.lagrePdf(
                         søknadUUid = soknadId.toString(),
