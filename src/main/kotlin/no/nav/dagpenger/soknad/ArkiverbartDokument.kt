@@ -1,21 +1,11 @@
 package no.nav.dagpenger.soknad
 
-import no.nav.dagpenger.soknad.pdf.URNResponse
-
-internal class ArkiverbartDokument private constructor(val variant: DokumentVariant, html: String) {
+internal class ArkiverbartDokument private constructor(val variant: DokumentVariant, val pdf: ByteArray) {
     internal val filnavn = "${variant.name.lowercase()}.pdf"
-    lateinit var pdfByteSteam: ByteArray
-    internal val html: String
-    internal lateinit var urn: String
-
-    init {
-        require(html.startsWith("<!DOCTYPE html>")) { "stringen må inneholde HTML" }
-        this.html = html
-    }
 
     companion object {
-        internal fun netto(generertHtml: String) = ArkiverbartDokument(DokumentVariant.NETTO, generertHtml)
-        internal fun brutto(generertHtml: String) = ArkiverbartDokument(DokumentVariant.BRUTTO, generertHtml)
+        internal fun netto(pdf: ByteArray) = ArkiverbartDokument(DokumentVariant.NETTO, pdf)
+        internal fun brutto(pdf: ByteArray) = ArkiverbartDokument(DokumentVariant.BRUTTO, pdf)
     }
 
     enum class DokumentVariant {
@@ -23,11 +13,8 @@ internal class ArkiverbartDokument private constructor(val variant: DokumentVari
     }
 }
 
-internal fun List<ArkiverbartDokument>.leggTilUrn(urnResponse: List<URNResponse>): List<ArkiverbartDokument> {
-    urnResponse.forEach { response ->
-        single { dokument ->
-            response.filnavn == dokument.filnavn
-        }.apply { urn = response.urn }
-    }
-    return this
-}
+internal class LagretDokument(
+    val urn: String,
+    val variant: ArkiverbartDokument.DokumentVariant,
+    val filnavn: String
+)

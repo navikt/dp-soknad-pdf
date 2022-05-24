@@ -3,9 +3,7 @@ package no.nav.dagpenger.soknad
 import com.fasterxml.jackson.databind.JsonNode
 import kotlinx.coroutines.runBlocking
 import mu.KotlinLogging
-import no.nav.dagpenger.soknad.html.HtmlBuilder
 import no.nav.dagpenger.soknad.html.HtmlModell
-import no.nav.dagpenger.soknad.pdf.PdfBuilder
 import no.nav.dagpenger.soknad.pdf.PdfLagring
 import no.nav.helse.rapids_rivers.JsonMessage
 import no.nav.helse.rapids_rivers.MessageContext
@@ -14,14 +12,11 @@ import no.nav.helse.rapids_rivers.River
 import java.time.LocalDateTime
 import java.time.ZonedDateTime
 import java.util.UUID
-import kotlin.reflect.KFunction1
 
 internal class PdfBehovLøser(
     rapidsConnection: RapidsConnection,
-    private val pdfBuilder: PdfBuilder,
     private val pdfLagring: PdfLagring,
     private val soknadSupplier: suspend (soknadId: UUID, ident: String) -> HtmlModell,
-    private val htmlBuilder: KFunction1<HtmlModell, List<ArkiverbartDokument>> = HtmlBuilder::lagBruttoOgNettoHtml
 ) : River.PacketListener {
     companion object {
         private val logg = KotlinLogging.logger {}
@@ -47,12 +42,7 @@ internal class PdfBehovLøser(
                     infoBlokk =
                         HtmlModell.InfoBlokk(fødselsnummer = ident, innsendtTidspunkt = packet.innsendtTidspunkt())
                 }
-                .let(htmlBuilder)
-                .apply {
-                    forEach { dokument ->
-                        dokument.pdfByteSteam = pdfBuilder.lagPdf(dokument)
-                    }
-                }
+                .let { Hubba.hubba(it) }
                 .let { dokumenter ->
                     pdfLagring.lagrePdf(
                         søknadUUid = soknadId.toString(),
@@ -68,7 +58,7 @@ internal class PdfBehovLøser(
     }
 }
 
-private fun List<ArkiverbartDokument>.behovSvar(): List<BehovSvar> = this.map {
+private fun List<LagretDokument>.behovSvar(): List<BehovSvar> = this.map {
     BehovSvar(
         urn = it.urn,
         metainfo = BehovSvar.MetaInfo(

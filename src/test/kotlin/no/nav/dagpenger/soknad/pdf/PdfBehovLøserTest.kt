@@ -4,10 +4,11 @@ import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import io.mockk.coEvery
 import io.mockk.mockk
-import no.nav.dagpenger.soknad.ArkiverbartDokument
+import no.nav.dagpenger.soknad.ArkiverbartDokument.DokumentVariant.BRUTTO
+import no.nav.dagpenger.soknad.ArkiverbartDokument.DokumentVariant.NETTO
+import no.nav.dagpenger.soknad.LagretDokument
 import no.nav.dagpenger.soknad.PdfBehovLøser
 import no.nav.dagpenger.soknad.html.TestModellHtml.htmlModell
-import no.nav.dagpenger.soknad.leggTilUrn
 import no.nav.helse.rapids_rivers.testsupport.TestRapid
 import org.intellij.lang.annotations.Language
 import org.junit.jupiter.api.Test
@@ -22,7 +23,6 @@ internal class PdfBehovLøserTest {
     val testRapid = TestRapid().also {
         PdfBehovLøser(
             rapidsConnection = it,
-            pdfBuilder = PdfBuilder,
             pdfLagring = mockk<PdfLagring>().also {
                 coEvery {
                     it.lagrePdf(
@@ -30,13 +30,8 @@ internal class PdfBehovLøserTest {
                         any()
                     )
                 } returns listOf(
-                    ArkiverbartDokument.netto("<!DOCTYPE html>"),
-                    ArkiverbartDokument.brutto("<!DOCTYPE html>")
-                ).leggTilUrn(
-                    listOf(
-                        URNResponse("brutto.pdf", "urn:vedlegg:soknadId/brutto.pdf"),
-                        URNResponse("netto.pdf", "urn:vedlegg:soknadId/netto.pdf")
-                    )
+                    LagretDokument("urn:vedlegg:soknadId/netto.pdf", NETTO, "netto.pdf"),
+                    LagretDokument("urn:vedlegg:soknadId/brutto.pdf", BRUTTO, "brutto.pdf"),
                 )
             },
             soknadSupplier = { _, _ -> htmlModell },

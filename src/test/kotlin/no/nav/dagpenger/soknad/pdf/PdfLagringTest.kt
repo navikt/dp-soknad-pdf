@@ -37,8 +37,8 @@ internal class PdfLagringTest {
             ).lagrePdf(
                 "uuid",
                 listOf(
-                    ArkiverbartDokument.netto("<!DOCTYPE html>").apply { pdfByteSteam = "søknad".toByteArray() },
-                    ArkiverbartDokument.brutto("<!DOCTYPE html>").apply { pdfByteSteam = "søknad".toByteArray() }
+                    ArkiverbartDokument.netto("<!DOCTYPE html>".toByteArray()),
+                    ArkiverbartDokument.brutto("<!DOCTYPE html>".toByteArray())
                 )
             )
             dokumentliste.single { it.variant == ArkiverbartDokument.DokumentVariant.BRUTTO }.also {

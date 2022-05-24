@@ -52,7 +52,7 @@ internal class SerderTest {
                 infoBlokk = HtmlModell.InfoBlokk("ident", innsendtTidspunkt = LocalDateTime.now())
             }
             HtmlBuilder.lagBruttoHtml(h).also {
-                File("build/tmp/test/søknad2.html").writeText(it.html)
+                File("build/tmp/test/søknad2.html").writeText(it)
                 PdfBuilder.lagPdf(it).also { generertPdf ->
                     File("build/tmp/test/søknad2.pdf").writeBytes(generertPdf)
                 }
