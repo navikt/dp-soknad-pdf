@@ -56,11 +56,11 @@ dependencies {
     val openHtmlToPdfVersion = "1.0.10"
     implementation(kotlin("stdlib"))
 
-    implementation("com.github.navikt:rapids-and-rivers:2022.05.02-13.49.ee057492fb1a")
+    implementation(RapidAndRiversKtor2)
 
     implementation(Konfig.konfig)
     implementation(Kotlin.Logging.kotlinLogging)
-    implementation("com.github.navikt.dp-biblioteker:oauth2-klient:2022.05.02-14.21.f4e9d6da3fa8")
+    implementation("com.github.navikt.dp-biblioteker:oauth2-klient:2022.05.30-09.37.623ee13a49dd")
     implementation(Ktor2.Client.library("logging"))
     implementation(Ktor2.Client.library("cio"))
     implementation(Ktor2.Client.library("content-negotiation"))
