@@ -29,6 +29,10 @@
           "title": "Hjelpetekst med overskrift",
           "body": "Og her forklares det enda litt mer hva ja eller nei betyr.I dette tilfellet betyr ja JA!(altså at du roper ja!) og nei NEI!(altså at du roper nei!) "
         }
+      },
+      {
+        "textId": "faktum.type-arbeidstid",
+        "text": "Her blir det spurt om å oppgi ett tall, hvilket tall velger du?"
       }
     ],
     "seksjoner": [

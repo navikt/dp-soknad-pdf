@@ -7,7 +7,7 @@ import no.nav.dagpenger.soknad.html.InnsendtSøknad
 internal class JsonHtmlMapper(
     private val søknadsData: String,
     tekst: String,
-    private val språk: InnsendtSøknad.SøknadSpråk = InnsendtSøknad.SøknadSpråk.BOKMÅL
+    private val språk: InnsendtSøknad.SøknadSpråk = InnsendtSøknad.SøknadSpråk.BOKMÅL,
 ) {
     private val oppslag = Oppslag(tekst)
     private val objectMapper = jacksonObjectMapper()
@@ -30,6 +30,7 @@ internal class JsonHtmlMapper(
             "string" -> this["svar"].asText()
             "boolean" -> språk.boolean(this["svar"].asBoolean())
             "generator" -> "generator"
+            "envalg" -> (oppslag.lookup(this["svar"].asText()) as Oppslag.TekstObjekt.SvaralternativTekstObjekt).text
             else -> throw IllegalArgumentException("hubba")
         }
     }
