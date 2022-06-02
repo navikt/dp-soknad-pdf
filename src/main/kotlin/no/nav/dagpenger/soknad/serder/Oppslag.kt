@@ -10,7 +10,7 @@ internal class Oppslag(tekstJson: String) {
 
     private fun parse(tekstJson: String): Map<String, TekstObjekt> =
         objectMapper.readTree(tekstJson).let {
-            it.tilFaktaTekstObjekt() + it.tilSeksjonTekstObjekt()
+            it.tilFaktaTekstObjekt() + it.tilSeksjonTekstObjekt() + it.tilSvarAlternativTekstObjekt()
         }
 
     private fun JsonNode.tilFaktaTekstObjekt(): Map<String, TekstObjekt> {
@@ -42,6 +42,19 @@ internal class Oppslag(tekstJson: String) {
         return map
     }
 
+    private fun JsonNode.tilSvarAlternativTekstObjekt(): Map<String, TekstObjekt> {
+        val map = mutableMapOf<String, TekstObjekt>()
+        svaralternativer().forEach { tekst ->
+            val textId = tekst["textId"].asText()
+            map[textId] = TekstObjekt.SvaralternativTekstObjekt(
+                textId = textId,
+                text = tekst["text"].asText(),
+                alertText = null
+            )
+        }
+        return map
+    }
+
     sealed class TekstObjekt(val textId: String, val description: String?, val helpText: HelpText?) {
 
         class FaktaTekstObjekt(
@@ -60,6 +73,16 @@ internal class Oppslag(tekstJson: String) {
             helpText: HelpText? = null,
         ) : TekstObjekt(textId, description, helpText)
 
+        /*
+                export interface SanityAlertText {
+                    title?: string;
+                    type: "info" | "warning" | "error" | "success";
+                    body: string;
+                }*/
+        class SvaralternativTekstObjekt(val text: String, val alertText: AlertText?, textId: String) :
+            TekstObjekt(textId, null, null)
+
+        class AlertText(val title: String, type: String, body: String)
         class HelpText(val title: String?, val body: String)
     }
 }
@@ -68,5 +91,7 @@ private fun JsonNode.helpText(): Oppslag.TekstObjekt.HelpText? =
     get("helpText")?.let {
         Oppslag.TekstObjekt.HelpText(it.get("title")?.asText(), it.get("body").asText())
     }
+
 private fun JsonNode.seksjoner() = this["SanityTexts"]["seksjoner"]
+private fun JsonNode.svaralternativer() = this["SanityTexts"]["svaralternativer"]
 private fun JsonNode.fakta() = this["SanityTexts"]["fakta"]

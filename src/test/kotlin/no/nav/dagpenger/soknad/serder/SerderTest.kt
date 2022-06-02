@@ -39,6 +39,15 @@ internal class SerderTest {
             assertEquals("Hjelpetekst", it.helpText?.body)
             assertNull(it.description)
         }
+
+        oppslag.lookup("svaralternativ1").also {
+            require(it is Oppslag.TekstObjekt.SvaralternativTekstObjekt)
+            assertEquals("svaralternativ1", it.textId)
+            assertEquals(
+                "Vet ikke helt hva dte her skal brukes til enda, men gjetter på at vi finner det ut",
+                it.text
+            )
+        }
     }
 
     @Test
