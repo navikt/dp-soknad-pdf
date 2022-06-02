@@ -52,6 +52,23 @@
             "faktum.type-arbeidstid.svar.kombinasjon",
             "faktum.type-arbeidstid.svar.ingen-passer"
           ]
+        },
+        {
+          "id": "7",
+          "type": "flervalg",
+          "beskrivendeId": "flervalg7",
+          "roller": [
+            "søker"
+          ],
+          "svar": [
+            "flervalg1",
+            "flervalg2"
+          ],
+          "gyldigeValg": [
+            "flervalg1",
+            "flervalg2",
+            "flervalg3"
+          ]
         }
       ]
     },

@@ -25,10 +25,11 @@ internal data class InnsendtSøknad(
 
     data class SporsmalSvar(
         val sporsmal: String,
-        val svar: String,
+        val svar: String?,
         val beskrivelse: String? = null,
         val hjelpetekst: Hjelpetekst? = null,
-        val oppfølgingspørmål: List<SporsmalSvar>? = null
+        val oppfølgingspørmål: List<SporsmalSvar>? = null,
+        val flereSvar: List<String> = listOf()
     )
 
     data class Hjelpetekst(val tekst: String, val tittel: String? = null)

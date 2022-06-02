@@ -25,13 +25,23 @@ internal class JsonHtmlMapper(
     }
 
     // TODO andre fakatyper
-    private fun JsonNode.svar(): String {
+    private fun JsonNode.svar(): String? {
         return when (this["type"].asText()) {
             "string" -> this["svar"].asText()
             "boolean" -> språk.boolean(this["svar"].asBoolean())
             "generator" -> "generator"
             "envalg" -> (oppslag.lookup(this["svar"].asText()) as Oppslag.TekstObjekt.SvaralternativTekstObjekt).text
-            else -> throw IllegalArgumentException("hubba")
+            "flervalg" -> null
+            else -> throw IllegalArgumentException("Ukjent faktumtype")
+        }
+    }
+
+    private fun JsonNode.flerValg(): List<String> {
+        return when (this["type"].asText()) {
+            "flervalg" -> this["svar"].toList().map {
+                (oppslag.lookup(it.asText()) as Oppslag.TekstObjekt.SvaralternativTekstObjekt).text
+            }
+            else -> emptyList()
         }
     }
 
@@ -43,7 +53,8 @@ internal class JsonHtmlMapper(
                 svar = node.svar(),
                 beskrivelse = tekstObjekt.description,
                 hjelpetekst = tekstObjekt.helpText(),
-                oppfølgingspørmål = listOf()
+                oppfølgingspørmål = listOf(),
+                flereSvar = node.flerValg()
             )
         }
     }
