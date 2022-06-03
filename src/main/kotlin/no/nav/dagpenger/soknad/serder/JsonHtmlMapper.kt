@@ -7,7 +7,6 @@ import no.nav.dagpenger.soknad.html.InnsendtSøknad
 import no.nav.dagpenger.soknad.html.InnsendtSøknad.EnkeltSvar
 import no.nav.dagpenger.soknad.html.InnsendtSøknad.Svar
 import no.nav.helse.rapids_rivers.asLocalDate
-import no.nav.helse.rapids_rivers.asLocalDateTime
 import java.time.format.DateTimeFormatter
 
 internal class JsonHtmlMapper(
@@ -46,13 +45,37 @@ internal class JsonHtmlMapper(
         }
     }
 
-    private fun JsonNode.flerValg(): List<String> {
+    private fun JsonNode.flerValg(): List<InnsendtSøknad.SvarAlternativ> {
         return when (this["type"].asText()) {
-            "flervalg" -> this["svar"].toList().map {
-                (oppslag.lookup(it.asText()) as Oppslag.TekstObjekt.SvaralternativTekstObjekt).text
+            "flervalg" -> this["svar"].toList().map { jsonNode ->
+                val jsonAlternativ =
+                    (oppslag.lookup(jsonNode.asText()) as Oppslag.TekstObjekt.SvaralternativTekstObjekt)
+                InnsendtSøknad.SvarAlternativ(
+                    jsonAlternativ.text,
+                    alertText(jsonAlternativ)
+                )
             }
             else -> emptyList()
         }
+    }
+
+    private fun alertText(tekstObjekt: Oppslag.TekstObjekt.SvaralternativTekstObjekt): InnsendtSøknad.InfoTekst? {
+        return tekstObjekt.alertText?.let { alerttext ->
+            infoTypefraSanityJson(typenøkkel = alerttext.type)?.let { infotype ->
+                InnsendtSøknad.InfoTekst(
+                    tittel = alerttext.title,
+                    tekst = alerttext.body,
+                    type = infotype
+                )
+            }
+        }
+    }
+    private fun infoTypefraSanityJson(typenøkkel: String) = when (typenøkkel) {
+        "info" -> InnsendtSøknad.Infotype.INFORMASJON
+        "error" -> InnsendtSøknad.Infotype.FEIL
+        "warning" -> InnsendtSøknad.Infotype.ADVARSEL
+        "success" -> null
+        else -> { throw IllegalArgumentException("ukjent alerttekst type $typenøkkel") }
     }
 
     private fun JsonNode.generatorfakta(): List<InnsendtSøknad.SpørmsålOgSvarGruppe> {

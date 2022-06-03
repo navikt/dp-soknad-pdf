@@ -35,10 +35,12 @@ internal data class InnsendtSøknad(
 
     sealed class Svar
     data class EnkeltSvar(val tekst: String) : Svar()
-    data class FlerSvar(val tekster: List<String>) : Svar()
+    data class FlerSvar(val alternativ: List<SvarAlternativ>) : Svar()
+    data class SvarAlternativ(val tekst: String, val tilleggsinformasjon: InfoTekst?)
     object IngenSvar : Svar()
 
     data class Hjelpetekst(val tekst: String, val tittel: String? = null)
+    data class InfoTekst(val tittel: String?, val tekst: String, val type: Infotype)
 
     data class MetaInfo(
         val språk: SøknadSpråk = SøknadSpråk.BOKMÅL,
@@ -48,6 +50,11 @@ internal data class InnsendtSøknad(
 
     data class InfoBlokk(val fødselsnummer: String, val innsendtTidspunkt: LocalDateTime) {
         val datoSendt = innsendtTidspunkt.format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"))
+    }
+
+    enum class Infotype() {
+//        "info" | "warning" | "error" | "success";
+        INFORMASJON, ADVARSEL, FEIL
     }
 
     enum class SøknadSpråk(

@@ -80,10 +80,10 @@ internal fun DIV.boldSpanP(boldTekst: String, svar: InnsendtSøknad.EnkeltSvar) 
 }
 
 internal fun DIV.boldSpanP(boldTekst: String, svar: InnsendtSøknad.FlerSvar) {
-    if (svar.tekster.isNotEmpty()) {
+    if (svar.alternativ.isNotEmpty()) {
         ul {
-            svar.tekster.forEach {
-                li { +it }
+            svar.alternativ.forEach {
+                li { +it.tekst }
             }
         }
     }

@@ -2,9 +2,24 @@ package no.nav.dagpenger.soknad.html
 
 import no.nav.dagpenger.soknad.html.InnsendtSøknad.EnkeltSvar
 import no.nav.dagpenger.soknad.html.InnsendtSøknad.SpørmsålOgSvarGruppe
+import no.nav.dagpenger.soknad.html.InnsendtSøknad.SvarAlternativ
 import java.time.LocalDateTime
 
 object TestModellHtml {
+    private val svarAlternativ = listOf(
+        SvarAlternativ(
+            tekst = "Ett svaralternativ",
+            tilleggsinformasjon = null
+        ),
+        SvarAlternativ(
+            tekst = "ja",
+            tilleggsinformasjon = InnsendtSøknad.InfoTekst(
+                "En tittel",
+                "Med noe tekst som kan være like lang som hjelpetekste vil jeg tro",
+                type = InnsendtSøknad.Infotype.ADVARSEL
+            )
+        )
+    )
     private val spmOgSvarSeksjon = InnsendtSøknad.Seksjon(
         overskrift = "Reel arbeidsøker",
         spmSvar = listOf(
@@ -26,7 +41,7 @@ object TestModellHtml {
             ),
             InnsendtSøknad.SporsmalSvar(
                 sporsmal = "Funker flersvar?",
-                svar = InnsendtSøknad.FlerSvar(listOf("Ja", "Nei", "Kanskje")),
+                svar = InnsendtSøknad.FlerSvar(svarAlternativ),
             ),
         )
     )

@@ -21,7 +21,6 @@ internal class SerderTest {
     @Test
     fun `parse søknads tekst riktig`() {
 
-
         oppslag.lookup("seksjon1").also {
             require(it is SeksjonTekstObjekt)
             assertEquals("seksjon1", it.textId)
@@ -44,7 +43,7 @@ internal class SerderTest {
     }
 
     @Test
-    fun `parser svaralternativ riktig`(){
+    fun `parser svaralternativ riktig`() {
         oppslag.lookup("svaralternativ1").also { oppslag ->
             require(oppslag is Oppslag.TekstObjekt.SvaralternativTekstObjekt)
             assertEquals("svaralternativ1", oppslag.textId)
@@ -52,12 +51,13 @@ internal class SerderTest {
                 "Vet ikke helt hva dte her skal brukes til enda, men gjetter på at vi finner det ut",
                 oppslag.text
             )
-            require(oppslag.alertText!=null)
+            require(oppslag.alertText != null)
             oppslag.alertText.also { alerttext ->
-                assertEquals("Her er ett og annet som er greit å vite hvios du har valgt svaralternativ1",alerttext.body
+                assertEquals(
+                    "Her er ett og annet som er greit å vite hvios du har valgt svaralternativ1", alerttext.body
                 )
                 assertEquals("Her er noe info", alerttext.title)
-                assertEquals("info",alerttext.type)
+                assertEquals("info", alerttext.type)
             }
         }
         assertDoesNotThrow {
@@ -71,7 +71,6 @@ internal class SerderTest {
                 assertNull(it.alertText)
             }
         }
-
     }
 
     @Test
