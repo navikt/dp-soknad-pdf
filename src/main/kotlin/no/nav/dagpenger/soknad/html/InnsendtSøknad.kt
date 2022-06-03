@@ -28,11 +28,12 @@ internal data class InnsendtSøknad(
         val svar: Svar,
         val beskrivelse: String? = null,
         val hjelpetekst: Hjelpetekst? = null,
-        val oppfølgingspørmål: List<SporsmalSvar>? = null,
+        val oppfølgingspørmål: List<SpørmsålOgSvarGruppe> = emptyList(),
     )
 
-    sealed class Svar
+    data class SpørmsålOgSvarGruppe(val spørsmålOgSvar: List<SporsmalSvar>)
 
+    sealed class Svar
     data class EnkeltSvar(val tekst: String) : Svar()
     data class FlerSvar(val tekster: List<String>) : Svar()
     object IngenSvar : Svar()

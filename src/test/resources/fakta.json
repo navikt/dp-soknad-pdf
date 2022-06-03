@@ -76,6 +76,24 @@
       "beskrivendeId": "seksjon2",
       "fakta": [
         {
+          "id": "3",
+          "type": "double",
+          "beskrivendeId": "desimaltall3",
+          "svar": 3.0,
+          "roller": [
+            "søker"
+          ]
+        },
+        {
+          "id": "2",
+          "type": "int",
+          "beskrivendeId": "heltall2",
+          "svar": 2,
+          "roller": [
+            "søker"
+          ]
+        },
+        {
           "id": "67",
           "type": "generator",
           "beskrivendeId": "f67",
@@ -83,18 +101,18 @@
             [
               {
                 "id": "6.1",
-                "type": "int",
+                "type": "tekst",
                 "beskrivendeId": "f6",
-                "svar": 21,
+                "svar": "Gruppe 1 Svar 1",
                 "roller": [
                   "søker"
                 ]
               },
               {
                 "id": "7.1",
-                "type": "boolean",
+                "type": "tekst",
                 "beskrivendeId": "f7",
-                "svar": true,
+                "svar": "gruppe 1 svar 2",
                 "roller": [
                   "søker"
                 ]
@@ -103,18 +121,18 @@
             [
               {
                 "id": "6.2",
-                "type": "int",
+                "type": "tekst",
                 "beskrivendeId": "f6",
-                "svar": 19,
+                "svar": "Gruppe 2 svar 1",
                 "roller": [
                   "søker"
                 ]
               },
               {
                 "id": "7.2",
-                "type": "boolean",
+                "type": "tekst",
                 "beskrivendeId": "f7",
-                "svar": true,
+                "svar": "Gruppe 2 svar 2",
                 "roller": [
                   "søker"
                 ]

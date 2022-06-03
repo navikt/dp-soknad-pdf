@@ -1,6 +1,7 @@
 package no.nav.dagpenger.soknad.html
 
 import no.nav.dagpenger.soknad.html.InnsendtSøknad.EnkeltSvar
+import no.nav.dagpenger.soknad.html.InnsendtSøknad.SpørmsålOgSvarGruppe
 import java.time.LocalDateTime
 
 object TestModellHtml {
@@ -30,7 +31,7 @@ object TestModellHtml {
         )
     )
 
-    private val oppfølgingspørmål = listOf(
+    private val tadda = listOf(
         InnsendtSøknad.SporsmalSvar(
             "Hvorfor ikke?",
             EnkeltSvar("Fordi sånn kan det være att det er at det er noen ganger at sånn kan det være")
@@ -39,14 +40,20 @@ object TestModellHtml {
             sporsmal = "Et  annet spørmsål",
             svar = EnkeltSvar("med et annet svar som også har oppfølging"),
             oppfølgingspørmål = listOf(
-                InnsendtSøknad.SporsmalSvar(
-                    "Hvorfor så mye oppfølging?",
-                    EnkeltSvar("Fordi vi følger opp all oppfølginga selvfølgelig")
+                SpørmsålOgSvarGruppe(
+                    listOf(
+                        InnsendtSøknad.SporsmalSvar(
+                            "Hvorfor så mye oppfølging?",
+                            EnkeltSvar("Fordi vi følger opp all oppfølginga selvfølgelig")
+                        )
+                    )
                 )
             )
         )
     )
-
+    private val oppfølgingspørmål = listOf(
+        SpørmsålOgSvarGruppe(tadda)
+    )
     private val spmOgSvarMedBarnSeksjon = InnsendtSøknad.Seksjon(
         overskrift = "Reel arbeidsøker med oppfølgingspørsmål",
         spmSvar = listOf(
@@ -70,7 +77,8 @@ object TestModellHtml {
         )
     )
 
-    private val spmOgSvarMedHjelpetekstSeksjon = InnsendtSøknad.Seksjon(
+    private
+    val spmOgSvarMedHjelpetekstSeksjon = InnsendtSøknad.Seksjon(
         overskrift = "Seksjon 2",
         hjelpetekst = InnsendtSøknad.Hjelpetekst("Hjelpetekst som er hjelpetekst som hjelper"),
         spmSvar = listOf(
@@ -97,7 +105,8 @@ object TestModellHtml {
         )
     )
 
-    private val spmOgSvarMedHjelpetekstOgOppfølgingSeksjon = InnsendtSøknad.Seksjon(
+    private
+    val spmOgSvarMedHjelpetekstOgOppfølgingSeksjon = InnsendtSøknad.Seksjon(
         overskrift = "Seksjon 2 med oppfølgingspørmsål",
         spmSvar = listOf(
             InnsendtSøknad.SporsmalSvar(
@@ -122,7 +131,8 @@ object TestModellHtml {
         beskrivelse = "En description er en beskrivelse av en egen elefant"
     )
 
-    internal val innsendtSøknad = InnsendtSøknad(
+    internal
+    val innsendtSøknad = InnsendtSøknad(
         seksjoner = listOf(
             spmOgSvarSeksjon,
             spmOgSvarMedBarnSeksjon,

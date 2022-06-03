@@ -26,15 +26,16 @@ internal class JsonHtmlMapper(
         }
     }
 
-    // TODO andre fakatyper
     private fun JsonNode.svar(): Svar {
-        return when (this["type"].asText()) {
-            "string" -> EnkeltSvar(this["svar"].asText())
+        return when (val type = this["type"].asText()) {
+            "tekst" -> EnkeltSvar(this["svar"].asText())
+            "double" -> EnkeltSvar(this["svar"].asText())
+            "int" -> EnkeltSvar(this["svar"].asText())
             "boolean" -> EnkeltSvar(språk.boolean(this["svar"].asBoolean()))
             "generator" -> InnsendtSøknad.IngenSvar
             "envalg" -> EnkeltSvar((oppslag.lookup(this["svar"].asText()) as Oppslag.TekstObjekt.SvaralternativTekstObjekt).text)
             "flervalg" -> InnsendtSøknad.FlerSvar(this.flerValg())
-            else -> throw IllegalArgumentException("Ukjent faktumtype")
+            else -> throw IllegalArgumentException("Ukjent faktumtype $type")
         }
     }
 
@@ -47,6 +48,29 @@ internal class JsonHtmlMapper(
         }
     }
 
+    private fun JsonNode.generatorfakta(): List<InnsendtSøknad.SpørmsålOgSvarGruppe> {
+        return when (this["type"].asText()) {
+            "generator" -> this["svar"].toList().map { liste ->
+                InnsendtSøknad.SpørmsålOgSvarGruppe(
+                    liste.toList().map { node ->
+                        val tekstObjekt =
+                            oppslag.lookup(node["beskrivendeId"].asText()) as Oppslag.TekstObjekt.FaktaTekstObjekt
+                        InnsendtSøknad.SporsmalSvar(
+                            sporsmal = tekstObjekt.text,
+                            svar = node.svar(),
+                            beskrivelse = tekstObjekt.description,
+                            hjelpetekst = tekstObjekt.helpText(),
+                            oppfølgingspørmål = node.generatorfakta(),
+
+                        )
+                    }
+                )
+            }
+
+            else -> emptyList()
+        }
+    }
+
     private fun JsonNode.fakta(): List<InnsendtSøknad.SporsmalSvar> {
         return this["fakta"].map { node ->
             val tekstObjekt = oppslag.lookup(node["beskrivendeId"].asText()) as Oppslag.TekstObjekt.FaktaTekstObjekt
@@ -55,7 +79,7 @@ internal class JsonHtmlMapper(
                 svar = node.svar(),
                 beskrivelse = tekstObjekt.description,
                 hjelpetekst = tekstObjekt.helpText(),
-                oppfølgingspørmål = listOf(),
+                oppfølgingspørmål = node.generatorfakta(),
             )
         }
     }

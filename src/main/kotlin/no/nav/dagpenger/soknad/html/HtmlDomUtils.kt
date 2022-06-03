@@ -107,8 +107,10 @@ private fun DIV.nettoSpørsmål(spmSvar: SporsmalSvar, språk: SøknadSpråk) {
     div {
         h3 { +spmSvar.sporsmal }
         boldSpanP(språk.svar, spmSvar.svar)
-        spmSvar.oppfølgingspørmål?.forEach { oppfølging ->
-            nettoSpørsmål(oppfølging, språk)
+        spmSvar.oppfølgingspørmål.forEach { oppfølging ->
+            oppfølging.spørsmålOgSvar.forEach {
+                nettoSpørsmål(it, språk)
+            }
         }
     }
 }
@@ -139,7 +141,11 @@ private fun DIV.bruttoSpørsmål(spmSvar: SporsmalSvar, språk: SøknadSpråk) {
             }
         }
         boldSpanP(språk.svar, spmSvar.svar)
-        spmSvar.oppfølgingspørmål?.forEach { oppfølging -> bruttoSpørsmål(oppfølging, språk) }
+        spmSvar.oppfølgingspørmål.forEach { oppfølging ->
+            oppfølging.spørsmålOgSvar.forEach {
+                bruttoSpørsmål(it, språk)
+            }
+        }
     }
 }
 
