@@ -7,6 +7,7 @@ import no.nav.dagpenger.soknad.html.InnsendtSøknad
 import no.nav.dagpenger.soknad.html.InnsendtSøknad.EnkeltSvar
 import no.nav.dagpenger.soknad.html.InnsendtSøknad.Svar
 import no.nav.helse.rapids_rivers.asLocalDate
+import no.nav.helse.rapids_rivers.asLocalDateTime
 import java.time.format.DateTimeFormatter
 
 internal class JsonHtmlMapper(
@@ -35,6 +36,7 @@ internal class JsonHtmlMapper(
             "double" -> EnkeltSvar(this["svar"].asText())
             "int" -> EnkeltSvar(this["svar"].asText())
             "boolean" -> EnkeltSvar(språk.boolean(this["svar"].asBoolean()))
+            "localdate" -> EnkeltSvar(this["svar"].dagMånedÅr())
             "periode" -> EnkeltSvar("${this["svar"]["fom"].dagMånedÅr()} - ${this["svar"]["tom"].dagMånedÅr()}")
             "generator" -> InnsendtSøknad.IngenSvar
             "valg" -> EnkeltSvar((oppslag.lookup(this["svar"].asText()) as Oppslag.TekstObjekt.SvaralternativTekstObjekt).text)
@@ -99,6 +101,9 @@ internal class JsonHtmlMapper(
 
 private fun JsonNode.dagMånedÅr(): String =
     this.asLocalDate().format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
+
+private fun JsonNode.localdatetime(): String =
+    this.asLocalDateTime().format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
 
 private fun Oppslag.TekstObjekt.helpText(): InnsendtSøknad.Hjelpetekst? {
     return this.helpText?.let { InnsendtSøknad.Hjelpetekst(it.body, it.title) }

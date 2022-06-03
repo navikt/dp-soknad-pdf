@@ -78,6 +78,15 @@
           "roller": [
             "søker"
           ]
+        },
+        {
+          "id": "6",
+          "type": "localdate",
+          "beskrivendeId": "dato6",
+          "svar": "2022-01-14",
+          "roller": [
+            "nav"
+          ]
         }
       ]
     },
