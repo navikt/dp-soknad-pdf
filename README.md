@@ -4,16 +4,20 @@ Løser behov fra [dp-soknad](https://github.com/navikt/dp-soknad) om generering 
 * Netto versjon: Inneholder spørsmål med svar fra bruker
 * Brutto inneholder alt bruker har sett av tekst (spørsmål, hjelpetekster, beskrivelser osv)
 
-Henter søknaddata via REST fra dp-soknad.
+Henter søknaddata og tekster via REST fra dp-soknad.
 
 ## Komme i gang
 
 Gradle brukes som byggverktøy og er bundlet inn.
 `./gradlew build`
 
+Diverse info
 ## Språkstøtte
 Støtter engelsk og bokmål, kan utvides.
 Navn på land hentet fra https://github.com/stefangabos/world_countries
+
+##Design
+Se [skisse i Figma](https://www.figma.com/file/xD7SQBSfrG2BGjic2efqNQ/%F0%9F%92%AC-Dagpenger-s%C3%B8knadsdialog) (krever innlogging)
 
 # Henvendelser
 

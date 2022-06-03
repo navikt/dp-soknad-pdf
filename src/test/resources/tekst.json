@@ -92,11 +92,21 @@
     "svaralternativer": [
       {
         "textId": "svaralternativ1",
-        "text": "Vet ikke helt hva dte her skal brukes til enda, men gjetter på at vi finner det ut"
+        "text": "Vet ikke helt hva dte her skal brukes til enda, men gjetter på at vi finner det ut",
+        "alertText": {
+          "title":"Her er noe info",
+          "type": "info",
+          "body": "Her er ett og annet som er greit å vite hvios du har valgt svaralternativ1"
+        }
+
       },
       {
         "textId": "flervalg1",
-        "text": "flervalg 1"
+        "text": "flervalg 1",
+        "alertText": {
+          "type": "info",
+          "body": "Her er ett og annet som er greit å vite hvios du har valgt svaralternativ1"
+        }
       },
       {
         "textId": "flervalg2",
@@ -105,3 +115,5 @@
     ]
   }
 }
+
+

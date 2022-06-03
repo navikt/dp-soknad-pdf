@@ -49,7 +49,13 @@ internal class Oppslag(tekstJson: String) {
             map[textId] = TekstObjekt.SvaralternativTekstObjekt(
                 textId = textId,
                 text = tekst["text"].asText(),
-                alertText = null
+                alertText = tekst["alertText"]?.let { alerttext ->
+                    TekstObjekt.AlertText(
+                        alerttext["title"]?.asText(),
+                        alerttext["type"].asText(),
+                        alerttext["body"].asText()
+                    )
+                }
             )
         }
         return map
@@ -73,16 +79,17 @@ internal class Oppslag(tekstJson: String) {
             helpText: HelpText? = null,
         ) : TekstObjekt(textId, description, helpText)
 
-        /*
-                export interface SanityAlertText {
-                    title?: string;
-                    type: "info" | "warning" | "error" | "success";
-                    body: string;
-                }*/
         class SvaralternativTekstObjekt(val text: String, val alertText: AlertText?, textId: String) :
             TekstObjekt(textId, null, null)
 
-        class AlertText(val title: String, type: String, body: String)
+        class AlertText(val title: String?, val type: String, val body: String) {
+            init {
+                if (!listOf("info", "warning", "error", "succes").contains(type)) {
+                    throw IllegalArgumentException("Ukjent type for alertText $type")
+                }
+            }
+        }
+
         class HelpText(val title: String?, val body: String)
     }
 }

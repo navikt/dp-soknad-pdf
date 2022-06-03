@@ -102,9 +102,6 @@ internal class JsonHtmlMapper(
 private fun JsonNode.dagMånedÅr(): String =
     this.asLocalDate().format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
 
-private fun JsonNode.localdatetime(): String =
-    this.asLocalDateTime().format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
-
 private fun Oppslag.TekstObjekt.helpText(): InnsendtSøknad.Hjelpetekst? {
     return this.helpText?.let { InnsendtSøknad.Hjelpetekst(it.body, it.title) }
 }
