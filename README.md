@@ -11,6 +11,10 @@ Henter søknaddata via REST fra dp-soknad.
 Gradle brukes som byggverktøy og er bundlet inn.
 `./gradlew build`
 
+## Språkstøtte
+Støtter engelsk og bokmål, kan utvides.
+Navn på land hentet fra https://github.com/stefangabos/world_countries
+
 # Henvendelser
 
 Spørsmål knyttet til koden eller prosjektet kan rettes mot:

@@ -69,6 +69,17 @@ internal data class InnsendtSøknad(
             { b: Boolean ->
                 if (b) "Ja" else "Nei"
             }
+        ),
+        ENGELSK(
+            "en",
+            "Answer",
+            "Social security number",
+            "Date sent",
+            "TODO: hovedoverskrift engelsk",
+            "TODO: hovedoverskrift engelsk",
+            { b: Boolean ->
+                if (b) "Yes" else "No"
+            }
         )
     }
 }

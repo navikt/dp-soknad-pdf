@@ -2,9 +2,12 @@ package no.nav.dagpenger.soknad.serder
 
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import no.nav.dagpenger.soknad.LandOppslag
 import no.nav.dagpenger.soknad.html.InnsendtSøknad
 import no.nav.dagpenger.soknad.html.InnsendtSøknad.EnkeltSvar
 import no.nav.dagpenger.soknad.html.InnsendtSøknad.Svar
+import no.nav.helse.rapids_rivers.asLocalDate
+import java.time.format.DateTimeFormatter
 
 internal class JsonHtmlMapper(
     private val søknadsData: String,
@@ -32,9 +35,11 @@ internal class JsonHtmlMapper(
             "double" -> EnkeltSvar(this["svar"].asText())
             "int" -> EnkeltSvar(this["svar"].asText())
             "boolean" -> EnkeltSvar(språk.boolean(this["svar"].asBoolean()))
+            "periode" -> EnkeltSvar("${this["svar"]["fom"].dagMånedÅr()} - ${this["svar"]["tom"].dagMånedÅr()}")
             "generator" -> InnsendtSøknad.IngenSvar
             "valg" -> EnkeltSvar((oppslag.lookup(this["svar"].asText()) as Oppslag.TekstObjekt.SvaralternativTekstObjekt).text)
             "flervalg" -> InnsendtSøknad.FlerSvar(this.flerValg())
+            "land" -> EnkeltSvar(LandOppslag.hentLand(språk, this["svar"].asText()))
             else -> throw IllegalArgumentException("Ukjent faktumtype $type")
         }
     }
@@ -91,6 +96,9 @@ internal class JsonHtmlMapper(
         )
     }
 }
+
+private fun JsonNode.dagMånedÅr(): String =
+    this.asLocalDate().format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
 
 private fun Oppslag.TekstObjekt.helpText(): InnsendtSøknad.Hjelpetekst? {
     return this.helpText?.let { InnsendtSøknad.Hjelpetekst(it.body, it.title) }

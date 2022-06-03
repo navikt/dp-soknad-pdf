@@ -7,8 +7,17 @@
         "description": "Tekstbokser"
       },
       {
+        "textId": "periode10",
+        "text": "Her er ett periodespørsmål",
+        "description": "Perioder"
+      },
+      {
         "textId": "f6",
         "text": "Her et generert something"
+      },
+      {
+        "textId": "land2",
+        "text": "Det finnes mange land og land har mange navn. Wattudu wattudu"
       },
       {
         "textId": "heltall2",

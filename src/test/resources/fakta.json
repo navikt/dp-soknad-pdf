@@ -69,6 +69,15 @@
             "flervalg2",
             "flervalg3"
           ]
+        },
+        {
+          "id": "2",
+          "type": "land",
+          "beskrivendeId": "land2",
+          "svar": "NOR",
+          "roller": [
+            "søker"
+          ]
         }
       ]
     },
@@ -159,6 +168,18 @@
                 "søker"
               ]
             }
+          ]
+        },
+        {
+          "id": "14",
+          "type": "periode",
+          "beskrivendeId": "periode10",
+          "svar": {
+            "fom": "2021-01-14",
+            "tom": "2021-03-12"
+          },
+          "roller": [
+            "søker"
           ]
         }
       ]
