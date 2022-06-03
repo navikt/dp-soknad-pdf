@@ -2,7 +2,7 @@ body {
     font-family: 'Source Sans Pro';
     font-style: normal;
     width: 600px;
-    padding: 40px;
+    padding: 0 40px 40px 40px;
     color: rgb(38, 38, 38);
 }
 
@@ -46,4 +46,13 @@ p {
 
 .infotekst {
     margin: 5px 0 0 0;
+}
+
+@page{
+    size:A4 portrait;
+    @top-right {
+        content: counter(page);
+        font-family: 'Source Sans Pro';
+        padding-right: 15px;
+    }
 }
