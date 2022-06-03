@@ -73,20 +73,41 @@ internal fun DIV.boldSpanP(boldTekst: String, vanligTekst: String) {
 }
 
 
-internal fun DIV.flersvar(svar: InnsendtSøknad.FlerSvar) {
+internal fun DIV.flersvar(svar: InnsendtSøknad.FlerSvar, brutto: Boolean) {
     if (svar.alternativ.isNotEmpty()) {
         ul {
             svar.alternativ.forEach {
                 li { +it.tekst }
             }
         }
+        if (brutto) {
+            div {
+                svar.alternativ.forEach { svaralternativ ->
+                    svaralternativ.tilleggsinformasjon?.also { info ->
+                        div(classes = "hjelpetekst") {
+                            h3 { +tilleggsinformasjonOverskrift(info) }
+                            p { +info.tekst }
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 
-internal fun DIV.svar(språk: SøknadSpråk, svar: InnsendtSøknad.Svar) {
+private fun tilleggsinformasjonOverskrift(info: InnsendtSøknad.InfoTekst): String {
+    var overskrift = info.type.name.lowercase()
+    if (info.tittel != null){
+        overskrift += ": ${info.tittel}"
+    }
+    return overskrift
+}
+
+
+private fun DIV.svar(språk: SøknadSpråk, svar: InnsendtSøknad.Svar, brutto: Boolean = false) {
     when (svar) {
         is InnsendtSøknad.EnkeltSvar -> boldSpanP(språk.svar, svar.tekst)
-        is InnsendtSøknad.FlerSvar -> flersvar(svar)
+        is InnsendtSøknad.FlerSvar -> flersvar(svar, brutto)
         InnsendtSøknad.IngenSvar -> {}
     }
 }
@@ -134,7 +155,7 @@ private fun DIV.bruttoSpørsmål(spmSvar: SporsmalSvar, språk: SøknadSpråk) {
                 p { +spmSvar.hjelpetekst.tekst }
             }
         }
-        svar(språk, spmSvar.svar)
+        svar(språk, spmSvar.svar, true)
         spmSvar.oppfølgingspørmål.forEach { oppfølging ->
             oppfølging.spørsmålOgSvar.forEach {
                 bruttoSpørsmål(it, språk)

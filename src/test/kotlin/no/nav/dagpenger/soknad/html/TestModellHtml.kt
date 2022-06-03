@@ -18,7 +18,16 @@ object TestModellHtml {
                 "Med noe tekst som kan være like lang som hjelpetekste vil jeg tro",
                 type = InnsendtSøknad.Infotype.ADVARSEL
             )
+        ),
+        SvarAlternativ(
+            tekst = "nei",
+            tilleggsinformasjon = InnsendtSøknad.InfoTekst(
+                tittel = null,
+                tekst = "Med noe tekst som kan være like lang som hjelpetekste vil jeg tro. Og forhåentligvis har mindre skrivefeil",
+                type = InnsendtSøknad.Infotype.ADVARSEL
+            )
         )
+
     )
     private val spmOgSvarSeksjon = InnsendtSøknad.Seksjon(
         overskrift = "Reel arbeidsøker",
@@ -46,7 +55,7 @@ object TestModellHtml {
         )
     )
 
-    private val tadda = listOf(
+    private val enkeltSvarGruppe = listOf(
         InnsendtSøknad.SporsmalSvar(
             "Hvorfor ikke?",
             EnkeltSvar("Fordi sånn kan det være att det er at det er noen ganger at sånn kan det være")
@@ -67,7 +76,7 @@ object TestModellHtml {
         )
     )
     private val oppfølgingspørmål = listOf(
-        SpørmsålOgSvarGruppe(tadda)
+        SpørmsålOgSvarGruppe(enkeltSvarGruppe)
     )
     private val spmOgSvarMedBarnSeksjon = InnsendtSøknad.Seksjon(
         overskrift = "Reel arbeidsøker med oppfølgingspørsmål",

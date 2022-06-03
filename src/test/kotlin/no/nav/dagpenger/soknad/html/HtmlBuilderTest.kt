@@ -35,7 +35,7 @@ class HtmlBuilderTest {
     fun `lager brutto html`() {
         HtmlBuilder.lagBruttoHtml(TestModellHtml.innsendtSøknad).also {
             assertEquals(6, "class=\"infotekst\"".toRegex().findAll(it).count())
-            assertEquals(6, "class=\"hjelpetekst\"".toRegex().findAll(it).count())
+            assertEquals(8, "class=\"hjelpetekst\"".toRegex().findAll(it).count())
             assertEquals(4, "class=\"seksjon\"".toRegex().findAll(it).count())
         }
     }
