@@ -33,7 +33,7 @@ internal class JsonHtmlMapper(
             "int" -> EnkeltSvar(this["svar"].asText())
             "boolean" -> EnkeltSvar(språk.boolean(this["svar"].asBoolean()))
             "generator" -> InnsendtSøknad.IngenSvar
-            "envalg" -> EnkeltSvar((oppslag.lookup(this["svar"].asText()) as Oppslag.TekstObjekt.SvaralternativTekstObjekt).text)
+            "valg" -> EnkeltSvar((oppslag.lookup(this["svar"].asText()) as Oppslag.TekstObjekt.SvaralternativTekstObjekt).text)
             "flervalg" -> InnsendtSøknad.FlerSvar(this.flerValg())
             else -> throw IllegalArgumentException("Ukjent faktumtype $type")
         }

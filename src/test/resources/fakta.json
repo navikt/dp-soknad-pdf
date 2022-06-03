@@ -40,7 +40,7 @@
         },
         {
           "id": "8002",
-          "type": "envalg",
+          "type": "valg",
           "beskrivendeId": "faktum.type-arbeidstid",
           "svar": "svaralternativ1",
           "roller": [
