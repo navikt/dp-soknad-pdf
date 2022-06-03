@@ -6,9 +6,11 @@ import kotlinx.html.div
 import kotlinx.html.h2
 import kotlinx.html.h3
 import kotlinx.html.id
+import kotlinx.html.li
 import kotlinx.html.meta
 import kotlinx.html.p
 import kotlinx.html.span
+import kotlinx.html.ul
 import kotlinx.html.unsafe
 import no.nav.dagpenger.soknad.html.InnsendtSøknad.PdfAMetaTagger
 import no.nav.dagpenger.soknad.html.InnsendtSøknad.SporsmalSvar
@@ -67,6 +69,31 @@ internal fun DIV.boldSpanP(boldTekst: String, vanligTekst: String) {
     p {
         span(classes = "boldSpan") { +"$boldTekst: " }
         +vanligTekst
+    }
+}
+
+internal fun DIV.boldSpanP(boldTekst: String, svar: InnsendtSøknad.EnkeltSvar) {
+    p {
+        span(classes = "boldSpan") { +"$boldTekst: " }
+        +svar.tekst
+    }
+}
+
+internal fun DIV.boldSpanP(boldTekst: String, svar: InnsendtSøknad.FlerSvar) {
+    if (svar.tekster.isNotEmpty()) {
+        ul {
+            svar.tekster.forEach {
+                li { +it }
+            }
+        }
+    }
+}
+
+internal fun DIV.boldSpanP(boldTekst: String, svar: InnsendtSøknad.Svar) {
+    when (svar) {
+        is InnsendtSøknad.EnkeltSvar -> boldSpanP(boldTekst, svar)
+        is InnsendtSøknad.FlerSvar -> boldSpanP(boldTekst, svar)
+        InnsendtSøknad.IngenSvar -> {}
     }
 }
 

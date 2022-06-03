@@ -25,12 +25,17 @@ internal data class InnsendtSøknad(
 
     data class SporsmalSvar(
         val sporsmal: String,
-        val svar: String?,
+        val svar: Svar,
         val beskrivelse: String? = null,
         val hjelpetekst: Hjelpetekst? = null,
         val oppfølgingspørmål: List<SporsmalSvar>? = null,
-        val flereSvar: List<String> = listOf()
     )
+
+    sealed class Svar
+
+    data class EnkeltSvar(val tekst: String) : Svar()
+    data class FlerSvar(val tekster: List<String>) : Svar()
+    object IngenSvar : Svar()
 
     data class Hjelpetekst(val tekst: String, val tittel: String? = null)
 

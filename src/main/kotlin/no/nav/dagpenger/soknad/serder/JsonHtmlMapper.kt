@@ -3,6 +3,8 @@ package no.nav.dagpenger.soknad.serder
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import no.nav.dagpenger.soknad.html.InnsendtSøknad
+import no.nav.dagpenger.soknad.html.InnsendtSøknad.EnkeltSvar
+import no.nav.dagpenger.soknad.html.InnsendtSøknad.Svar
 
 internal class JsonHtmlMapper(
     private val søknadsData: String,
@@ -25,13 +27,13 @@ internal class JsonHtmlMapper(
     }
 
     // TODO andre fakatyper
-    private fun JsonNode.svar(): String? {
+    private fun JsonNode.svar(): Svar {
         return when (this["type"].asText()) {
-            "string" -> this["svar"].asText()
-            "boolean" -> språk.boolean(this["svar"].asBoolean())
-            "generator" -> "generator"
-            "envalg" -> (oppslag.lookup(this["svar"].asText()) as Oppslag.TekstObjekt.SvaralternativTekstObjekt).text
-            "flervalg" -> null
+            "string" -> EnkeltSvar(this["svar"].asText())
+            "boolean" -> EnkeltSvar(språk.boolean(this["svar"].asBoolean()))
+            "generator" -> InnsendtSøknad.IngenSvar
+            "envalg" -> EnkeltSvar((oppslag.lookup(this["svar"].asText()) as Oppslag.TekstObjekt.SvaralternativTekstObjekt).text)
+            "flervalg" -> InnsendtSøknad.FlerSvar(this.flerValg())
             else -> throw IllegalArgumentException("Ukjent faktumtype")
         }
     }
@@ -54,7 +56,6 @@ internal class JsonHtmlMapper(
                 beskrivelse = tekstObjekt.description,
                 hjelpetekst = tekstObjekt.helpText(),
                 oppfølgingspørmål = listOf(),
-                flereSvar = node.flerValg()
             )
         }
     }
