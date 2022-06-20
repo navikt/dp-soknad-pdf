@@ -72,7 +72,6 @@ internal fun DIV.boldSpanP(boldTekst: String, vanligTekst: String) {
     }
 }
 
-
 internal fun DIV.flersvar(svar: InnsendtSøknad.FlerSvar, brutto: Boolean) {
     if (svar.alternativ.isNotEmpty()) {
         ul {
@@ -97,12 +96,11 @@ internal fun DIV.flersvar(svar: InnsendtSøknad.FlerSvar, brutto: Boolean) {
 
 private fun tilleggsinformasjonOverskrift(info: InnsendtSøknad.InfoTekst): String {
     var overskrift = info.type.name.lowercase()
-    if (info.tittel != null){
+    if (info.tittel != null) {
         overskrift += ": ${info.tittel}"
     }
     return overskrift
 }
-
 
 private fun DIV.svar(språk: SøknadSpråk, svar: InnsendtSøknad.Svar, brutto: Boolean = false) {
     when (svar) {
