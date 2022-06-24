@@ -21,7 +21,6 @@ internal class SoknadSupplier(
     tokenSupplier: () -> String,
     engine: HttpClientEngine = CIO.create()
 ) {
-
     private val httpKlient: HttpClient = HttpClient(engine) {
         defaultRequest {
             header("Authorization", "Bearer ${tokenSupplier.invoke()}")
@@ -35,14 +34,13 @@ internal class SoknadSupplier(
 
     suspend fun hentSoknad(id: UUID, ident: String): InnsendtSøknad {
         return withContext(Dispatchers.IO) {
-            val fakta = object {}.javaClass.getResource("/fakta.json")?.readText()!!
-//            val fakta = async {
-//                httpKlient.get("$dpSoknadBaseUrl/$id/fakta").bodyAsText()
-//            }
+            val fakta = async {
+                httpKlient.get("$dpSoknadBaseUrl/$id/fakta").bodyAsText()
+            }
             val tekst = async {
                 httpKlient.get("$dpSoknadBaseUrl/$id/ferdigstilt/tekst").bodyAsText()
             }
-            JsonHtmlMapper(søknadsData = fakta, tekst = tekst.await()).parse()
+            JsonHtmlMapper(søknadsData = fakta.await(), tekst = tekst.await()).parse()
         }
     }
 }
