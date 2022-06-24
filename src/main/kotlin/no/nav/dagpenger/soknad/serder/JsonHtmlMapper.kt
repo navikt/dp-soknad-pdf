@@ -38,7 +38,7 @@ internal class JsonHtmlMapper(
             "localdate" -> EnkeltSvar(this["svar"].dagMånedÅr())
             "periode" -> EnkeltSvar("${this["svar"]["fom"].dagMånedÅr()} - ${this["svar"]["tom"].dagMånedÅr()}")
             "generator" -> InnsendtSøknad.IngenSvar
-            "valg" -> EnkeltSvar((oppslag.lookup(this["svar"].asText()) as Oppslag.TekstObjekt.SvaralternativTekstObjekt).text)
+            "envalg" -> EnkeltSvar((oppslag.lookup(this["svar"].asText()) as Oppslag.TekstObjekt.SvaralternativTekstObjekt).text)
             "flervalg" -> InnsendtSøknad.FlerSvar(this.flerValg())
             "land" -> EnkeltSvar(LandOppslag.hentLand(språk, this["svar"].asText()))
             else -> throw IllegalArgumentException("Ukjent faktumtype $type")
