@@ -36,7 +36,6 @@ internal class PdfBehovLøser(
         val soknadId = packet.søknadUuid()
         val ident = packet.ident()
         logg.info("Mottok behov for søknadspdf med uuid $soknadId")
-        return
         runBlocking {
             soknadSupplier(soknadId, ident)
                 .apply {
