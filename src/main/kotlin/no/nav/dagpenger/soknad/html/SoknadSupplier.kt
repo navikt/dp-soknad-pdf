@@ -35,7 +35,7 @@ internal class SoknadSupplier(
     suspend fun hentSoknad(id: UUID, ident: String): InnsendtSøknad {
         return withContext(Dispatchers.IO) {
             val fakta = async {
-                httpKlient.get("$dpSoknadBaseUrl/$id/fakta").bodyAsText()
+                httpKlient.get("$dpSoknadBaseUrl/$id/ferdigstilt/fakta").bodyAsText()
             }
             val tekst = async {
                 httpKlient.get("$dpSoknadBaseUrl/$id/ferdigstilt/tekst").bodyAsText()
