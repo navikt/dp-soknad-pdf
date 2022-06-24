@@ -22,6 +22,7 @@ internal object HtmlBuilder {
     ): String {
         val språk = innsendtSøknad.metaInfo.språk
         return createHTMLDocument().html {
+            attributes["xmlns"] = "http://www.w3.org/1999/xhtml"
             lang = språk.langAtributt
             head {
                 title(innsendtSøknad.metaInfo.tittel)
