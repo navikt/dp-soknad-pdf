@@ -2,6 +2,9 @@ package no.nav.dagpenger.soknad.serder
 
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import mu.KotlinLogging
+
+private val logger = KotlinLogging.logger { }
 
 internal class Oppslag(tekstJson: String) {
     private val objectMapper = jacksonObjectMapper()
@@ -49,7 +52,7 @@ internal class Oppslag(tekstJson: String) {
             map[textId] = TekstObjekt.SvaralternativTekstObjekt(
                 textId = textId,
                 text = tekst["text"].asText(),
-                alertText = tekst["alertText"]?.let { alerttext ->
+                alertText = tekst["alertText"]?.takeIf { !it.isNull }?.let { alerttext ->
                     TekstObjekt.AlertText(
                         alerttext["title"]?.asText(),
                         alerttext["type"].asText(),
@@ -62,7 +65,6 @@ internal class Oppslag(tekstJson: String) {
     }
 
     sealed class TekstObjekt(val textId: String, val description: String?, val helpText: HelpText?) {
-
         class FaktaTekstObjekt(
             // todo: kan vi fjerne unit?
             val unit: String? = null,
@@ -95,7 +97,8 @@ internal class Oppslag(tekstJson: String) {
 }
 
 private fun JsonNode.helpText(): Oppslag.TekstObjekt.HelpText? =
-    get("helpText")?.let {
+    get("helpText")?.takeIf { !it.isNull }?.let {
+        println(it)
         Oppslag.TekstObjekt.HelpText(it.get("title")?.asText(), it.get("body").asText())
     }
 
