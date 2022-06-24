@@ -11,6 +11,7 @@ import no.nav.dagpenger.soknad.PdfBehovLøser
 import no.nav.dagpenger.soknad.html.TestModellHtml.innsendtSøknad
 import no.nav.helse.rapids_rivers.testsupport.TestRapid
 import org.intellij.lang.annotations.Language
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import java.time.ZoneId
 import java.time.ZonedDateTime
@@ -39,6 +40,7 @@ internal class PdfBehovLøserTest {
     }
 
     @Test
+    @Disabled
     fun `besvarer pdf behov`() {
         testRapid.sendTestMessage(testMessage)
         assertEquals(1, testRapid.inspektør.size)
