@@ -99,6 +99,6 @@ private fun JsonNode.helpText(): Oppslag.TekstObjekt.HelpText? =
         Oppslag.TekstObjekt.HelpText(it.get("title")?.asText(), it.get("body").asText())
     }
 
-private fun JsonNode.seksjoner() = this["SanityTexts"]["seksjoner"]
-private fun JsonNode.svaralternativer() = this["SanityTexts"]["svaralternativer"]
-private fun JsonNode.fakta() = this["SanityTexts"]["fakta"]
+private fun JsonNode.seksjoner() = this["sanityTexts"]["seksjoner"]
+private fun JsonNode.svaralternativer() = this["sanityTexts"]["svaralternativer"]
+private fun JsonNode.fakta() = this["sanityTexts"]["fakta"]
