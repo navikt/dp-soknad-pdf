@@ -2,6 +2,11 @@
   "sanityTexts": {
     "fakta": [
       {
+        "textId": "f15",
+        "text": "Her er ett dokumentsak",
+        "description": "Dokument som dokumenterer"
+      },
+      {
         "textId": "flervalg7",
         "text": "Her er det noen teksbokser typisk",
         "description": "Tekstbokser"
@@ -87,6 +92,10 @@
       {
         "textId": "seksjon2",
         "title": "Tittel for seksjon 2"
+      },
+      {
+        "textId": "dokumentseksjon",
+        "title": "Dokumenter"
       }
     ],
     "svaralternativer": [

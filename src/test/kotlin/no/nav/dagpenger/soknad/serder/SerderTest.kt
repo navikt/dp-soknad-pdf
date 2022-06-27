@@ -19,7 +19,7 @@ internal class SerderTest {
     private val oppslag = Oppslag(tekstJson)
 
     @Test
-    fun `parse søknads tekst riktig`() {
+    fun `parser søknadstekst riktig`() {
 
         oppslag.lookup("seksjon1").also {
             require(it is SeksjonTekstObjekt)

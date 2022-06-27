@@ -7,6 +7,9 @@ import no.nav.dagpenger.soknad.html.InnsendtSøknad
 import no.nav.dagpenger.soknad.html.InnsendtSøknad.EnkeltSvar
 import no.nav.dagpenger.soknad.html.InnsendtSøknad.Svar
 import no.nav.helse.rapids_rivers.asLocalDate
+import no.nav.helse.rapids_rivers.asLocalDateTime
+import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 internal class JsonHtmlMapper(
@@ -35,12 +38,13 @@ internal class JsonHtmlMapper(
             "double" -> EnkeltSvar(this["svar"].asText())
             "int" -> EnkeltSvar(this["svar"].asText())
             "boolean" -> EnkeltSvar(språk.boolean(this["svar"].asBoolean()))
-            "localdate" -> EnkeltSvar(this["svar"].dagMånedÅr())
-            "periode" -> EnkeltSvar("${this["svar"]["fom"].dagMånedÅr()} - ${this["svar"]["tom"].dagMånedÅr()}")
+            "localdate" -> EnkeltSvar(this["svar"].asLocalDate().dagMånedÅr())
+            "periode" -> EnkeltSvar("${this["svar"]["fom"].asLocalDate().dagMånedÅr()} - ${this["svar"]["tom"].asLocalDate().dagMånedÅr()}")
             "generator" -> InnsendtSøknad.IngenSvar
             "envalg" -> EnkeltSvar((oppslag.lookup(this["svar"].asText()) as Oppslag.TekstObjekt.SvaralternativTekstObjekt).text)
             "flervalg" -> InnsendtSøknad.FlerSvar(this.flerValg())
             "land" -> EnkeltSvar(LandOppslag.hentLand(språk, this["svar"].asText()))
+            "dokument" -> EnkeltSvar(this.dokumentTekst())
             else -> throw IllegalArgumentException("Ukjent faktumtype $type")
         }
     }
@@ -70,12 +74,15 @@ internal class JsonHtmlMapper(
             }
         }
     }
+
     private fun infoTypefraSanityJson(typenøkkel: String) = when (typenøkkel) {
         "info" -> InnsendtSøknad.Infotype.INFORMASJON
         "error" -> InnsendtSøknad.Infotype.FEIL
         "warning" -> InnsendtSøknad.Infotype.ADVARSEL
         "success" -> null
-        else -> { throw IllegalArgumentException("ukjent alerttekst type $typenøkkel") }
+        else -> {
+            throw IllegalArgumentException("ukjent alerttekst type $typenøkkel")
+        }
     }
 
     private fun JsonNode.generatorfakta(): List<InnsendtSøknad.SpørmsålOgSvarGruppe> {
@@ -122,8 +129,16 @@ internal class JsonHtmlMapper(
     }
 }
 
-private fun JsonNode.dagMånedÅr(): String =
-    this.asLocalDate().format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
+private fun JsonNode.dokumentTekst(): String {
+    val opplastetDato = this["svar"]["lastOppTidsstempel"].asLocalDateTime().dagMånedÅr()
+    val filnavn = this["svar"]["urn"].asText().split("/").last()
+    return "Du har lastet opp $filnavn den $opplastetDato"
+}
+
+private fun LocalDate.dagMånedÅr(): String =
+    this.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
+private fun LocalDateTime.dagMånedÅr(): String =
+    this.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
 
 private fun Oppslag.TekstObjekt.helpText(): InnsendtSøknad.Hjelpetekst? {
     return this.helpText?.let { InnsendtSøknad.Hjelpetekst(it.body, it.title) }
