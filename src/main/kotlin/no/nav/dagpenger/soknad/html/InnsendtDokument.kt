@@ -3,7 +3,7 @@ package no.nav.dagpenger.soknad.html
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-internal data class InnsendtSøknad(
+internal data class InnsendtDokument(
     val seksjoner: List<Seksjon>,
     val generellTekst: GenerellTekst,
     val språk: DokumentSpråk

@@ -32,7 +32,7 @@ internal class SoknadSupplier(
         }
     }
 
-    suspend fun hentSoknad(id: UUID, språk: InnsendtSøknad.DokumentSpråk): InnsendtSøknad {
+    suspend fun hentSoknad(id: UUID, språk: InnsendtDokument.DokumentSpråk): InnsendtDokument {
         return withContext(Dispatchers.IO) {
             val fakta = async {
                 httpKlient.get("$dpSoknadBaseUrl/$id/ferdigstilt/fakta").bodyAsText()

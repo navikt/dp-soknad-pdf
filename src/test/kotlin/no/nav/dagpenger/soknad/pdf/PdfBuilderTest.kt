@@ -17,7 +17,7 @@ internal class PdfBuilderTest {
     @Test
     fun `Kan lage PDF fra HTML`() {
         assertDoesNotThrow {
-            PdfBuilder.lagPdf(HtmlBuilder.lagBruttoHtml(TestModellHtml.innsendtSøknad)).also {
+            PdfBuilder.lagPdf(HtmlBuilder.lagBruttoHtml(TestModellHtml.innsendtDokument)).also {
                 File("build/tmp/test/søknad.pdf").writeBytes(it)
             }
         }
@@ -27,7 +27,7 @@ internal class PdfBuilderTest {
     fun `Møter PdfA og UA standardene`() {
         VeraGreenfieldFoundryProvider.initialise()
         Foundries.defaultInstance().use { foundry ->
-            val pdf = ByteArrayInputStream(PdfBuilder.lagPdf(HtmlBuilder.lagBruttoHtml(TestModellHtml.innsendtSøknad)))
+            val pdf = ByteArrayInputStream(PdfBuilder.lagPdf(HtmlBuilder.lagBruttoHtml(TestModellHtml.innsendtDokument)))
             val validator = foundry.createValidator(PDFAFlavour.PDFA_2_U, true)
             foundry.createParser(pdf, PDFAFlavour.PDFA_2_U).also { parser ->
                 val result = validator.validate(parser).testAssertions.filter {

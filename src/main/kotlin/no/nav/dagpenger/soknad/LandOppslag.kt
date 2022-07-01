@@ -1,7 +1,7 @@
 package no.nav.dagpenger.soknad
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import no.nav.dagpenger.soknad.html.InnsendtSøknad.DokumentSpråk
+import no.nav.dagpenger.soknad.html.InnsendtDokument.DokumentSpråk
 import no.nav.dagpenger.soknad.pdf.fileAsString
 
 object LandOppslag {

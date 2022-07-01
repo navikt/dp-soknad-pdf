@@ -3,7 +3,7 @@ package no.nav.dagpenger.soknad.serder
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import mu.KotlinLogging
-import no.nav.dagpenger.soknad.html.InnsendtSøknad
+import no.nav.dagpenger.soknad.html.InnsendtDokument
 
 private val logger = KotlinLogging.logger { }
 
@@ -65,9 +65,9 @@ internal class Oppslag(private val tekstJson: String) {
         return map
     }
 
-    internal fun generellTekst(): InnsendtSøknad.GenerellTekst {
+    internal fun generellTekst(): InnsendtDokument.GenerellTekst {
         return objectMapper.readTree(tekstJson).apptekster().let {
-            InnsendtSøknad.GenerellTekst(
+            InnsendtDokument.GenerellTekst(
                 hovedOverskrift = it["pdf.hovedoverskrift"].asText(),
                 tittel = it["pdf.tittel"].asText(),
                 svar = it["pdf.svar"].asText(),

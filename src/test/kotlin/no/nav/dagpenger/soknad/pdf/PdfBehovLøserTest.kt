@@ -8,7 +8,7 @@ import no.nav.dagpenger.soknad.ArkiverbartDokument.DokumentVariant.BRUTTO
 import no.nav.dagpenger.soknad.ArkiverbartDokument.DokumentVariant.NETTO
 import no.nav.dagpenger.soknad.LagretDokument
 import no.nav.dagpenger.soknad.PdfBehovLøser
-import no.nav.dagpenger.soknad.html.TestModellHtml.innsendtSøknad
+import no.nav.dagpenger.soknad.html.TestModellHtml.innsendtDokument
 import no.nav.helse.rapids_rivers.testsupport.TestRapid
 import org.intellij.lang.annotations.Language
 import org.junit.jupiter.api.Test
@@ -34,7 +34,7 @@ internal class PdfBehovLøserTest {
                     LagretDokument("urn:vedlegg:soknadId/brutto.pdf", BRUTTO, "brutto.pdf"),
                 )
             },
-            soknadSupplier = { _, _ -> innsendtSøknad },
+            soknadSupplier = { _, _ -> innsendtDokument },
         )
     }
 

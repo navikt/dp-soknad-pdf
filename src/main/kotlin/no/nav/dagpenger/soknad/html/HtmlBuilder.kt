@@ -13,35 +13,35 @@ import kotlinx.html.lang
 import kotlinx.html.title
 
 internal object HtmlBuilder {
-    fun lagNettoHtml(innsendtSøknad: InnsendtSøknad) = lagHtml(innsendtSøknad, DIV::nettoSeksjon)
-    fun lagBruttoHtml(innsendtSøknad: InnsendtSøknad) = lagHtml(innsendtSøknad, DIV::bruttoSeksjon)
+    fun lagNettoHtml(innsendtDokument: InnsendtDokument) = lagHtml(innsendtDokument, DIV::nettoSeksjon)
+    fun lagBruttoHtml(innsendtDokument: InnsendtDokument) = lagHtml(innsendtDokument, DIV::bruttoSeksjon)
 
     private fun lagHtml(
-        innsendtSøknad: InnsendtSøknad,
-        seksjonFunksjon: DIV.(InnsendtSøknad.Seksjon, InnsendtSøknad.GenerellTekst) -> Unit = DIV::nettoSeksjon
+        innsendtDokument: InnsendtDokument,
+        seksjonFunksjon: DIV.(InnsendtDokument.Seksjon, InnsendtDokument.GenerellTekst) -> Unit = DIV::nettoSeksjon
     ): String {
-        val generellTekst = innsendtSøknad.generellTekst
+        val generellTekst = innsendtDokument.generellTekst
         return createHTMLDocument().html {
             attributes["xmlns"] = "http://www.w3.org/1999/xhtml"
-            lang = innsendtSøknad.språk.langAtributt
+            lang = innsendtDokument.språk.langAtributt
             head {
-                title(innsendtSøknad.generellTekst.tittel)
+                title(innsendtDokument.generellTekst.tittel)
                 pdfaMetaTags()
                 fontimports()
-                bookmarks(innsendtSøknad.seksjoner)
+                bookmarks(innsendtDokument.seksjoner)
                 søknadPdfStyle()
             }
             body {
                 h1 {
                     id = "hovedoverskrift"
-                    +innsendtSøknad.generellTekst.hovedOverskrift
+                    +innsendtDokument.generellTekst.hovedOverskrift
                 }
                 div(classes = "infoblokk") {
                     id = "infoblokk"
-                    boldSpanP(boldTekst = generellTekst.fnr, vanligTekst = innsendtSøknad.infoBlokk.fødselsnummer)
-                    boldSpanP(boldTekst = generellTekst.datoSendt, vanligTekst = innsendtSøknad.infoBlokk.datoSendt)
+                    boldSpanP(boldTekst = generellTekst.fnr, vanligTekst = innsendtDokument.infoBlokk.fødselsnummer)
+                    boldSpanP(boldTekst = generellTekst.datoSendt, vanligTekst = innsendtDokument.infoBlokk.datoSendt)
                 }
-                innsendtSøknad.seksjoner.forEach { seksjon ->
+                innsendtDokument.seksjoner.forEach { seksjon ->
                     div(classes = "seksjon") {
                         seksjonFunksjon(seksjon, generellTekst)
                     }
