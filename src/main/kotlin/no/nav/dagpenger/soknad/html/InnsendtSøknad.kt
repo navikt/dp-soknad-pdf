@@ -5,7 +5,8 @@ import java.time.format.DateTimeFormatter
 
 internal data class InnsendtSøknad(
     val seksjoner: List<Seksjon>,
-    val metaInfo: MetaInfo
+    val generellTekst: GenerellTekst,
+    val språk: DokumentSpråk
 ) {
 
     lateinit var infoBlokk: InfoBlokk
@@ -42,10 +43,12 @@ internal data class InnsendtSøknad(
     data class Hjelpetekst(val tekst: String, val tittel: String? = null)
     data class InfoTekst(val tittel: String?, val tekst: String, val type: Infotype)
 
-    data class MetaInfo(
-        val språk: DokumentSpråk = DokumentSpråk.BOKMÅL,
-        val hovedOverskrift: String = språk.hovedOverskrift,
-        val tittel: String = språk.tittel,
+    data class GenerellTekst(
+        val hovedOverskrift: String,
+        val tittel: String,
+        val svar: String,
+        val datoSendt: String,
+        val fnr: String
     )
 
     data class InfoBlokk(val fødselsnummer: String, val innsendtTidspunkt: LocalDateTime) {
@@ -70,31 +73,16 @@ internal data class InnsendtSøknad(
 
     enum class DokumentSpråk(
         val langAtributt: String,
-        val svar: String,
-        val fødselsnummer: String,
-        val datoSendt: String,
-        val hovedOverskrift: String,
-        val tittel: String,
         val boolean: (Boolean) -> String
     ) {
         BOKMÅL(
             "no",
-            "Svar",
-            "Fødselsnummer",
-            "Dato sendt",
-            "Søknad om dagpenger",
-            "Søknad om dagpenger",
             { b: Boolean ->
                 if (b) "Ja" else "Nei"
             }
         ),
         ENGELSK(
             "en",
-            "Answer",
-            "Social security number",
-            "Date sent",
-            "TODO: hovedoverskrift engelsk",
-            "TODO: hovedoverskrift engelsk",
             { b: Boolean ->
                 if (b) "Yes" else "No"
             }

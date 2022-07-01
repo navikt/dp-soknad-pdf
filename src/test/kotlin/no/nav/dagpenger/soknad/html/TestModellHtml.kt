@@ -163,9 +163,14 @@ object TestModellHtml {
             spmOgSvarMedHjelpetekstSeksjon,
             spmOgSvarMedHjelpetekstOgOppfølgingSeksjon
         ),
-        metaInfo = InnsendtSøknad.MetaInfo(
-            hovedOverskrift = "Søknad om dagpenger"
-        )
+        generellTekst = InnsendtSøknad.GenerellTekst(
+            hovedOverskrift = "Søknad om dagpenger",
+            tittel = "Søknad om dagpenger",
+            svar = "Svar",
+            datoSendt = "Dato sendt",
+            fnr = "fødselsnummer"
+        ),
+        språk = InnsendtSøknad.DokumentSpråk.BOKMÅL
     ).apply {
         infoBlokk = InnsendtSøknad.InfoBlokk("12345678910", LocalDateTime.now())
     }

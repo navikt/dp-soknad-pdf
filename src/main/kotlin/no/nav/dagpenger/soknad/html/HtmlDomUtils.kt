@@ -12,7 +12,7 @@ import kotlinx.html.p
 import kotlinx.html.span
 import kotlinx.html.ul
 import kotlinx.html.unsafe
-import no.nav.dagpenger.soknad.html.InnsendtSøknad.DokumentSpråk
+import no.nav.dagpenger.soknad.html.InnsendtSøknad.GenerellTekst
 import no.nav.dagpenger.soknad.html.InnsendtSøknad.PdfAMetaTagger
 import no.nav.dagpenger.soknad.html.InnsendtSøknad.SporsmalSvar
 import org.apache.commons.text.translate.EntityArrays.HTML40_EXTENDED_UNESCAPE
@@ -107,33 +107,33 @@ private fun tilleggsinformasjonOverskrift(info: InnsendtSøknad.InfoTekst): Stri
     return overskrift
 }
 
-private fun DIV.svar(språk: DokumentSpråk, svar: InnsendtSøknad.Svar, brutto: Boolean = false) {
+private fun DIV.svar(tekst: GenerellTekst, svar: InnsendtSøknad.Svar, brutto: Boolean = false) {
     when (svar) {
-        is InnsendtSøknad.EnkeltSvar -> boldSpanP(språk.svar, svar.tekst)
+        is InnsendtSøknad.EnkeltSvar -> boldSpanP(tekst.svar, svar.tekst)
         is InnsendtSøknad.FlerSvar -> flersvar(svar, brutto)
         InnsendtSøknad.IngenSvar -> {}
     }
 }
 
-internal fun DIV.nettoSeksjon(seksjon: InnsendtSøknad.Seksjon, språk: DokumentSpråk) {
+internal fun DIV.nettoSeksjon(seksjon: InnsendtSøknad.Seksjon, tekst: GenerellTekst) {
     id = seksjonId(seksjon.overskrift)
     h2 { +seksjon.overskrift }
-    seksjon.spmSvar.forEach { nettoSpørsmål(it, språk) }
+    seksjon.spmSvar.forEach { nettoSpørsmål(it, tekst) }
 }
 
-private fun DIV.nettoSpørsmål(spmSvar: SporsmalSvar, språk: DokumentSpråk) {
+private fun DIV.nettoSpørsmål(spmSvar: SporsmalSvar, tekst: GenerellTekst) {
     div {
         h3 { +spmSvar.sporsmal }
-        svar(språk, spmSvar.svar)
+        svar(tekst, spmSvar.svar)
         spmSvar.oppfølgingspørmål.forEach { oppfølging ->
             oppfølging.spørsmålOgSvar.forEach {
-                nettoSpørsmål(it, språk)
+                nettoSpørsmål(it, tekst)
             }
         }
     }
 }
 
-internal fun DIV.bruttoSeksjon(seksjon: InnsendtSøknad.Seksjon, språk: DokumentSpråk) {
+internal fun DIV.bruttoSeksjon(seksjon: InnsendtSøknad.Seksjon, tekst: GenerellTekst) {
     id = seksjonId(seksjon.overskrift)
     h2 { +seksjon.overskrift }
     seksjon.beskrivelse?.also { p(classes = "infotekst") { +seksjon.beskrivelse } }
@@ -144,11 +144,11 @@ internal fun DIV.bruttoSeksjon(seksjon: InnsendtSøknad.Seksjon, språk: Dokumen
         }
     }
     seksjon.spmSvar.forEach {
-        bruttoSpørsmål(it, språk)
+        bruttoSpørsmål(it, tekst)
     }
 }
 
-private fun DIV.bruttoSpørsmål(spmSvar: SporsmalSvar, språk: DokumentSpråk) {
+private fun DIV.bruttoSpørsmål(spmSvar: SporsmalSvar, tekst: GenerellTekst) {
     div {
         h3 { +spmSvar.sporsmal }
         spmSvar.beskrivelse?.also { p(classes = "infotekst") { +spmSvar.beskrivelse } }
@@ -158,10 +158,10 @@ private fun DIV.bruttoSpørsmål(spmSvar: SporsmalSvar, språk: DokumentSpråk) 
                 p { +spmSvar.hjelpetekst.tekst }
             }
         }
-        svar(språk, spmSvar.svar, true)
+        svar(tekst, spmSvar.svar, true)
         spmSvar.oppfølgingspørmål.forEach { oppfølging ->
             oppfølging.spørsmålOgSvar.forEach {
-                bruttoSpørsmål(it, språk)
+                bruttoSpørsmål(it, tekst)
             }
         }
     }

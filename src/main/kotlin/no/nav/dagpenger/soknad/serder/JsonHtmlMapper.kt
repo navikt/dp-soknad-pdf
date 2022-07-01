@@ -39,7 +39,11 @@ internal class JsonHtmlMapper(
             "int" -> EnkeltSvar(this["svar"].asText())
             "boolean" -> EnkeltSvar(språk.boolean(this["svar"].asBoolean()))
             "localdate" -> EnkeltSvar(this["svar"].asLocalDate().dagMånedÅr())
-            "periode" -> EnkeltSvar("${this["svar"]["fom"].asLocalDate().dagMånedÅr()} - ${this["svar"]["tom"].asLocalDate().dagMånedÅr()}")
+            "periode" -> EnkeltSvar(
+                "${
+                this["svar"]["fom"].asLocalDate().dagMånedÅr()
+                } - ${this["svar"]["tom"].asLocalDate().dagMånedÅr()}"
+            )
             "generator" -> InnsendtSøknad.IngenSvar
             "envalg" -> EnkeltSvar((oppslag.lookup(this["svar"].asText()) as Oppslag.TekstObjekt.SvaralternativTekstObjekt).text)
             "flervalg" -> InnsendtSøknad.FlerSvar(this.flerValg())
@@ -114,7 +118,8 @@ internal class JsonHtmlMapper(
     fun parse(): InnsendtSøknad {
         return InnsendtSøknad(
             seksjoner = parse(søknadsData),
-            metaInfo = InnsendtSøknad.MetaInfo(språk = InnsendtSøknad.DokumentSpråk.BOKMÅL),
+            generellTekst = oppslag.generellTekst(),
+            språk = språk
         )
     }
 }
@@ -127,6 +132,7 @@ private fun JsonNode.dokumentTekst(): String {
 
 private fun LocalDate.dagMånedÅr(): String =
     this.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
+
 private fun LocalDateTime.dagMånedÅr(): String =
     this.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
 

@@ -3,10 +3,11 @@ package no.nav.dagpenger.soknad.serder
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import mu.KotlinLogging
+import no.nav.dagpenger.soknad.html.InnsendtSøknad
 
 private val logger = KotlinLogging.logger { }
 
-internal class Oppslag(tekstJson: String) {
+internal class Oppslag(private val tekstJson: String) {
     private val objectMapper = jacksonObjectMapper()
     private val tekstMap = parse(tekstJson)
     fun lookup(id: String): TekstObjekt = tekstMap[id] ?: throw IllegalArgumentException("Fant ikke tekst til id $id")
@@ -64,9 +65,20 @@ internal class Oppslag(tekstJson: String) {
         return map
     }
 
+    internal fun generellTekst(): InnsendtSøknad.GenerellTekst {
+        return objectMapper.readTree(tekstJson).apptekster().let {
+            InnsendtSøknad.GenerellTekst(
+                hovedOverskrift = it["pdf.hovedoverskrift"].asText(),
+                tittel = it["pdf.tittel"].asText(),
+                svar = it["pdf.svar"].asText(),
+                datoSendt = it["pdf.datosendt"].asText(),
+                fnr = it["pdf.fnr"].asText()
+            )
+        }
+    }
+
     sealed class TekstObjekt(val textId: String, val description: String?, val helpText: HelpText?) {
         class FaktaTekstObjekt(
-            // todo: kan vi fjerne unit?
             val unit: String? = null,
             val text: String,
             textId: String,
@@ -105,3 +117,4 @@ private fun JsonNode.helpText(): Oppslag.TekstObjekt.HelpText? =
 private fun JsonNode.seksjoner() = this["sanityTexts"]["seksjoner"]
 private fun JsonNode.svaralternativer() = this["sanityTexts"]["svaralternativer"]
 private fun JsonNode.fakta() = this["sanityTexts"]["fakta"]
+private fun JsonNode.apptekster(): JsonNode = this["sanityTexts"]["apptekster"]

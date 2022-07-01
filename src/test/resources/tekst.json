@@ -121,7 +121,17 @@
         "textId": "flervalg2",
         "text": "flervalg 2"
       }
-    ]
+    ],
+    "apptekster": {
+      "pdf.tittel": "Søknad om dagpenger",
+      "pdf.datosendt": "Dato sendt",
+      "pdf.fnr": "Fødselsnummer",
+      "pdf.hovedoverskrift": "Søknad om dagpenger",
+      "pdf.svar": "svar",
+      "pdfa.description": "Søknad om dagpenger",
+      "pdfa.subject" : "Dagpenger",
+      "pdfa.author": "NAV Dagpenger"
+    }
   }
 }
 

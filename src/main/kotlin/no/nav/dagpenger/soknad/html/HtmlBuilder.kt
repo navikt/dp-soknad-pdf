@@ -18,14 +18,14 @@ internal object HtmlBuilder {
 
     private fun lagHtml(
         innsendtSøknad: InnsendtSøknad,
-        seksjonFunksjon: DIV.(InnsendtSøknad.Seksjon, InnsendtSøknad.DokumentSpråk) -> Unit = DIV::nettoSeksjon
+        seksjonFunksjon: DIV.(InnsendtSøknad.Seksjon, InnsendtSøknad.GenerellTekst) -> Unit = DIV::nettoSeksjon
     ): String {
-        val språk = innsendtSøknad.metaInfo.språk
+        val generellTekst = innsendtSøknad.generellTekst
         return createHTMLDocument().html {
             attributes["xmlns"] = "http://www.w3.org/1999/xhtml"
-            lang = språk.langAtributt
+            lang = innsendtSøknad.språk.langAtributt
             head {
-                title(innsendtSøknad.metaInfo.tittel)
+                title(innsendtSøknad.generellTekst.tittel)
                 pdfaMetaTags()
                 fontimports()
                 bookmarks(innsendtSøknad.seksjoner)
@@ -34,16 +34,16 @@ internal object HtmlBuilder {
             body {
                 h1 {
                     id = "hovedoverskrift"
-                    +innsendtSøknad.metaInfo.hovedOverskrift
+                    +innsendtSøknad.generellTekst.hovedOverskrift
                 }
                 div(classes = "infoblokk") {
                     id = "infoblokk"
-                    boldSpanP(boldTekst = språk.fødselsnummer, vanligTekst = innsendtSøknad.infoBlokk.fødselsnummer)
-                    boldSpanP(boldTekst = språk.datoSendt, vanligTekst = innsendtSøknad.infoBlokk.datoSendt)
+                    boldSpanP(boldTekst = generellTekst.fnr, vanligTekst = innsendtSøknad.infoBlokk.fødselsnummer)
+                    boldSpanP(boldTekst = generellTekst.datoSendt, vanligTekst = innsendtSøknad.infoBlokk.datoSendt)
                 }
                 innsendtSøknad.seksjoner.forEach { seksjon ->
                     div(classes = "seksjon") {
-                        seksjonFunksjon(seksjon, språk)
+                        seksjonFunksjon(seksjon, generellTekst)
                     }
                 }
             }
