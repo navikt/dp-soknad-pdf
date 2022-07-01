@@ -1,4 +1,4 @@
-package no.nav.dagpenger.soknad.html
+package no.nav.dagpenger.innsending.html
 
 import kotlinx.html.DIV
 import kotlinx.html.body

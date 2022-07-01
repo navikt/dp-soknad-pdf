@@ -1,4 +1,4 @@
-package no.nav.dagpenger.soknad.pdf
+package no.nav.dagpenger.innsending.pdf
 
 import io.ktor.client.engine.mock.MockEngine
 import io.ktor.client.engine.mock.respond
@@ -7,7 +7,7 @@ import io.ktor.http.HttpMethod
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.headersOf
 import kotlinx.coroutines.runBlocking
-import no.nav.dagpenger.soknad.ArkiverbartDokument
+import no.nav.dagpenger.innsending.ArkiverbartDokument
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull

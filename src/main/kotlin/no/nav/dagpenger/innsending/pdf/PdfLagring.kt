@@ -1,4 +1,4 @@
-package no.nav.dagpenger.soknad.pdf
+package no.nav.dagpenger.innsending.pdf
 
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -15,8 +15,8 @@ import io.ktor.http.ContentType
 import io.ktor.http.Headers
 import io.ktor.http.HttpHeaders
 import io.ktor.serialization.jackson.jackson
-import no.nav.dagpenger.soknad.ArkiverbartDokument
-import no.nav.dagpenger.soknad.LagretDokument
+import no.nav.dagpenger.innsending.ArkiverbartDokument
+import no.nav.dagpenger.innsending.LagretDokument
 
 class PdfLagring(
     private val baseUrl: String,

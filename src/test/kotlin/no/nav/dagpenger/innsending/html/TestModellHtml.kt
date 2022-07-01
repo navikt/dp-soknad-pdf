@@ -1,8 +1,8 @@
-package no.nav.dagpenger.soknad.html
+package no.nav.dagpenger.innsending.html
 
-import no.nav.dagpenger.soknad.html.Innsending.EnkeltSvar
-import no.nav.dagpenger.soknad.html.Innsending.SpørmsålOgSvarGruppe
-import no.nav.dagpenger.soknad.html.Innsending.SvarAlternativ
+import no.nav.dagpenger.innsending.html.Innsending.EnkeltSvar
+import no.nav.dagpenger.innsending.html.Innsending.SpørmsålOgSvarGruppe
+import no.nav.dagpenger.innsending.html.Innsending.SvarAlternativ
 import java.time.LocalDateTime
 
 object TestModellHtml {

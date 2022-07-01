@@ -1,4 +1,4 @@
-package no.nav.dagpenger.soknad.pdf
+package no.nav.dagpenger.innsending.pdf
 
 import com.openhtmltopdf.outputdevice.helper.BaseRendererBuilder
 import com.openhtmltopdf.pdfboxout.PdfRendererBuilder

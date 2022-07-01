@@ -1,4 +1,4 @@
-package no.nav.dagpenger.soknad.html
+package no.nav.dagpenger.innsending.html
 
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter

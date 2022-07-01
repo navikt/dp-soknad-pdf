@@ -1,4 +1,4 @@
-package no.nav.dagpenger.soknad.html
+package no.nav.dagpenger.innsending.html
 
 import kotlinx.html.DIV
 import kotlinx.html.HEAD
@@ -12,9 +12,9 @@ import kotlinx.html.p
 import kotlinx.html.span
 import kotlinx.html.ul
 import kotlinx.html.unsafe
-import no.nav.dagpenger.soknad.html.Innsending.GenerellTekst
-import no.nav.dagpenger.soknad.html.Innsending.PdfAMetaTagger
-import no.nav.dagpenger.soknad.html.Innsending.SporsmalSvar
+import no.nav.dagpenger.innsending.html.Innsending.GenerellTekst
+import no.nav.dagpenger.innsending.html.Innsending.PdfAMetaTagger
+import no.nav.dagpenger.innsending.html.Innsending.SporsmalSvar
 import org.apache.commons.text.translate.EntityArrays.HTML40_EXTENDED_UNESCAPE
 import org.apache.commons.text.translate.EntityArrays.ISO8859_1_UNESCAPE
 

@@ -1,8 +1,8 @@
-package no.nav.dagpenger.soknad
+package no.nav.dagpenger.innsending
 
-import no.nav.dagpenger.soknad.html.HtmlBuilder
-import no.nav.dagpenger.soknad.html.Innsending
-import no.nav.dagpenger.soknad.pdf.PdfBuilder
+import no.nav.dagpenger.innsending.html.HtmlBuilder
+import no.nav.dagpenger.innsending.html.Innsending
+import no.nav.dagpenger.innsending.pdf.PdfBuilder
 
 internal class ArkiverbartDokument private constructor(val variant: DokumentVariant, val pdf: ByteArray) {
     internal val filnavn = "${variant.name.lowercase()}.pdf"

@@ -1,9 +1,9 @@
-package no.nav.dagpenger.soknad.serder
+package no.nav.dagpenger.innsending.serder
 
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import mu.KotlinLogging
-import no.nav.dagpenger.soknad.html.Innsending
+import no.nav.dagpenger.innsending.html.Innsending
 
 private val logger = KotlinLogging.logger { }
 

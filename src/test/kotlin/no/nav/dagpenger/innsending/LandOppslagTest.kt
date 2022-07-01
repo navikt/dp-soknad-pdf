@@ -1,7 +1,7 @@
-package no.nav.dagpenger.soknad
+package no.nav.dagpenger.innsending
 
-import no.nav.dagpenger.soknad.html.Innsending
-import no.nav.dagpenger.soknad.html.Innsending.InnsendingsSpråk.BOKMÅL
+import no.nav.dagpenger.innsending.html.Innsending
+import no.nav.dagpenger.innsending.html.Innsending.InnsendingsSpråk.BOKMÅL
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows

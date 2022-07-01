@@ -1,12 +1,12 @@
-package no.nav.dagpenger.soknad
+package no.nav.dagpenger.innsending
 
 import com.fasterxml.jackson.databind.JsonNode
 import kotlinx.coroutines.runBlocking
 import mu.KotlinLogging
-import no.nav.dagpenger.soknad.html.Innsending
-import no.nav.dagpenger.soknad.html.Innsending.InnsendingsSpråk.BOKMÅL
-import no.nav.dagpenger.soknad.html.Innsending.InnsendingsSpråk.ENGELSK
-import no.nav.dagpenger.soknad.pdf.PdfLagring
+import no.nav.dagpenger.innsending.html.Innsending
+import no.nav.dagpenger.innsending.html.Innsending.InnsendingsSpråk.BOKMÅL
+import no.nav.dagpenger.innsending.html.Innsending.InnsendingsSpråk.ENGELSK
+import no.nav.dagpenger.innsending.pdf.PdfLagring
 import no.nav.helse.rapids_rivers.JsonMessage
 import no.nav.helse.rapids_rivers.MessageContext
 import no.nav.helse.rapids_rivers.RapidsConnection

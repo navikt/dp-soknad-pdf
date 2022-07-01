@@ -1,8 +1,8 @@
-package no.nav.dagpenger.soknad
+package no.nav.dagpenger.innsending
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import no.nav.dagpenger.soknad.html.Innsending.InnsendingsSpråk
-import no.nav.dagpenger.soknad.pdf.fileAsString
+import no.nav.dagpenger.innsending.html.Innsending.InnsendingsSpråk
+import no.nav.dagpenger.innsending.pdf.fileAsString
 
 object LandOppslag {
     // countries.json hentet fra https://github.com/stefangabos/world_countries

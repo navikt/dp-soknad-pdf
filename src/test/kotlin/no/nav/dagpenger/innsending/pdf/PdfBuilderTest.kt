@@ -1,7 +1,7 @@
-package no.nav.dagpenger.soknad.pdf
+package no.nav.dagpenger.innsending.pdf
 
-import no.nav.dagpenger.soknad.html.HtmlBuilder
-import no.nav.dagpenger.soknad.html.TestModellHtml
+import no.nav.dagpenger.innsending.html.HtmlBuilder
+import no.nav.dagpenger.innsending.html.TestModellHtml
 import org.junit.jupiter.api.Assertions.assertDoesNotThrow
 import org.junit.jupiter.api.Test
 import org.verapdf.pdfa.Foundries

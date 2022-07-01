@@ -1,11 +1,11 @@
-package no.nav.dagpenger.soknad.serder
+package no.nav.dagpenger.innsending.serder
 
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import no.nav.dagpenger.soknad.LandOppslag
-import no.nav.dagpenger.soknad.html.Innsending
-import no.nav.dagpenger.soknad.html.Innsending.EnkeltSvar
-import no.nav.dagpenger.soknad.html.Innsending.Svar
+import no.nav.dagpenger.innsending.LandOppslag
+import no.nav.dagpenger.innsending.html.Innsending
+import no.nav.dagpenger.innsending.html.Innsending.EnkeltSvar
+import no.nav.dagpenger.innsending.html.Innsending.Svar
 import no.nav.helse.rapids_rivers.asLocalDate
 import no.nav.helse.rapids_rivers.asLocalDateTime
 import java.time.LocalDate
