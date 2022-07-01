@@ -26,7 +26,7 @@ internal object HtmlBuilder {
             lang = innsending.språk.langAtributt
             head {
                 title(innsending.generellTekst.tittel)
-                pdfaMetaTags()
+                pdfaMetaTags(innsending)
                 fontimports()
                 bookmarks(innsending.seksjoner)
                 søknadPdfStyle()

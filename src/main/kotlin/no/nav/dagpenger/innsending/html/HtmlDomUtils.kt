@@ -13,7 +13,6 @@ import kotlinx.html.span
 import kotlinx.html.ul
 import kotlinx.html.unsafe
 import no.nav.dagpenger.innsending.html.Innsending.GenerellTekst
-import no.nav.dagpenger.innsending.html.Innsending.PdfAMetaTagger
 import no.nav.dagpenger.innsending.html.Innsending.SporsmalSvar
 import org.apache.commons.text.translate.EntityArrays.HTML40_EXTENDED_UNESCAPE
 import org.apache.commons.text.translate.EntityArrays.ISO8859_1_UNESCAPE
@@ -34,19 +33,21 @@ internal fun String.xhtmlCompliant() = this
 fun String.replace(pairs: Map<String, String>) =
     pairs.entries.fold(this) { acc, (old, new) -> acc.replace(old, new) }
 
-internal fun HEAD.pdfaMetaTags() {
-    meta {
-        name = "description"
-        content = PdfAMetaTagger.description
-    }
-    meta {
-        name = "subject"
-        content = PdfAMetaTagger.subject
-    }
+internal fun HEAD.pdfaMetaTags(innsending: Innsending) {
+    with(innsending.pdfAMetaTagger) {
+        meta {
+            name = "description"
+            content = description
+        }
+        meta {
+            name = "subject"
+            content = subject
+        }
 
-    meta {
-        name = "author"
-        content = PdfAMetaTagger.author
+        meta {
+            name = "author"
+            content = author
+        }
     }
 }
 

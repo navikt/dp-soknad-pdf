@@ -6,16 +6,20 @@ import java.time.format.DateTimeFormatter
 internal data class Innsending(
     val seksjoner: List<Seksjon>,
     val generellTekst: GenerellTekst,
-    val språk: InnsendingsSpråk
+    val språk: InnsendingsSpråk,
+    val pdfAMetaTagger: PdfAMetaTagger
 ) {
 
     lateinit var infoBlokk: InfoBlokk
 
-    object PdfAMetaTagger {
-        const val description: String = "Søknad om dagpenger"
-        const val subject: String = "Dagpenger"
-        const val author: String = "NAV"
-    }
+    open class PdfAMetaTagger(
+        val description: String,
+        val subject: String,
+        val author: String,
+    )
+
+    object DefaultPdfAMetaTagger :
+        PdfAMetaTagger(description = "Søknad om dagpenger", subject = "Dagpenger", author = "NAV Dagpenger")
 
     data class Seksjon(
         val overskrift: String,

@@ -170,7 +170,8 @@ object TestModellHtml {
             datoSendt = "Dato sendt",
             fnr = "fødselsnummer"
         ),
-        språk = Innsending.InnsendingsSpråk.BOKMÅL
+        språk = Innsending.InnsendingsSpråk.BOKMÅL,
+        pdfAMetaTagger = Innsending.DefaultPdfAMetaTagger
     ).apply {
         infoBlokk = Innsending.InfoBlokk("12345678910", LocalDateTime.now())
     }

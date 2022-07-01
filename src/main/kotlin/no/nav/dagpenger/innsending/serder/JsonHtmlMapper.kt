@@ -119,7 +119,8 @@ internal class JsonHtmlMapper(
         return Innsending(
             seksjoner = parse(innsendingsData),
             generellTekst = oppslag.generellTekst(),
-            språk = språk
+            språk = språk,
+            pdfAMetaTagger = oppslag.pdfaMetaTags()
         )
     }
 }

@@ -65,16 +65,26 @@ internal class Oppslag(private val tekstJson: String) {
         return map
     }
 
-    internal fun generellTekst(): Innsending.GenerellTekst {
-        return objectMapper.readTree(tekstJson).apptekster().let {
-            Innsending.GenerellTekst(
-                hovedOverskrift = it["pdf.hovedoverskrift"].asText(),
-                tittel = it["pdf.tittel"].asText(),
-                svar = it["pdf.svar"].asText(),
-                datoSendt = it["pdf.datosendt"].asText(),
-                fnr = it["pdf.fnr"].asText()
+    internal fun generellTekst(): Innsending.GenerellTekst = objectMapper.readTree(tekstJson).apptekster().let {
+        Innsending.GenerellTekst(
+            hovedOverskrift = it["pdf.hovedoverskrift"].asText(),
+            tittel = it["pdf.tittel"].asText(),
+            svar = it["pdf.svar"].asText(),
+            datoSendt = it["pdf.datosendt"].asText(),
+            fnr = it["pdf.fnr"].asText()
+        )
+    }
+
+    fun pdfaMetaTags(): Innsending.PdfAMetaTagger = try {
+        objectMapper.readTree(tekstJson).apptekster().let {
+            Innsending.PdfAMetaTagger(
+                description = it["pdfa.description"].asText(),
+                subject = it["pdfa.subject"].asText(),
+                author = it["pdfa.author"].asText()
             )
         }
+    } catch (nullpointer: NullPointerException) {
+        Innsending.DefaultPdfAMetaTagger
     }
 
     sealed class TekstObjekt(val textId: String, val description: String?, val helpText: HelpText?) {
