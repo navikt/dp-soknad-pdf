@@ -65,23 +65,13 @@ internal class JsonHtmlMapper(
 
     private fun alertText(tekstObjekt: Oppslag.TekstObjekt.SvaralternativTekstObjekt): InnsendtSøknad.InfoTekst? {
         return tekstObjekt.alertText?.let { alerttext ->
-            infoTypefraSanityJson(typenøkkel = alerttext.type)?.let { infotype ->
+            InnsendtSøknad.Infotype.fraSanityJson(typenøkkel = alerttext.type)?.let { infotype ->
                 InnsendtSøknad.InfoTekst(
                     tittel = alerttext.title,
                     tekst = alerttext.body,
                     type = infotype
                 )
             }
-        }
-    }
-
-    private fun infoTypefraSanityJson(typenøkkel: String) = when (typenøkkel) {
-        "info" -> InnsendtSøknad.Infotype.INFORMASJON
-        "error" -> InnsendtSøknad.Infotype.FEIL
-        "warning" -> InnsendtSøknad.Infotype.ADVARSEL
-        "success" -> null
-        else -> {
-            throw IllegalArgumentException("ukjent alerttekst type $typenøkkel")
         }
     }
 

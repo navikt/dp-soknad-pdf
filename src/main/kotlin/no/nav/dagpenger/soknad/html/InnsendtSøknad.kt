@@ -53,8 +53,19 @@ internal data class InnsendtSøknad(
     }
 
     enum class Infotype() {
-//        "info" | "warning" | "error" | "success";
-        INFORMASJON, ADVARSEL, FEIL
+        INFORMASJON, ADVARSEL, FEIL;
+
+        companion object {
+            fun fraSanityJson(typenøkkel: String) = when (typenøkkel) {
+                "info" -> Infotype.INFORMASJON
+                "error" -> FEIL
+                "warning" -> ADVARSEL
+                "success" -> null
+                else -> {
+                    throw IllegalArgumentException("ukjent alerttekst type $typenøkkel")
+                }
+            }
+        }
     }
 
     enum class SøknadSpråk(
