@@ -3,9 +3,9 @@ package no.nav.dagpenger.soknad
 import com.fasterxml.jackson.databind.JsonNode
 import kotlinx.coroutines.runBlocking
 import mu.KotlinLogging
-import no.nav.dagpenger.soknad.html.InnsendtDokument
-import no.nav.dagpenger.soknad.html.InnsendtDokument.DokumentSpråk.BOKMÅL
-import no.nav.dagpenger.soknad.html.InnsendtDokument.DokumentSpråk.ENGELSK
+import no.nav.dagpenger.soknad.html.Innsending
+import no.nav.dagpenger.soknad.html.Innsending.InnsendingsSpråk.BOKMÅL
+import no.nav.dagpenger.soknad.html.Innsending.InnsendingsSpråk.ENGELSK
 import no.nav.dagpenger.soknad.pdf.PdfLagring
 import no.nav.helse.rapids_rivers.JsonMessage
 import no.nav.helse.rapids_rivers.MessageContext
@@ -18,7 +18,7 @@ import java.util.UUID
 internal class PdfBehovLøser(
     rapidsConnection: RapidsConnection,
     private val pdfLagring: PdfLagring,
-    private val soknadSupplier: suspend (soknadId: UUID, dokumentSpråk: InnsendtDokument.DokumentSpråk) -> InnsendtDokument,
+    private val innsendingSupplier: suspend (soknadId: UUID, innsendingsSpråk: Innsending.InnsendingsSpråk) -> Innsending,
 ) : River.PacketListener {
     companion object {
         private val logg = KotlinLogging.logger {}
@@ -40,10 +40,10 @@ internal class PdfBehovLøser(
         val ident = packet.ident()
         logg.info("Mottok behov for søknadspdf med uuid $soknadId")
         runBlocking {
-            soknadSupplier(soknadId, packet.dokumentSpråk())
+            innsendingSupplier(soknadId, packet.dokumentSpråk())
                 .apply {
                     infoBlokk =
-                        InnsendtDokument.InfoBlokk(fødselsnummer = ident, innsendtTidspunkt = packet.innsendtTidspunkt())
+                        Innsending.InfoBlokk(fødselsnummer = ident, innsendtTidspunkt = packet.innsendtTidspunkt())
                 }
                 .let { lagArkiverbartDokument(it) }
                 .let { dokumenter ->
@@ -61,7 +61,7 @@ internal class PdfBehovLøser(
     }
 }
 
-private fun JsonMessage.dokumentSpråk(): InnsendtDokument.DokumentSpråk = when (this["dokument_språk"].asText()) {
+private fun JsonMessage.dokumentSpråk(): Innsending.InnsendingsSpråk = when (this["dokument_språk"].asText()) {
     "en" -> ENGELSK
     "nb" -> BOKMÅL
     else -> BOKMÅL

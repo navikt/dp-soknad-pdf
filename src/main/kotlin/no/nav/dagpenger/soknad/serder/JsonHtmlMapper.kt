@@ -3,9 +3,9 @@ package no.nav.dagpenger.soknad.serder
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import no.nav.dagpenger.soknad.LandOppslag
-import no.nav.dagpenger.soknad.html.InnsendtDokument
-import no.nav.dagpenger.soknad.html.InnsendtDokument.EnkeltSvar
-import no.nav.dagpenger.soknad.html.InnsendtDokument.Svar
+import no.nav.dagpenger.soknad.html.Innsending
+import no.nav.dagpenger.soknad.html.Innsending.EnkeltSvar
+import no.nav.dagpenger.soknad.html.Innsending.Svar
 import no.nav.helse.rapids_rivers.asLocalDate
 import no.nav.helse.rapids_rivers.asLocalDateTime
 import java.time.LocalDate
@@ -13,17 +13,17 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 internal class JsonHtmlMapper(
-    private val søknadsData: String,
+    private val innsendingsData: String,
     tekst: String,
-    private val språk: InnsendtDokument.DokumentSpråk = InnsendtDokument.DokumentSpråk.BOKMÅL,
+    private val språk: Innsending.InnsendingsSpråk = Innsending.InnsendingsSpråk.BOKMÅL,
 ) {
     private val oppslag = Oppslag(tekst)
     private val objectMapper = jacksonObjectMapper()
 
-    private fun parse(søknadsData: String): List<InnsendtDokument.Seksjon> {
-        return objectMapper.readTree(søknadsData)["seksjoner"].map {
+    private fun parse(innsendingsData: String): List<Innsending.Seksjon> {
+        return objectMapper.readTree(innsendingsData)["seksjoner"].map {
             val tekstObjekt = oppslag.lookup(it["beskrivendeId"].asText()) as Oppslag.TekstObjekt.SeksjonTekstObjekt
-            InnsendtDokument.Seksjon(
+            Innsending.Seksjon(
                 overskrift = tekstObjekt.title,
                 beskrivelse = tekstObjekt.description,
                 hjelpetekst = tekstObjekt.helpText(),
@@ -44,21 +44,21 @@ internal class JsonHtmlMapper(
                 this["svar"]["fom"].asLocalDate().dagMånedÅr()
                 } - ${this["svar"]["tom"].asLocalDate().dagMånedÅr()}"
             )
-            "generator" -> InnsendtDokument.IngenSvar
+            "generator" -> Innsending.IngenSvar
             "envalg" -> EnkeltSvar((oppslag.lookup(this["svar"].asText()) as Oppslag.TekstObjekt.SvaralternativTekstObjekt).text)
-            "flervalg" -> InnsendtDokument.FlerSvar(this.flerValg())
+            "flervalg" -> Innsending.FlerSvar(this.flerValg())
             "land" -> EnkeltSvar(LandOppslag.hentLand(språk, this["svar"].asText()))
             "dokument" -> EnkeltSvar(this.dokumentTekst())
             else -> throw IllegalArgumentException("Ukjent faktumtype $type")
         }
     }
 
-    private fun JsonNode.flerValg(): List<InnsendtDokument.SvarAlternativ> {
+    private fun JsonNode.flerValg(): List<Innsending.SvarAlternativ> {
         return when (this["type"].asText()) {
             "flervalg" -> this["svar"].toList().map { jsonNode ->
                 val jsonAlternativ =
                     (oppslag.lookup(jsonNode.asText()) as Oppslag.TekstObjekt.SvaralternativTekstObjekt)
-                InnsendtDokument.SvarAlternativ(
+                Innsending.SvarAlternativ(
                     jsonAlternativ.text,
                     alertText(jsonAlternativ)
                 )
@@ -67,10 +67,10 @@ internal class JsonHtmlMapper(
         }
     }
 
-    private fun alertText(tekstObjekt: Oppslag.TekstObjekt.SvaralternativTekstObjekt): InnsendtDokument.InfoTekst? {
+    private fun alertText(tekstObjekt: Oppslag.TekstObjekt.SvaralternativTekstObjekt): Innsending.InfoTekst? {
         return tekstObjekt.alertText?.let { alerttext ->
-            InnsendtDokument.Infotype.fraSanityJson(typenøkkel = alerttext.type)?.let { infotype ->
-                InnsendtDokument.InfoTekst(
+            Innsending.Infotype.fraSanityJson(typenøkkel = alerttext.type)?.let { infotype ->
+                Innsending.InfoTekst(
                     tittel = alerttext.title,
                     tekst = alerttext.body,
                     type = infotype
@@ -79,14 +79,14 @@ internal class JsonHtmlMapper(
         }
     }
 
-    private fun JsonNode.generatorfakta(): List<InnsendtDokument.SpørmsålOgSvarGruppe> {
+    private fun JsonNode.generatorfakta(): List<Innsending.SpørmsålOgSvarGruppe> {
         return when (this["type"].asText()) {
             "generator" -> this["svar"].toList().map { liste ->
-                InnsendtDokument.SpørmsålOgSvarGruppe(
+                Innsending.SpørmsålOgSvarGruppe(
                     liste.toList().map { node ->
                         val tekstObjekt =
                             oppslag.lookup(node["beskrivendeId"].asText()) as Oppslag.TekstObjekt.FaktaTekstObjekt
-                        InnsendtDokument.SporsmalSvar(
+                        Innsending.SporsmalSvar(
                             sporsmal = tekstObjekt.text,
                             svar = node.svar(),
                             beskrivelse = tekstObjekt.description,
@@ -102,10 +102,10 @@ internal class JsonHtmlMapper(
         }
     }
 
-    private fun JsonNode.fakta(): List<InnsendtDokument.SporsmalSvar> {
+    private fun JsonNode.fakta(): List<Innsending.SporsmalSvar> {
         return this["fakta"].map { node ->
             val tekstObjekt = oppslag.lookup(node["beskrivendeId"].asText()) as Oppslag.TekstObjekt.FaktaTekstObjekt
-            InnsendtDokument.SporsmalSvar(
+            Innsending.SporsmalSvar(
                 sporsmal = tekstObjekt.text,
                 svar = node.svar(),
                 beskrivelse = tekstObjekt.description,
@@ -115,9 +115,9 @@ internal class JsonHtmlMapper(
         }
     }
 
-    fun parse(): InnsendtDokument {
-        return InnsendtDokument(
-            seksjoner = parse(søknadsData),
+    fun parse(): Innsending {
+        return Innsending(
+            seksjoner = parse(innsendingsData),
             generellTekst = oppslag.generellTekst(),
             språk = språk
         )
@@ -136,6 +136,6 @@ private fun LocalDate.dagMånedÅr(): String =
 private fun LocalDateTime.dagMånedÅr(): String =
     this.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
 
-private fun Oppslag.TekstObjekt.helpText(): InnsendtDokument.Hjelpetekst? {
-    return this.helpText?.let { InnsendtDokument.Hjelpetekst(it.body, it.title) }
+private fun Oppslag.TekstObjekt.helpText(): Innsending.Hjelpetekst? {
+    return this.helpText?.let { Innsending.Hjelpetekst(it.body, it.title) }
 }

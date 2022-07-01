@@ -1,7 +1,7 @@
 package no.nav.dagpenger.soknad
 
-import no.nav.dagpenger.soknad.html.InnsendtDokument
-import no.nav.dagpenger.soknad.html.InnsendtDokument.DokumentSpråk.BOKMÅL
+import no.nav.dagpenger.soknad.html.Innsending
+import no.nav.dagpenger.soknad.html.Innsending.InnsendingsSpråk.BOKMÅL
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -10,7 +10,7 @@ internal class LandOppslagTest {
 
     @Test
     fun `henter riktig land på riktig språk`() {
-        LandOppslag.hentLand(InnsendtDokument.DokumentSpråk.ENGELSK, "NOR").also {
+        LandOppslag.hentLand(Innsending.InnsendingsSpråk.ENGELSK, "NOR").also {
             assertEquals("Norway", it)
         }
         LandOppslag.hentLand(BOKMÅL, "bel").also {

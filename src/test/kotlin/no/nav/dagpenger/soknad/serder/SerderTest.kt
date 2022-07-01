@@ -1,7 +1,7 @@
 package no.nav.dagpenger.soknad.serder
 
 import no.nav.dagpenger.soknad.html.HtmlBuilder
-import no.nav.dagpenger.soknad.html.InnsendtDokument
+import no.nav.dagpenger.soknad.html.Innsending
 import no.nav.dagpenger.soknad.pdf.PdfBuilder
 import no.nav.dagpenger.soknad.serder.Oppslag.TekstObjekt.FaktaTekstObjekt
 import no.nav.dagpenger.soknad.serder.Oppslag.TekstObjekt.SeksjonTekstObjekt
@@ -77,11 +77,11 @@ internal class SerderTest {
     fun `lager riktig html og pfd fra json`() {
         assertDoesNotThrow {
             val h = JsonHtmlMapper(
-                søknadsData = faktaJson,
+                innsendingsData = faktaJson,
                 tekst = tekstJson,
-                språk = InnsendtDokument.DokumentSpråk.BOKMÅL
+                språk = Innsending.InnsendingsSpråk.BOKMÅL
             ).parse().apply {
-                infoBlokk = InnsendtDokument.InfoBlokk("ident", innsendtTidspunkt = LocalDateTime.now())
+                infoBlokk = Innsending.InfoBlokk("ident", innsendtTidspunkt = LocalDateTime.now())
             }
             HtmlBuilder.lagBruttoHtml(h).also {
                 File("build/tmp/test/søknad2.html").writeText(it)

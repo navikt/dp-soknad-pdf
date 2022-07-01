@@ -12,9 +12,9 @@ import kotlinx.html.p
 import kotlinx.html.span
 import kotlinx.html.ul
 import kotlinx.html.unsafe
-import no.nav.dagpenger.soknad.html.InnsendtDokument.GenerellTekst
-import no.nav.dagpenger.soknad.html.InnsendtDokument.PdfAMetaTagger
-import no.nav.dagpenger.soknad.html.InnsendtDokument.SporsmalSvar
+import no.nav.dagpenger.soknad.html.Innsending.GenerellTekst
+import no.nav.dagpenger.soknad.html.Innsending.PdfAMetaTagger
+import no.nav.dagpenger.soknad.html.Innsending.SporsmalSvar
 import org.apache.commons.text.translate.EntityArrays.HTML40_EXTENDED_UNESCAPE
 import org.apache.commons.text.translate.EntityArrays.ISO8859_1_UNESCAPE
 
@@ -50,7 +50,7 @@ internal fun HEAD.pdfaMetaTags() {
     }
 }
 
-internal fun HEAD.bookmarks(seksjoner: List<InnsendtDokument.Seksjon>) {
+internal fun HEAD.bookmarks(seksjoner: List<Innsending.Seksjon>) {
 // TODO: Språktilpassning på statiske bokmerker
     val seksjonBokmerker = seksjoner.map {
         """<bookmark name = "${it.overskrift}" href="#${seksjonId(it.overskrift)}"></bookmark>"""
@@ -77,7 +77,7 @@ internal fun DIV.boldSpanP(boldTekst: String, vanligTekst: String) {
     }
 }
 
-internal fun DIV.flersvar(svar: InnsendtDokument.FlerSvar, brutto: Boolean) {
+internal fun DIV.flersvar(svar: Innsending.FlerSvar, brutto: Boolean) {
     if (svar.alternativ.isNotEmpty()) {
         ul {
             svar.alternativ.forEach {
@@ -99,7 +99,7 @@ internal fun DIV.flersvar(svar: InnsendtDokument.FlerSvar, brutto: Boolean) {
     }
 }
 
-private fun tilleggsinformasjonOverskrift(info: InnsendtDokument.InfoTekst): String {
+private fun tilleggsinformasjonOverskrift(info: Innsending.InfoTekst): String {
     var overskrift = info.type.name.lowercase()
     if (info.tittel != null) {
         overskrift += ": ${info.tittel}"
@@ -107,15 +107,15 @@ private fun tilleggsinformasjonOverskrift(info: InnsendtDokument.InfoTekst): Str
     return overskrift
 }
 
-private fun DIV.svar(tekst: GenerellTekst, svar: InnsendtDokument.Svar, brutto: Boolean = false) {
+private fun DIV.svar(tekst: GenerellTekst, svar: Innsending.Svar, brutto: Boolean = false) {
     when (svar) {
-        is InnsendtDokument.EnkeltSvar -> boldSpanP(tekst.svar, svar.tekst)
-        is InnsendtDokument.FlerSvar -> flersvar(svar, brutto)
-        InnsendtDokument.IngenSvar -> {}
+        is Innsending.EnkeltSvar -> boldSpanP(tekst.svar, svar.tekst)
+        is Innsending.FlerSvar -> flersvar(svar, brutto)
+        Innsending.IngenSvar -> {}
     }
 }
 
-internal fun DIV.nettoSeksjon(seksjon: InnsendtDokument.Seksjon, tekst: GenerellTekst) {
+internal fun DIV.nettoSeksjon(seksjon: Innsending.Seksjon, tekst: GenerellTekst) {
     id = seksjonId(seksjon.overskrift)
     h2 { +seksjon.overskrift }
     seksjon.spmSvar.forEach { nettoSpørsmål(it, tekst) }
@@ -133,7 +133,7 @@ private fun DIV.nettoSpørsmål(spmSvar: SporsmalSvar, tekst: GenerellTekst) {
     }
 }
 
-internal fun DIV.bruttoSeksjon(seksjon: InnsendtDokument.Seksjon, tekst: GenerellTekst) {
+internal fun DIV.bruttoSeksjon(seksjon: Innsending.Seksjon, tekst: GenerellTekst) {
     id = seksjonId(seksjon.overskrift)
     h2 { +seksjon.overskrift }
     seksjon.beskrivelse?.also { p(classes = "infotekst") { +seksjon.beskrivelse } }

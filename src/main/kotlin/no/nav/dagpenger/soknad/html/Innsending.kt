@@ -3,10 +3,10 @@ package no.nav.dagpenger.soknad.html
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-internal data class InnsendtDokument(
+internal data class Innsending(
     val seksjoner: List<Seksjon>,
     val generellTekst: GenerellTekst,
-    val språk: DokumentSpråk
+    val språk: InnsendingsSpråk
 ) {
 
     lateinit var infoBlokk: InfoBlokk
@@ -71,7 +71,7 @@ internal data class InnsendtDokument(
         }
     }
 
-    enum class DokumentSpråk(
+    enum class InnsendingsSpråk(
         val langAtributt: String,
         val boolean: (Boolean) -> String
     ) {

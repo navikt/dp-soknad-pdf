@@ -26,7 +26,7 @@ class HtmlBuilderTest {
     @Test
     fun manuellTest() {
         assertDoesNotThrow {
-            HtmlBuilder.lagBruttoHtml(TestModellHtml.innsendtDokument).also {
+            HtmlBuilder.lagBruttoHtml(TestModellHtml.innsending).also {
                 File("build/tmp/test/søknad.html").writeText(it)
                 lagPdf(it).also { generertPdf ->
                     File("build/tmp/test/søknad.pdf").writeBytes(generertPdf)
@@ -37,7 +37,7 @@ class HtmlBuilderTest {
 
     @Test
     fun `lager netto html`() {
-        HtmlBuilder.lagNettoHtml(TestModellHtml.innsendtDokument).also {
+        HtmlBuilder.lagNettoHtml(TestModellHtml.innsending).also {
             assertEquals(0, "class=\"infotekst\"".toRegex().findAll(it).count())
             assertEquals(0, "class=\"hjelpetekst\"".toRegex().findAll(it).count())
             assertEquals(4, "class=\"seksjon\"".toRegex().findAll(it).count())
@@ -46,7 +46,7 @@ class HtmlBuilderTest {
 
     @Test
     fun `lager brutto html`() {
-        HtmlBuilder.lagBruttoHtml(TestModellHtml.innsendtDokument).also {
+        HtmlBuilder.lagBruttoHtml(TestModellHtml.innsending).also {
             assertEquals(6, "class=\"infotekst\"".toRegex().findAll(it).count())
             assertEquals(8, "class=\"hjelpetekst\"".toRegex().findAll(it).count())
             assertEquals(4, "class=\"seksjon\"".toRegex().findAll(it).count())
