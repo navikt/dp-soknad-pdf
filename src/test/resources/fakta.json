@@ -15,10 +15,15 @@
           "id": "1",
           "type": "boolean",
           "beskrivendeId": "f1",
-          "svar": true,
+          "svar": false,
           "roller": [
             "søker"
-          ]
+          ],
+          "gyldigeValg": [
+            "f1.svar.ja",
+            "f1.svar.nei"
+          ],
+          "readOnly": false
         },
         {
           "id": "3",
@@ -27,6 +32,10 @@
           "svar": true,
           "roller": [
             "søker"
+          ],
+          "gyldigeValg": [
+            "f3.svar.ja",
+            "f3.svar.nei"
           ]
         },
         {
@@ -36,6 +45,10 @@
           "svar": true,
           "roller": [
             "søker"
+          ],
+          "gyldigeValg": [
+            "f5.svar.ja",
+            "f5.svar.nei"
           ]
         },
         {
@@ -175,6 +188,10 @@
               "beskrivendeId": "f7",
               "roller": [
                 "søker"
+              ],
+              "gyldigeValg": [
+                "f7.svar.ja",
+                "f7.svar.nei"
               ]
             }
           ]
@@ -193,7 +210,8 @@
         }
       ]
     },
-    {"beskrivendeId": "dokumentseksjon",
+    {
+      "beskrivendeId": "dokumentseksjon",
       "fakta": [
         {
           "id": "15",

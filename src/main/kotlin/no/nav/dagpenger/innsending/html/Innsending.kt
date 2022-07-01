@@ -76,20 +76,13 @@ internal data class Innsending(
     }
 
     enum class InnsendingsSpråk(
-        val langAtributt: String,
-        val boolean: (Boolean) -> String
+        val langAtributt: String
     ) {
         BOKMÅL(
-            "no",
-            { b: Boolean ->
-                if (b) "Ja" else "Nei"
-            }
+            "no"
         ),
         ENGELSK(
-            "en",
-            { b: Boolean ->
-                if (b) "Yes" else "No"
-            }
+            "en"
         )
     }
 }

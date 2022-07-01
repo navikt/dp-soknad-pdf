@@ -37,7 +37,7 @@ internal class JsonHtmlMapper(
             "tekst" -> EnkeltSvar(this["svar"].asText())
             "double" -> EnkeltSvar(this["svar"].asText())
             "int" -> EnkeltSvar(this["svar"].asText())
-            "boolean" -> EnkeltSvar(språk.boolean(this["svar"].asBoolean()))
+            "boolean" -> EnkeltSvar((oppslag.lookup(this.booleanTextId()) as Oppslag.TekstObjekt.FaktaTekstObjekt).text)
             "localdate" -> EnkeltSvar(this["svar"].asLocalDate().dagMånedÅr())
             "periode" -> EnkeltSvar(
                 "${
@@ -122,6 +122,14 @@ internal class JsonHtmlMapper(
             språk = språk,
             pdfAMetaTagger = oppslag.pdfaMetaTags()
         )
+    }
+}
+
+private fun JsonNode.booleanTextId(): String {
+    val baseId = "${this["beskrivendeId"].asText()}.svar"
+    return when (this["svar"].asBoolean()) {
+        false -> "$baseId.nei"
+        true -> "$baseId.ja"
     }
 }
 
