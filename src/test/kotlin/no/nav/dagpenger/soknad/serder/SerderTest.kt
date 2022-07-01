@@ -79,7 +79,7 @@ internal class SerderTest {
             val h = JsonHtmlMapper(
                 søknadsData = faktaJson,
                 tekst = tekstJson,
-                språk = InnsendtSøknad.SøknadSpråk.BOKMÅL
+                språk = InnsendtSøknad.DokumentSpråk.BOKMÅL
             ).parse().apply {
                 infoBlokk = InnsendtSøknad.InfoBlokk("ident", innsendtTidspunkt = LocalDateTime.now())
             }

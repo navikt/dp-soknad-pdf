@@ -32,7 +32,7 @@ internal class SoknadSupplier(
         }
     }
 
-    suspend fun hentSoknad(id: UUID, ident: String): InnsendtSøknad {
+    suspend fun hentSoknad(id: UUID, språk: InnsendtSøknad.DokumentSpråk): InnsendtSøknad {
         return withContext(Dispatchers.IO) {
             val fakta = async {
                 httpKlient.get("$dpSoknadBaseUrl/$id/ferdigstilt/fakta").bodyAsText()
@@ -40,7 +40,7 @@ internal class SoknadSupplier(
             val tekst = async {
                 httpKlient.get("$dpSoknadBaseUrl/$id/ferdigstilt/tekst").bodyAsText()
             }
-            JsonHtmlMapper(søknadsData = fakta.await(), tekst = tekst.await()).parse()
+            JsonHtmlMapper(søknadsData = fakta.await(), tekst = tekst.await(), språk = språk).parse()
         }
     }
 }

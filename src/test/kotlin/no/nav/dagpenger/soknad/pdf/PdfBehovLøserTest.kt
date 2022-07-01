@@ -85,6 +85,7 @@ internal class PdfBehovLøserTest {
     val testMessage = """ {
         "@event_name": "behov",
         "@behov": ["ArkiverbarSøknad"],
+        "dokument_språk": "en",
         "søknad_uuid": "$soknadId",
         "ident": "12345678910",
         "innsendtTidspunkt": "${ZonedDateTime.now(ZoneId.of("Europe/Oslo"))}"

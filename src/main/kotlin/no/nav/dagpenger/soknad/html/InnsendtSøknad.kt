@@ -43,7 +43,7 @@ internal data class InnsendtSøknad(
     data class InfoTekst(val tittel: String?, val tekst: String, val type: Infotype)
 
     data class MetaInfo(
-        val språk: SøknadSpråk = SøknadSpråk.BOKMÅL,
+        val språk: DokumentSpråk = DokumentSpråk.BOKMÅL,
         val hovedOverskrift: String = språk.hovedOverskrift,
         val tittel: String = språk.tittel,
     )
@@ -68,7 +68,7 @@ internal data class InnsendtSøknad(
         }
     }
 
-    enum class SøknadSpråk(
+    enum class DokumentSpråk(
         val langAtributt: String,
         val svar: String,
         val fødselsnummer: String,

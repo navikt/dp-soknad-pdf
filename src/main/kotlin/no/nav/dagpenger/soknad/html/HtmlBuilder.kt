@@ -18,7 +18,7 @@ internal object HtmlBuilder {
 
     private fun lagHtml(
         innsendtSøknad: InnsendtSøknad,
-        seksjonFunksjon: DIV.(InnsendtSøknad.Seksjon, InnsendtSøknad.SøknadSpråk) -> Unit = DIV::nettoSeksjon
+        seksjonFunksjon: DIV.(InnsendtSøknad.Seksjon, InnsendtSøknad.DokumentSpråk) -> Unit = DIV::nettoSeksjon
     ): String {
         val språk = innsendtSøknad.metaInfo.språk
         return createHTMLDocument().html {

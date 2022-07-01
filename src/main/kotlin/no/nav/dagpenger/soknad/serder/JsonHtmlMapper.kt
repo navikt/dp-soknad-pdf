@@ -15,7 +15,7 @@ import java.time.format.DateTimeFormatter
 internal class JsonHtmlMapper(
     private val søknadsData: String,
     tekst: String,
-    private val språk: InnsendtSøknad.SøknadSpråk = InnsendtSøknad.SøknadSpråk.BOKMÅL,
+    private val språk: InnsendtSøknad.DokumentSpråk = InnsendtSøknad.DokumentSpråk.BOKMÅL,
 ) {
     private val oppslag = Oppslag(tekst)
     private val objectMapper = jacksonObjectMapper()
@@ -114,7 +114,7 @@ internal class JsonHtmlMapper(
     fun parse(): InnsendtSøknad {
         return InnsendtSøknad(
             seksjoner = parse(søknadsData),
-            metaInfo = InnsendtSøknad.MetaInfo(språk = InnsendtSøknad.SøknadSpråk.BOKMÅL),
+            metaInfo = InnsendtSøknad.MetaInfo(språk = InnsendtSøknad.DokumentSpråk.BOKMÅL),
         )
     }
 }

@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.JsonNode
 import kotlinx.coroutines.runBlocking
 import mu.KotlinLogging
 import no.nav.dagpenger.soknad.html.InnsendtSøknad
+import no.nav.dagpenger.soknad.html.InnsendtSøknad.DokumentSpråk.BOKMÅL
+import no.nav.dagpenger.soknad.html.InnsendtSøknad.DokumentSpråk.ENGELSK
 import no.nav.dagpenger.soknad.pdf.PdfLagring
 import no.nav.helse.rapids_rivers.JsonMessage
 import no.nav.helse.rapids_rivers.MessageContext
@@ -16,7 +18,7 @@ import java.util.UUID
 internal class PdfBehovLøser(
     rapidsConnection: RapidsConnection,
     private val pdfLagring: PdfLagring,
-    private val soknadSupplier: suspend (soknadId: UUID, ident: String) -> InnsendtSøknad,
+    private val soknadSupplier: suspend (soknadId: UUID, dokumentSpråk: InnsendtSøknad.DokumentSpråk) -> InnsendtSøknad,
 ) : River.PacketListener {
     companion object {
         private val logg = KotlinLogging.logger {}
@@ -29,6 +31,7 @@ internal class PdfBehovLøser(
             validate { it.demandAll("@behov", listOf(BEHOV)) }
             validate { it.rejectKey("@løsning") }
             validate { it.requireKey("søknad_uuid", "ident", "innsendtTidspunkt") }
+            validate { it.interestedIn("dokument_språk") }
         }.register(this)
     }
 
@@ -37,7 +40,7 @@ internal class PdfBehovLøser(
         val ident = packet.ident()
         logg.info("Mottok behov for søknadspdf med uuid $soknadId")
         runBlocking {
-            soknadSupplier(soknadId, ident)
+            soknadSupplier(soknadId, packet.dokumentSpråk())
                 .apply {
                     infoBlokk =
                         InnsendtSøknad.InfoBlokk(fødselsnummer = ident, innsendtTidspunkt = packet.innsendtTidspunkt())
@@ -58,6 +61,12 @@ internal class PdfBehovLøser(
     }
 }
 
+private fun JsonMessage.dokumentSpråk(): InnsendtSøknad.DokumentSpråk = when (this["dokument_språk"].asText()) {
+    "en" -> ENGELSK
+    "nb" -> BOKMÅL
+    else -> BOKMÅL
+}
+
 private fun List<LagretDokument>.behovSvar(): List<BehovSvar> = this.map {
     BehovSvar(
         urn = it.urn,
@@ -68,7 +77,7 @@ private fun List<LagretDokument>.behovSvar(): List<BehovSvar> = this.map {
     )
 }
 
-internal data class BehovSvar(val metainfo: BehovSvar.MetaInfo, val urn: String) {
+internal data class BehovSvar(val metainfo: MetaInfo, val urn: String) {
     data class MetaInfo(val innhold: String, val filtype: String = "PDF", val variant: String)
 }
 

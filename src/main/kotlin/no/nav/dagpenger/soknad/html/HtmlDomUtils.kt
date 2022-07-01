@@ -12,9 +12,9 @@ import kotlinx.html.p
 import kotlinx.html.span
 import kotlinx.html.ul
 import kotlinx.html.unsafe
+import no.nav.dagpenger.soknad.html.InnsendtSøknad.DokumentSpråk
 import no.nav.dagpenger.soknad.html.InnsendtSøknad.PdfAMetaTagger
 import no.nav.dagpenger.soknad.html.InnsendtSøknad.SporsmalSvar
-import no.nav.dagpenger.soknad.html.InnsendtSøknad.SøknadSpråk
 import org.apache.commons.text.translate.EntityArrays.HTML40_EXTENDED_UNESCAPE
 import org.apache.commons.text.translate.EntityArrays.ISO8859_1_UNESCAPE
 
@@ -107,7 +107,7 @@ private fun tilleggsinformasjonOverskrift(info: InnsendtSøknad.InfoTekst): Stri
     return overskrift
 }
 
-private fun DIV.svar(språk: SøknadSpråk, svar: InnsendtSøknad.Svar, brutto: Boolean = false) {
+private fun DIV.svar(språk: DokumentSpråk, svar: InnsendtSøknad.Svar, brutto: Boolean = false) {
     when (svar) {
         is InnsendtSøknad.EnkeltSvar -> boldSpanP(språk.svar, svar.tekst)
         is InnsendtSøknad.FlerSvar -> flersvar(svar, brutto)
@@ -115,13 +115,13 @@ private fun DIV.svar(språk: SøknadSpråk, svar: InnsendtSøknad.Svar, brutto: 
     }
 }
 
-internal fun DIV.nettoSeksjon(seksjon: InnsendtSøknad.Seksjon, språk: SøknadSpråk) {
+internal fun DIV.nettoSeksjon(seksjon: InnsendtSøknad.Seksjon, språk: DokumentSpråk) {
     id = seksjonId(seksjon.overskrift)
     h2 { +seksjon.overskrift }
     seksjon.spmSvar.forEach { nettoSpørsmål(it, språk) }
 }
 
-private fun DIV.nettoSpørsmål(spmSvar: SporsmalSvar, språk: SøknadSpråk) {
+private fun DIV.nettoSpørsmål(spmSvar: SporsmalSvar, språk: DokumentSpråk) {
     div {
         h3 { +spmSvar.sporsmal }
         svar(språk, spmSvar.svar)
@@ -133,7 +133,7 @@ private fun DIV.nettoSpørsmål(spmSvar: SporsmalSvar, språk: SøknadSpråk) {
     }
 }
 
-internal fun DIV.bruttoSeksjon(seksjon: InnsendtSøknad.Seksjon, språk: SøknadSpråk) {
+internal fun DIV.bruttoSeksjon(seksjon: InnsendtSøknad.Seksjon, språk: DokumentSpråk) {
     id = seksjonId(seksjon.overskrift)
     h2 { +seksjon.overskrift }
     seksjon.beskrivelse?.also { p(classes = "infotekst") { +seksjon.beskrivelse } }
@@ -148,7 +148,7 @@ internal fun DIV.bruttoSeksjon(seksjon: InnsendtSøknad.Seksjon, språk: Søknad
     }
 }
 
-private fun DIV.bruttoSpørsmål(spmSvar: SporsmalSvar, språk: SøknadSpråk) {
+private fun DIV.bruttoSpørsmål(spmSvar: SporsmalSvar, språk: DokumentSpråk) {
     div {
         h3 { +spmSvar.sporsmal }
         spmSvar.beskrivelse?.also { p(classes = "infotekst") { +spmSvar.beskrivelse } }

@@ -1,7 +1,7 @@
 package no.nav.dagpenger.soknad
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import no.nav.dagpenger.soknad.html.InnsendtSøknad.SøknadSpråk
+import no.nav.dagpenger.soknad.html.InnsendtSøknad.DokumentSpråk
 import no.nav.dagpenger.soknad.pdf.fileAsString
 
 object LandOppslag {
@@ -12,7 +12,7 @@ object LandOppslag {
         }
     }
 
-    internal fun hentLand(språk: SøknadSpråk, iso3landkode: String): String =
+    internal fun hentLand(språk: DokumentSpråk, iso3landkode: String): String =
         data.find { it["alpha3"].asText() == iso3landkode.lowercase() }?.let {
             it[språk.langAtributt].asText()
         } ?: throw IllegalArgumentException("Fant ikke land med aplha3kode $iso3landkode")
