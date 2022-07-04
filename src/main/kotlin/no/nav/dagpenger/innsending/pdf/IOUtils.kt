@@ -1,4 +1,4 @@
-package no.nav.dagpenger.soknad.pdf
+package no.nav.dagpenger.innsending.pdf
 
 import java.io.FileNotFoundException
 import java.io.InputStream

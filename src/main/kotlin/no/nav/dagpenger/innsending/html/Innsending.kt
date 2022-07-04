@@ -1,20 +1,25 @@
-package no.nav.dagpenger.soknad.html
+package no.nav.dagpenger.innsending.html
 
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-internal data class InnsendtSøknad(
+internal data class Innsending(
     val seksjoner: List<Seksjon>,
-    val metaInfo: MetaInfo
+    val generellTekst: GenerellTekst,
+    val språk: InnsendingsSpråk,
+    val pdfAMetaTagger: PdfAMetaTagger
 ) {
 
     lateinit var infoBlokk: InfoBlokk
 
-    object PdfAMetaTagger {
-        const val description: String = "Søknad om dagpenger"
-        const val subject: String = "Dagpenger"
-        const val author: String = "NAV"
-    }
+    open class PdfAMetaTagger(
+        val description: String,
+        val subject: String,
+        val author: String,
+    )
+
+    object DefaultPdfAMetaTagger :
+        PdfAMetaTagger(description = "Søknad om dagpenger", subject = "Dagpenger", author = "NAV Dagpenger")
 
     data class Seksjon(
         val overskrift: String,
@@ -42,10 +47,12 @@ internal data class InnsendtSøknad(
     data class Hjelpetekst(val tekst: String, val tittel: String? = null)
     data class InfoTekst(val tittel: String?, val tekst: String, val type: Infotype)
 
-    data class MetaInfo(
-        val språk: SøknadSpråk = SøknadSpråk.BOKMÅL,
-        val hovedOverskrift: String = språk.hovedOverskrift,
-        val tittel: String = språk.tittel,
+    data class GenerellTekst(
+        val hovedOverskrift: String,
+        val tittel: String,
+        val svar: String,
+        val datoSendt: String,
+        val fnr: String
     )
 
     data class InfoBlokk(val fødselsnummer: String, val innsendtTidspunkt: LocalDateTime) {
@@ -53,40 +60,29 @@ internal data class InnsendtSøknad(
     }
 
     enum class Infotype() {
-//        "info" | "warning" | "error" | "success";
-        INFORMASJON, ADVARSEL, FEIL
+        INFORMASJON, ADVARSEL, FEIL;
+
+        companion object {
+            fun fraSanityJson(typenøkkel: String) = when (typenøkkel) {
+                "info" -> Infotype.INFORMASJON
+                "error" -> FEIL
+                "warning" -> ADVARSEL
+                "success" -> null
+                else -> {
+                    throw IllegalArgumentException("ukjent alerttekst type $typenøkkel")
+                }
+            }
+        }
     }
 
-    enum class SøknadSpråk(
-        val langAtributt: String,
-        val svar: String,
-        val fødselsnummer: String,
-        val datoSendt: String,
-        val hovedOverskrift: String,
-        val tittel: String,
-        val boolean: (Boolean) -> String
+    enum class InnsendingsSpråk(
+        val langAtributt: String
     ) {
         BOKMÅL(
-            "no",
-            "Svar",
-            "Fødselsnummer",
-            "Dato sendt",
-            "Søknad om dagpenger",
-            "Søknad om dagpenger",
-            { b: Boolean ->
-                if (b) "Ja" else "Nei"
-            }
+            "no"
         ),
         ENGELSK(
-            "en",
-            "Answer",
-            "Social security number",
-            "Date sent",
-            "TODO: hovedoverskrift engelsk",
-            "TODO: hovedoverskrift engelsk",
-            { b: Boolean ->
-                if (b) "Yes" else "No"
-            }
+            "en"
         )
     }
 }

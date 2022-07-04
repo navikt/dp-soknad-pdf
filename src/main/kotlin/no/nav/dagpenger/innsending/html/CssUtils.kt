@@ -1,10 +1,10 @@
-package no.nav.dagpenger.soknad.html
+package no.nav.dagpenger.innsending.html
 
 import kotlinx.html.HEAD
 import kotlinx.html.link
 import kotlinx.html.style
 import kotlinx.html.unsafe
-import no.nav.dagpenger.soknad.pdf.fileAsString
+import no.nav.dagpenger.innsending.pdf.fileAsString
 
 internal fun HEAD.fontimports() {
     link {

@@ -77,6 +77,30 @@
       {
         "textId": "faktum.type-arbeidstid",
         "text": "Her blir det spurt om å oppgi ett tall, hvilket tall velger du?"
+      },
+      {
+        "textId": "f1.svar.ja",
+        "text": "svarer vel ja da"
+      },
+      {
+        "textId": "f1.svar.nei",
+        "text": "svarer vel nei da"
+      },
+      {
+        "textId": "f3.svar.nei",
+        "text": "svarer vel nei da"
+      },
+      {
+        "textId": "f3.svar.ja",
+        "text": "svarer vel ja da"
+      },
+      {
+        "textId": "f5.svar.nei",
+        "text": "svarer vel nei da"
+      },
+      {
+        "textId": "f5.svar.ja",
+        "text": "svarer vel ja da"
       }
     ],
     "seksjoner": [
@@ -121,7 +145,17 @@
         "textId": "flervalg2",
         "text": "flervalg 2"
       }
-    ]
+    ],
+    "apptekster": {
+      "pdf.tittel": "Søknad om dagpenger",
+      "pdf.datosendt": "Dato sendt",
+      "pdf.fnr": "Fødselsnummer",
+      "pdf.hovedoverskrift": "Søknad om dagpenger",
+      "pdf.svar": "svar",
+      "pdfa.description": "Søknad om dagpenger",
+      "pdfa.subject" : "Dagpenger",
+      "pdfa.author": "NAV Dagpenger"
+    }
   }
 }
 

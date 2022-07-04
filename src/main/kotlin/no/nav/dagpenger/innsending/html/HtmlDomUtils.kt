@@ -1,4 +1,4 @@
-package no.nav.dagpenger.soknad.html
+package no.nav.dagpenger.innsending.html
 
 import kotlinx.html.DIV
 import kotlinx.html.HEAD
@@ -12,9 +12,8 @@ import kotlinx.html.p
 import kotlinx.html.span
 import kotlinx.html.ul
 import kotlinx.html.unsafe
-import no.nav.dagpenger.soknad.html.InnsendtSøknad.PdfAMetaTagger
-import no.nav.dagpenger.soknad.html.InnsendtSøknad.SporsmalSvar
-import no.nav.dagpenger.soknad.html.InnsendtSøknad.SøknadSpråk
+import no.nav.dagpenger.innsending.html.Innsending.GenerellTekst
+import no.nav.dagpenger.innsending.html.Innsending.SporsmalSvar
 import org.apache.commons.text.translate.EntityArrays.HTML40_EXTENDED_UNESCAPE
 import org.apache.commons.text.translate.EntityArrays.ISO8859_1_UNESCAPE
 
@@ -34,23 +33,25 @@ internal fun String.xhtmlCompliant() = this
 fun String.replace(pairs: Map<String, String>) =
     pairs.entries.fold(this) { acc, (old, new) -> acc.replace(old, new) }
 
-internal fun HEAD.pdfaMetaTags() {
-    meta {
-        name = "description"
-        content = PdfAMetaTagger.description
-    }
-    meta {
-        name = "subject"
-        content = PdfAMetaTagger.subject
-    }
+internal fun HEAD.pdfaMetaTags(innsending: Innsending) {
+    with(innsending.pdfAMetaTagger) {
+        meta {
+            name = "description"
+            content = description
+        }
+        meta {
+            name = "subject"
+            content = subject
+        }
 
-    meta {
-        name = "author"
-        content = PdfAMetaTagger.author
+        meta {
+            name = "author"
+            content = author
+        }
     }
 }
 
-internal fun HEAD.bookmarks(seksjoner: List<InnsendtSøknad.Seksjon>) {
+internal fun HEAD.bookmarks(seksjoner: List<Innsending.Seksjon>, generellTekst: GenerellTekst) {
 // TODO: Språktilpassning på statiske bokmerker
     val seksjonBokmerker = seksjoner.map {
         """<bookmark name = "${it.overskrift}" href="#${seksjonId(it.overskrift)}"></bookmark>"""
@@ -61,7 +62,7 @@ internal fun HEAD.bookmarks(seksjoner: List<InnsendtSøknad.Seksjon>) {
         raw(
             """
                 <bookmarks>
-                    <bookmark name="Søknad om dagpenger" href="#hovedoverskrift"></bookmark>
+                    <bookmark name="${generellTekst.hovedOverskrift}" href="#hovedoverskrift"></bookmark>
                     <bookmark name="Info om søknad" href="#infoblokk"></bookmark>
                     $seksjonBokmerker
                 </bookmarks>
@@ -77,7 +78,7 @@ internal fun DIV.boldSpanP(boldTekst: String, vanligTekst: String) {
     }
 }
 
-internal fun DIV.flersvar(svar: InnsendtSøknad.FlerSvar, brutto: Boolean) {
+internal fun DIV.flersvar(svar: Innsending.FlerSvar, brutto: Boolean) {
     if (svar.alternativ.isNotEmpty()) {
         ul {
             svar.alternativ.forEach {
@@ -99,7 +100,7 @@ internal fun DIV.flersvar(svar: InnsendtSøknad.FlerSvar, brutto: Boolean) {
     }
 }
 
-private fun tilleggsinformasjonOverskrift(info: InnsendtSøknad.InfoTekst): String {
+private fun tilleggsinformasjonOverskrift(info: Innsending.InfoTekst): String {
     var overskrift = info.type.name.lowercase()
     if (info.tittel != null) {
         overskrift += ": ${info.tittel}"
@@ -107,33 +108,33 @@ private fun tilleggsinformasjonOverskrift(info: InnsendtSøknad.InfoTekst): Stri
     return overskrift
 }
 
-private fun DIV.svar(språk: SøknadSpråk, svar: InnsendtSøknad.Svar, brutto: Boolean = false) {
+private fun DIV.svar(tekst: GenerellTekst, svar: Innsending.Svar, brutto: Boolean = false) {
     when (svar) {
-        is InnsendtSøknad.EnkeltSvar -> boldSpanP(språk.svar, svar.tekst)
-        is InnsendtSøknad.FlerSvar -> flersvar(svar, brutto)
-        InnsendtSøknad.IngenSvar -> {}
+        is Innsending.EnkeltSvar -> boldSpanP(tekst.svar, svar.tekst)
+        is Innsending.FlerSvar -> flersvar(svar, brutto)
+        Innsending.IngenSvar -> {}
     }
 }
 
-internal fun DIV.nettoSeksjon(seksjon: InnsendtSøknad.Seksjon, språk: SøknadSpråk) {
+internal fun DIV.nettoSeksjon(seksjon: Innsending.Seksjon, tekst: GenerellTekst) {
     id = seksjonId(seksjon.overskrift)
     h2 { +seksjon.overskrift }
-    seksjon.spmSvar.forEach { nettoSpørsmål(it, språk) }
+    seksjon.spmSvar.forEach { nettoSpørsmål(it, tekst) }
 }
 
-private fun DIV.nettoSpørsmål(spmSvar: SporsmalSvar, språk: SøknadSpråk) {
+private fun DIV.nettoSpørsmål(spmSvar: SporsmalSvar, tekst: GenerellTekst) {
     div {
         h3 { +spmSvar.sporsmal }
-        svar(språk, spmSvar.svar)
+        svar(tekst, spmSvar.svar)
         spmSvar.oppfølgingspørmål.forEach { oppfølging ->
             oppfølging.spørsmålOgSvar.forEach {
-                nettoSpørsmål(it, språk)
+                nettoSpørsmål(it, tekst)
             }
         }
     }
 }
 
-internal fun DIV.bruttoSeksjon(seksjon: InnsendtSøknad.Seksjon, språk: SøknadSpråk) {
+internal fun DIV.bruttoSeksjon(seksjon: Innsending.Seksjon, tekst: GenerellTekst) {
     id = seksjonId(seksjon.overskrift)
     h2 { +seksjon.overskrift }
     seksjon.beskrivelse?.also { p(classes = "infotekst") { +seksjon.beskrivelse } }
@@ -144,11 +145,11 @@ internal fun DIV.bruttoSeksjon(seksjon: InnsendtSøknad.Seksjon, språk: Søknad
         }
     }
     seksjon.spmSvar.forEach {
-        bruttoSpørsmål(it, språk)
+        bruttoSpørsmål(it, tekst)
     }
 }
 
-private fun DIV.bruttoSpørsmål(spmSvar: SporsmalSvar, språk: SøknadSpråk) {
+private fun DIV.bruttoSpørsmål(spmSvar: SporsmalSvar, tekst: GenerellTekst) {
     div {
         h3 { +spmSvar.sporsmal }
         spmSvar.beskrivelse?.also { p(classes = "infotekst") { +spmSvar.beskrivelse } }
@@ -158,10 +159,10 @@ private fun DIV.bruttoSpørsmål(spmSvar: SporsmalSvar, språk: SøknadSpråk) {
                 p { +spmSvar.hjelpetekst.tekst }
             }
         }
-        svar(språk, spmSvar.svar, true)
+        svar(tekst, spmSvar.svar, true)
         spmSvar.oppfølgingspørmål.forEach { oppfølging ->
             oppfølging.spørsmålOgSvar.forEach {
-                bruttoSpørsmål(it, språk)
+                bruttoSpørsmål(it, tekst)
             }
         }
     }

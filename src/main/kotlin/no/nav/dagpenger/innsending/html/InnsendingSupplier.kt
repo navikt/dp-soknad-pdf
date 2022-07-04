@@ -1,4 +1,4 @@
-package no.nav.dagpenger.soknad.html
+package no.nav.dagpenger.innsending.html
 
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.HttpClientEngine
@@ -13,10 +13,10 @@ import io.ktor.serialization.jackson.jackson
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
-import no.nav.dagpenger.soknad.serder.JsonHtmlMapper
+import no.nav.dagpenger.innsending.serder.JsonHtmlMapper
 import java.util.UUID
 
-internal class SoknadSupplier(
+internal class InnsendingSupplier(
     private val dpSoknadBaseUrl: String,
     tokenSupplier: () -> String,
     engine: HttpClientEngine = CIO.create()
@@ -32,7 +32,7 @@ internal class SoknadSupplier(
         }
     }
 
-    suspend fun hentSoknad(id: UUID, ident: String): InnsendtSøknad {
+    suspend fun hentSoknad(id: UUID, språk: Innsending.InnsendingsSpråk): Innsending {
         return withContext(Dispatchers.IO) {
             val fakta = async {
                 httpKlient.get("$dpSoknadBaseUrl/$id/ferdigstilt/fakta").bodyAsText()
@@ -40,7 +40,7 @@ internal class SoknadSupplier(
             val tekst = async {
                 httpKlient.get("$dpSoknadBaseUrl/$id/ferdigstilt/tekst").bodyAsText()
             }
-            JsonHtmlMapper(søknadsData = fakta.await(), tekst = tekst.await()).parse()
+            JsonHtmlMapper(innsendingsData = fakta.await(), tekst = tekst.await(), språk = språk).parse()
         }
     }
 }

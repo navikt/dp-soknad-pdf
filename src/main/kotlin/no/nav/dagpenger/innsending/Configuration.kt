@@ -1,4 +1,4 @@
-package no.nav.dagpenger.soknad
+package no.nav.dagpenger.innsending
 
 import com.natpryce.konfig.Configuration
 import com.natpryce.konfig.ConfigurationMap
