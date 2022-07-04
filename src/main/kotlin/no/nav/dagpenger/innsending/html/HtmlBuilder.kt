@@ -28,7 +28,7 @@ internal object HtmlBuilder {
                 title(innsending.generellTekst.tittel)
                 pdfaMetaTags(innsending)
                 fontimports()
-                bookmarks(innsending.seksjoner)
+                bookmarks(innsending.seksjoner, innsending.generellTekst)
                 søknadPdfStyle()
             }
             body {
