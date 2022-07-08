@@ -14,7 +14,7 @@ internal class Oppslag(private val tekstJson: String) {
 
     private fun parse(tekstJson: String): Map<String, TekstObjekt> =
         objectMapper.readTree(tekstJson).let {
-            it.tilFaktaTekstObjekt() + it.tilSeksjonTekstObjekt() + it.tilSvarAlternativTekstObjekt()
+            it.tilFaktaTekstObjekt() + it.tilSeksjonTekstObjekt() + it.tilSvarAlternativTekstObjekt() + it.tilAppTekstObjekt()
         }
 
     private fun JsonNode.tilFaktaTekstObjekt(): Map<String, TekstObjekt> {
@@ -46,6 +46,18 @@ internal class Oppslag(private val tekstJson: String) {
         return map
     }
 
+    private fun JsonNode.tilAppTekstObjekt(): Map<String, TekstObjekt> {
+        val map = mutableMapOf<String, TekstObjekt>()
+        apptekster().forEach { tekst ->
+            val textId = tekst["textId"].asText()
+            map[textId] = TekstObjekt.EnkelText(
+                textId = textId,
+                text = tekst["valueText"].asText(),
+            )
+        }
+        return map
+    }
+
     private fun JsonNode.tilSvarAlternativTekstObjekt(): Map<String, TekstObjekt> {
         val map = mutableMapOf<String, TekstObjekt>()
         svaralternativer().forEach { tekst ->
@@ -65,27 +77,24 @@ internal class Oppslag(private val tekstJson: String) {
         return map
     }
 
-    internal fun generellTekst(): Innsending.GenerellTekst = objectMapper.readTree(tekstJson).apptekster().let {
-        Innsending.GenerellTekst(
-            hovedOverskrift = it["pdf.hovedoverskrift"].asText(),
-            tittel = it["pdf.tittel"].asText(),
-            svar = it["pdf.svar"].asText(),
-            datoSendt = it["pdf.datosendt"].asText(),
-            fnr = it["pdf.fnr"].asText()
+    internal fun generellTekst(): Innsending.GenerellTekst {
+        return Innsending.GenerellTekst(
+            hovedOverskrift = (lookup("pdf.hovedoverskrift") as TekstObjekt.EnkelText).text,
+            tittel = (lookup("pdf.tittel") as TekstObjekt.EnkelText).text,
+            svar = (lookup("pdf.svar") as TekstObjekt.EnkelText).text,
+            datoSendt = (lookup("pdf.datosendt") as TekstObjekt.EnkelText).text,
+            fnr = (lookup("pdf.fnr") as TekstObjekt.EnkelText).text
         )
     }
 
-    fun pdfaMetaTags(): Innsending.PdfAMetaTagger = try {
+    fun pdfaMetaTags(): Innsending.PdfAMetaTagger =
         objectMapper.readTree(tekstJson).apptekster().let {
             Innsending.PdfAMetaTagger(
-                description = it["pdfa.description"].asText(),
-                subject = it["pdfa.subject"].asText(),
-                author = it["pdfa.author"].asText()
+                description = (lookup("pdfa.description") as TekstObjekt.EnkelText).text,
+                subject = (lookup("pdfa.subject") as TekstObjekt.EnkelText).text,
+                author = (lookup("pdfa.author") as TekstObjekt.EnkelText).text
             )
         }
-    } catch (nullpointer: NullPointerException) {
-        Innsending.DefaultPdfAMetaTagger
-    }
 
     sealed class TekstObjekt(val textId: String, val description: String?, val helpText: HelpText?) {
         class FaktaTekstObjekt(
@@ -105,6 +114,8 @@ internal class Oppslag(private val tekstJson: String) {
 
         class SvaralternativTekstObjekt(val text: String, val alertText: AlertText?, textId: String) :
             TekstObjekt(textId, null, null)
+
+        class EnkelText(textId: String, val text: String) : TekstObjekt(textId, null, null)
 
         class AlertText(val title: String?, val type: String, val body: String) {
             init {

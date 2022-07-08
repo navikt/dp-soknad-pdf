@@ -146,16 +146,112 @@
         "text": "flervalg 2"
       }
     ],
-    "apptekster": {
-      "pdf.tittel": "Søknad om dagpenger",
-      "pdf.datosendt": "Dato sendt",
-      "pdf.fnr": "Fødselsnummer",
-      "pdf.hovedoverskrift": "Søknad om dagpenger",
-      "pdf.svar": "svar",
-      "pdfa.description": "Søknad om dagpenger",
-      "pdfa.subject" : "Dagpenger",
-      "pdfa.author": "NAV Dagpenger"
-    }
+    "apptekster": [
+      {
+        "textId": "barn.legg-til",
+        "valueText": "Legg til barn"
+      },
+      {
+        "textId": "start-soknad.start-knapp",
+        "valueText": "Start søknad"
+      },
+      {
+        "textId": "arbeidsforhold.legg-til",
+        "valueText": "Legg til arbeidsforhold"
+      },
+      {
+        "textId": "generator.fjern",
+        "valueText": "Fjern dette svaret"
+      },
+      {
+        "textId": "knapp.neste",
+        "valueText": "Neste steg"
+      },
+      {
+        "textId": "oppsummering.slett-soknad",
+        "valueText": "Slett søknad"
+      },
+      {
+        "textId": "pdfa.description",
+        "valueText": "Søknad om dagpenger"
+      },
+      {
+        "textId": "pdfa.subject",
+        "valueText": "Dagpenger"
+      },
+      {
+        "textId": "laster-sporsmal.tittel",
+        "valueText": "Laster neste spørsmål"
+      },
+      {
+        "textId": "pdf.hovedoverskrift",
+        "valueText": "Søknad om dagpenger"
+      },
+      {
+        "textId": "pdf.svar",
+        "valueText": "svar"
+      },
+      {
+        "textId": "oppsummering.send-soknad",
+        "valueText": "Send inn søknad"
+      },
+      {
+        "textId": "knapp.forrige",
+        "valueText": "Forrige steg"
+      },
+      {
+        "textId": "pdf.datosendt",
+        "valueText": "Dato sendt"
+      },
+      {
+        "textId": "oppsummering.feil",
+        "valueText": "Noe skjedde feil med innsendingen av søknaden."
+      },
+      {
+        "textId": "arbeidsforhold.fjern",
+        "valueText": "Fjern dette arbeidsforholdet"
+      },
+      {
+        "textId": "pdf.fnr",
+        "valueText": "Fødselsnummer"
+      },
+      {
+        "textId": "barn.fjern",
+        "valueText": "Fjern dette barnet"
+      },
+      {
+        "textId": "pdf.tittel",
+        "valueText": "Søknad om dagpenger"
+      },
+      {
+        "textId": "soknad.til-oppsummering",
+        "valueText": "Gå til oppsummering"
+      },
+      {
+        "textId": "start-soknad.tittel",
+        "valueText": "Søknad om dagpenger"
+      },
+      {
+        "textId": "knapp.avbryt",
+        "valueText": "Avbryt"
+      },
+      {
+        "textId": "laster-sporsmal.tekst",
+        "valueText": "Tenk på noe som gjør deg glad."
+      },
+      {
+        "textId": "generator.legg-til",
+        "valueText": "Legg til svar"
+      },
+      {
+        "textId": "pdfa.author",
+        "valueText": "NAV Dagpenger"
+      },
+      {
+        "textId": "oppsummering.endre-svar",
+        "valueText": "Endre svar"
+      }
+    ]
   }
 }
 
