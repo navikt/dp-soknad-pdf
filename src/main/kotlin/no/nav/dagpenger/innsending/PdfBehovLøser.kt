@@ -37,9 +37,6 @@ internal class PdfBehovLøser(
 
     override fun onPacket(packet: JsonMessage, context: MessageContext) {
         val soknadId = packet.søknadUuid()
-        if (packet.innsendtTidspunkt() < LocalDateTime.now().minusHours(2)) {
-            return
-        }
         val ident = packet.ident()
         logg.info("Mottok behov for søknadspdf med uuid $soknadId")
         runBlocking {
