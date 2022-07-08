@@ -9,8 +9,10 @@ import no.nav.dagpenger.innsending.html.Innsending.InnsendingsSpråk.ENGELSK
 import no.nav.dagpenger.innsending.pdf.PdfLagring
 import no.nav.helse.rapids_rivers.JsonMessage
 import no.nav.helse.rapids_rivers.MessageContext
+import no.nav.helse.rapids_rivers.MessageProblems
 import no.nav.helse.rapids_rivers.RapidsConnection
 import no.nav.helse.rapids_rivers.River
+import org.apache.pdfbox.cos.COSName.F
 import java.time.LocalDateTime
 import java.time.ZonedDateTime
 import java.util.UUID
@@ -37,6 +39,9 @@ internal class PdfBehovLøser(
 
     override fun onPacket(packet: JsonMessage, context: MessageContext) {
         val soknadId = packet.søknadUuid()
+        if(soknadId.toString()=="78996b21-992f-4743-ac85-4219c409792a"){
+            return
+        }
         val ident = packet.ident()
         logg.info("Mottok behov for søknadspdf med uuid $soknadId")
         runBlocking {
