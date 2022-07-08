@@ -13,6 +13,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 
 internal class PdfLagringTest {
+    val testFnr = "12345678910"
 
     @Test
     fun `Sender pdf til mellomlagring`() {
@@ -20,6 +21,7 @@ internal class PdfLagringTest {
 
             assertEquals(HttpMethod.Post, request.method)
             assertNotNull(request.headers["Authorization"])
+            assertEquals(request.headers["X-Eier"], testFnr)
             assertEquals(request.headers["Authorization"], "Bearer token")
 
             respond(
@@ -39,7 +41,8 @@ internal class PdfLagringTest {
                 listOf(
                     ArkiverbartDokument.netto("<!DOCTYPE html>".toByteArray()),
                     ArkiverbartDokument.brutto("<!DOCTYPE html>".toByteArray())
-                )
+                ),
+                testFnr
             )
             dokumentliste.single { it.variant == ArkiverbartDokument.DokumentVariant.BRUTTO }.also {
                 assertEquals("brutto.pdf", it.filnavn)

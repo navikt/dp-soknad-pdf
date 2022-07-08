@@ -19,6 +19,7 @@ import kotlin.test.assertEquals
 
 internal class PdfBehovLøserTest {
     val soknadId = UUID.randomUUID()
+    val testFnr = "12345678910"
 
     val testRapid = TestRapid().also {
         PdfBehovLøser(
@@ -27,7 +28,8 @@ internal class PdfBehovLøserTest {
                 coEvery {
                     it.lagrePdf(
                         soknadId.toString(),
-                        any()
+                        any(),
+                        testFnr
                     )
                 } returns listOf(
                     LagretDokument("urn:vedlegg:soknadId/netto.pdf", NETTO, "netto.pdf"),
@@ -87,7 +89,7 @@ internal class PdfBehovLøserTest {
         "@behov": ["ArkiverbarSøknad"],
         "dokument_språk": "en",
         "søknad_uuid": "$soknadId",
-        "ident": "12345678910",
+        "ident": "$testFnr",
         "innsendtTidspunkt": "${ZonedDateTime.now(ZoneId.of("Europe/Oslo"))}"
             }
     """.trimIndent()

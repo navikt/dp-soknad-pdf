@@ -9,6 +9,7 @@ import no.nav.dagpenger.innsending.html.Innsending.InnsendingsSpråk.ENGELSK
 import no.nav.dagpenger.innsending.pdf.PdfLagring
 import no.nav.helse.rapids_rivers.JsonMessage
 import no.nav.helse.rapids_rivers.MessageContext
+import no.nav.helse.rapids_rivers.MessageProblems
 import no.nav.helse.rapids_rivers.RapidsConnection
 import no.nav.helse.rapids_rivers.River
 import java.time.LocalDateTime
@@ -49,7 +50,8 @@ internal class PdfBehovLøser(
                 .let { dokumenter ->
                     pdfLagring.lagrePdf(
                         søknadUUid = soknadId.toString(),
-                        arkiverbartDokument = dokumenter
+                        arkiverbartDokument = dokumenter,
+                        fnr = ident
                     ).also {
                         logg.info { "Svar fra dp-mellomlagring: $it" }
                         logg.info { "Mappet til packet: $it" }

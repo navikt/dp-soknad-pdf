@@ -38,7 +38,8 @@ class PdfLagring(
 
     internal suspend fun lagrePdf(
         søknadUUid: String,
-        arkiverbartDokument: List<ArkiverbartDokument>
+        arkiverbartDokument: List<ArkiverbartDokument>,
+        fnr: String
     ): List<LagretDokument> {
         return httpKlient.submitFormWithBinaryData(
             url = "$baseUrl/$søknadUUid",
@@ -53,7 +54,9 @@ class PdfLagring(
                     )
                 }
             }
-        ).body<List<URNResponse>>().map {
+        ) {
+            this.header("X-Eier", fnr)
+        }.body<List<URNResponse>>().map {
             val a2 = arkiverbartDokument.single { a ->
                 a.filnavn == it.filnavn
             }
