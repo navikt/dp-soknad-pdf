@@ -38,6 +38,9 @@ internal class PdfBehovLøser(
 
     override fun onPacket(packet: JsonMessage, context: MessageContext) {
         val soknadId = packet.søknadUuid()
+        if(soknadId.toString()=="d7597809-702b-44b6-a29f-c4aaae1b8322"){
+            return
+        }
         val ident = packet.ident()
         logg.info("Mottok behov for søknadspdf med uuid $soknadId")
         runBlocking {
