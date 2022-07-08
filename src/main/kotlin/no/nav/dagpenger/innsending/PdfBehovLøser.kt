@@ -9,7 +9,6 @@ import no.nav.dagpenger.innsending.html.Innsending.InnsendingsSpråk.ENGELSK
 import no.nav.dagpenger.innsending.pdf.PdfLagring
 import no.nav.helse.rapids_rivers.JsonMessage
 import no.nav.helse.rapids_rivers.MessageContext
-import no.nav.helse.rapids_rivers.MessageProblems
 import no.nav.helse.rapids_rivers.RapidsConnection
 import no.nav.helse.rapids_rivers.River
 import java.time.LocalDateTime
@@ -38,7 +37,7 @@ internal class PdfBehovLøser(
 
     override fun onPacket(packet: JsonMessage, context: MessageContext) {
         val soknadId = packet.søknadUuid()
-        if(soknadId.toString()=="d7597809-702b-44b6-a29f-c4aaae1b8322"){
+        if (packet.innsendtTidspunkt() < LocalDateTime.now().minusHours(2)) {
             return
         }
         val ident = packet.ident()
