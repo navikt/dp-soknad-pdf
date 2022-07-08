@@ -37,7 +37,7 @@ internal class JsonHtmlMapper(
             "tekst" -> EnkeltSvar(this["svar"].asText())
             "double" -> EnkeltSvar(this["svar"].asText())
             "int" -> EnkeltSvar(this["svar"].asText())
-            "boolean" -> EnkeltSvar((oppslag.lookup(this.booleanTextId()) as Oppslag.TekstObjekt.FaktaTekstObjekt).text)
+            "boolean" -> EnkeltSvar((oppslag.lookup(this.booleanTextId()) as Oppslag.TekstObjekt.SvaralternativTekstObjekt).text)
             "localdate" -> EnkeltSvar(this["svar"].asLocalDate().dagMånedÅr())
             "periode" -> EnkeltSvar(
                 "${

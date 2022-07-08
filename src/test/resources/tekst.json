@@ -77,7 +77,28 @@
       {
         "textId": "faktum.type-arbeidstid",
         "text": "Her blir det spurt om å oppgi ett tall, hvilket tall velger du?"
+      }
+    ],
+    "seksjoner": [
+      {
+        "textId": "seksjon1",
+        "title": "Tittel for seksjon 1",
+        "description": "description for seksjon",
+        "helpText": {
+          "title": "Hjelpetekst med overskrift til seksjon",
+          "body": "Her er en hjelpetekst tekst som hjelper veldig mye når en trenger hjelp"
+        }
       },
+      {
+        "textId": "seksjon2",
+        "title": "Tittel for seksjon 2"
+      },
+      {
+        "textId": "dokumentseksjon",
+        "title": "Dokumenter"
+      }
+    ],
+    "svaralternativer": [
       {
         "textId": "f1.svar.ja",
         "text": "svarer vel ja da"
@@ -101,28 +122,7 @@
       {
         "textId": "f5.svar.ja",
         "text": "svarer vel ja da"
-      }
-    ],
-    "seksjoner": [
-      {
-        "textId": "seksjon1",
-        "title": "Tittel for seksjon 1",
-        "description": "description for seksjon",
-        "helpText": {
-          "title": "Hjelpetekst med overskrift til seksjon",
-          "body": "Her er en hjelpetekst tekst som hjelper veldig mye når en trenger hjelp"
-        }
       },
-      {
-        "textId": "seksjon2",
-        "title": "Tittel for seksjon 2"
-      },
-      {
-        "textId": "dokumentseksjon",
-        "title": "Dokumenter"
-      }
-    ],
-    "svaralternativer": [
       {
         "textId": "svaralternativ1",
         "text": "Vet ikke helt hva dte her skal brukes til enda, men gjetter på at vi finner det ut",
