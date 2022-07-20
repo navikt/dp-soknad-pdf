@@ -3,6 +3,7 @@ package no.nav.dagpenger.innsending.serder
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import mu.KotlinLogging
+import mu.withLoggingContext
 import no.nav.dagpenger.innsending.html.Innsending
 
 private val logger = KotlinLogging.logger { }
@@ -21,13 +22,15 @@ internal class Oppslag(private val tekstJson: String) {
         val map = mutableMapOf<String, TekstObjekt>()
         fakta().forEach { tekst ->
             val textId = tekst["textId"].asText()
-            map[textId] = TekstObjekt.FaktaTekstObjekt(
-                textId = textId,
-                text = tekst["text"].asText(),
-                description = tekst.get("description")?.asText(),
-                helpText = tekst.helpText(),
-                unit = tekst.get("unit")?.asText()
-            )
+            withLoggingContext("textId" to textId) {
+                map[textId] = TekstObjekt.FaktaTekstObjekt(
+                    textId = textId,
+                    text = tekst["text"].asText(),
+                    description = tekst.get("description")?.asText(),
+                    helpText = tekst.helpText(),
+                    unit = tekst.get("unit")?.asText()
+                )
+            }
         }
         return map
     }
@@ -36,12 +39,14 @@ internal class Oppslag(private val tekstJson: String) {
         val map = mutableMapOf<String, TekstObjekt>()
         seksjoner().forEach { tekst ->
             val textId = tekst["textId"].asText()
-            map[textId] = TekstObjekt.SeksjonTekstObjekt(
-                textId = textId,
-                title = tekst["title"].asText(),
-                description = tekst.get("description")?.asText(),
-                helpText = tekst.helpText()
-            )
+            withLoggingContext("textId" to textId) {
+                map[textId] = TekstObjekt.SeksjonTekstObjekt(
+                    textId = textId,
+                    title = tekst["title"].asText(),
+                    description = tekst.get("description")?.asText(),
+                    helpText = tekst.helpText()
+                )
+            }
         }
         return map
     }
@@ -50,10 +55,12 @@ internal class Oppslag(private val tekstJson: String) {
         val map = mutableMapOf<String, TekstObjekt>()
         apptekster().forEach { tekst ->
             val textId = tekst["textId"].asText()
-            map[textId] = TekstObjekt.EnkelText(
-                textId = textId,
-                text = tekst["valueText"].asText(),
-            )
+            withLoggingContext("textId" to textId) {
+                map[textId] = TekstObjekt.EnkelText(
+                    textId = textId,
+                    text = tekst["valueText"].asText(),
+                )
+            }
         }
         return map
     }
@@ -62,17 +69,19 @@ internal class Oppslag(private val tekstJson: String) {
         val map = mutableMapOf<String, TekstObjekt>()
         svaralternativer().forEach { tekst ->
             val textId = tekst["textId"].asText()
-            map[textId] = TekstObjekt.SvaralternativTekstObjekt(
-                textId = textId,
-                text = tekst["text"].asText(),
-                alertText = tekst["alertText"]?.takeIf { !it.isNull }?.let { alerttext ->
-                    TekstObjekt.AlertText(
-                        alerttext["title"]?.asText(),
-                        alerttext["type"].asText(),
-                        alerttext["body"].asText()
-                    )
-                }
-            )
+            withLoggingContext("textId" to textId) {
+                map[textId] = TekstObjekt.SvaralternativTekstObjekt(
+                    textId = textId,
+                    text = tekst["text"].asText(),
+                    alertText = tekst["alertText"]?.takeIf { !it.isNull }?.let { alerttext ->
+                        TekstObjekt.AlertText(
+                            alerttext["title"]?.asText(),
+                            alerttext["type"].asText(),
+                            alerttext["body"].asText()
+                        )
+                    }
+                )
+            }
         }
         return map
     }
@@ -130,8 +139,7 @@ internal class Oppslag(private val tekstJson: String) {
 }
 
 private fun JsonNode.helpText(): Oppslag.TekstObjekt.HelpText? =
-    get("helpText")?.takeIf { !it.isNull }?.let {
-        println(it)
+    get("helpText")?.let {
         Oppslag.TekstObjekt.HelpText(it.get("title")?.asText(), it.get("body").asText())
     }
 
