@@ -5,6 +5,8 @@ import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import mu.KotlinLogging
 import mu.withLoggingContext
 import no.nav.dagpenger.innsending.html.Innsending
+import no.nav.dagpenger.innsending.serder.Oppslag.TekstObjekt.SammensattText
+import no.nav.dagpenger.innsending.serder.Oppslag.TekstObjekt.SammensattTextType
 
 private val logger = KotlinLogging.logger { }
 
@@ -43,7 +45,7 @@ internal class Oppslag(private val tekstJson: String) {
                 map[textId] = TekstObjekt.SeksjonTekstObjekt(
                     textId = textId,
                     title = tekst["title"].asText(),
-                    description = tekst.get("description")?.asText(),
+                    description = tekst.get("description")?.tilSammensattTextObjekt().toString(),
                     helpText = tekst.helpText()
                 )
             }
@@ -135,7 +137,30 @@ internal class Oppslag(private val tekstJson: String) {
         }
 
         class HelpText(val title: String?, val body: String)
+
+        class SammensattText(
+            val type: SammensattTextType,
+            key: String,
+            text: String?,
+            style: String?,
+            children: List<SammensattText>
+        )
+
+        enum class SammensattTextType() {
+            block,span,link
+        }
     }
+}
+
+private fun JsonNode.tilSammensattTextObjekt(): List<SammensattText> {
+   return this.toList().map { tekstnode -> SammensattText(
+       type = SammensattTextType.valueOf(tekstnode["_type"].asText()),
+       key = tekstnode["_key"].asText(),
+       text = tekstnode.get("text")?.asText(),
+       style = tekstnode.get("style")?.asText(),
+       children = tekstnode.get("children")?.tilSammensattTextObjekt() ?: emptyList()
+   )
+   }
 }
 
 private fun JsonNode.helpText(): Oppslag.TekstObjekt.HelpText? =
