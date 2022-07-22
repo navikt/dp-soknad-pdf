@@ -3,6 +3,7 @@ package no.nav.dagpenger.innsending
 import com.fasterxml.jackson.databind.JsonNode
 import kotlinx.coroutines.runBlocking
 import mu.KotlinLogging
+import mu.withLoggingContext
 import no.nav.dagpenger.innsending.html.Innsending
 import no.nav.dagpenger.innsending.html.Innsending.InnsendingsSpråk.BOKMÅL
 import no.nav.dagpenger.innsending.html.Innsending.InnsendingsSpråk.ENGELSK
@@ -18,7 +19,7 @@ import java.util.UUID
 internal class PdfBehovLøser(
     rapidsConnection: RapidsConnection,
     private val pdfLagring: PdfLagring,
-    private val innsendingSupplier: suspend (soknadId: UUID, innsendingsSpråk: Innsending.InnsendingsSpråk) -> Innsending,
+    private val innsendingSupplier: suspend (soknadId: UUID, innsendingsSpråk: Innsending.InnsendingsSpråk) -> Innsending
 ) : River.PacketListener {
     companion object {
         private val logg = KotlinLogging.logger {}
@@ -37,30 +38,37 @@ internal class PdfBehovLøser(
 
     override fun onPacket(packet: JsonMessage, context: MessageContext) {
         val soknadId = packet.søknadUuid()
-        if (soknadId.toString() == "78996b21-992f-4743-ac85-4219c409792a") {
-            return
-        }
         val ident = packet.ident()
-        logg.info("Mottok behov for søknadspdf med uuid $soknadId")
-        runBlocking {
-            innsendingSupplier(soknadId, packet.dokumentSpråk())
-                .apply {
-                    infoBlokk =
-                        Innsending.InfoBlokk(fødselsnummer = ident, innsendtTidspunkt = packet.innsendtTidspunkt())
+        withLoggingContext("søknadId" to soknadId.toString()) {
+            try {
+                logg.info("Mottok behov for PDF av søknad")
+
+                runBlocking {
+                    innsendingSupplier(soknadId, packet.dokumentSpråk())
+                        .apply {
+                            infoBlokk =
+                                Innsending.InfoBlokk(
+                                    fødselsnummer = ident,
+                                    innsendtTidspunkt = packet.innsendtTidspunkt()
+                                )
+                        }
+                        .let { lagArkiverbartDokument(it) }
+                        .let { dokumenter ->
+                            pdfLagring.lagrePdf(
+                                søknadUUid = soknadId.toString(),
+                                arkiverbartDokument = dokumenter,
+                                fnr = ident
+                            ).also {
+                                logg.info { "Svar fra dp-mellomlagring: $it" }
+                                logg.info { "Mappet til packet: $it" }
+                                packet["@løsning"] = mapOf(BEHOV to it.behovSvar())
+                            }
+                        }
+                    context.publish(packet.toJson())
                 }
-                .let { lagArkiverbartDokument(it) }
-                .let { dokumenter ->
-                    pdfLagring.lagrePdf(
-                        søknadUUid = soknadId.toString(),
-                        arkiverbartDokument = dokumenter,
-                        fnr = ident
-                    ).also {
-                        logg.info { "Svar fra dp-mellomlagring: $it" }
-                        logg.info { "Mappet til packet: $it" }
-                        packet["@løsning"] = mapOf(BEHOV to it.behovSvar())
-                    }
-                }
-            context.publish(packet.toJson())
+            } catch (e: Error) {
+                logg.error(e) { "Kunne ikke lage PDF for søknad. Fortsetter likevel." }
+            }
         }
     }
 }
