@@ -150,7 +150,11 @@ private fun JsonNode.asRawHtmlString(): RawHtmlString {
 }
 
 class RawHtmlString(htmlFraSanity: String) {
-    val html: String = Jsoup.clean(htmlFraSanity, tilatteTaggerOgAttributter)
+    val html: String = Jsoup.clean(htmlFraSanity, tilatteTaggerOgAttributter).also {
+        if (!Jsoup.isValid(htmlFraSanity, tilatteTaggerOgAttributter)) {
+            logger.error { "Mottok html med ustøttet innhold: \noriginal html: $htmlFraSanity\n etter clean: $htmlFraSanity" }
+        }
+    }
 
     companion object {
         private val tilatteTaggerOgAttributter = Safelist.relaxed().removeTags("img")
