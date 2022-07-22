@@ -161,8 +161,9 @@ private fun JsonNode.asRawHtmlString(): RawHtmlString {
 
 class RawHtmlString(htmlFraSanity: String) {
     val html: String = Jsoup.clean(htmlFraSanity, tilatteTaggerOgAttributter).also {
-        if (!Jsoup.isValid(htmlFraSanity, tilatteTaggerOgAttributter)) {
+        if (!(it.startsWith("<") && it.endsWith(""))) {
             logger.error { "Mottok html med ustøttet innhold: \noriginal html: $htmlFraSanity\n etter clean: $htmlFraSanity" }
+            throw UgyldigHtmlError(htmlFraSanity)
         }
     }
 
@@ -180,3 +181,5 @@ private fun JsonNode.seksjoner() = this["sanityTexts"]["seksjoner"]
 private fun JsonNode.svaralternativer() = this["sanityTexts"]["svaralternativer"]
 private fun JsonNode.fakta() = this["sanityTexts"]["fakta"]
 private fun JsonNode.apptekster(): JsonNode = this["sanityTexts"]["apptekster"]
+
+class UgyldigHtmlError(htmlString: String) : IllegalArgumentException("Mottok ugyldig HTML: $htmlString")
