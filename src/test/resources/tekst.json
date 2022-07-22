@@ -58,7 +58,7 @@
         "textId": "f3",
         "text": "Her blir det spurt om noe som du kan svare ja eller nei på. Svarer du ja eller nei?",
         "helpText": {
-          "body": "<p>Hjelpetekst</p>"
+          "body": "<p>Hjelpetekst <script>\ndocument.getElementById(\"demo\").innerHTML = \"Hello JavaScript!\";\n</script></p>"
         }
       },
       {
@@ -86,7 +86,7 @@
         "description": ["<p>description for seksjon</p>","<p>tadda, det her går jo bra!<img src=\"https://ikke.tilgjengelig\" alt=\"Det kommer jo ikke å funke\"></img></p>"],
         "helpText": {
           "title": "Hjelpetekst med overskrift til seksjon",
-          "body": "<p>Her er en hjelpetekst tekst som hjelper veldig mye når en trenger hjelp. Med superhjelpsom <a src=\"https://nav.no/superhjelpen\">lenke</a></p>"
+          "body": "<p>Her er en hjelpetekst tekst som hjelper veldig <img src=\"jasklfjl\" alt=\"ok\"></img>mye når en trenger hjelp. Med superhjelpsom <a href=\"https://nav.no/superhjelpen\">lenke</a></p>"
         }
       },
       {

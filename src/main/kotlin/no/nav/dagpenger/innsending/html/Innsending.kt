@@ -44,8 +44,8 @@ internal data class Innsending(
     data class SvarAlternativ(val tekst: String, val tilleggsinformasjon: InfoTekst?)
     object IngenSvar : Svar()
 
-    data class Hjelpetekst(val unsafeHtml: UnsafeHtml, val tittel: String? = null)
-    data class InfoTekst(val tittel: String?, val unsafeHtml: UnsafeHtml, val type: Infotype)
+    data class Hjelpetekst(val unsafeHtmlBody: UnsafeHtml, val tittel: String? = null)
+    data class InfoTekst(val tittel: String?, val unsafeHtmlBody: UnsafeHtml, val type: Infotype)
 
     data class GenerellTekst(
         val hovedOverskrift: String,
@@ -76,7 +76,10 @@ internal data class Innsending(
     }
 
     internal class UnsafeHtml(val kode: String) {
-        private fun injectCssClass(className: String) {}
+        fun medCssKlasse(klasse: String) = """<p class="$klasse"${kode.substringAfter("<p")}"""
+        companion object {
+            private fun String.leggTilPåHtmlPtag(kode: String): String = """<p class="$this"${kode.substringAfter("<p")}"""
+        }
     }
 
     enum class InnsendingsSpråk(

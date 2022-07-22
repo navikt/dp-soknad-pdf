@@ -6,6 +6,8 @@ import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import mu.KotlinLogging
 import mu.withLoggingContext
 import no.nav.dagpenger.innsending.html.Innsending
+import org.jsoup.Jsoup
+import org.jsoup.safety.Safelist
 
 private val logger = KotlinLogging.logger { }
 
@@ -140,7 +142,6 @@ internal class Oppslag(private val tekstJson: String) {
 }
 
 private fun JsonNode.asRawHtmlString(): RawHtmlString {
-    val x = 0
     return if (this is TextNode) {
         RawHtmlString(this.asText())
     } else {
@@ -148,9 +149,11 @@ private fun JsonNode.asRawHtmlString(): RawHtmlString {
     }
 }
 
-class RawHtmlString(val html: String) {
+class RawHtmlString(htmlFraSanity: String) {
+    val html: String = Jsoup.clean(htmlFraSanity, tilatteTaggerOgAttributter)
+
     companion object {
-        val acceptedTags = listOf("<p>", "<strong>", "<em>", "<a>")
+        private val tilatteTaggerOgAttributter = Safelist.relaxed().removeTags("img")
     }
 }
 

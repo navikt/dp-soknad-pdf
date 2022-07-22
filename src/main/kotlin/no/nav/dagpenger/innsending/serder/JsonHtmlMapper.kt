@@ -25,7 +25,7 @@ internal class JsonHtmlMapper(
             val tekstObjekt = oppslag.lookup(it["beskrivendeId"].asText()) as Oppslag.TekstObjekt.SeksjonTekstObjekt
             Innsending.Seksjon(
                 overskrift = tekstObjekt.title,
-                beskrivelse = tekstObjekt.description?.let { rawHtmlString -> Innsending.UnsafeHtml(rawHtmlString.html) },
+                beskrivelse = tekstObjekt.description?.let { rawHtml -> Innsending.UnsafeHtml(rawHtml.html) },
                 hjelpetekst = tekstObjekt.helpText(),
                 spmSvar = it.fakta()
             )
@@ -72,7 +72,7 @@ internal class JsonHtmlMapper(
             Innsending.Infotype.fraSanityJson(typenøkkel = alerttext.type)?.let { infotype ->
                 Innsending.InfoTekst(
                     tittel = alerttext.title,
-                    unsafeHtml = Innsending.UnsafeHtml(alerttext.body.html),
+                    unsafeHtmlBody = Innsending.UnsafeHtml(alerttext.body.html),
                     type = infotype
                 )
             }
@@ -89,11 +89,7 @@ internal class JsonHtmlMapper(
                         Innsending.SporsmalSvar(
                             sporsmal = tekstObjekt.text,
                             svar = node.svar(),
-                            beskrivelse = tekstObjekt.description?.let { rawHtmlString ->
-                                Innsending.UnsafeHtml(
-                                    rawHtmlString.html
-                                )
-                            },
+                            beskrivelse = tekstObjekt.description?.let { rawHtml -> Innsending.UnsafeHtml(rawHtml.html) },
                             hjelpetekst = tekstObjekt.helpText(),
                             oppfølgingspørmål = node.generatorfakta(),
 
