@@ -91,7 +91,7 @@ internal fun DIV.flersvar(svar: Innsending.FlerSvar, brutto: Boolean) {
                     svaralternativ.tilleggsinformasjon?.also { info ->
                         div(classes = "hjelpetekst") {
                             h3 { +tilleggsinformasjonOverskrift(info) }
-                            unsafe { +info.unsafeHtmlBody.kode }
+                            info.unsafeHtmlBody?.let { unsafe { +info.unsafeHtmlBody.kode } }
                         }
                     }
                 }
@@ -137,7 +137,11 @@ private fun DIV.nettoSpørsmål(spmSvar: SporsmalSvar, tekst: GenerellTekst) {
 internal fun DIV.bruttoSeksjon(seksjon: Innsending.Seksjon, tekst: GenerellTekst) {
     id = seksjonId(seksjon.overskrift)
     h2 { +seksjon.overskrift }
-    seksjon.beskrivelse?.also { unsafe { +seksjon.beskrivelse.medCssKlasse("infotekst") } }
+    try {
+        seksjon.beskrivelse?.also { unsafe { +seksjon.beskrivelse.medCssKlasse("infotekst") } }
+    } catch (error: Exception) {
+        throw error
+    }
     seksjon.hjelpetekst?.also {
         div(classes = "hjelpetekst") {
             seksjon.hjelpetekst.tittel?.also { tittel -> h3 { +tittel } }

@@ -45,7 +45,7 @@ internal data class Innsending(
     object IngenSvar : Svar()
 
     data class Hjelpetekst(val unsafeHtmlBody: UnsafeHtml?, val tittel: String? = null)
-    data class InfoTekst(val tittel: String?, val unsafeHtmlBody: UnsafeHtml, val type: Infotype)
+    data class InfoTekst(val tittel: String?, val unsafeHtmlBody: UnsafeHtml?, val type: Infotype)
 
     data class GenerellTekst(
         val hovedOverskrift: String,
@@ -76,6 +76,7 @@ internal data class Innsending(
     }
 
     internal class UnsafeHtml(val kode: String) {
+        // TODO: må fungere i arrays også
         fun medCssKlasse(klasse: String) = """<p class="$klasse"${kode.substringAfter("<p")}"""
         companion object {
             private fun String.leggTilPåHtmlPtag(kode: String): String = """<p class="$this"${kode.substringAfter("<p")}"""

@@ -18,8 +18,23 @@ import kotlin.test.assertNotNull
 
 internal class SerderTest {
     val faktaJson = object {}.javaClass.getResource("/fakta.json")?.readText()!!
+    val debugfaktaJson = object {}.javaClass.getResource("/debugfakta.json")?.readText()!!
     val tekstJson = object {}.javaClass.getResource("/tekst.json")?.readText()!!
+    val debugtekstJson = object {}.javaClass.getResource("/debugtekst.json")?.readText()!!
     private val oppslag = Oppslag(tekstJson)
+
+    @Test
+    fun `Debug test`() {
+        val h = JsonHtmlMapper(
+            innsendingsData = debugfaktaJson,
+            tekst = debugtekstJson,
+            språk = Innsending.InnsendingsSpråk.BOKMÅL
+        ).parse().apply {
+            infoBlokk = Innsending.InfoBlokk("ident", innsendtTidspunkt = LocalDateTime.now())
+        }
+        HtmlBuilder.lagNettoHtml(h).also { PdfBuilder.lagPdf(it) }
+        HtmlBuilder.lagBruttoHtml(h).also { PdfBuilder.lagPdf(it) }
+    }
 
     @Test
     fun `parser søknadstekst riktig`() {
@@ -63,7 +78,7 @@ internal class SerderTest {
             oppslag.alertText.also { alerttext ->
                 assertEquals(
                     "<p>Her er ett og annet som er greit å vite hvios du har valgt svaralternativ1</p>",
-                    alerttext.body.html
+                    alerttext.body!!.html
                 )
                 assertEquals("Her er noe info", alerttext.title)
                 assertEquals("info", alerttext.type)

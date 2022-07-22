@@ -11,7 +11,7 @@ class InnsendingTest {
     fun `legger til klasse i string`() {
         val testHtml = "<p>Somethings gotta give</p>"
         val testHtmlMedKlasse = """<p class="et-eller-annet">Somethings gotta give</p>"""
-        Innsending.UnsafeHtml(RawHtmlString(testHtml).html).also {
+        Innsending.UnsafeHtml(RawHtmlString.nyEllerNull(testHtml)!!.html).also {
             assertEquals(testHtml, it.kode)
             assertEquals(testHtmlMedKlasse, it.medCssKlasse("et-eller-annet"))
         }

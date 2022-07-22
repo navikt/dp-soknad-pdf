@@ -1,6 +1,7 @@
 package no.nav.dagpenger.innsending.serder
 
 import com.fasterxml.jackson.databind.JsonNode
+import com.fasterxml.jackson.databind.node.ArrayNode
 import com.fasterxml.jackson.databind.node.TextNode
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import mu.KotlinLogging
@@ -139,7 +140,7 @@ internal class Oppslag(private val tekstJson: String) {
 
         class EnkelText(textId: String, val text: String) : TekstObjekt(textId, null, null)
 
-        class AlertText(val title: String?, val type: String, val body: RawHtmlString) {
+        class AlertText(val title: String?, val type: String, val body: RawHtmlString?) {
             init {
                 if (!listOf("info", "warning", "error", "succes").contains(type)) {
                     throw IllegalArgumentException("Ukjent type for alertText $type")
@@ -151,24 +152,24 @@ internal class Oppslag(private val tekstJson: String) {
     }
 }
 
-private fun JsonNode.asRawHtmlString(): RawHtmlString {
-    return if (this is TextNode) {
-        RawHtmlString(this.asText())
-    } else {
-        RawHtmlString(this.toList().joinToString(separator = "") { it.asText() })
-    }
+private fun JsonNode.asRawHtmlString(): RawHtmlString? = when {
+    this is TextNode -> this.asText()
+    this is ArrayNode -> this.toList().joinToString(separator = "") { it.asText() }
+    isNull -> null
+    else -> throw UgyldigHtmlError(this.toPrettyString())
 }
+    .let { RawHtmlString.nyEllerNull(it) }
 
-class RawHtmlString(htmlFraSanity: String) {
-    val html: String = Jsoup.clean(htmlFraSanity, tilatteTaggerOgAttributter).also {
-        if (!(it.startsWith("<") || it.endsWith(">"))) {
-            logger.error { "Mottok html med ustøttet innhold: \noriginal html: $htmlFraSanity\n etter clean: $htmlFraSanity" }
-        }
-        // throw UgyldigHtmlError(htmlFraSanity)
-    }
+class RawHtmlString private constructor(htmlFraSanity: String) {
+    val html: String = Jsoup.clean(htmlFraSanity, tilatteTaggerOgAttributter)
 
     companion object {
-        private val tilatteTaggerOgAttributter = Safelist.relaxed().removeTags("img")
+        internal fun nyEllerNull(htmlString: String?): RawHtmlString? = when {
+            htmlString.isNullOrEmpty() -> null
+            else -> RawHtmlString(htmlString)
+        }
+
+        private val tilatteTaggerOgAttributter = Safelist.relaxed().removeTags("img", "br")
     }
 }
 

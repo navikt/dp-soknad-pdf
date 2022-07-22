@@ -38,15 +38,13 @@ internal class InnsendingSupplier(
         return withContext(Dispatchers.IO) {
             val fakta = async {
                 httpKlient.get("$dpSoknadBaseUrl/$id/ferdigstilt/fakta").bodyAsText()
-            }.await()
-            logger.info("mottok søknaddata: $fakta")
+            }
+
             val tekst = async {
                 httpKlient.get("$dpSoknadBaseUrl/$id/ferdigstilt/tekst").bodyAsText()
-            }.await()
+            }
 
-            logger.info(" mottok søknadstekst :$tekst")
-
-            JsonHtmlMapper(innsendingsData = fakta, tekst = tekst, språk = språk).parse()
+            JsonHtmlMapper(innsendingsData = fakta.await(), tekst = tekst.await(), språk = språk).parse()
         }
     }
 }

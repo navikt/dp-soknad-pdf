@@ -72,7 +72,7 @@ internal class JsonHtmlMapper(
             Innsending.Infotype.fraSanityJson(typenøkkel = alerttext.type)?.let { infotype ->
                 Innsending.InfoTekst(
                     tittel = alerttext.title,
-                    unsafeHtmlBody = Innsending.UnsafeHtml(alerttext.body.html),
+                    unsafeHtmlBody = alerttext.body?.let { Innsending.UnsafeHtml(alerttext.body.html) },
                     type = infotype
                 )
             }

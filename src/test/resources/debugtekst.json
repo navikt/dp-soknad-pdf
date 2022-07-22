@@ -1,0 +1,2019 @@
+{
+  "sanityTexts": {
+    "fakta": [
+      {
+        "text": "Legg til barn",
+        "unit": null,
+        "textId": "faktum.legge-til-egne-barn",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "Hvilket land bor du i?",
+        "unit": null,
+        "textId": "faktum.hvilket-land-bor-du-i",
+        "helpText": {
+          "body": [
+            "<p>Er du usikker på hva du skal svare, kan du lese mer om hvor du skal søke penger fra på <a href=\"https://www.nav.no/\">nav.no</a>.</p>"
+          ],
+          "title": "Har du pendlet mellom flere land?"
+        },
+        "description": [
+          "<p>Med bostedsland mener vi ditt vanlige oppholdssted, som er der du eier eller leier bolig og tilbringer mesteparten av tiden din.</p>"
+        ]
+      },
+      {
+        "text": "Har du reist tilbake til bostedslandet ditt etter at du ble arbeidsledig eller permittert?",
+        "unit": null,
+        "textId": "faktum.reist-tilbake-etter-arbeidsledig",
+        "helpText": {
+          "body": [
+            "<p>Hvis du er helt arbeidsledig og har pendlet sjeldnere enn én gang i uken, kan du selv velge å bli i Norge og søke arbeid her. Velger du å bli i Norge kan du også søke om dagpenger.</p>",
+            "<p>Om du heller skal søke om penger fra bostedslandet ditt, avhenger av hvor lenge du har vært borte fra Norge etter at du ble arbeidsledig og hva som var formålet med å reise tilbake.</p>",
+            "<p>Husk at du må søke om dagpenger for at vi skal kunne vurdere om du oppfyller vilkårene for å få penger fra Norge.</p>"
+          ],
+          "title": "Hvorfor spør vi om dette?"
+        },
+        "description": [
+          "<p>Hvis du velger å reise tilbake til landet du er bosatt i, kan du miste retten til å få dagpenger fra Norge og må søke om økonomisk støtte fra landet du bor i.</p>"
+        ]
+      },
+      {
+        "text": "Dato for avreise",
+        "unit": null,
+        "textId": "faktum.reist-tilbake-periode",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "Hvorfor reiste du fra Norge?",
+        "unit": null,
+        "textId": "faktum.reist-tilbake-aarsak",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "Reiste du hjem til landet du bor i én gang i uken eller mer, mens du jobbet i Norge?",
+        "unit": null,
+        "textId": "faktum.reist-tilbake-en-gang-eller-mer",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "Reiste du i takt med rotasjon?",
+        "unit": null,
+        "textId": "faktum.reist-i-takt-med-rotasjon",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "Har du mottatt dagpenger fra NAV i løpet av de siste 52 ukene?",
+        "unit": null,
+        "textId": "faktum.mottatt-dagpenger-siste-12-mnd",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "faktum.register.barn-liste",
+        "unit": null,
+        "textId": "faktum.register.barn-liste",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "faktum.barn-liste",
+        "unit": null,
+        "textId": "faktum.barn-liste",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "Hvilken dato søker du dagpenger fra?",
+        "unit": null,
+        "textId": "faktum.dagpenger-soknadsdato",
+        "helpText": null,
+        "description": [
+          "<p>Du bør søke om dagpenger fra den første dagen du er helt eller delvis arbeidsledig, eller permittert.</p>"
+        ]
+      },
+      {
+        "text": "Hvilken type arbeidstid har du hatt?",
+        "unit": null,
+        "textId": "faktum.type-arbeidstid",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "Har du jobbet siden sist du fikk dagpenger?",
+        "unit": null,
+        "textId": "faktum.arbeidsforhold.gjenopptak.jobbet-siden-sist",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "Skriv årsaken til at dagpengene ble stanset (Maks 500 tegn)",
+        "unit": null,
+        "textId": "faktum.arbeidsforhold.gjenopptak.aarsak-til-stans",
+        "helpText": null,
+        "description": [
+          "<p>For eksempel om du har vært syk, på ferie, glemt å sende meldekort, vært i utdanning eller hatt foreldrepermisjon.</p>"
+        ]
+      },
+      {
+        "text": "Hvilken dato søker du gjenopptak av dagpenger fra?\n",
+        "unit": null,
+        "textId": "faktum.arbeidsforhold.gjenopptak.soknadsdato-gjenopptak",
+        "helpText": {
+          "body": [
+            "<p>Du kan tidligst få dagpenger fra den dagen du sender inn søknaden om gjenopptak om dagpenger.</p>"
+          ],
+          "title": "Når kan jeg tidligst få dagpenger fra?"
+        },
+        "description": [
+          "<p>Hvis du har jobbet siden sist skal du oppgi den første dagen du ble helt eller delvis arbeidsledig.</p>"
+        ]
+      },
+      {
+        "text": "Har du hatt endringer i ett eller flere arbeidsforhold siden sist du fikk dagpenger?",
+        "unit": null,
+        "textId": "faktum.arbeidsforhold.gjenopptak.endringer-i-arbeidsforhold",
+        "helpText": null,
+        "description": [
+          "<p>Vi trenger informasjon om arbeidsforholdene dine som har endret seg siden sist du fikk dagpenger. For eksempel at arbeidsgiveren din har gått konkurs.</p>"
+        ]
+      },
+      {
+        "text": "Ønsker du at NAV skal gjøre en ny beregning av hvor mye du skal få i dagpenger?",
+        "unit": null,
+        "textId": "faktum.arbeidsforhold.gjenopptak.onsker-ny-beregning",
+        "helpText": {
+          "body": [
+            "<p>Har du jobbet i minst 12 uker, kan du ved å svare “ja” på dette spørsmålet få en ny vurdering av hvor mye du skal få i dagpenger. Ber du oss om å gjøre en ny vurdering, vil vi velge det alternativet som lønner seg for deg.</p>"
+          ],
+          "title": "Hva vil dette bety for meg?"
+        },
+        "description": null
+      },
+      {
+        "text": "Ønsker du å få fastsatt ny vanlig arbeidstid?",
+        "unit": null,
+        "textId": "faktum.arbeidsforhold.gjenopptak.onsker-faa-fastsatt-ny-vanlig-arbeidstid",
+        "helpText": {
+          "body": null,
+          "title": "Hva vil dette bety for meg?"
+        },
+        "description": [
+          "<p>Hvis du har arbeidet flere timer siden forrige gang du mottok dagpenger, kan det lønne seg å få fastsatt ny arbeidstid. Dette betyr at du kan arbeide mer og samtidig motta dagpenger. Ber du oss om å gjøre en ny vurdering, vil vi velge det alternativet som lønner seg for deg.</p>"
+        ]
+      },
+      {
+        "text": "faktum.arbeidsforhold",
+        "unit": null,
+        "textId": "faktum.arbeidsforhold",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "Har du jobbet i Sveits, eller et annet EØS-land enn Norge i løpet av de siste 36 månedene?",
+        "unit": null,
+        "textId": "faktum.eos-arbeid-siste-36-mnd",
+        "helpText": {
+          "body": [
+            "<p>Hvis du har jobbet i et annet EØS-land eller i Sveits, kan du ha rett til å få overført arbeidsperioder du har hatt der. Da vil de regnes med i vurderingen av retten til dagpenger i Norge.</p>"
+          ],
+          "title": "Hvorfor må jeg svare på dette?"
+        },
+        "description": null
+      },
+      {
+        "text": "faktum.eos-arbeidsforhold",
+        "unit": null,
+        "textId": "faktum.eos-arbeidsforhold",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "Driver du egen næringsvirksomhet?",
+        "unit": null,
+        "textId": "faktum.driver-du-egen-naering",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "Skriv inn hvor mange timer du jobbet i egen næring før arbeidstiden ble redusert",
+        "unit": "timer",
+        "textId": "faktum.egen-naering-arbeidstimer-for",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "Skriv inn hvor mange timer du jobber i egen næring nå",
+        "unit": "timer",
+        "textId": "faktum.egen-naering-arbeidstimer-naa",
+        "helpText": null,
+        "description": [
+          "<p>Hvis du jobber mer enn 60 prosent av den totale arbeidstiden du hadde før, har du ikke rett til dagpenger</p>"
+        ]
+      },
+      {
+        "text": "Driver du eget gårdsbruk?",
+        "unit": null,
+        "textId": "faktum.driver-du-eget-gaardsbruk",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "Gårdsbrukets organisasjonsnummer",
+        "unit": null,
+        "textId": "faktum.eget-gaardsbruk-organisasjonsnummer",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "Hvilken type gårdsbruk driver du? ",
+        "unit": null,
+        "textId": "faktum.eget-gaardsbruk-type-gaardsbruk",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "Hvem eier gårdsbruket? Du kan krysse for flere.",
+        "unit": null,
+        "textId": "faktum.eget-gaardsbruk-hvem-eier",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "Hvor mye av inntekten går til deg?",
+        "unit": "%",
+        "textId": "faktum.eget-gaardsbruk-jeg-andel-inntekt",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "Hvor mye av inntekten går til ektefelle/samboer?",
+        "unit": "%",
+        "textId": "faktum.eget-gaardsbruk-ektefelle-samboer-andel-inntekt",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "Hvor mye av inntekten går til  andre?",
+        "unit": "%",
+        "textId": "faktum.eget-gaardsbruk-andre-andel-inntekt",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "Skriv hvor mange arbeidstimer som ble brukt",
+        "unit": "timer",
+        "textId": "faktum.eget-gaardsbruk-arbeidstimer-aar",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "Hvor mange arbeidstimer blir brukt på gårdsbruket totalt i løpet av ett år?",
+        "unit": null,
+        "textId": "faktum.eget-gaardsbruk-arbeidsaar-for-timer",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "Forklar kort hvordan du har beregnet antall arbeidstimer totalt",
+        "unit": null,
+        "textId": "faktum.eget-gaardsbruk-arbeidstimer-beregning",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "faktum.egen-naering-organisasjonsnummer-liste",
+        "unit": null,
+        "textId": "faktum.egen-naering-organisasjonsnummer-liste",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "Har du avtjent verneplikt i minst tre måneder de siste 12 månedene?",
+        "unit": null,
+        "textId": "faktum.avtjent-militaer-sivilforsvar-tjeneste-siste-12-mnd",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "Mottar du eller har du søkt om ytelser fra andre enn NAV?",
+        "unit": null,
+        "textId": "faktum.andre-ytelser-mottatt-eller-sokt",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "Hvilke andre ytelser?",
+        "unit": null,
+        "textId": "faktum.hvilke-andre-ytelser",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": " Hvem utbetaler pensjonen?",
+        "unit": null,
+        "textId": "faktum.tjenestepensjon-hvem-utbetaler",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "Hvilken periode gjelder ytelsen for?",
+        "unit": null,
+        "textId": "faktum.tjenestepensjon-hvilken-periode",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": " Hvem utbetaler etterlønnen?",
+        "unit": null,
+        "textId": "faktum.etterlonn-arbeidsgiver-hvem-utbetaler",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "Hvem utbetaler etterlønnen?",
+        "unit": null,
+        "textId": "faktum.etterlonn-arbeidsgiver-hvilken-periode",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "Hvilket land utbetaler pengene?",
+        "unit": null,
+        "textId": "faktum.dagpenger-hvilket-eos-land-utbetaler",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "Hvilken periode gjelder ytelsen for?",
+        "unit": null,
+        "textId": "faktum.dagpenger-eos-land-hvilken-periode",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "Hvilken ytelse er det?",
+        "unit": null,
+        "textId": "faktum.hvilken-annen-ytelse",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "Hvem utbetaler ytelsen?",
+        "unit": null,
+        "textId": "faktum.annen-ytelse-hvem-utebetaler",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "Hvilken periode gjelder ytelsen for?",
+        "unit": null,
+        "textId": "faktum.annen-ytelse-hvilken-periode",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "Får du eller kommer du til å få en utbetaling eller andre økonomiske goder fra tidligere arbeidsgiver?",
+        "unit": null,
+        "textId": "faktum.utbetaling-eller-okonomisk-gode-tidligere-arbeidsgiver",
+        "helpText": {
+          "body": [
+            "<p>Du kan ikke få dagpenger samtidig som du er dekket av lønn fra arbeidsgiver. Det er ikke når du får utbetalingen som er avgjørende, men hvilken periode utbetalingen gjelder for.</p>"
+          ],
+          "title": "Hvorfor spør vi om dette?"
+        },
+        "description": null
+      },
+      {
+        "text": "Skriv inn hva du får eller beholder",
+        "unit": null,
+        "textId": "faktum.okonomisk-gode-tidligere-arbeidsgiver-hva-omfatter-avtalen",
+        "helpText": null,
+        "description": [
+          "<p>Du må opplyse hvor mye du får utbetalt. Hvis du beholder noen gjenstander, må du skrive hvilke. Du trenger ikke opplyse om feriepenger.</p>"
+        ]
+      },
+      {
+        "text": "Hvilken periode gjelder ytelsen for?",
+        "unit": null,
+        "textId": "faktum.arbeidsløs-GFF-hvilken-periode",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "Hvilken periode gjelder ytelsen for?",
+        "unit": null,
+        "textId": "faktum.garantilott-GFF-hvilken-periode",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "Kan du jobbe både heltid og deltid?",
+        "unit": null,
+        "textId": "faktum.jobbe-hel-deltid",
+        "helpText": null,
+        "description": [
+          "<p>Som hovedregel må du kunne ta både hel- og deltidsjobb for å ha rett til dagpenger.</p>"
+        ]
+      },
+      {
+        "text": "Velg situasjonen som gjelder deg.",
+        "unit": null,
+        "textId": "faktum.kun-deltid-aarsak",
+        "helpText": null,
+        "description": [
+          "<p>Du kan krysse av for flere alternativer. Du må dokumentere årsaken.</p>"
+        ]
+      },
+      {
+        "text": "Skriv kort om situasjonen din",
+        "unit": null,
+        "textId": "faktum.kort-om-hvorfor-kun-deltid",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "Skriv inn antall timer du kan jobbe per uke",
+        "unit": null,
+        "textId": "faktum.kun-deltid-aarsak-antall-timer",
+        "helpText": {
+          "body": [
+            "<p>Hvis du har uføretrygd må du kunne jobbe minst 11,25 timer per uke.</p>"
+          ],
+          "title": "Hvis du har uføretrygd"
+        },
+        "description": [
+          "<p>For å få rett til dagpenger må du normalt kunne jobbe minst 18,75 timer per uke.</p>"
+        ]
+      },
+      {
+        "text": "Kan du jobbe i hele Norge?",
+        "unit": null,
+        "textId": "faktum.jobbe-hele-norge",
+        "helpText": null,
+        "description": [
+          "<p>Som hovedregel må du være villig til å ta arbeid i hele Norge for å ha rett til dagpenger</p>"
+        ]
+      },
+      {
+        "text": "Velg situasjonen som gjelder deg.",
+        "unit": null,
+        "textId": "faktum.ikke-jobbe-hele-norge",
+        "helpText": null,
+        "description": [
+          "<p>Du kan krysse av for flere alternativer. Du må dokumentere årsaken.</p>"
+        ]
+      },
+      {
+        "text": "Skriv kort om situasjonen din",
+        "unit": null,
+        "textId": "faktum.kort-om-hvorfor-ikke-jobbe-hele-norge",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "Kan du ta alle typer arbeid?",
+        "unit": null,
+        "textId": "faktum.alle-typer-arbeid",
+        "helpText": {
+          "body": [
+            "<p>Med helsemessige begrensninger mener vi funksjonshemming, sykdom, allergier som hindrer deg i arbeidet eller andre årsaker som må tas hensyn til når du skal finne nytt arbeid. Du må oppgi hva som gjelder for deg, og dokumentere de helsemessige årsakene du viser til.</p>"
+          ],
+          "title": "Hva regnes som helsemessige begrensninger?"
+        },
+        "description": [
+          "<p>Som hovedregel må du kunne ta alle typer arbeid for å ha rett til dagpenger.</p>",
+          "<p>Hvis du har helsemessige begrensninger og ikke kan ta alle typer arbeid, vil vi ta hensyn til dette.<br/></p>"
+        ]
+      },
+      {
+        "text": "Er du villig til å bytte yrke eller gå ned i lønn?",
+        "unit": null,
+        "textId": "faktum.bytte-yrke-ned-i-lonn",
+        "helpText": null,
+        "description": [
+          "<p>For å ha rett til dagpenger må du være villig til å ta ethvert arbeid du er kvalifisert for. Dette gjelder også innenfor yrker du ikke er utdannet til eller har arbeidserfaring fra. Dette betyr også at du må være villig til å gå ned i lønn. Du trenger ikke å ta arbeid som ikke er lønnet etter tariff.</p>"
+        ]
+      },
+      {
+        "text": "Tar du utdanning eller opplæring?",
+        "unit": null,
+        "textId": "faktum.tar-du-utdanning",
+        "helpText": null,
+        "description": [
+          "<p>Som hovedregel har du ikke rett til dagpenger når du er under utdanning eller opplæring.</p>"
+        ]
+      },
+      {
+        "text": "Avsluttet du utdanning i løpet av de siste seks månedene?",
+        "unit": null,
+        "textId": "faktum.avsluttet-utdanning-siste-6-mnd",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "Planlegger du å starte eller fullføre utdanning eller opplæring samtidig som du mottar dagpenger?",
+        "unit": null,
+        "textId": "faktum.planlegger-utdanning-med-dagpenger",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "Hvis du har flere opplysninger du mener er viktige for søknaden din kan du skrive dem her",
+        "unit": null,
+        "textId": "faktum.tilleggsopplysninger",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "Har du flere opplysninger du mener er viktige for søknaden din?",
+        "unit": null,
+        "textId": "faktum.tilleggsopplysninger.har-tilleggsopplysninger",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "faktum.dokument-verneplikt-tjenestebevis",
+        "unit": null,
+        "textId": "faktum.dokument-verneplikt-tjenestebevis",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "faktum.dokument-verneplikt-tjenestebevis-tilgjengelig",
+        "unit": null,
+        "textId": "faktum.dokument-verneplikt-tjenestebevis-tilgjengelig",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "faktum.dokument-verneplikt-tjenestebevis-årsak",
+        "unit": null,
+        "textId": "faktum.dokument-verneplikt-tjenestebevis-årsak",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "faktum.dokument-utdanning-sluttdato",
+        "unit": null,
+        "textId": "faktum.dokument-utdanning-sluttdato",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "faktum.dokument-utdanning-sluttdato-tilgjengelig",
+        "unit": null,
+        "textId": "faktum.dokument-utdanning-sluttdato-tilgjengelig",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "faktum.dokument-utdanning-sluttdato-årsak",
+        "unit": null,
+        "textId": "faktum.dokument-utdanning-sluttdato-årsak",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "faktum.dokument-egen-næring-arbeidstimer",
+        "unit": null,
+        "textId": "faktum.dokument-egen-næring-arbeidstimer",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "faktum.dokument-egen-næring-arbeidstimer-tilgjengelig",
+        "unit": null,
+        "textId": "faktum.dokument-egen-næring-arbeidstimer-tilgjengelig",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "faktum.dokument-egen-næring-arbeidstimer-ikke-tilgjengelig-årsak",
+        "unit": null,
+        "textId": "faktum.dokument-egen-næring-arbeidstimer-ikke-tilgjengelig-årsak",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "faktum.dokument-egen-næring-gårdsbruk-arbeidstimer",
+        "unit": null,
+        "textId": "faktum.dokument-egen-næring-gårdsbruk-arbeidstimer",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "faktum-dokument-egen-næring-gårdsbruk-arbeidstimer-tilgjengelig",
+        "unit": null,
+        "textId": "faktum-dokument-egen-næring-gårdsbruk-arbeidstimer-tilgjengelig",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "faktum.dokument-egen-næring-gårdsbruk-arbeidstimer-ikke-tilgjengelig-årsak",
+        "unit": null,
+        "textId": "faktum.dokument-egen-næring-gårdsbruk-arbeidstimer-ikke-tilgjengelig-årsak",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "Etternavn",
+        "unit": null,
+        "textId": "faktum.barn-etternavn",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "Fødselsdato (dd.mm.ååå)",
+        "unit": null,
+        "textId": "faktum.barn-foedselsdato",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "Forsørger du barnet?",
+        "unit": null,
+        "textId": "faktum.forsoerger-du-barnet",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "Fornavn og mellomnavn",
+        "unit": null,
+        "textId": "faktum.barn-fornavn-mellomnavn",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "Bostedsland til barnet",
+        "unit": null,
+        "textId": "faktum.barn-statsborgerskap",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "Har barnet en årsinntekt på over 1 G?",
+        "unit": null,
+        "textId": "faktum.barn-aarsinntekt-over-1g",
+        "helpText": null,
+        "description": [
+          "<p>Dersom barnet har årsinntekt over 1 G, får du ikke barnetillegg for dette barnet.</p>"
+        ]
+      },
+      {
+        "text": "Skriv inn inntekten til barnet i norske kroner",
+        "unit": "NOK",
+        "textId": "faktum.barn-inntekt",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "Navnet på bedriften",
+        "unit": null,
+        "textId": "faktum.arbeidsforhold.navn-bedrift",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "Hvilket land har du jobbet i?",
+        "unit": null,
+        "textId": "faktum.arbeidsforhold.land",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "Hvordan har dette arbeidsforholdet endret seg?",
+        "unit": null,
+        "textId": "faktum.arbeidsforhold.endret",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "Vet du hvor mange timer du jobber i arbeidsforholdet?",
+        "unit": null,
+        "textId": "faktum.arbeidsforhold.kjent-antall-timer-jobbet",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "Hvor mange timer i uka jobber du i dette arbeidsforholdet?",
+        "unit": null,
+        "textId": "faktum.arbeidsforhold.antall-timer-jobbet",
+        "helpText": {
+          "body": [
+            "<p>Jobber du like mye hver uke, oppgir du denne arbeidstiden.<br/><br/>Hvis du ikke jobber like mye hver uke, oppgir du antall timer du forventer å jobbe per uke i denne måneden.</p>"
+          ],
+          "title": "Hva skal jeg oppgi som arbeidstid?"
+        },
+        "description": null
+      },
+      {
+        "text": "Har du tilleggsopplysninger til dette arbeidsforholdet?",
+        "unit": null,
+        "textId": "faktum.arbeidsforhold.har-tilleggsopplysninger",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "Tilleggsopplysninger",
+        "unit": null,
+        "textId": "faktum.arbeidsforhold.tilleggsopplysninger",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "Når startet du i jobben?",
+        "unit": null,
+        "textId": "faktum.arbeidsforhold.startdato-arbeidsforhold",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": " Fra hvilken dato er arbeidstiden din redusert? (dd.mm.åååå)",
+        "unit": null,
+        "textId": "faktum.arbeidsforhold.arbeidstid-redusert-fra-dato",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "Er dette et midlertidig arbeidsforhold med en kontraktfestet sluttdato?",
+        "unit": null,
+        "textId": "faktum.arbeidsforhold.midlertidig-med-kontraktfestet-sluttdato",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "Oppgi den kontraktsfestede sluttdatoen på dette arbeidsforholdet",
+        "unit": null,
+        "textId": "faktum.arbeidsforhold.kontraktfestet-sluttdato",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "Når startet du i denne jobben?",
+        "unit": null,
+        "textId": "faktum.arbeidsforhold.midlertidig-arbeidsforhold-oppstartsdato",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "Er du permittert fra fiskeforedlings- eller fiskeoljeindustrien?",
+        "unit": null,
+        "textId": "faktum.arbeidsforhold.permittertert-fra-fiskeri-naering",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "Varighet på arbeidsforholdet",
+        "unit": null,
+        "textId": "faktum.arbeidsforhold.varighet",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "Vet du hvor mange timer du har jobbet i uka før du ble sagt opp?",
+        "unit": null,
+        "textId": "faktum.arbeidsforhold.vet-du-antall-timer-foer-mistet-jobb",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "Vet du hvor mange timer du har jobbet i uka før arbeidsgiveren gikk konkurs?",
+        "unit": null,
+        "textId": "faktum.arbeidsforhold.vet-du-antall-timer-foer-konkurs",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "Vet du hvor mange timer du har jobbet i uka før kontrakten utgikk?",
+        "unit": null,
+        "textId": "faktum.arbeidsforhold.vet-du-antall-timer-foer-kontrakt-utgikk",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "Vet du hvor mange timer du har jobbet i uka før du sa opp jobben?",
+        "unit": null,
+        "textId": "faktum.arbeidsforhold.vet-du-antall-timer-foer-du-sa-opp",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "Vet du hvor mange timer du har jobbet i uka før arbeidstiden ble redusert?",
+        "unit": null,
+        "textId": "faktum.arbeidsforhold.vet-du-antall-timer-foer-redusert-arbeidstid",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "Vet du hvor mange timer du har jobbet i uka før du ble permittert?",
+        "unit": null,
+        "textId": "faktum.arbeidsforhold.vet-du-antall-timer-foer-permittert",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "Hvor mange timer jobber du i uka?",
+        "unit": null,
+        "textId": "faktum.arbeidsforhold.antall-timer-dette-arbeidsforhold",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "Legg inn siste permitteringsperiode",
+        "unit": null,
+        "textId": "faktum.arbeidsforhold.permittert-periode",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "Hvor mange prosent er du permittert?",
+        "unit": "%",
+        "textId": "faktum.arbeidsforhold.permittert-prosent",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "Vet du hva lønnspliktsperioden til arbeidsgiveren din er eller var?",
+        "unit": null,
+        "textId": "faktum.arbeidsforhold.vet-du-lonnsplikt-periode",
+        "helpText": null,
+        "description": [
+          "<p>Du finner informasjon om arbeidsgivers lønnspliktperiode i permitteringsvarselet. Fra-datoen er den første dagen du ikke arbeider som normalt fordi du er permittert.</p>"
+        ]
+      },
+      {
+        "text": "Når var lønnspliktsperioden?",
+        "unit": null,
+        "textId": "faktum.arbeidsforhold.naar-var-lonnsplikt-periode",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": " Hva er årsaken til at du har sagt opp? (Maks 500 tegn) ",
+        "unit": null,
+        "textId": "faktum.arbeidsforhold.aarsak-til-du-sa-opp",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "Har du fått tilbud om forlengelse av arbeidskontrakten eller tilbud om annen stilling hos arbeidsgiveren din?",
+        "unit": null,
+        "textId": "faktum.arbeidsforhold.tilbud-om-forlengelse-eller-annen-stilling",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "Hva har du svart på tilbudet?",
+        "unit": null,
+        "textId": "faktum.arbeidsforhold.svar-paa-forlengelse-eller-annen-stilling",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "Hva er årsaken til at du ikke har tatt imot tilbudet?",
+        "unit": null,
+        "textId": "faktum.arbeidsforhold.aarsak-til-ikke-akseptert-tilbud",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "Ønsker du å søke om forskudd på lønnsgarantimidler?",
+        "unit": null,
+        "textId": "faktum.arbeidsforhold.soke-forskudd-lonnsgarantimidler",
+        "helpText": {
+          "body": [
+            "<p>Lønnsgarantiordningen skal sikre at du som arbeidstaker får lønn som du ikke har fått utbetalt når arbeidsgiveren din går konkurs. Søknaden til lønnsgarantiordningen skal sendes via bostyrer i konkursboet.<br/><br/>Det kan ta lang tid før du får svar på søknaden om lønnsgarantimidler. Du kan derfor søke om forskudd på lønnsgarantimidler. Forskuddet blir utbetalt som dagpenger, i inntil en måned etter at arbeidsgiveren din er konkurs.<br/><br/>Er du usikker på om du har rett på lønnsgarantimidler, anbefaler vi at du søker om forskudd her. Da må du også sende en egen søknad om lønnsgarantimidler, i tillegg til denne søknaden.</p>"
+          ],
+          "title": "Hva er lønnsgarantiordningen?"
+        },
+        "description": [
+          "<p><br/></p>"
+        ]
+      },
+      {
+        "text": "Ønsker du å søke om dagpenger i tillegg til forskudd om lønnsgarantimidler?",
+        "unit": null,
+        "textId": "faktum.arbeidsforhold.soke-forskudd-lonnsgarantimidler-i-tillegg-til-dagpenger",
+        "helpText": {
+          "body": [
+            "<p>Forskudd på lønnsgarantimidler blir utbetalt i inntil én måned.<br/><br/>Hvis du er uten arbeid etter at perioden med forskudd på lønnsgarantimidler er ferdig, kan du ha rett på dagpenger. Det kan du søke om ved å svare ja på dette spørsmålet.</p>"
+          ],
+          "title": "Hvem kan ha rett på dagpenger?"
+        },
+        "description": null
+      },
+      {
+        "text": "Godtar du at NAV trekker forskuddet om lønnsgarantimidler direkte fra lønnsgarantiordningen?",
+        "unit": null,
+        "textId": "faktum.arbeidsforhold.godta-trekk-fra-nav-av-forskudd-fra-lonnsgarantimidler",
+        "helpText": null,
+        "description": [
+          "<p>Når du får innvilget lønnsgarantimidler, trekker vi forskuddet fra lønnsgarantimidlene. Dette er fordi forskuddet kun skal dekke den første måneden du venter på svar på søknaden om lønnsgarantimidler. Du taper ikke penger totalt sett.<br/><br/>Du får likt beløp i lønnsgarantimidler totalt, uavhengig av om du velger forskudd eller ikke.</p>"
+        ]
+      },
+      {
+        "text": "Har du søkt om lønnsgarantimidler?",
+        "unit": null,
+        "textId": "faktum.arbeidsforhold.har-sokt-om-lonnsgarantimidler",
+        "helpText": null,
+        "description": [
+          "<p>For å ha rett til forskudd på lønnsgarantimidler må du søke lønnsgarantiordningen om lønnsgarantimidler. Dette kan bostyrer i konkursboet hjelpe deg med.</p>"
+        ]
+      },
+      {
+        "text": "Dekker lønnsgarantiordningen lønnskravet ditt?",
+        "unit": null,
+        "textId": "faktum.arbeidsforhold.dekker-lonnsgarantiordningen-lonnskravet-ditt",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "Har du fått utbetalt lønn for dager etter datoen arbeidsgiveren din gikk konkurs eller ble tvangsavviklet?",
+        "unit": null,
+        "textId": "faktum.arbeidsforhold.utbetalt-lonn-etter-konkurs",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "Velg den siste dagen du har fått utbetalt lønn for",
+        "unit": null,
+        "textId": "faktum.arbeidsforhold.siste-dag-utbetalt-for-konkurs",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "Hva var årsaken til at du ble sagt opp?",
+        "unit": null,
+        "textId": "faktum.arbeidsforhold.hva-er-aarsak-til-avskjediget",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "Hva var årsaken til at du ble sagt opp?",
+        "unit": null,
+        "textId": "faktum.arbeidsforhold.vet-du-aarsak-til-sagt-opp-av-arbeidsgiver",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "Hva er årsaken til at arbeidstiden din ble redusert?",
+        "unit": null,
+        "textId": "faktum.arbeidsforhold.vet-du-aarsak-til-redusert-arbeidstid",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "Er dette et midlertidig arbeidsforhold med en kontraktfestet sluttdato?",
+        "unit": null,
+        "textId": "faktum.arbeidsforhold.midlertidig-arbeidsforhold-med-sluttdato",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "Har du fått tilbud om å fortsette hos arbeidsgiveren din i en annen stilling eller et annet sted i Norge?",
+        "unit": null,
+        "textId": "faktum.arbeidsforhold.tilbud-om-annen-stilling-eller-annet-sted-i-norge",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "Arbeidet du skift eller turnus?",
+        "unit": null,
+        "textId": "faktum.arbeidsforhold.skift-eller-turnus",
+        "helpText": null,
+        "description": [
+          "<p>Skift eller turnus kan være når du har avtale om å arbeide ulike tider i ulike uker, som for eksempel dagtid en uke og kveldstid en uke, eller har fri hver tredje helg.</p>"
+        ]
+      },
+      {
+        "text": "Arbeidet du rotasjon?",
+        "unit": null,
+        "textId": "faktum.arbeidsforhold.rotasjon",
+        "helpText": null,
+        "description": [
+          "<p>En rotasjon er for eksempel at du arbeider to uker og har fri i to uker.</p>"
+        ]
+      },
+      {
+        "text": "Hvor mange arbeidsdager hadde du i den siste rotasjonen din?",
+        "unit": null,
+        "textId": "faktum.arbeidsforhold.arbeidsdager-siste-rotasjon",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "Hvor mange fridager hadde du i den siste rotasjonen din?",
+        "unit": null,
+        "textId": "faktum.arbeidsforhold.fridager-siste-rotasjon",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "Navnet på bedriften",
+        "unit": null,
+        "textId": "faktum.eos-arbeidsforhold.arbeidsgivernavn",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "Hvilket land har du jobbet i?",
+        "unit": null,
+        "textId": "faktum.eos-arbeidsforhold.land",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "Oppgi personnummeret (PIN) som du hadde i dette landet",
+        "unit": null,
+        "textId": "faktum.eos-arbeidsforhold.personnummer",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "Varighet på arbeidsforholdet",
+        "unit": null,
+        "textId": "faktum.eos-arbeidsforhold.varighet",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "text": "Næringens organisasjonsnummer",
+        "unit": null,
+        "textId": "faktum.egen-naering-organisasjonsnummer",
+        "helpText": null,
+        "description": null
+      }
+    ],
+    "seksjoner": [
+      {
+        "title": "Bostedsland",
+        "textId": "bostedsland",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "title": "Gjenopptak",
+        "textId": "gjenopptak",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "title": "barnetillegg-register",
+        "textId": "barnetillegg-register",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "title": "Barnetillegg",
+        "textId": "barnetillegg",
+        "helpText": null,
+        "description": [
+          "<p>Forsørger du barn (biologiske og/eller adoptivbarn) under 18 år, kan du ha rett på barnetillegg.</p>",
+          "<p><br/>Du kan også ha rett på barnetillegg dersom du er pliktig til å betale bidrag.</p>"
+        ]
+      },
+      {
+        "title": "Arbeidsforhold",
+        "textId": "arbeidsforhold",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "title": "Arbeidsforhold i EØS-området",
+        "textId": "eos-arbeidsforhold",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "title": "Egen næring",
+        "textId": "egen-naering",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "title": "Verneplikt",
+        "textId": "verneplikt",
+        "helpText": null,
+        "description": [
+          "<p>Du kan ha rett til dagpenger etter særlige regler hvis du har avtjent militærtjeneste eller obligatorisk sivilforsvarstjeneste i minst tre av de siste tolv månedene.</p>"
+        ]
+      },
+      {
+        "title": "Andre ytelser",
+        "textId": "andre-ytelser",
+        "helpText": null,
+        "description": [
+          "<p>Dersom du mottar ytelser fra andre enn NAV, kan det ha betydning for retten din til dagpenger.</p>"
+        ]
+      },
+      {
+        "title": "Reell arbeidssøker",
+        "textId": "reell-arbeidssoker",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "title": "Utdanning",
+        "textId": "utdanning",
+        "helpText": null,
+        "description": [
+          "<p>Som hovedregel har du ikke rett til dagpenger når du er under utdanning eller opplæring.</p>"
+        ]
+      },
+      {
+        "title": "Tilleggsopplysninger",
+        "textId": "tilleggsopplysninger",
+        "helpText": null,
+        "description": [
+          "<p>Hvis du har flere opplysninger du mener er viktige for søknaden din kan du skrive dem her.</p>"
+        ]
+      },
+      {
+        "title": "Reell arbeidssøker",
+        "textId": "reell-arbeidssoker",
+        "helpText": {
+          "body": [
+            "<p>Du må svare «ja» på alle spørsmål under «reel arbeidssøker». Det vil likevel ikke bli stilt like strenge krav til deg, som de som er helt arbeidsledige.</p>"
+          ],
+          "title": "For deg som er delvis eller kortvarig permittert"
+        },
+        "description": [
+          "<p>For å få dagpenger må du være reell arbeidssøker. Dette betyr at du som hovedregel</p>",
+          "<ul><li>er frisk nok til å jobbe minst 50 prosent som tilsvarer 18,75 timer i uka</li></ul>",
+          "<ul><li>kan ta ethvert arbeid hvor som helst i Norge</li></ul>",
+          "<ul><li>kan delta i arbeidsmarkedstiltak</li></ul>"
+        ]
+      }
+    ],
+    "apptekster": [
+      {
+        "textId": "barn.legg-til",
+        "valueText": "Legg til barn"
+      },
+      {
+        "textId": "start-soknad.start-knapp",
+        "valueText": "Start søknad"
+      },
+      {
+        "textId": "arbeidsforhold.legg-til",
+        "valueText": "Legg til arbeidsforhold"
+      },
+      {
+        "textId": "generator.fjern",
+        "valueText": "Fjern dette svaret"
+      },
+      {
+        "textId": "knapp.neste",
+        "valueText": "Neste steg"
+      },
+      {
+        "textId": "oppsummering.slett-soknad",
+        "valueText": "Slett søknad"
+      },
+      {
+        "textId": "pdfa.description",
+        "valueText": "Søknad om dagpenger"
+      },
+      {
+        "textId": "pdfa.subject",
+        "valueText": "Dagpenger"
+      },
+      {
+        "textId": "laster-sporsmal.tittel",
+        "valueText": "Laster neste spørsmål"
+      },
+      {
+        "textId": "pdf.hovedoverskrift",
+        "valueText": "Søknad om dagpenger"
+      },
+      {
+        "textId": "pdf.svar",
+        "valueText": "svar"
+      },
+      {
+        "textId": "oppsummering.send-soknad",
+        "valueText": "Send inn søknad"
+      },
+      {
+        "textId": "knapp.forrige",
+        "valueText": "Forrige steg"
+      },
+      {
+        "textId": "pdf.datosendt",
+        "valueText": "Dato sendt"
+      },
+      {
+        "textId": "oppsummering.feil",
+        "valueText": "Noe skjedde feil med innsendingen av søknaden."
+      },
+      {
+        "textId": "arbeidsforhold.fjern",
+        "valueText": "Fjern dette arbeidsforholdet"
+      },
+      {
+        "textId": "pdf.fnr",
+        "valueText": "Fødselsnummer"
+      },
+      {
+        "textId": "barn.fjern",
+        "valueText": "Fjern dette barnet"
+      },
+      {
+        "textId": "pdf.tittel",
+        "valueText": "Søknad om dagpenger"
+      },
+      {
+        "textId": "soknad.til-oppsummering",
+        "valueText": "Gå til oppsummering"
+      },
+      {
+        "textId": "start-soknad.tittel",
+        "valueText": "Søknad om dagpenger"
+      },
+      {
+        "textId": "knapp.avbryt",
+        "valueText": "Avbryt"
+      },
+      {
+        "textId": "laster-sporsmal.tekst",
+        "valueText": "Tenk på noe som gjør deg glad."
+      },
+      {
+        "textId": "generator.legg-til",
+        "valueText": "Legg til svar"
+      },
+      {
+        "textId": "pdfa.author",
+        "valueText": "NAV Dagpenger"
+      },
+      {
+        "textId": "oppsummering.endre-svar",
+        "valueText": "Endre svar"
+      }
+    ],
+    "landgrupper": [],
+    "svaralternativer": [
+      {
+        "text": "Ja",
+        "textId": "faktum.reist-tilbake-etter-arbeidsledig.svar.ja",
+        "alertText": null
+      },
+      {
+        "text": "Nei",
+        "textId": "faktum.reist-tilbake-etter-arbeidsledig.svar.nei",
+        "alertText": null
+      },
+      {
+        "text": "Ja",
+        "textId": "faktum.reist-tilbake-en-gang-eller-mer.svar.ja",
+        "alertText": null
+      },
+      {
+        "text": "Nei",
+        "textId": "faktum.reist-tilbake-en-gang-eller-mer.svar.nei",
+        "alertText": null
+      },
+      {
+        "text": "Ja",
+        "textId": "faktum.reist-i-takt-med-rotasjon.svar.ja",
+        "alertText": null
+      },
+      {
+        "text": "Nei",
+        "textId": "faktum.reist-i-takt-med-rotasjon.svar.nei",
+        "alertText": null
+      },
+      {
+        "text": "Ja",
+        "textId": "faktum.mottatt-dagpenger-siste-12-mnd.svar.ja",
+        "alertText": null
+      },
+      {
+        "text": "Nei",
+        "textId": "faktum.mottatt-dagpenger-siste-12-mnd.svar.nei",
+        "alertText": null
+      },
+      {
+        "text": "Vet ikke",
+        "textId": "faktum.mottatt-dagpenger-siste-12-mnd.svar.vet-ikke",
+        "alertText": null
+      },
+      {
+        "text": "Fast arbeidstid",
+        "textId": "faktum.type-arbeidstid.svar.fast",
+        "alertText": null
+      },
+      {
+        "text": "Varierende arbeidstid",
+        "textId": "faktum.type-arbeidstid.svar.varierende",
+        "alertText": null
+      },
+      {
+        "text": "En kombinasjon av fast og varierende arbeidstid",
+        "textId": "faktum.type-arbeidstid.svar.kombinasjon",
+        "alertText": null
+      },
+      {
+        "text": "Ingen av alternativene passer for meg",
+        "textId": "faktum.type-arbeidstid.svar.ingen-passer",
+        "alertText": null
+      },
+      {
+        "text": "Ja",
+        "textId": "faktum.arbeidsforhold.gjenopptak.jobbet-siden-sist.svar.ja",
+        "alertText": null
+      },
+      {
+        "text": "Nei",
+        "textId": "faktum.arbeidsforhold.gjenopptak.jobbet-siden-sist.svar.nei",
+        "alertText": null
+      },
+      {
+        "text": "Ja",
+        "textId": "faktum.arbeidsforhold.gjenopptak.endringer-i-arbeidsforhold.svar.ja",
+        "alertText": null
+      },
+      {
+        "text": "Nei",
+        "textId": "faktum.arbeidsforhold.gjenopptak.endringer-i-arbeidsforhold.svar.nei",
+        "alertText": null
+      },
+      {
+        "text": "Ja",
+        "textId": "faktum.arbeidsforhold.gjenopptak.onsker-ny-beregning.svar.ja",
+        "alertText": null
+      },
+      {
+        "text": "Nei",
+        "textId": "faktum.arbeidsforhold.gjenopptak.onsker-ny-beregning.svar.nei",
+        "alertText": null
+      },
+      {
+        "text": "Ja",
+        "textId": "faktum.arbeidsforhold.gjenopptak.onsker-faa-fastsatt-ny-vanlig-arbeidstid.svar.ja",
+        "alertText": null
+      },
+      {
+        "text": "Nei",
+        "textId": "faktum.arbeidsforhold.gjenopptak.onsker-faa-fastsatt-ny-vanlig-arbeidstid.svar.nei",
+        "alertText": null
+      },
+      {
+        "text": "Ja",
+        "textId": "faktum.eos-arbeid-siste-36-mnd.svar.ja",
+        "alertText": null
+      },
+      {
+        "text": "Nei",
+        "textId": "faktum.eos-arbeid-siste-36-mnd.svar.nei",
+        "alertText": null
+      },
+      {
+        "text": "Ja",
+        "textId": "faktum.driver-du-egen-naering.svar.ja",
+        "alertText": {
+          "body": [
+            "<p>Selv om du driver et eget selskap eller egen næring må du være villig til å ta annet arbeid.</p>",
+            "<p><br/>Hvis du jobber mer enn 60 prosent av tidligere arbeidstid har du ikke rett til dagpenger.</p>"
+          ],
+          "type": "info"
+        }
+      },
+      {
+        "text": "Nei",
+        "textId": "faktum.driver-du-egen-naering.svar.nei",
+        "alertText": null
+      },
+      {
+        "text": "Ja",
+        "textId": "faktum.driver-du-eget-gaardsbruk.svar.ja",
+        "alertText": null
+      },
+      {
+        "text": "Nei",
+        "textId": "faktum.driver-du-eget-gaardsbruk.svar.nei",
+        "alertText": null
+      },
+      {
+        "text": "Dyr",
+        "textId": "faktum.eget-gaardsbruk-type-gaardsbruk.svar.dyr",
+        "alertText": null
+      },
+      {
+        "text": "Jord",
+        "textId": "faktum.eget-gaardsbruk-type-gaardsbruk.svar.jord",
+        "alertText": null
+      },
+      {
+        "text": "Skog",
+        "textId": "faktum.eget-gaardsbruk-type-gaardsbruk.svar.skog",
+        "alertText": null
+      },
+      {
+        "text": "Annet",
+        "textId": "faktum.eget-gaardsbruk-type-gaardsbruk.svar.annet",
+        "alertText": null
+      },
+      {
+        "text": "Jeg",
+        "textId": "faktum.eget-gaardsbruk-hvem-eier.svar.selv",
+        "alertText": null
+      },
+      {
+        "text": "Ektefelle/Samboer",
+        "textId": "faktum.eget-gaardsbruk-hvem-eier.svar.ektefelle-samboer",
+        "alertText": null
+      },
+      {
+        "text": "Andre",
+        "textId": "faktum.eget-gaardsbruk-hvem-eier.svar.andre",
+        "alertText": null
+      },
+      {
+        "text": "Ja",
+        "textId": "faktum.avtjent-militaer-sivilforsvar-tjeneste-siste-12-mnd.svar.ja",
+        "alertText": null
+      },
+      {
+        "text": "Nei",
+        "textId": "faktum.avtjent-militaer-sivilforsvar-tjeneste-siste-12-mnd.svar.nei",
+        "alertText": null
+      },
+      {
+        "text": "Ja",
+        "textId": "faktum.andre-ytelser-mottatt-eller-sokt.svar.ja",
+        "alertText": null
+      },
+      {
+        "text": "Nei",
+        "textId": "faktum.andre-ytelser-mottatt-eller-sokt.svar.nei",
+        "alertText": null
+      },
+      {
+        "text": "Pensjon fra en offentlig tjenestepensjonsordning",
+        "textId": "faktum.hvilke-andre-ytelser.svar.pensjon-offentlig-tjenestepensjon",
+        "alertText": null
+      },
+      {
+        "text": "Stønad under arbeidsløshet fra Garantikassen for fiskere (GFF)",
+        "textId": "faktum.hvilke-andre-ytelser.svar.arbeidsloshet-garantikassen-for-fiskere",
+        "alertText": null
+      },
+      {
+        "text": "Garantilott fra Garantikassen for fiskere",
+        "textId": "faktum.hvilke-andre-ytelser.svar.garantilott-garantikassen-for-fiskere",
+        "alertText": null
+      },
+      {
+        "text": "Etterlønn fra arbeidsgiver",
+        "textId": "faktum.hvilke-andre-ytelser.svar.etterlonn-arbeidsgiver",
+        "alertText": null
+      },
+      {
+        "text": "Dagpenger fra et annet EØS-land",
+        "textId": "faktum.hvilke-andre-ytelser.svar.dagpenger-annet-eos-land",
+        "alertText": null
+      },
+      {
+        "text": "Annen ytelse",
+        "textId": "faktum.hvilke-andre-ytelser.svar.annen-ytelse",
+        "alertText": null
+      },
+      {
+        "text": "Ja",
+        "textId": "faktum.utbetaling-eller-okonomisk-gode-tidligere-arbeidsgiver.svar.ja",
+        "alertText": null
+      },
+      {
+        "text": "Nei",
+        "textId": "faktum.utbetaling-eller-okonomisk-gode-tidligere-arbeidsgiver.svar.nei",
+        "alertText": null
+      },
+      {
+        "text": "Ja",
+        "textId": "faktum.jobbe-hel-deltid.svar.ja",
+        "alertText": null
+      },
+      {
+        "text": "Nei",
+        "textId": "faktum.jobbe-hel-deltid.svar.nei",
+        "alertText": null
+      },
+      {
+        "text": "Redusert helse, fysisk eller psykisk",
+        "textId": "faktum.kun-deltid-aarsak.svar.redusert-helse",
+        "alertText": null
+      },
+      {
+        "text": "Omsorg for barn under ett år",
+        "textId": "faktum.kun-deltid-aarsak.svar.omsorg-baby",
+        "alertText": null
+      },
+      {
+        "text": "Eneansvar eller delt ansvar for barn til og med 7. klasse",
+        "textId": "faktum.kun-deltid-aarsak.svar.eneansvar-barn",
+        "alertText": null
+      },
+      {
+        "text": "Eneansvar eller delt ansvar for barn under 18 år med spesielle behov",
+        "textId": "faktum.kun-deltid-aarsak.svar.omsorg-barn-spesielle-behov",
+        "alertText": null
+      },
+      {
+        "text": "Den andre forelderen jobber  skift, turnus eller utenfor nærområdet. Og dere har ansvar for barn til og med 7. klasse eller barn under 18 år med spesielle behov.",
+        "textId": "faktum.kun-deltid-aarsak.svar.skift-turnus",
+        "alertText": null
+      },
+      {
+        "text": "Har fylt 60 år",
+        "textId": "faktum.kun-deltid-aarsak.svar.har-fylt-60",
+        "alertText": null
+      },
+      {
+        "text": "Annen situasjon",
+        "textId": "faktum.kun-deltid-aarsak.svar.annen-situasjon",
+        "alertText": null
+      },
+      {
+        "text": "Ja",
+        "textId": "faktum.jobbe-hele-norge.svar.ja",
+        "alertText": null
+      },
+      {
+        "text": "Nei",
+        "textId": "faktum.jobbe-hele-norge.svar.nei",
+        "alertText": null
+      },
+      {
+        "text": "Redusert helse, fysisk eller psykisk",
+        "textId": "faktum.ikke-jobbe-hele-norge.svar.redusert-helse",
+        "alertText": null
+      },
+      {
+        "text": "Omsorg for barn under ett år",
+        "textId": "faktum.ikke-jobbe-hele-norge.svar.omsorg-baby",
+        "alertText": null
+      },
+      {
+        "text": "Eneansvar eller delt ansvar for barn til og med 7. klasse",
+        "textId": "faktum.ikke-jobbe-hele-norge.svar.eneansvar-barn",
+        "alertText": null
+      },
+      {
+        "text": "Eneansvar eller delt ansvar for barn under 18 år med spesielle behov",
+        "textId": "faktum.ikke-jobbe-hele-norge.svar.omsorg-barn-spesielle-behov",
+        "alertText": null
+      },
+      {
+        "text": "Den andre forelderen jobber  skift, turnus eller utenfor nærområdet. Og dere har ansvar for barn til og med 7. klasse eller barn under 18 år med spesielle behov.",
+        "textId": "faktum.ikke-jobbe-hele-norge.svar.skift-turnus",
+        "alertText": null
+      },
+      {
+        "text": "Har fylt 60 år",
+        "textId": "faktum.ikke-jobbe-hele-norge.svar.har-fylt-60",
+        "alertText": null
+      },
+      {
+        "text": "Annen situasjon",
+        "textId": "faktum.ikke-jobbe-hele-norge.svar.annen-situasjon",
+        "alertText": null
+      },
+      {
+        "text": "Ja",
+        "textId": "faktum.alle-typer-arbeid.svar.ja",
+        "alertText": null
+      },
+      {
+        "text": "Nei",
+        "textId": "faktum.alle-typer-arbeid.svar.nei",
+        "alertText": null
+      },
+      {
+        "text": "Ja",
+        "textId": "faktum.bytte-yrke-ned-i-lonn.svar.ja",
+        "alertText": null
+      },
+      {
+        "text": "Nei",
+        "textId": "faktum.bytte-yrke-ned-i-lonn.svar.nei",
+        "alertText": null
+      },
+      {
+        "text": "Ja",
+        "textId": "faktum.tar-du-utdanning.svar.ja",
+        "alertText": null
+      },
+      {
+        "text": "Nei",
+        "textId": "faktum.tar-du-utdanning.svar.nei",
+        "alertText": null
+      },
+      {
+        "text": "Ja",
+        "textId": "faktum.avsluttet-utdanning-siste-6-mnd.svar.ja",
+        "alertText": null
+      },
+      {
+        "text": "Nei",
+        "textId": "faktum.avsluttet-utdanning-siste-6-mnd.svar.nei",
+        "alertText": null
+      },
+      {
+        "text": "Ja",
+        "textId": "faktum.planlegger-utdanning-med-dagpenger.svar.ja",
+        "alertText": null
+      },
+      {
+        "text": "Nei",
+        "textId": "faktum.planlegger-utdanning-med-dagpenger.svar.nei",
+        "alertText": null
+      },
+      {
+        "text": "Ja",
+        "textId": "faktum.tilleggsopplysninger.har-tilleggsopplysninger.svar.ja",
+        "alertText": null
+      },
+      {
+        "text": "Nei",
+        "textId": "faktum.tilleggsopplysninger.har-tilleggsopplysninger.svar.nei",
+        "alertText": null
+      },
+      {
+        "text": "faktum.dokument-verneplikt-tjenestebevis-tilgjengelig.svar.ja",
+        "textId": "faktum.dokument-verneplikt-tjenestebevis-tilgjengelig.svar.ja",
+        "alertText": null
+      },
+      {
+        "text": "faktum.dokument-verneplikt-tjenestebevis-tilgjengelig.svar.nei",
+        "textId": "faktum.dokument-verneplikt-tjenestebevis-tilgjengelig.svar.nei",
+        "alertText": null
+      },
+      {
+        "text": "faktum.dokument-utdanning-sluttdato-tilgjengelig.svar.ja",
+        "textId": "faktum.dokument-utdanning-sluttdato-tilgjengelig.svar.ja",
+        "alertText": null
+      },
+      {
+        "text": "faktum.dokument-utdanning-sluttdato-tilgjengelig.svar.nei",
+        "textId": "faktum.dokument-utdanning-sluttdato-tilgjengelig.svar.nei",
+        "alertText": null
+      },
+      {
+        "text": "faktum.dokument-egen-næring-arbeidstimer-tilgjengelig.svar.ja",
+        "textId": "faktum.dokument-egen-næring-arbeidstimer-tilgjengelig.svar.ja",
+        "alertText": null
+      },
+      {
+        "text": "faktum.dokument-egen-næring-arbeidstimer-tilgjengelig.svar.nei",
+        "textId": "faktum.dokument-egen-næring-arbeidstimer-tilgjengelig.svar.nei",
+        "alertText": null
+      },
+      {
+        "text": "faktum-dokument-egen-næring-gårdsbruk-arbeidstimer-tilgjengelig.svar.ja",
+        "textId": "faktum-dokument-egen-næring-gårdsbruk-arbeidstimer-tilgjengelig.svar.ja",
+        "alertText": null
+      },
+      {
+        "text": "faktum-dokument-egen-næring-gårdsbruk-arbeidstimer-tilgjengelig.svar.nei",
+        "textId": "faktum-dokument-egen-næring-gårdsbruk-arbeidstimer-tilgjengelig.svar.nei",
+        "alertText": null
+      },
+      {
+        "text": "Ja",
+        "textId": "faktum.forsoerger-du-barnet.svar.ja",
+        "alertText": null
+      },
+      {
+        "text": "Ja",
+        "textId": "faktum.barn-aarsinntekt-over-1g.svar.ja",
+        "alertText": null
+      },
+      {
+        "text": "Nei",
+        "textId": "faktum.barn-aarsinntekt-over-1g.svar.nei",
+        "alertText": null
+      },
+      {
+        "text": "Nei",
+        "textId": "faktum.forsoerger-du-barnet.svar.nei",
+        "alertText": null
+      },
+      {
+        "text": "Arbeidsforholdet er ikke endret",
+        "textId": "faktum.arbeidsforhold.endret.svar.ikke-endret",
+        "alertText": null
+      },
+      {
+        "text": "Jeg er avskjediget",
+        "textId": "faktum.arbeidsforhold.endret.svar.avskjediget",
+        "alertText": {
+          "body": [
+            "<p>Avskjediget betyr at du er oppsagt med øyeblikkelig virkning, uten oppsigelsestid. Hvis du er avskjediget, vil du normalt ikke få dagpenger de første 18 ukene. Denne ventetiden løper først fra den datoen dagpengeperioden starter.<br/><br/>Det er viktig at du ikke venter med å søke om dagpenger. Du må sende søknaden din nå, selv om du kan få en ventetid på 18 uker.<br/><br/>Du må være registrert som arbeidssøker hos NAV og sende meldekort i ventetiden.</p>"
+          ],
+          "type": "warning"
+        }
+      },
+      {
+        "text": "Arbeidsgiver har sagt meg opp",
+        "textId": "faktum.arbeidsforhold.endret.svar.sagt-opp-av-arbeidsgiver",
+        "alertText": null
+      },
+      {
+        "text": "Argeidsgiver er konkurs",
+        "textId": "faktum.arbeidsforhold.endret.svar.arbeidsgiver-konkurs",
+        "alertText": null
+      },
+      {
+        "text": "Kontrakten er utgått",
+        "textId": "faktum.arbeidsforhold.endret.svar.kontrakt-utgaatt",
+        "alertText": null
+      },
+      {
+        "text": "Jeg har sagt opp selv",
+        "textId": "faktum.arbeidsforhold.endret.svar.sagt-opp-selv",
+        "alertText": null
+      },
+      {
+        "text": "Arbeidstiden er redusert",
+        "textId": "faktum.arbeidsforhold.endret.svar.redusert-arbeidstid",
+        "alertText": null
+      },
+      {
+        "text": "Jeg er permittert",
+        "textId": "faktum.arbeidsforhold.endret.svar.permittert",
+        "alertText": null
+      },
+      {
+        "text": "Ja",
+        "textId": "faktum.arbeidsforhold.kjent-antall-timer-jobbet.svar.ja",
+        "alertText": null
+      },
+      {
+        "text": "Nei, jeg er usikker, bruk opplysninger fra skatteetaten.no/mineinntekter for å beregne min vanlige arbeidstid.",
+        "textId": "faktum.arbeidsforhold.kjent-antall-timer-jobbet.svar.nei",
+        "alertText": null
+      },
+      {
+        "text": "Ja",
+        "textId": "faktum.arbeidsforhold.har-tilleggsopplysninger.svar.ja",
+        "alertText": null
+      },
+      {
+        "text": "Nei",
+        "textId": "faktum.arbeidsforhold.har-tilleggsopplysninger.svar.nei",
+        "alertText": null
+      },
+      {
+        "text": "Ja",
+        "textId": "faktum.arbeidsforhold.midlertidig-med-kontraktfestet-sluttdato.svar.ja",
+        "alertText": null
+      },
+      {
+        "text": "Nei",
+        "textId": "faktum.arbeidsforhold.midlertidig-med-kontraktfestet-sluttdato.svar.nei",
+        "alertText": null
+      },
+      {
+        "text": "Jeg vet ikke",
+        "textId": "faktum.arbeidsforhold.midlertidig-med-kontraktfestet-sluttdato.svar.vet-ikke",
+        "alertText": null
+      },
+      {
+        "text": "Ja",
+        "textId": "faktum.arbeidsforhold.permittertert-fra-fiskeri-naering.svar.ja",
+        "alertText": null
+      },
+      {
+        "text": "Nei",
+        "textId": "faktum.arbeidsforhold.permittertert-fra-fiskeri-naering.svar.nei",
+        "alertText": null
+      },
+      {
+        "text": "Ja",
+        "textId": "faktum.arbeidsforhold.vet-du-antall-timer-foer-mistet-jobb.svar.ja",
+        "alertText": null
+      },
+      {
+        "text": "Nei",
+        "textId": "faktum.arbeidsforhold.vet-du-antall-timer-foer-mistet-jobb.svar.nei",
+        "alertText": null
+      },
+      {
+        "text": "Ja",
+        "textId": "faktum.arbeidsforhold.vet-du-antall-timer-foer-konkurs.svar.ja",
+        "alertText": null
+      },
+      {
+        "text": "Nei, jeg er usikker, bruk opplysninger fra skatteetaten.no/mineinntekter for å beregne min vanlige arbeidstid.",
+        "textId": "faktum.arbeidsforhold.vet-du-antall-timer-foer-konkurs.svar.nei",
+        "alertText": null
+      },
+      {
+        "text": "Ja",
+        "textId": "faktum.arbeidsforhold.vet-du-antall-timer-foer-kontrakt-utgikk.svar.ja",
+        "alertText": null
+      },
+      {
+        "text": "Nei, jeg er usikker, bruk opplysninger fra skatteetaten.no/mineinntekter for å beregne min vanlige arbeidstid.",
+        "textId": "faktum.arbeidsforhold.vet-du-antall-timer-foer-kontrakt-utgikk.svar.nei",
+        "alertText": null
+      },
+      {
+        "text": "Ja",
+        "textId": "faktum.arbeidsforhold.vet-du-antall-timer-foer-du-sa-opp.svar.ja",
+        "alertText": null
+      },
+      {
+        "text": "Nei, jeg er usikker, bruk opplysninger fra skatteetaten.no/mineinntekter for å beregne min vanlige arbeidstid.",
+        "textId": "faktum.arbeidsforhold.vet-du-antall-timer-foer-du-sa-opp.svar.nei",
+        "alertText": null
+      },
+      {
+        "text": "Ja",
+        "textId": "faktum.arbeidsforhold.vet-du-antall-timer-foer-redusert-arbeidstid.svar.ja",
+        "alertText": null
+      },
+      {
+        "text": "Nei, jeg er usikker, bruk opplysninger fra skatteetaten.no/mineinntekter for å beregne min vanlige arbeidstid.",
+        "textId": "faktum.arbeidsforhold.vet-du-antall-timer-foer-redusert-arbeidstid.svar.nei",
+        "alertText": null
+      },
+      {
+        "text": "Ja",
+        "textId": "faktum.arbeidsforhold.vet-du-antall-timer-foer-permittert.svar.ja",
+        "alertText": null
+      },
+      {
+        "text": "Nei, jeg er usikker, bruk opplysninger fra skatteetaten.no/mineinntekter for å beregne min vanlige arbeidstid.",
+        "textId": "faktum.arbeidsforhold.vet-du-antall-timer-foer-permittert.svar.nei",
+        "alertText": null
+      },
+      {
+        "text": "Ja",
+        "textId": "faktum.arbeidsforhold.vet-du-lonnsplikt-periode.svar.ja",
+        "alertText": null
+      },
+      {
+        "text": "Nei",
+        "textId": "faktum.arbeidsforhold.vet-du-lonnsplikt-periode.svar.nei",
+        "alertText": null
+      },
+      {
+        "text": "Ja",
+        "textId": "faktum.arbeidsforhold.tilbud-om-forlengelse-eller-annen-stilling.svar.ja",
+        "alertText": null
+      },
+      {
+        "text": "Nei",
+        "textId": "faktum.arbeidsforhold.tilbud-om-forlengelse-eller-annen-stilling.svar.nei",
+        "alertText": null
+      },
+      {
+        "text": "Ja",
+        "textId": "faktum.arbeidsforhold.svar-paa-forlengelse-eller-annen-stilling.svar.ja",
+        "alertText": null
+      },
+      {
+        "text": "Nei",
+        "textId": "faktum.arbeidsforhold.svar-paa-forlengelse-eller-annen-stilling.svar.nei",
+        "alertText": null
+      },
+      {
+        "text": "Har ikke svart",
+        "textId": "faktum.arbeidsforhold.svar-paa-forlengelse-eller-annen-stilling.svar.ikke-svart",
+        "alertText": null
+      },
+      {
+        "text": "Ja",
+        "textId": "faktum.arbeidsforhold.soke-forskudd-lonnsgarantimidler.svar.ja",
+        "alertText": null
+      },
+      {
+        "text": "Nei",
+        "textId": "faktum.arbeidsforhold.soke-forskudd-lonnsgarantimidler.svar.nei",
+        "alertText": null
+      },
+      {
+        "text": "Ja",
+        "textId": "faktum.arbeidsforhold.soke-forskudd-lonnsgarantimidler-i-tillegg-til-dagpenger.svar.ja",
+        "alertText": null
+      },
+      {
+        "text": "Nei",
+        "textId": "faktum.arbeidsforhold.soke-forskudd-lonnsgarantimidler-i-tillegg-til-dagpenger.svar.nei",
+        "alertText": null
+      },
+      {
+        "text": "Ja",
+        "textId": "faktum.arbeidsforhold.godta-trekk-fra-nav-av-forskudd-fra-lonnsgarantimidler.svar.ja",
+        "alertText": null
+      },
+      {
+        "text": "Nei",
+        "textId": "faktum.arbeidsforhold.godta-trekk-fra-nav-av-forskudd-fra-lonnsgarantimidler.svar.nei",
+        "alertText": null
+      },
+      {
+        "text": "Nei",
+        "textId": "faktum.arbeidsforhold.har-sokt-om-lonnsgarantimidler.svar.nei",
+        "alertText": null
+      },
+      {
+        "text": "Nei, men jeg skal søke om lønnsgarantimidler",
+        "textId": "faktum.arbeidsforhold.har-sokt-om-lonnsgarantimidler.svar.nei-men-skal",
+        "alertText": null
+      },
+      {
+        "text": "Ja",
+        "textId": "faktum.arbeidsforhold.har-sokt-om-lonnsgarantimidler.svar.ja",
+        "alertText": null
+      },
+      {
+        "text": "Ja",
+        "textId": "faktum.arbeidsforhold.dekker-lonnsgarantiordningen-lonnskravet-ditt.svar.ja",
+        "alertText": null
+      },
+      {
+        "text": "Nei",
+        "textId": "faktum.arbeidsforhold.dekker-lonnsgarantiordningen-lonnskravet-ditt.svar.nei",
+        "alertText": null
+      },
+      {
+        "text": "Jeg vet ikke",
+        "textId": "faktum.arbeidsforhold.dekker-lonnsgarantiordningen-lonnskravet-ditt.svar.vet-ikke",
+        "alertText": null
+      },
+      {
+        "text": "Ja",
+        "textId": "faktum.arbeidsforhold.utbetalt-lonn-etter-konkurs.svar.ja",
+        "alertText": null
+      },
+      {
+        "text": "Nei",
+        "textId": "faktum.arbeidsforhold.utbetalt-lonn-etter-konkurs.svar.nei",
+        "alertText": null
+      },
+      {
+        "text": "Ja",
+        "textId": "faktum.arbeidsforhold.midlertidig-arbeidsforhold-med-sluttdato.svar.ja",
+        "alertText": null
+      },
+      {
+        "text": "Nei",
+        "textId": "faktum.arbeidsforhold.midlertidig-arbeidsforhold-med-sluttdato.svar.nei",
+        "alertText": null
+      },
+      {
+        "text": "Jeg vet ikke",
+        "textId": "faktum.arbeidsforhold.midlertidig-arbeidsforhold-med-sluttdato.svar.vet-ikke",
+        "alertText": null
+      },
+      {
+        "text": "Ja",
+        "textId": "faktum.arbeidsforhold.tilbud-om-annen-stilling-eller-annet-sted-i-norge.svar.ja",
+        "alertText": null
+      },
+      {
+        "text": "Nei",
+        "textId": "faktum.arbeidsforhold.tilbud-om-annen-stilling-eller-annet-sted-i-norge.svar.nei",
+        "alertText": null
+      },
+      {
+        "text": "Ja",
+        "textId": "faktum.arbeidsforhold.skift-eller-turnus.svar.ja",
+        "alertText": null
+      },
+      {
+        "text": "Nei",
+        "textId": "faktum.arbeidsforhold.skift-eller-turnus.svar.nei",
+        "alertText": null
+      },
+      {
+        "text": "Ja",
+        "textId": "faktum.arbeidsforhold.rotasjon.svar.ja",
+        "alertText": null
+      },
+      {
+        "text": "Nei",
+        "textId": "faktum.arbeidsforhold.rotasjon.svar.nei",
+        "alertText": null
+      },
+      {
+        "text": "Ja",
+        "textId": "faktum.legge-til-egne-barn.svar.ja",
+        "alertText": null
+      },
+      {
+        "text": "Nei",
+        "textId": "faktum.legge-til-egne-barn.svar.nei",
+        "alertText": null
+      }
+    ]
+  }
+}
