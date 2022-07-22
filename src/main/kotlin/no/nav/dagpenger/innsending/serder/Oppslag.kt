@@ -1,6 +1,7 @@
 package no.nav.dagpenger.innsending.serder
 
 import com.fasterxml.jackson.databind.JsonNode
+import com.fasterxml.jackson.databind.node.TextNode
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import mu.KotlinLogging
 import mu.withLoggingContext
@@ -26,7 +27,7 @@ internal class Oppslag(private val tekstJson: String) {
                 map[textId] = TekstObjekt.FaktaTekstObjekt(
                     textId = textId,
                     text = tekst["text"].asText(),
-                    description = tekst.get("description")?.asText(),
+                    description = tekst.get("description")?.asRawHtmlString(),
                     helpText = tekst.helpText(),
                     unit = tekst.get("unit")?.asText()
                 )
@@ -43,7 +44,7 @@ internal class Oppslag(private val tekstJson: String) {
                 map[textId] = TekstObjekt.SeksjonTekstObjekt(
                     textId = textId,
                     title = tekst["title"].asText(),
-                    description = tekst.get("description")?.asText(),
+                    description = tekst.get("description")?.asRawHtmlString(),
                     helpText = tekst.helpText()
                 )
             }
@@ -105,19 +106,19 @@ internal class Oppslag(private val tekstJson: String) {
             )
         }
 
-    sealed class TekstObjekt(val textId: String, val description: String?, val helpText: HelpText?) {
+    sealed class TekstObjekt(val textId: String, val description: RawHtmlString?, val helpText: HelpText?) {
         class FaktaTekstObjekt(
             val unit: String? = null,
             val text: String,
             textId: String,
-            description: String? = null,
+            description: RawHtmlString? = null,
             helpText: HelpText? = null,
         ) : TekstObjekt(textId, description, helpText)
 
         class SeksjonTekstObjekt(
             val title: String,
             textId: String,
-            description: String? = null,
+            description: RawHtmlString? = null,
             helpText: HelpText? = null,
         ) : TekstObjekt(textId, description, helpText)
 
@@ -135,6 +136,21 @@ internal class Oppslag(private val tekstJson: String) {
         }
 
         class HelpText(val title: String?, val body: String)
+    }
+}
+
+private fun JsonNode.asRawHtmlString(): RawHtmlString {
+    val x = 0
+    return if (this is TextNode) {
+        RawHtmlString(this.asText())
+    } else {
+        RawHtmlString(this.toList().joinToString(separator = "") { it.asText() })
+    }
+}
+
+class RawHtmlString(val html: String) {
+    companion object {
+        val acceptedTags = listOf("<p>", "<strong>", "<em>", "<a>")
     }
 }
 

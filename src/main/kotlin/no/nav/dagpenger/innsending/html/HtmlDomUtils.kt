@@ -137,7 +137,7 @@ private fun DIV.nettoSpørsmål(spmSvar: SporsmalSvar, tekst: GenerellTekst) {
 internal fun DIV.bruttoSeksjon(seksjon: Innsending.Seksjon, tekst: GenerellTekst) {
     id = seksjonId(seksjon.overskrift)
     h2 { +seksjon.overskrift }
-    seksjon.beskrivelse?.also { p(classes = "infotekst") { +seksjon.beskrivelse } }
+    seksjon.beskrivelse?.also { unsafe { seksjon.beskrivelse.innhold } }
     seksjon.hjelpetekst?.also {
         div(classes = "hjelpetekst") {
             seksjon.hjelpetekst.tittel?.also { tittel -> h3 { +tittel } }
@@ -152,7 +152,7 @@ internal fun DIV.bruttoSeksjon(seksjon: Innsending.Seksjon, tekst: GenerellTekst
 private fun DIV.bruttoSpørsmål(spmSvar: SporsmalSvar, tekst: GenerellTekst) {
     div {
         h3 { +spmSvar.sporsmal }
-        spmSvar.beskrivelse?.also { p(classes = "infotekst") { +spmSvar.beskrivelse } }
+        spmSvar.beskrivelse?.also { unsafe { spmSvar.beskrivelse.innhold } }
         spmSvar.hjelpetekst?.also {
             div(classes = "hjelpetekst") {
                 spmSvar.hjelpetekst.tittel?.also { tittel -> h3 { +tittel } }

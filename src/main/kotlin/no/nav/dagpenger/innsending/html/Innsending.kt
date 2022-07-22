@@ -23,7 +23,7 @@ internal data class Innsending(
 
     data class Seksjon(
         val overskrift: String,
-        val beskrivelse: String? = null,
+        val beskrivelse: UnsafeHtml? = null,
         val hjelpetekst: Hjelpetekst? = null,
         val spmSvar: List<SporsmalSvar>
     )
@@ -31,7 +31,7 @@ internal data class Innsending(
     data class SporsmalSvar(
         val sporsmal: String,
         val svar: Svar,
-        val beskrivelse: String? = null,
+        val beskrivelse: UnsafeHtml? = null,
         val hjelpetekst: Hjelpetekst? = null,
         val oppfølgingspørmål: List<SpørmsålOgSvarGruppe> = emptyList(),
     )
@@ -73,6 +73,10 @@ internal data class Innsending(
                 }
             }
         }
+    }
+
+    internal class UnsafeHtml(val innhold: String) {
+        private fun injectCssClass(className: String) {}
     }
 
     enum class InnsendingsSpråk(

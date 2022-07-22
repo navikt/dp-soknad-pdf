@@ -5,6 +5,7 @@ import no.nav.dagpenger.innsending.html.Innsending
 import no.nav.dagpenger.innsending.pdf.PdfBuilder
 import no.nav.dagpenger.innsending.serder.Oppslag.TekstObjekt.FaktaTekstObjekt
 import no.nav.dagpenger.innsending.serder.Oppslag.TekstObjekt.SeksjonTekstObjekt
+import org.intellij.lang.annotations.Language
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Test
@@ -26,8 +27,12 @@ internal class SerderTest {
             assertEquals("seksjon1", it.textId)
             assertEquals("Tittel for seksjon 1", it.title)
             assertEquals("Hjelpetekst med overskrift til seksjon", it.helpText?.title)
-            assertEquals("Her er en hjelpetekst tekst som hjelper veldig mye når en trenger hjelp", it.helpText?.body)
-            assertEquals("description for seksjon", it.description)
+            val expcextedBody =
+                """<p>Her er en hjelpetekst tekst som hjelper veldig mye når en trenger hjelp. Med superhjelpsom <a src="https://nav.no/superhjelpen">lenke</a></p>"""
+            assertEquals(expcextedBody, it.helpText?.body)
+            @Language("HTML")
+            val expectedDescription = """<p>description for seksjon</p><p>tadda, det her går jo bra!<img src="https://ikke.tilgjengelig" alt="Det kommer jo ikke å funke"></img></p>"""
+            assertEquals(expectedDescription, it.description?.html)
         }
 
         oppslag.lookup("f3").also {
