@@ -67,7 +67,8 @@ internal class PdfBehovLøser(
                     context.publish(packet.toJson())
                 }
             } catch (e: Exception) {
-                logg.error(e) { "Kunne ikke lage PDF for søknad. Fortsetter likevel." }
+                logg.error(e) { "Kunne ikke lage PDF for søknad." }
+                throw e
             }
         }
     }
