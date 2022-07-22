@@ -72,7 +72,7 @@ internal class JsonHtmlMapper(
             Innsending.Infotype.fraSanityJson(typenøkkel = alerttext.type)?.let { infotype ->
                 Innsending.InfoTekst(
                     tittel = alerttext.title,
-                    tekst = alerttext.body,
+                    unsafeHtml = Innsending.UnsafeHtml(alerttext.body.html),
                     type = infotype
                 )
             }
@@ -150,5 +150,5 @@ private fun LocalDateTime.dagMånedÅr(): String =
     this.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
 
 private fun Oppslag.TekstObjekt.helpText(): Innsending.Hjelpetekst? {
-    return this.helpText?.let { Innsending.Hjelpetekst(it.body, it.title) }
+    return this.helpText?.let { Innsending.Hjelpetekst(Innsending.UnsafeHtml(it.body.html), it.title) }
 }

@@ -29,7 +29,7 @@ internal class SerderTest {
             assertEquals("Hjelpetekst med overskrift til seksjon", it.helpText?.title)
             val expcextedBody =
                 """<p>Her er en hjelpetekst tekst som hjelper veldig mye når en trenger hjelp. Med superhjelpsom <a src="https://nav.no/superhjelpen">lenke</a></p>"""
-            assertEquals(expcextedBody, it.helpText?.body)
+            assertEquals(expcextedBody, it.helpText?.body?.html)
             @Language("HTML")
             val expectedDescription = """<p>description for seksjon</p><p>tadda, det her går jo bra!<img src="https://ikke.tilgjengelig" alt="Det kommer jo ikke å funke"></img></p>"""
             assertEquals(expectedDescription, it.description?.html)
@@ -42,7 +42,7 @@ internal class SerderTest {
                 "Her blir det spurt om noe som du kan svare ja eller nei på. Svarer du ja eller nei?",
                 it.text
             )
-            assertEquals("Hjelpetekst", it.helpText?.body)
+            assertEquals("<p>Hjelpetekst</p>", it.helpText?.body?.html)
             assertNull(it.description)
         }
     }
@@ -59,7 +59,7 @@ internal class SerderTest {
             require(oppslag.alertText != null)
             oppslag.alertText.also { alerttext ->
                 assertEquals(
-                    "Her er ett og annet som er greit å vite hvios du har valgt svaralternativ1", alerttext.body
+                    "<p>Her er ett og annet som er greit å vite hvios du har valgt svaralternativ1</p>", alerttext.body.html
                 )
                 assertEquals("Her er noe info", alerttext.title)
                 assertEquals("info", alerttext.type)

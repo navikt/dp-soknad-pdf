@@ -78,7 +78,7 @@ internal class Oppslag(private val tekstJson: String) {
                         TekstObjekt.AlertText(
                             alerttext["title"]?.asText(),
                             alerttext["type"].asText(),
-                            alerttext["body"].asText()
+                            alerttext["body"].asRawHtmlString()
                         )
                     }
                 )
@@ -127,7 +127,7 @@ internal class Oppslag(private val tekstJson: String) {
 
         class EnkelText(textId: String, val text: String) : TekstObjekt(textId, null, null)
 
-        class AlertText(val title: String?, val type: String, val body: String) {
+        class AlertText(val title: String?, val type: String, val body: RawHtmlString) {
             init {
                 if (!listOf("info", "warning", "error", "succes").contains(type)) {
                     throw IllegalArgumentException("Ukjent type for alertText $type")
@@ -135,7 +135,7 @@ internal class Oppslag(private val tekstJson: String) {
             }
         }
 
-        class HelpText(val title: String?, val body: String)
+        class HelpText(val title: String?, val body: RawHtmlString)
     }
 }
 
@@ -156,7 +156,7 @@ class RawHtmlString(val html: String) {
 
 private fun JsonNode.helpText(): Oppslag.TekstObjekt.HelpText? =
     get("helpText")?.let {
-        Oppslag.TekstObjekt.HelpText(it.get("title")?.asText(), it.get("body").asText())
+        Oppslag.TekstObjekt.HelpText(it.get("title")?.asText(), it.get("body").asRawHtmlString())
     }
 
 private fun JsonNode.seksjoner() = this["sanityTexts"]["seksjoner"]
