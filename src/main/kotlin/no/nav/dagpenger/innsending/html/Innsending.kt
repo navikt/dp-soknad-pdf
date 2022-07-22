@@ -44,7 +44,7 @@ internal data class Innsending(
     data class SvarAlternativ(val tekst: String, val tilleggsinformasjon: InfoTekst?)
     object IngenSvar : Svar()
 
-    data class Hjelpetekst(val unsafeHtmlBody: UnsafeHtml, val tittel: String? = null)
+    data class Hjelpetekst(val unsafeHtmlBody: UnsafeHtml?, val tittel: String? = null)
     data class InfoTekst(val tittel: String?, val unsafeHtmlBody: UnsafeHtml, val type: Infotype)
 
     data class GenerellTekst(

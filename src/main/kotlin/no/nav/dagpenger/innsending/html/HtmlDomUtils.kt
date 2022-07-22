@@ -141,7 +141,7 @@ internal fun DIV.bruttoSeksjon(seksjon: Innsending.Seksjon, tekst: GenerellTekst
     seksjon.hjelpetekst?.also {
         div(classes = "hjelpetekst") {
             seksjon.hjelpetekst.tittel?.also { tittel -> h3 { +tittel } }
-            unsafe { +seksjon.hjelpetekst.unsafeHtmlBody.kode }
+            seksjon.hjelpetekst.unsafeHtmlBody?.let { unsafe { +seksjon.hjelpetekst.unsafeHtmlBody.kode } }
         }
     }
     seksjon.spmSvar.forEach {

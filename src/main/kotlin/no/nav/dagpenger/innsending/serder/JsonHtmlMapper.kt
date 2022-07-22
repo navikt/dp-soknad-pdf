@@ -26,7 +26,7 @@ internal class JsonHtmlMapper(
             Innsending.Seksjon(
                 overskrift = tekstObjekt.title,
                 beskrivelse = tekstObjekt.description?.let { rawHtml -> Innsending.UnsafeHtml(rawHtml.html) },
-                hjelpetekst = tekstObjekt.helpText(),
+                hjelpetekst = tekstObjekt.hjelpetekst(),
                 spmSvar = it.fakta()
             )
         }
@@ -90,7 +90,7 @@ internal class JsonHtmlMapper(
                             sporsmal = tekstObjekt.text,
                             svar = node.svar(),
                             beskrivelse = tekstObjekt.description?.let { rawHtml -> Innsending.UnsafeHtml(rawHtml.html) },
-                            hjelpetekst = tekstObjekt.helpText(),
+                            hjelpetekst = tekstObjekt.hjelpetekst(),
                             oppfølgingspørmål = node.generatorfakta(),
 
                         )
@@ -109,7 +109,7 @@ internal class JsonHtmlMapper(
                 sporsmal = tekstObjekt.text,
                 svar = node.svar(),
                 beskrivelse = tekstObjekt.description?.let { rawHtmlString -> Innsending.UnsafeHtml(rawHtmlString.html) },
-                hjelpetekst = tekstObjekt.helpText(),
+                hjelpetekst = tekstObjekt.hjelpetekst(),
                 oppfølgingspørmål = node.generatorfakta(),
             )
         }
@@ -145,6 +145,9 @@ private fun LocalDate.dagMånedÅr(): String =
 private fun LocalDateTime.dagMånedÅr(): String =
     this.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
 
-private fun Oppslag.TekstObjekt.helpText(): Innsending.Hjelpetekst? {
-    return this.helpText?.let { Innsending.Hjelpetekst(Innsending.UnsafeHtml(it.body.html), it.title) }
+private fun Oppslag.TekstObjekt.hjelpetekst(): Innsending.Hjelpetekst? {
+    return this.helpText?.let { oppslag ->
+        val unsafeHtml = oppslag.body?.let { Innsending.UnsafeHtml(it.html) }
+        Innsending.Hjelpetekst(unsafeHtmlBody = unsafeHtml, tittel = oppslag.title)
+    }
 }

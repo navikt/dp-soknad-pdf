@@ -40,7 +40,7 @@ internal class Oppslag(private val tekstJson: String) {
                     textId = textId,
                     text = tekst["text"].asText(),
                     description = tekst.get("description")?.asRawHtmlString(),
-                    helpText = tekst.helpText(),
+                    helpText = tekst.hjelpetekst(),
                     unit = tekst.get("unit")?.asText()
                 )
             }
@@ -57,7 +57,7 @@ internal class Oppslag(private val tekstJson: String) {
                     textId = textId,
                     title = tekst["title"].asText(),
                     description = tekst.get("description")?.asRawHtmlString(),
-                    helpText = tekst.helpText()
+                    helpText = tekst.hjelpetekst()
                 )
             }
         }
@@ -147,7 +147,7 @@ internal class Oppslag(private val tekstJson: String) {
             }
         }
 
-        class HelpText(val title: String?, val body: RawHtmlString)
+        class HelpText(val title: String?, val body: RawHtmlString?)
     }
 }
 
@@ -171,9 +171,9 @@ class RawHtmlString(htmlFraSanity: String) {
     }
 }
 
-private fun JsonNode.helpText(): Oppslag.TekstObjekt.HelpText? =
+private fun JsonNode.hjelpetekst(): Oppslag.TekstObjekt.HelpText? =
     get("helpText")?.let {
-        Oppslag.TekstObjekt.HelpText(it.get("title")?.asText(), it.get("body").asRawHtmlString())
+        Oppslag.TekstObjekt.HelpText(it.get("title")?.asText(), it.get("body")?.asRawHtmlString())
     }
 
 private fun JsonNode.seksjoner() = this["sanityTexts"]["seksjoner"]
