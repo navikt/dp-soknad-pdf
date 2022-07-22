@@ -13,9 +13,11 @@ import io.ktor.serialization.jackson.jackson
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
+import mu.KotlinLogging
 import no.nav.dagpenger.innsending.serder.JsonHtmlMapper
 import java.util.UUID
 
+val logger = KotlinLogging.logger {}
 internal class InnsendingSupplier(
     private val dpSoknadBaseUrl: String,
     tokenSupplier: () -> String,
@@ -37,9 +39,13 @@ internal class InnsendingSupplier(
             val fakta = async {
                 httpKlient.get("$dpSoknadBaseUrl/$id/ferdigstilt/fakta").bodyAsText()
             }
+            logger.info("mottok søknaddata", fakta)
             val tekst = async {
                 httpKlient.get("$dpSoknadBaseUrl/$id/ferdigstilt/tekst").bodyAsText()
             }
+
+            logger.info(" mottok søknadstekst ", tekst)
+
             JsonHtmlMapper(innsendingsData = fakta.await(), tekst = tekst.await(), språk = språk).parse()
         }
     }

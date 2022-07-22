@@ -161,7 +161,9 @@ private fun JsonNode.asRawHtmlString(): RawHtmlString {
 
 class RawHtmlString(htmlFraSanity: String) {
     val html: String = Jsoup.clean(htmlFraSanity, tilatteTaggerOgAttributter).also {
-        logger.error { "Mottok html med ustøttet innhold: \noriginal html: $htmlFraSanity\n etter clean: $htmlFraSanity" }
+        if (!(it.startsWith("<") || it.endsWith(">"))) {
+            logger.error { "Mottok html med ustøttet innhold: \noriginal html: $htmlFraSanity\n etter clean: $htmlFraSanity" }
+        }
         // throw UgyldigHtmlError(htmlFraSanity)
     }
 
