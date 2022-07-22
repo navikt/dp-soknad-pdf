@@ -15,5 +15,5 @@ object LandOppslag {
     internal fun hentLand(språk: InnsendingsSpråk, iso3landkode: String): String =
         data.find { it["alpha3"].asText() == iso3landkode.lowercase() }?.let {
             it[språk.langAtributt].asText()
-        } ?: throw IllegalArgumentException("Fant ikke land med aplha3kode $iso3landkode")
+        } ?: throw IllegalArgumentException("Fant ikke land med alpha3kode $iso3landkode")
 }

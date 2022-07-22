@@ -68,7 +68,7 @@ internal class PdfBehovLøser(
                 }
             } catch (e: Exception) {
                 logg.error(e) { "Kunne ikke lage PDF for søknad." }
-                throw e
+                // throw e
             }
         }
     }
