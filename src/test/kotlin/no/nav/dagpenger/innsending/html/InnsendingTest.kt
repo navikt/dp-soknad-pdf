@@ -1,5 +1,6 @@
 package no.nav.dagpenger.innsending.html
 
+import kotlinx.html.div
 import no.nav.dagpenger.innsending.serder.RawHtmlString
 import kotlin.test.Test
 import kotlin.test.assertEquals

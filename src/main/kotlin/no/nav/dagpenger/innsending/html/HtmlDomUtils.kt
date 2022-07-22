@@ -91,7 +91,7 @@ internal fun DIV.flersvar(svar: Innsending.FlerSvar, brutto: Boolean) {
                     svaralternativ.tilleggsinformasjon?.also { info ->
                         div(classes = "hjelpetekst") {
                             h3 { +tilleggsinformasjonOverskrift(info) }
-                            unsafe { info.unsafeHtmlBody.kode }
+                            unsafe { +info.unsafeHtmlBody.kode }
                         }
                     }
                 }
@@ -137,11 +137,11 @@ private fun DIV.nettoSpørsmål(spmSvar: SporsmalSvar, tekst: GenerellTekst) {
 internal fun DIV.bruttoSeksjon(seksjon: Innsending.Seksjon, tekst: GenerellTekst) {
     id = seksjonId(seksjon.overskrift)
     h2 { +seksjon.overskrift }
-    seksjon.beskrivelse?.also { unsafe { seksjon.beskrivelse.kode } }
+    seksjon.beskrivelse?.also { unsafe { +seksjon.beskrivelse.medCssKlasse("infotekst") } }
     seksjon.hjelpetekst?.also {
         div(classes = "hjelpetekst") {
             seksjon.hjelpetekst.tittel?.also { tittel -> h3 { +tittel } }
-            unsafe { seksjon.hjelpetekst.unsafeHtmlBody.kode }
+            unsafe { +seksjon.hjelpetekst.unsafeHtmlBody.kode }
         }
     }
     seksjon.spmSvar.forEach {
@@ -152,11 +152,11 @@ internal fun DIV.bruttoSeksjon(seksjon: Innsending.Seksjon, tekst: GenerellTekst
 private fun DIV.bruttoSpørsmål(spmSvar: SporsmalSvar, tekst: GenerellTekst) {
     div {
         h3 { +spmSvar.sporsmal }
-        spmSvar.beskrivelse?.also { unsafe { spmSvar.beskrivelse.kode } }
+        spmSvar.beskrivelse?.also { unsafe { +spmSvar.beskrivelse.medCssKlasse("infotekst") } }
         spmSvar.hjelpetekst?.also {
             div(classes = "hjelpetekst") {
                 spmSvar.hjelpetekst.tittel?.also { tittel -> h3 { +tittel } }
-                unsafe { spmSvar.hjelpetekst.unsafeHtmlBody.kode }
+                // unsafe { +spmSvar.hjelpetekst.unsafeHtmlBody.kode }
             }
         }
         svar(tekst, spmSvar.svar, true)
