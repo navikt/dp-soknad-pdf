@@ -28,4 +28,4 @@ Spørsmål knyttet til koden eller prosjektet kan rettes mot:
 
 ## For NAV-ansattexk
 
-Interne henvendelser kan sendes via Slack i kanalen #dagpenger.
+Interne henvendelser kan sendes via Slack i kanalen #team-dagpenger.

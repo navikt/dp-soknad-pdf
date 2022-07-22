@@ -23,7 +23,7 @@ internal data class Innsending(
 
     data class Seksjon(
         val overskrift: String,
-        val beskrivelse: String? = null,
+        val beskrivelse: UnsafeHtml? = null,
         val hjelpetekst: Hjelpetekst? = null,
         val spmSvar: List<SporsmalSvar>
     )
@@ -31,7 +31,7 @@ internal data class Innsending(
     data class SporsmalSvar(
         val sporsmal: String,
         val svar: Svar,
-        val beskrivelse: String? = null,
+        val beskrivelse: UnsafeHtml? = null,
         val hjelpetekst: Hjelpetekst? = null,
         val oppfølgingspørmål: List<SpørmsålOgSvarGruppe> = emptyList(),
     )
@@ -44,8 +44,8 @@ internal data class Innsending(
     data class SvarAlternativ(val tekst: String, val tilleggsinformasjon: InfoTekst?)
     object IngenSvar : Svar()
 
-    data class Hjelpetekst(val tekst: String, val tittel: String? = null)
-    data class InfoTekst(val tittel: String?, val tekst: String, val type: Infotype)
+    data class Hjelpetekst(val unsafeHtmlBody: UnsafeHtml, val tittel: String? = null)
+    data class InfoTekst(val tittel: String?, val unsafeHtmlBody: UnsafeHtml, val type: Infotype)
 
     data class GenerellTekst(
         val hovedOverskrift: String,
@@ -72,6 +72,13 @@ internal data class Innsending(
                     throw IllegalArgumentException("ukjent alerttekst type $typenøkkel")
                 }
             }
+        }
+    }
+
+    internal class UnsafeHtml(val kode: String) {
+        fun medCssKlasse(klasse: String) = """<p class="$klasse"${kode.substringAfter("<p")}"""
+        companion object {
+            private fun String.leggTilPåHtmlPtag(kode: String): String = """<p class="$this"${kode.substringAfter("<p")}"""
         }
     }
 

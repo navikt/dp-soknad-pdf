@@ -4,17 +4,17 @@
       {
         "textId": "f15",
         "text": "Her er ett dokumentsak",
-        "description": "Dokument som dokumenterer"
+        "description": "<p>Dokument som dokumenterer</p>"
       },
       {
         "textId": "flervalg7",
         "text": "Her er det noen teksbokser typisk",
-        "description": "Tekstbokser"
+        "description": "<p>Tekstbokser</p>"
       },
       {
         "textId": "periode10",
         "text": "Her er ett periodespørsmål",
-        "description": "Perioder"
+        "description": "<p>Perioder forklares avhengig av hva det handler om egentlig.Her skal det bare være ett element</p>"
       },
       {
         "textId": "f6",
@@ -39,26 +39,26 @@
       {
         "textId": "desimaltall3",
         "text": "Her er ett double også! At det går ann!",
-        "description": "Tall representerer en menge av et eller annet",
+        "description": ["<p>Her kommer ett array</p> ","<p>Tall representerer en menge av et eller annet</p>","<p>Forhåpentligvis ser lenker <a href\"https://nav.no\">sånn her ut<a/></p>"],
         "helpText": {
           "title": "Hjelpetekst til doubles",
-          "body": "Og her forklares det enda litt mer hva double skal fortelle"
+          "body": "<p>Og her forklares det enda litt <strong>mer</strong> hva double skal fortelle</p>"
         }
       },
       {
         "textId": "f1",
         "text": "Her blir det spurt om noe som du kan svar ja eller nei på. Svarer du ja eller nei?",
-        "description": "Og her beskrive det hva ja eller nei betyr.I dette tilfellet betyr ja JA og nei NEI",
+        "description": "<p>Og her beskrive det hva <strong>ja eller nei</strong> betyr.I dette tilfellet betyr <em>ja JA og nei NEI</em></p>",
         "helpText": {
           "title": "Hjelpetekst med overskrift",
-          "body": "Og her forklares det enda litt mer hva ja eller nei betyr.I dette tilfellet betyr ja JA!"
+          "body": "<p>Og her forklares det enda litt mer hva ja eller nei betyr.I dette tilfellet betyr ja JA!</p>"
         }
       },
       {
         "textId": "f3",
         "text": "Her blir det spurt om noe som du kan svare ja eller nei på. Svarer du ja eller nei?",
         "helpText": {
-          "body": "Hjelpetekst"
+          "body": "<p>Hjelpetekst <script>\ndocument.getElementById(\"demo\").innerHTML = \"Hello JavaScript!\";\n</script></p>"
         }
       },
       {
@@ -68,10 +68,10 @@
       {
         "textId": "f67",
         "text": "Her blir det spurt om å oppgi ett tall, hvilket tall velger du?",
-        "description": "Viser seg at dette faktumet er ett generatorfaktum, med masse faktum i seg. Det er jeg fryktelig usikker på hvordan blir gitt. Oi, og pluss; hvordan vet vi om noe er ett oppfølgingspørsmål? :exploding_head",
+        "description": "<p>Viser seg at dette faktumet er ett generatorfaktum, med masse faktum i seg. Det er jeg fryktelig usikker på hvordan blir gitt. Oi, og pluss; hvordan vet vi om noe er ett oppfølgingspørsmål? :exploding_head</p>",
         "helpText": {
           "title": "Hjelpetekst med overskrift",
-          "body": "Og her forklares det enda litt mer hva ja eller nei betyr.I dette tilfellet betyr ja JA!(altså at du roper ja!) og nei NEI!(altså at du roper nei!) "
+          "body": "<p>Og her forklares det enda litt mer hva ja eller nei betyr.I dette tilfellet betyr ja JA!(altså at du roper ja!) og nei NEI!(altså at du roper nei!)</p> "
         }
       },
       {
@@ -83,10 +83,10 @@
       {
         "textId": "seksjon1",
         "title": "Tittel for seksjon 1",
-        "description": "description for seksjon",
+        "description": ["<p>description for seksjon</p>","<p>tadda, det her går jo bra!<img src=\"https://ikke.tilgjengelig\" alt=\"Det kommer jo ikke å funke\"></img></p>"],
         "helpText": {
           "title": "Hjelpetekst med overskrift til seksjon",
-          "body": "Her er en hjelpetekst tekst som hjelper veldig mye når en trenger hjelp"
+          "body": "<p>Her er en hjelpetekst tekst som hjelper veldig <img src=\"jasklfjl\" alt=\"ok\"></img>mye når en trenger hjelp. Med superhjelpsom <a href=\"https://nav.no/superhjelpen\">lenke</a></p>"
         }
       },
       {
@@ -129,7 +129,7 @@
         "alertText": {
           "title":"Her er noe info",
           "type": "info",
-          "body": "Her er ett og annet som er greit å vite hvios du har valgt svaralternativ1"
+          "body": "<p>Her er ett og annet som er greit å vite hvios du har valgt svaralternativ1</p>"
         }
 
       },
@@ -138,7 +138,7 @@
         "text": "flervalg 1",
         "alertText": {
           "type": "info",
-          "body": "Her er ett og annet som er greit å vite hvios du har valgt svaralternativ1"
+          "body": "<p>Her er ett og annet som er greit å vite hvios du har valgt svaralternativ1</p>"
         }
       },
       {

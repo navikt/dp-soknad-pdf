@@ -1,10 +1,13 @@
 package no.nav.dagpenger.innsending.serder
 
 import com.fasterxml.jackson.databind.JsonNode
+import com.fasterxml.jackson.databind.node.TextNode
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import mu.KotlinLogging
 import mu.withLoggingContext
 import no.nav.dagpenger.innsending.html.Innsending
+import org.jsoup.Jsoup
+import org.jsoup.safety.Safelist
 
 private val logger = KotlinLogging.logger { }
 
@@ -26,7 +29,7 @@ internal class Oppslag(private val tekstJson: String) {
                 map[textId] = TekstObjekt.FaktaTekstObjekt(
                     textId = textId,
                     text = tekst["text"].asText(),
-                    description = tekst.get("description")?.asText(),
+                    description = tekst.get("description")?.asRawHtmlString(),
                     helpText = tekst.helpText(),
                     unit = tekst.get("unit")?.asText()
                 )
@@ -43,7 +46,7 @@ internal class Oppslag(private val tekstJson: String) {
                 map[textId] = TekstObjekt.SeksjonTekstObjekt(
                     textId = textId,
                     title = tekst["title"].asText(),
-                    description = tekst.get("description")?.asText(),
+                    description = tekst.get("description")?.asRawHtmlString(),
                     helpText = tekst.helpText()
                 )
             }
@@ -77,7 +80,7 @@ internal class Oppslag(private val tekstJson: String) {
                         TekstObjekt.AlertText(
                             alerttext["title"]?.asText(),
                             alerttext["type"].asText(),
-                            alerttext["body"].asText()
+                            alerttext["body"].asRawHtmlString()
                         )
                     }
                 )
@@ -105,19 +108,19 @@ internal class Oppslag(private val tekstJson: String) {
             )
         }
 
-    sealed class TekstObjekt(val textId: String, val description: String?, val helpText: HelpText?) {
+    sealed class TekstObjekt(val textId: String, val description: RawHtmlString?, val helpText: HelpText?) {
         class FaktaTekstObjekt(
             val unit: String? = null,
             val text: String,
             textId: String,
-            description: String? = null,
+            description: RawHtmlString? = null,
             helpText: HelpText? = null,
         ) : TekstObjekt(textId, description, helpText)
 
         class SeksjonTekstObjekt(
             val title: String,
             textId: String,
-            description: String? = null,
+            description: RawHtmlString? = null,
             helpText: HelpText? = null,
         ) : TekstObjekt(textId, description, helpText)
 
@@ -126,7 +129,7 @@ internal class Oppslag(private val tekstJson: String) {
 
         class EnkelText(textId: String, val text: String) : TekstObjekt(textId, null, null)
 
-        class AlertText(val title: String?, val type: String, val body: String) {
+        class AlertText(val title: String?, val type: String, val body: RawHtmlString) {
             init {
                 if (!listOf("info", "warning", "error", "succes").contains(type)) {
                     throw IllegalArgumentException("Ukjent type for alertText $type")
@@ -134,13 +137,29 @@ internal class Oppslag(private val tekstJson: String) {
             }
         }
 
-        class HelpText(val title: String?, val body: String)
+        class HelpText(val title: String?, val body: RawHtmlString)
+    }
+}
+
+private fun JsonNode.asRawHtmlString(): RawHtmlString {
+    return if (this is TextNode) {
+        RawHtmlString(this.asText())
+    } else {
+        RawHtmlString(this.toList().joinToString(separator = "") { it.asText() })
+    }
+}
+
+class RawHtmlString(htmlFraSanity: String) {
+    val html: String = Jsoup.clean(htmlFraSanity, tilatteTaggerOgAttributter)
+
+    companion object {
+        private val tilatteTaggerOgAttributter = Safelist.relaxed().removeTags("img")
     }
 }
 
 private fun JsonNode.helpText(): Oppslag.TekstObjekt.HelpText? =
     get("helpText")?.let {
-        Oppslag.TekstObjekt.HelpText(it.get("title")?.asText(), it.get("body").asText())
+        Oppslag.TekstObjekt.HelpText(it.get("title")?.asText(), it.get("body").asRawHtmlString())
     }
 
 private fun JsonNode.seksjoner() = this["sanityTexts"]["seksjoner"]

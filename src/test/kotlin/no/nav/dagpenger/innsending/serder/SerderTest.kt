@@ -2,10 +2,13 @@ package no.nav.dagpenger.innsending.serder
 
 import no.nav.dagpenger.innsending.html.HtmlBuilder
 import no.nav.dagpenger.innsending.html.Innsending
+import no.nav.dagpenger.innsending.html.replace
 import no.nav.dagpenger.innsending.pdf.PdfBuilder
 import no.nav.dagpenger.innsending.serder.Oppslag.TekstObjekt.FaktaTekstObjekt
 import no.nav.dagpenger.innsending.serder.Oppslag.TekstObjekt.SeksjonTekstObjekt
+import org.intellij.lang.annotations.Language
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
@@ -26,8 +29,13 @@ internal class SerderTest {
             assertEquals("seksjon1", it.textId)
             assertEquals("Tittel for seksjon 1", it.title)
             assertEquals("Hjelpetekst med overskrift til seksjon", it.helpText?.title)
-            assertEquals("Her er en hjelpetekst tekst som hjelper veldig mye når en trenger hjelp", it.helpText?.body)
-            assertEquals("description for seksjon", it.description)
+            val expcextedBody =
+                """<p>Her er en hjelpetekst tekst som hjelper veldig mye når en trenger hjelp. Med superhjelpsom <a href="https://nav.no/superhjelpen">lenke</a></p>"""
+            assertEquals(expcextedBody, it.helpText?.body?.html)
+            @Language("HTML")
+            val expectedDescription =
+                """<p>description for seksjon</p><p>tadda, det her går jo bra!</p>"""
+            assertEquals(expectedDescription, it.description?.html?.replace("\n", ""))
         }
 
         oppslag.lookup("f3").also {
@@ -37,7 +45,7 @@ internal class SerderTest {
                 "Her blir det spurt om noe som du kan svare ja eller nei på. Svarer du ja eller nei?",
                 it.text
             )
-            assertEquals("Hjelpetekst", it.helpText?.body)
+            assertEquals("<p>Hjelpetekst</p>", it.helpText?.body?.html?.replace(" ", ""))
             assertNull(it.description)
         }
     }
@@ -54,7 +62,8 @@ internal class SerderTest {
             require(oppslag.alertText != null)
             oppslag.alertText.also { alerttext ->
                 assertEquals(
-                    "Her er ett og annet som er greit å vite hvios du har valgt svaralternativ1", alerttext.body
+                    "<p>Her er ett og annet som er greit å vite hvios du har valgt svaralternativ1</p>",
+                    alerttext.body.html
                 )
                 assertEquals("Her er noe info", alerttext.title)
                 assertEquals("info", alerttext.type)
@@ -74,7 +83,7 @@ internal class SerderTest {
     }
 
     @Test
-    fun `lager riktig html og pfd fra json`() {
+    fun `lager html og pfd fra json`() {
         assertDoesNotThrow {
             val h = JsonHtmlMapper(
                 innsendingsData = faktaJson,
@@ -91,4 +100,35 @@ internal class SerderTest {
             }
         }
     }
+
+    @Test
+    fun `fjerner tags som ikke er tillatt`() {
+        oppslag.`portable objekter i testfil`().forEach { tekstobjekt ->
+            tekstobjekt.description?.let { assertIngenUlovligeTagger(it) }
+            tekstobjekt.helpText?.body?.let { assertIngenUlovligeTagger(it) }
+        }
+    }
 }
+
+private fun assertIngenUlovligeTagger(htmlString: RawHtmlString) {
+    listOf("<script>", "<img>", "<iframe>").forEach {
+        assertFalse(
+            htmlString.html.contains(it.toRegex()),
+            "string ${htmlString.html} inneholder ulovlig tag $it"
+        )
+    }
+}
+
+private fun Oppslag.`portable objekter i testfil`() =
+    listOf(
+        this.lookup("f15"),
+        this.lookup("flervalg7"),
+        this.lookup("flervalg1"),
+        this.lookup("periode10"),
+        this.lookup("desimaltall3"),
+        this.lookup("f1"),
+        this.lookup("f3"),
+        this.lookup("f67"),
+        this.lookup("seksjon1"),
+        this.lookup("svaralternativ1")
+    )
