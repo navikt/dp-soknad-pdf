@@ -16,10 +16,20 @@ internal class Oppslag(private val tekstJson: String) {
     private val tekstMap = parse(tekstJson)
     fun lookup(id: String): TekstObjekt = tekstMap[id] ?: throw IllegalArgumentException("Fant ikke tekst til id $id")
 
-    private fun parse(tekstJson: String): Map<String, TekstObjekt> =
-        objectMapper.readTree(tekstJson).let {
-            it.tilFaktaTekstObjekt() + it.tilSeksjonTekstObjekt() + it.tilSvarAlternativTekstObjekt() + it.tilAppTekstObjekt()
+    companion object {
+        private val logg = KotlinLogging.logger {}
+    }
+
+    private fun parse(tekstJson: String): Map<String, TekstObjekt> {
+        return try {
+            objectMapper.readTree(tekstJson).let {
+                it.tilFaktaTekstObjekt() + it.tilSeksjonTekstObjekt() + it.tilSvarAlternativTekstObjekt() + it.tilAppTekstObjekt()
+            }
+        } catch (e: NullPointerException) {
+            logg.error(e) { "Fikk NullPointerException ved parsing av tekster: $tekstJson" }
+            throw e
         }
+    }
 
     private fun JsonNode.tilFaktaTekstObjekt(): Map<String, TekstObjekt> {
         val map = mutableMapOf<String, TekstObjekt>()
@@ -61,7 +71,7 @@ internal class Oppslag(private val tekstJson: String) {
             withLoggingContext("textId" to textId) {
                 map[textId] = TekstObjekt.EnkelText(
                     textId = textId,
-                    text = tekst["valueText"].asText(),
+                    text = tekst["valueText"].asText()
                 )
             }
         }
@@ -114,14 +124,14 @@ internal class Oppslag(private val tekstJson: String) {
             val text: String,
             textId: String,
             description: RawHtmlString? = null,
-            helpText: HelpText? = null,
+            helpText: HelpText? = null
         ) : TekstObjekt(textId, description, helpText)
 
         class SeksjonTekstObjekt(
             val title: String,
             textId: String,
             description: RawHtmlString? = null,
-            helpText: HelpText? = null,
+            helpText: HelpText? = null
         ) : TekstObjekt(textId, description, helpText)
 
         class SvaralternativTekstObjekt(val text: String, val alertText: AlertText?, textId: String) :
