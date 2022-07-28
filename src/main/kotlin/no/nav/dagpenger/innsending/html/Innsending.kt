@@ -46,14 +46,21 @@ internal data class Innsending(
 
     class Hjelpetekst private constructor(val unsafeHtmlBody: UnsafeHtml?, val tittel: String? = null) {
         companion object {
-            fun newOrNull(unsafeHtmlBody: UnsafeHtml? = null, tittel: String? = null) = when {
+            fun nyEllerNull(unsafeHtmlBody: UnsafeHtml? = null, tittel: String? = null) = when {
                 tittel.isNullOrEmpty() && unsafeHtmlBody?.kode.isNullOrEmpty() -> null
                 else -> Hjelpetekst(unsafeHtmlBody, tittel)
             }
         }
     }
 
-    data class InfoTekst(val tittel: String?, val unsafeHtmlBody: UnsafeHtml?, val type: Infotype)
+    class InfoTekst private constructor(val tittel: String?, val unsafeHtmlBody: UnsafeHtml?, val type: Infotype) {
+        companion object {
+            fun nyEllerNull(tittel: String? = null, unsafeHtmlBody: UnsafeHtml? = null, type: Infotype) = when {
+                tittel.isNullOrEmpty() && unsafeHtmlBody?.kode.isNullOrEmpty() -> null
+                else -> InfoTekst(tittel, unsafeHtmlBody, type)
+            }
+        }
+    }
 
     data class GenerellTekst(
         val hovedOverskrift: String,

@@ -2,6 +2,7 @@ package no.nav.dagpenger.innsending.html
 
 import no.nav.dagpenger.innsending.pdf.PdfBuilder.lagPdf
 import org.intellij.lang.annotations.Language
+import org.jsoup.Jsoup
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
@@ -38,21 +39,24 @@ class HtmlBuilderTest {
     @Test
     fun `lager netto html`() {
         HtmlBuilder.lagNettoHtml(TestModellHtml.innsending).also {
-            assertEquals(0, "class=\"infotekst\"".toRegex().findAll(it).count(), "Feil antall infortekster")
-            assertEquals(0, "class=\"hjelpetekst\"".toRegex().findAll(it).count(), "Feil antall hjelpetekster")
-            assertEquals(4, "class=\"seksjon\"".toRegex().findAll(it).count(), "Feil antall seksjoner")
+            assertEquals(0, antallElementerMedKlassenavn(it, "infotekst"), "Feil antall infotekster")
+            assertEquals(0, antallElementerMedKlassenavn(it, "hjelpetekst"), "Feil antall hjelpetekster")
+            assertEquals(4, antallElementerMedKlassenavn(it, "seksjon"), "Feil antall seksjoner")
         }
     }
 
     @Test
     fun `lager brutto html`() {
         HtmlBuilder.lagBruttoHtml(TestModellHtml.innsending).also {
-            assertEquals(6, "class=\"infotekst\"".toRegex().findAll(it).count(), "Feil antall infortekster")
-            assertEquals(8, "class=\"hjelpetekst\"".toRegex().findAll(it).count(), "Feil antall hjelpetekster")
-            assertEquals(4, "class=\"seksjon\"".toRegex().findAll(it).count(), "Feil antall hjelpetekster")
+            assertEquals(6, antallElementerMedKlassenavn(it, "infotekst"), "Feil antall infortekster")
+            assertEquals(8, antallElementerMedKlassenavn(it, "hjelpetekst"), "Feil antall hjelpetekster")
+            assertEquals(4, antallElementerMedKlassenavn(it, "seksjon"), "Feil antall hjelpetekster")
         }
     }
 }
+
+private fun antallElementerMedKlassenavn(htmlstring: String, klassenavn: String) =
+    Jsoup.parse(htmlstring).getElementsByClass(klassenavn).size
 
 @Language("HTML")
 private val foo: String = """<!DOCTYPE html>

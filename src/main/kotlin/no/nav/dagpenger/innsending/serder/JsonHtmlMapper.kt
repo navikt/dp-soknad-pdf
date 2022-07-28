@@ -70,7 +70,7 @@ internal class JsonHtmlMapper(
     private fun alertText(tekstObjekt: Oppslag.TekstObjekt.SvaralternativTekstObjekt): Innsending.InfoTekst? {
         return tekstObjekt.alertText?.let { alerttext ->
             Innsending.Infotype.fraSanityJson(typenøkkel = alerttext.type)?.let { infotype ->
-                Innsending.InfoTekst(
+                Innsending.InfoTekst.nyEllerNull(
                     tittel = alerttext.title,
                     unsafeHtmlBody = alerttext.body?.let { Innsending.UnsafeHtml(alerttext.body.html) },
                     type = infotype
@@ -148,6 +148,6 @@ private fun LocalDateTime.dagMånedÅr(): String =
 private fun Oppslag.TekstObjekt.hjelpetekst(): Innsending.Hjelpetekst? {
     return this.helpText?.let { oppslag ->
         val unsafeHtml = oppslag.body?.let { Innsending.UnsafeHtml(it.html) }
-        Innsending.Hjelpetekst.newOrNull(unsafeHtmlBody = unsafeHtml, tittel = oppslag.title)
+        Innsending.Hjelpetekst.nyEllerNull(unsafeHtmlBody = unsafeHtml, tittel = oppslag.title)
     }
 }

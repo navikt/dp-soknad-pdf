@@ -7,10 +7,6 @@ import java.time.LocalDateTime
 
 object TestModellHtml {
 
-    val infotekstKlasse = "infotekst"
-    val seksjonKlasse = "seksjon"
-    val hjelpetekstKlasse = "hjelpetekst"
-
     private val svarAlternativ = listOf(
         SvarAlternativ(
             tekst = "Ett svaralternativ",
@@ -18,7 +14,7 @@ object TestModellHtml {
         ),
         SvarAlternativ(
             tekst = "ja",
-            tilleggsinformasjon = Innsending.InfoTekst(
+            tilleggsinformasjon = Innsending.InfoTekst.nyEllerNull(
                 "En tittel",
                 Innsending.UnsafeHtml(
                     "<p>Med noe tekst som kan være like lang som hjelpetekste vil jeg tro</p>",
@@ -28,7 +24,7 @@ object TestModellHtml {
         ),
         SvarAlternativ(
             tekst = "nei",
-            tilleggsinformasjon = Innsending.InfoTekst(
+            tilleggsinformasjon = Innsending.InfoTekst.nyEllerNull(
                 tittel = null,
                 unsafeHtmlBody = Innsending.UnsafeHtml("<p>Med noe tekst som kan være like lang som hjelpetekste vil jeg tro. Og forhåentligvis har mindre skrivefeil</p>"),
                 type = Innsending.Infotype.ADVARSEL
@@ -111,12 +107,12 @@ object TestModellHtml {
     private
     val spmOgSvarMedHjelpetekstSeksjon = Innsending.Seksjon(
         overskrift = "Seksjon 2",
-        hjelpetekst = Innsending.Hjelpetekst.newOrNull(Innsending.UnsafeHtml("<p>Hjelpetekst som er hjelpetekst som hjelper</p>")),
+        hjelpetekst = Innsending.Hjelpetekst.nyEllerNull(Innsending.UnsafeHtml("<p>Hjelpetekst som er hjelpetekst som hjelper</p>")),
         spmSvar = listOf(
             Innsending.SporsmalSvar(
                 sporsmal = "Dett er spm 1",
                 svar = EnkeltSvar("svar 1"),
-                hjelpetekst = Innsending.Hjelpetekst.newOrNull(
+                hjelpetekst = Innsending.Hjelpetekst.nyEllerNull(
                     tittel = "Tittel til en hjelpetekst",
                     unsafeHtmlBody = Innsending.UnsafeHtml("<p>Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.</p>")
                 )
@@ -125,13 +121,13 @@ object TestModellHtml {
                 sporsmal = "Dett er spm 2",
                 svar = EnkeltSvar("svar 2"),
                 beskrivelse = Innsending.UnsafeHtml("<p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.</p>"),
-                hjelpetekst = Innsending.Hjelpetekst.newOrNull(Innsending.UnsafeHtml("<p>Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.</p>"))
+                hjelpetekst = Innsending.Hjelpetekst.nyEllerNull(Innsending.UnsafeHtml("<p>Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.</p>"))
             ),
             Innsending.SporsmalSvar(
                 sporsmal = "Dett er spm 3",
                 svar = EnkeltSvar("svar 3"),
                 beskrivelse = Innsending.UnsafeHtml("<p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.</p>"),
-                hjelpetekst = Innsending.Hjelpetekst.newOrNull(Innsending.UnsafeHtml("<p>Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.</p>"))
+                hjelpetekst = Innsending.Hjelpetekst.nyEllerNull(Innsending.UnsafeHtml("<p>Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.</p>"))
             ),
         )
     )
@@ -149,14 +145,14 @@ object TestModellHtml {
                 sporsmal = "Dett er spm 2 som skal ha oppfølgingspørsmål",
                 svar = EnkeltSvar("svar 2"),
                 beskrivelse = Innsending.UnsafeHtml("<p>Contrary to popular belief, Lorem Ipsum is not <em>simply random text</em>. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.</p>"),
-                hjelpetekst = Innsending.Hjelpetekst.newOrNull(Innsending.UnsafeHtml("<p>Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.</p>")),
+                hjelpetekst = Innsending.Hjelpetekst.nyEllerNull(Innsending.UnsafeHtml("<p>Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.</p>")),
                 oppfølgingspørmål = oppfølgingspørmål
             ),
             Innsending.SporsmalSvar(
                 sporsmal = "Dett er spm 3",
                 svar = EnkeltSvar("svar 3"),
                 beskrivelse = Innsending.UnsafeHtml("<p>Contrary to <strong>popular belief</strong>, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.</p>"),
-                hjelpetekst = Innsending.Hjelpetekst.newOrNull(Innsending.UnsafeHtml("<p>Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.</p>")),
+                hjelpetekst = Innsending.Hjelpetekst.nyEllerNull(Innsending.UnsafeHtml("<p>Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.</p>")),
             ),
         ),
         beskrivelse = Innsending.UnsafeHtml("<p>En description er en beskrivelse av en egen elefant</p>")
