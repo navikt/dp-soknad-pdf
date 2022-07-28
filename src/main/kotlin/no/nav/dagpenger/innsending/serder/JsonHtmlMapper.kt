@@ -148,6 +148,6 @@ private fun LocalDateTime.dagMånedÅr(): String =
 private fun Oppslag.TekstObjekt.hjelpetekst(): Innsending.Hjelpetekst? {
     return this.helpText?.let { oppslag ->
         val unsafeHtml = oppslag.body?.let { Innsending.UnsafeHtml(it.html) }
-        Innsending.Hjelpetekst(unsafeHtmlBody = unsafeHtml, tittel = oppslag.title)
+        Innsending.Hjelpetekst.newOrNull(unsafeHtmlBody = unsafeHtml, tittel = oppslag.title)
     }
 }

@@ -2,11 +2,12 @@ package no.nav.dagpenger.innsending.serder
 
 import no.nav.dagpenger.innsending.html.HtmlBuilder
 import no.nav.dagpenger.innsending.html.Innsending
-import no.nav.dagpenger.innsending.html.replace
+import no.nav.dagpenger.innsending.html.Innsending.Hjelpetekst
 import no.nav.dagpenger.innsending.pdf.PdfBuilder
 import no.nav.dagpenger.innsending.serder.Oppslag.TekstObjekt.FaktaTekstObjekt
 import no.nav.dagpenger.innsending.serder.Oppslag.TekstObjekt.SeksjonTekstObjekt
 import org.intellij.lang.annotations.Language
+import org.jsoup.Jsoup
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertNull
@@ -25,15 +26,24 @@ internal class SerderTest {
 
     @Test
     fun `Debug test`() {
-        val h = JsonHtmlMapper(
+        val mappetInnsending = JsonHtmlMapper(
             innsendingsData = debugfaktaJson,
             tekst = debugtekstJson,
             språk = Innsending.InnsendingsSpråk.BOKMÅL
         ).parse().apply {
             infoBlokk = Innsending.InfoBlokk("ident", innsendtTidspunkt = LocalDateTime.now())
         }
-        HtmlBuilder.lagNettoHtml(h).also { PdfBuilder.lagPdf(it) }
-        HtmlBuilder.lagBruttoHtml(h).also { PdfBuilder.lagPdf(it) }
+
+        assertIngenTommehjelpetekster(mappetInnsending)
+        HtmlBuilder.lagNettoHtml(mappetInnsending).also { PdfBuilder.lagPdf(it) }
+        HtmlBuilder.lagBruttoHtml(mappetInnsending).also {
+            PdfBuilder.lagPdf(it)
+            assertEquals(
+                0,
+                Jsoup.parse(it).getElementsByClass("hjelpetekst").filter { t -> t.childrenSize() <1 }.size,
+                "fant tomme hjelpetekster"
+            )
+        }
     }
 
     @Test
@@ -147,3 +157,16 @@ private fun Oppslag.`portable objekter i testfil`() =
         this.lookup("seksjon1"),
         this.lookup("svaralternativ1")
     )
+
+private fun assertIngenTommehjelpetekster(innsending: Innsending) {
+    innsending.seksjoner.forEach { seksjon ->
+        seksjon.hjelpetekst?.let { assertFalse(it.isEmpty(), "Fant tom hjelpetekst i seksjon ${seksjon.overskrift}") }
+        seksjon.spmSvar.forEach { spmSvar ->
+            spmSvar.hjelpetekst?.let { assertFalse(it.isEmpty(), "Fant tom hjelpetekst på spørsmål ${spmSvar.sporsmal}") }
+        }
+    }
+}
+
+private fun Hjelpetekst.isEmpty(): Boolean = this.tittel.isNullOrEmpty() && this.unsafeHtmlBody.isNullOrEmpty()
+
+private fun Innsending.UnsafeHtml?.isNullOrEmpty(): Boolean = this?.kode.isNullOrEmpty()

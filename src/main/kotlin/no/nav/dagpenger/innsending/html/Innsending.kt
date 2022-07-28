@@ -44,7 +44,15 @@ internal data class Innsending(
     data class SvarAlternativ(val tekst: String, val tilleggsinformasjon: InfoTekst?)
     object IngenSvar : Svar()
 
-    data class Hjelpetekst(val unsafeHtmlBody: UnsafeHtml?, val tittel: String? = null)
+    class Hjelpetekst private constructor(val unsafeHtmlBody: UnsafeHtml?, val tittel: String? = null) {
+        companion object {
+            fun newOrNull(unsafeHtmlBody: UnsafeHtml? = null, tittel: String? = null) = when {
+                tittel.isNullOrEmpty() && unsafeHtmlBody?.kode.isNullOrEmpty() -> null
+                else -> Hjelpetekst(unsafeHtmlBody, tittel)
+            }
+        }
+    }
+
     data class InfoTekst(val tittel: String?, val unsafeHtmlBody: UnsafeHtml?, val type: Infotype)
 
     data class GenerellTekst(
@@ -78,8 +86,10 @@ internal data class Innsending(
     internal class UnsafeHtml(val kode: String) {
         // TODO: må fungere i arrays også
         fun medCssKlasse(klasse: String) = """<p class="$klasse"${kode.substringAfter("<p")}"""
+
         companion object {
-            private fun String.leggTilPåHtmlPtag(kode: String): String = """<p class="$this"${kode.substringAfter("<p")}"""
+            private fun String.leggTilPåHtmlPtag(kode: String): String =
+                """<p class="$this"${kode.substringAfter("<p")}"""
         }
     }
 

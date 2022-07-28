@@ -38,18 +38,18 @@ class HtmlBuilderTest {
     @Test
     fun `lager netto html`() {
         HtmlBuilder.lagNettoHtml(TestModellHtml.innsending).also {
-            assertEquals(0, "class=\"infotekst\"".toRegex().findAll(it).count(), "For få infortekster")
-            assertEquals(0, "class=\"hjelpetekst\"".toRegex().findAll(it).count(), "For få hjelpetekster")
-            assertEquals(4, "class=\"seksjon\"".toRegex().findAll(it).count(), "for få seksjoner")
+            assertEquals(0, "class=\"infotekst\"".toRegex().findAll(it).count(), "Feil antall infortekster")
+            assertEquals(0, "class=\"hjelpetekst\"".toRegex().findAll(it).count(), "Feil antall hjelpetekster")
+            assertEquals(4, "class=\"seksjon\"".toRegex().findAll(it).count(), "Feil antall seksjoner")
         }
     }
 
     @Test
     fun `lager brutto html`() {
         HtmlBuilder.lagBruttoHtml(TestModellHtml.innsending).also {
-            assertEquals(6, "class=\"infotekst\"".toRegex().findAll(it).count(), "For få infortekster")
-            assertEquals(8, "class=\"hjelpetekst\"".toRegex().findAll(it).count(), "For få hjelpetekster")
-            assertEquals(4, "class=\"seksjon\"".toRegex().findAll(it).count(), "For få hjelpetekster")
+            assertEquals(6, "class=\"infotekst\"".toRegex().findAll(it).count(), "Feil antall infortekster")
+            assertEquals(8, "class=\"hjelpetekst\"".toRegex().findAll(it).count(), "Feil antall hjelpetekster")
+            assertEquals(4, "class=\"seksjon\"".toRegex().findAll(it).count(), "Feil antall hjelpetekster")
         }
     }
 }
