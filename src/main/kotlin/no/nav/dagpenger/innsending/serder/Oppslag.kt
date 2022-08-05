@@ -10,7 +10,6 @@ import no.nav.dagpenger.innsending.html.Innsending
 import org.jsoup.Jsoup
 import org.jsoup.safety.Safelist
 
-
 internal class Oppslag(private val tekstJson: String) {
     private val objectMapper = jacksonObjectMapper()
     private val tekstMap = parse(tekstJson)

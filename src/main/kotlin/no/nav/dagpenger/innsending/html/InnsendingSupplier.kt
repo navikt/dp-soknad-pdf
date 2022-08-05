@@ -14,7 +14,6 @@ import io.ktor.serialization.jackson.jackson
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
-import mu.KotlinLogging
 import no.nav.dagpenger.innsending.serder.JsonHtmlMapper
 import java.util.UUID
 
