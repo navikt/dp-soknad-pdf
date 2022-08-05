@@ -5,6 +5,7 @@ import io.ktor.client.engine.HttpClientEngine
 import io.ktor.client.engine.cio.CIO
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.defaultRequest
+import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logging
 import io.ktor.client.request.get
 import io.ktor.client.request.header
@@ -17,7 +18,6 @@ import mu.KotlinLogging
 import no.nav.dagpenger.innsending.serder.JsonHtmlMapper
 import java.util.UUID
 
-val logger = KotlinLogging.logger {}
 internal class InnsendingSupplier(
     private val dpSoknadBaseUrl: String,
     tokenSupplier: () -> String,
@@ -31,6 +31,7 @@ internal class InnsendingSupplier(
             jackson { }
         }
         install(Logging) {
+            level = LogLevel.INFO
         }
     }
 
