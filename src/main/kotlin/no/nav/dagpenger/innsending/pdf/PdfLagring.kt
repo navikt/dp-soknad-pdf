@@ -32,7 +32,7 @@ class PdfLagring(
             jackson { }
         }
         install(Logging) {
-            level = LogLevel.ALL
+            level = LogLevel.INFO
         }
     }
 
