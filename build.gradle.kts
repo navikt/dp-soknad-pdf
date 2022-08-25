@@ -65,6 +65,7 @@ dependencies {
     implementation(Ktor2.Client.library("cio"))
     implementation(Ktor2.Client.library("content-negotiation"))
     implementation("io.ktor:ktor-serialization-jackson:${Ktor2.version}")
+    implementation(Jackson.jsr310)
     implementation("com.openhtmltopdf:openhtmltopdf-pdfbox:$openHtmlToPdfVersion")
     implementation("com.openhtmltopdf:openhtmltopdf-slf4j:$openHtmlToPdfVersion")
     implementation("com.openhtmltopdf:openhtmltopdf-svg-support:$openHtmlToPdfVersion")

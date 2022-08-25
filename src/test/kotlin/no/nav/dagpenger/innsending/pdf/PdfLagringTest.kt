@@ -9,11 +9,13 @@ import io.ktor.http.headersOf
 import kotlinx.coroutines.runBlocking
 import no.nav.dagpenger.innsending.ArkiverbartDokument
 import org.junit.jupiter.api.Test
+import java.time.LocalDateTime
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 
 internal class PdfLagringTest {
     val testFnr = "12345678910"
+    private val now = LocalDateTime.now()
 
     @Test
     fun `Sender pdf til mellomlagring`() {
@@ -23,10 +25,14 @@ internal class PdfLagringTest {
             assertNotNull(request.headers["Authorization"])
             assertEquals(request.headers["X-Eier"], testFnr)
             assertEquals(request.headers["Authorization"], "Bearer token")
-
             respond(
                 //language=JSON
-                content = """[{"filnavn":"netto.pdf","urn":"urn:vedlegg:id/netto.pdf"},{"filnavn":"brutto.pdf","urn":"urn:vedlegg:id/brutto.pdf"}]""",
+                content = """
+                    [
+                      {"filnavn":"netto.pdf","urn":"urn:vedlegg:id/netto.pdf","filid":"id/netto.pdf","storrelse": 0, "tidspunkt": "$now" },
+                      {"filnavn":"brutto.pdf","urn":"urn:vedlegg:id/brutto.pdf","filid":"id/brutto.pdf","storrelse": 0, "tidspunkt": "$now" }
+                    ]
+                """.trimIndent(),
                 status = HttpStatusCode.Created,
                 headers = headersOf(HttpHeaders.ContentType, "application/json")
             )

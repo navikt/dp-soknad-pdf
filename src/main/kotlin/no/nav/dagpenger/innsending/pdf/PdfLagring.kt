@@ -1,5 +1,7 @@
 package no.nav.dagpenger.innsending.pdf
 
+import com.fasterxml.jackson.databind.SerializationFeature
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.engine.HttpClientEngine
@@ -17,6 +19,7 @@ import io.ktor.http.HttpHeaders
 import io.ktor.serialization.jackson.jackson
 import no.nav.dagpenger.innsending.ArkiverbartDokument
 import no.nav.dagpenger.innsending.LagretDokument
+import java.time.LocalDateTime
 
 class PdfLagring(
     private val baseUrl: String,
@@ -29,7 +32,10 @@ class PdfLagring(
             header("Authorization", "Bearer ${tokenSupplier.invoke()}")
         }
         install(ContentNegotiation) {
-            jackson { }
+            jackson {
+                registerModule(JavaTimeModule())
+                disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
+            }
         }
         install(Logging) {
             level = LogLevel.INFO
@@ -69,4 +75,10 @@ class PdfLagring(
     }
 }
 
-internal data class URNResponse(val filnavn: String, val urn: String)
+internal data class URNResponse(
+    val filnavn: String,
+    val urn: String,
+    val filid: String,
+    val storrelse: Long,
+    val tidspunkt: LocalDateTime
+)
