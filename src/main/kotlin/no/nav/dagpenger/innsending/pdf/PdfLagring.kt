@@ -78,7 +78,7 @@ class PdfLagring(
 internal data class URNResponse(
     val filnavn: String,
     val urn: String,
-    val filid: String,
+    val filsti: String,
     val storrelse: Long,
     val tidspunkt: LocalDateTime
 )

@@ -29,8 +29,8 @@ internal class PdfLagringTest {
                 //language=JSON
                 content = """
                     [
-                      {"filnavn":"netto.pdf","urn":"urn:vedlegg:id/netto.pdf","filid":"id/netto.pdf","storrelse": 0, "tidspunkt": "$now" },
-                      {"filnavn":"brutto.pdf","urn":"urn:vedlegg:id/brutto.pdf","filid":"id/brutto.pdf","storrelse": 0, "tidspunkt": "$now" }
+                      {"filnavn":"netto.pdf","urn":"urn:vedlegg:id/netto.pdf","filsti":"id/netto.pdf","storrelse": 0, "tidspunkt": "$now" },
+                      {"filnavn":"brutto.pdf","urn":"urn:vedlegg:id/brutto.pdf","filsti":"id/brutto.pdf","storrelse": 0, "tidspunkt": "$now" }
                     ]
                 """.trimIndent(),
                 status = HttpStatusCode.Created,
