@@ -2,6 +2,7 @@ package no.nav.dagpenger.innsending.serder
 
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import mu.KotlinLogging
 import no.nav.dagpenger.innsending.LandOppslag
 import no.nav.dagpenger.innsending.html.Innsending
 import no.nav.dagpenger.innsending.html.Innsending.EnkeltSvar
@@ -11,6 +12,8 @@ import no.nav.helse.rapids_rivers.asLocalDateTime
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+
+private val sikkerlogg = KotlinLogging.logger("tjenestekall")
 
 internal class JsonHtmlMapper(
     private val innsendingsData: String,
@@ -33,24 +36,32 @@ internal class JsonHtmlMapper(
     }
 
     private fun JsonNode.svar(): Svar {
-        return when (val type = this["type"].asText()) {
-            "tekst" -> EnkeltSvar(this["svar"].asText())
-            "double" -> EnkeltSvar(this["svar"].asText())
-            "int" -> EnkeltSvar(this["svar"].asText())
-            "boolean" -> EnkeltSvar((oppslag.lookup(this.booleanTextId()) as Oppslag.TekstObjekt.SvaralternativTekstObjekt).text)
-            "localdate" -> EnkeltSvar(this["svar"].asLocalDate().dagMånedÅr())
-            "periode" -> EnkeltSvar(
-                "${
-                this["svar"]["fom"].asLocalDate().dagMånedÅr()
-                } - ${this["svar"]["tom"].asLocalDate().dagMånedÅr()}"
-            )
-            "generator" -> Innsending.IngenSvar
-            "envalg" -> EnkeltSvar((oppslag.lookup(this["svar"].asText()) as Oppslag.TekstObjekt.SvaralternativTekstObjekt).text)
-            "flervalg" -> Innsending.FlerSvar(this.flerValg())
-            "land" -> EnkeltSvar(LandOppslag.hentLand(språk, this["svar"].asText()))
-            "dokument" -> EnkeltSvar(this.dokumentTekst())
-            else -> throw IllegalArgumentException("Ukjent faktumtype $type")
-        }
+        return kotlin.runCatching {
+            when (val type = this["type"].asText()) {
+                "tekst" -> EnkeltSvar(this["svar"].asText())
+                "double" -> EnkeltSvar(this["svar"].asText())
+                "int" -> EnkeltSvar(this["svar"].asText())
+                "boolean" -> EnkeltSvar((oppslag.lookup(this.booleanTextId()) as Oppslag.TekstObjekt.SvaralternativTekstObjekt).text)
+                "localdate" -> EnkeltSvar(this["svar"].asLocalDate().dagMånedÅr())
+                "periode" -> EnkeltSvar(
+                    "${
+                    this["svar"]["fom"].asLocalDate().dagMånedÅr()
+                    } - ${this["svar"]["tom"].asLocalDate().dagMånedÅr()}"
+                )
+                "generator" -> Innsending.IngenSvar
+                "envalg" -> EnkeltSvar((oppslag.lookup(this["svar"].asText()) as Oppslag.TekstObjekt.SvaralternativTekstObjekt).text)
+                "flervalg" -> Innsending.FlerSvar(this.flerValg())
+                "land" -> EnkeltSvar(LandOppslag.hentLand(språk, this["svar"].asText()))
+                "dokument" -> EnkeltSvar(this.dokumentTekst())
+                else -> throw IllegalArgumentException("Ukjent faktumtype $type")
+            }
+        }.fold(
+            onSuccess = { it },
+            onFailure = { e ->
+                sikkerlogg.error { "Kunne ikke parse json node: $this" }
+                throw e
+            }
+        )
     }
 
     private fun JsonNode.flerValg(): List<Innsending.SvarAlternativ> {
