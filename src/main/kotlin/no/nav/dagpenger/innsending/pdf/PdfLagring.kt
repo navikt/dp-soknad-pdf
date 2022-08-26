@@ -38,7 +38,7 @@ class PdfLagring(
             }
         }
         install(Logging) {
-            level = LogLevel.INFO
+            level = LogLevel.ALL
         }
     }
 
