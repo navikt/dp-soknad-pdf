@@ -46,7 +46,7 @@ internal class JsonHtmlMapper(
                 "periode" -> EnkeltSvar(
                     "${
                     this["svar"]["fom"].asLocalDate().dagMånedÅr()
-                    } - ${this["svar"]["tom"].asLocalDate().dagMånedÅr()}"
+                    } - ${this["svar"]["tom"]?.asLocalDate()?.dagMånedÅr()}"
                 )
                 "generator" -> Innsending.IngenSvar
                 "envalg" -> EnkeltSvar((oppslag.lookup(this["svar"].asText()) as Oppslag.TekstObjekt.SvaralternativTekstObjekt).text)
