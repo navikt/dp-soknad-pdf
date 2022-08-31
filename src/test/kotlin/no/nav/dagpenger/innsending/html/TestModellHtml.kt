@@ -3,7 +3,7 @@ package no.nav.dagpenger.innsending.html
 import no.nav.dagpenger.innsending.html.Innsending.EnkeltSvar
 import no.nav.dagpenger.innsending.html.Innsending.SpørmsålOgSvarGruppe
 import no.nav.dagpenger.innsending.html.Innsending.SvarAlternativ
-import java.time.LocalDateTime
+import java.time.ZonedDateTime
 
 object TestModellHtml {
 
@@ -176,6 +176,6 @@ object TestModellHtml {
         språk = Innsending.InnsendingsSpråk.BOKMÅL,
         pdfAMetaTagger = Innsending.DefaultPdfAMetaTagger
     ).apply {
-        infoBlokk = Innsending.InfoBlokk("12345678910", LocalDateTime.now())
+        infoBlokk = Innsending.InfoBlokk("12345678910", ZonedDateTime.now())
     }
 }

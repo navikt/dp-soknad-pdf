@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import java.io.File
-import java.time.LocalDateTime
+import java.time.ZonedDateTime
 import kotlin.test.assertNotNull
 
 internal class SerderTest {
@@ -31,7 +31,7 @@ internal class SerderTest {
             tekst = debugtekstJson,
             språk = Innsending.InnsendingsSpråk.BOKMÅL
         ).parse().apply {
-            infoBlokk = Innsending.InfoBlokk("ident", innsendtTidspunkt = LocalDateTime.now())
+            infoBlokk = Innsending.InfoBlokk("ident", innsendtTidspunkt = ZonedDateTime.now())
         }
 
         assertIngenTommehjelpetekster(mappetInnsending)
@@ -115,7 +115,7 @@ internal class SerderTest {
                 tekst = tekstJson,
                 språk = Innsending.InnsendingsSpråk.BOKMÅL
             ).parse().apply {
-                infoBlokk = Innsending.InfoBlokk("ident", innsendtTidspunkt = LocalDateTime.now())
+                infoBlokk = Innsending.InfoBlokk("ident", innsendtTidspunkt = ZonedDateTime.now())
             }
             HtmlBuilder.lagBruttoHtml(h).also {
                 File("build/tmp/test/søknad2.html").writeText(it)

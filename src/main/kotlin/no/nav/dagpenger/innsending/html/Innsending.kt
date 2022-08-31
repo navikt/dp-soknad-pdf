@@ -1,6 +1,6 @@
 package no.nav.dagpenger.innsending.html
 
-import java.time.LocalDateTime
+import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
 internal data class Innsending(
@@ -70,7 +70,7 @@ internal data class Innsending(
         val fnr: String
     )
 
-    data class InfoBlokk(val fødselsnummer: String, val innsendtTidspunkt: LocalDateTime) {
+    data class InfoBlokk(val fødselsnummer: String, val innsendtTidspunkt: ZonedDateTime) {
         val datoSendt = innsendtTidspunkt.format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"))
     }
 

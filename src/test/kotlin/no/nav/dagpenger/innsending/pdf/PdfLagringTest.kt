@@ -9,13 +9,13 @@ import io.ktor.http.headersOf
 import kotlinx.coroutines.runBlocking
 import no.nav.dagpenger.innsending.ArkiverbartDokument
 import org.junit.jupiter.api.Test
-import java.time.LocalDateTime
+import java.time.ZonedDateTime
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 
 internal class PdfLagringTest {
     val testFnr = "12345678910"
-    private val now = LocalDateTime.now()
+    private val now = ZonedDateTime.now()
 
     @Test
     fun `Sender pdf til mellomlagring`() {

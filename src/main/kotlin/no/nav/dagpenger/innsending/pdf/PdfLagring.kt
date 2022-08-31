@@ -19,7 +19,7 @@ import io.ktor.http.HttpHeaders
 import io.ktor.serialization.jackson.jackson
 import no.nav.dagpenger.innsending.ArkiverbartDokument
 import no.nav.dagpenger.innsending.LagretDokument
-import java.time.LocalDateTime
+import java.time.ZonedDateTime
 
 class PdfLagring(
     private val baseUrl: String,
@@ -80,5 +80,5 @@ internal data class URNResponse(
     val urn: String,
     val filsti: String,
     val storrelse: Long,
-    val tidspunkt: LocalDateTime
+    val tidspunkt: ZonedDateTime
 )
