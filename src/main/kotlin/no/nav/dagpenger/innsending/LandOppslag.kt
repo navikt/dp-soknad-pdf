@@ -7,7 +7,7 @@ import no.nav.dagpenger.innsending.pdf.fileAsString
 object LandOppslag {
     // countries.json hentet fra https://github.com/stefangabos/world_countries
     private val data by lazy {
-        "/countries.json".fileAsString().let {
+        "/world.json".fileAsString().let {
             jacksonObjectMapper().readTree(it)
         }
     }
