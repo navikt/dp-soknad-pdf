@@ -17,6 +17,7 @@ private val sikkerlogg = KotlinLogging.logger("tjenestekall")
 
 internal class JsonHtmlMapper(
     private val innsendingsData: String,
+    private val dokumentasjonKrav: String,
     tekst: String,
     private val språk: Innsending.InnsendingsSpråk = Innsending.InnsendingsSpråk.BOKMÅL,
 ) {

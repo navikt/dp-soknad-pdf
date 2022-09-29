@@ -36,15 +36,27 @@ internal class InnsendingSupplier(
 
     suspend fun hentSoknad(id: UUID, språk: Innsending.InnsendingsSpråk): Innsending {
         return withContext(Dispatchers.IO) {
-            val fakta = async {
-                httpKlient.get("$dpSoknadBaseUrl/$id/ferdigstilt/fakta").bodyAsText()
-            }
-
-            val tekst = async {
-                httpKlient.get("$dpSoknadBaseUrl/$id/ferdigstilt/tekst").bodyAsText()
-            }
-
-            JsonHtmlMapper(innsendingsData = fakta.await(), tekst = tekst.await(), språk = språk).parse()
+            val fakta = async { hentFakta(id) }
+            val tekst = async { hentTekst(id) }
+            val dokumentasjonsKrav = async { hentDokumentasjonKrav(id) }
+            JsonHtmlMapper(
+                innsendingsData = fakta.await(),
+                dokumentasjonKrav = dokumentasjonsKrav.await(),
+                tekst = tekst.await(),
+                språk = språk
+            ).parse()
         }
+    }
+
+    private suspend fun hentFakta(id: UUID): String {
+        return httpKlient.get("$dpSoknadBaseUrl/$id/ferdigstilt/fakta").bodyAsText()
+    }
+
+    private suspend fun hentTekst(id: UUID): String {
+        return httpKlient.get("$dpSoknadBaseUrl/$id/ferdigstilt/tekst").bodyAsText()
+    }
+
+    private suspend fun hentDokumentasjonKrav(id: UUID): String {
+        return httpKlient.get("$dpSoknadBaseUrl/soknad/$id/dokumentasjonskrav").bodyAsText()
     }
 }

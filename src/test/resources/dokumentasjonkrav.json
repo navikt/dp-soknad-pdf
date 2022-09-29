@@ -1,0 +1,54 @@
+{
+  "soknad_uuid": "4a5f6767-3513-448f-a3aa-868eec05e412",
+  "krav": [
+    {
+      "id": "8065",
+      "beskrivendeId": "faktum.dokument-varsel-om-permittering",
+      "fakta": [
+        {
+          "id": "8006.1",
+          "svar": "faktum.arbeidsforhold.endret.svar.permittert",
+          "type": "envalg",
+          "roller": [
+            "søker"
+          ],
+          "readOnly": false,
+          "gyldigeValg": [
+            "faktum.arbeidsforhold.endret.svar.ikke-endret",
+            "faktum.arbeidsforhold.endret.svar.avskjediget",
+            "faktum.arbeidsforhold.endret.svar.sagt-opp-av-arbeidsgiver",
+            "faktum.arbeidsforhold.endret.svar.arbeidsgiver-konkurs",
+            "faktum.arbeidsforhold.endret.svar.kontrakt-utgaatt",
+            "faktum.arbeidsforhold.endret.svar.sagt-opp-selv",
+            "faktum.arbeidsforhold.endret.svar.redusert-arbeidstid",
+            "faktum.arbeidsforhold.endret.svar.permittert"
+          ],
+          "beskrivendeId": "faktum.arbeidsforhold.endret",
+          "sannsynliggjøresAv": [
+            {
+              "id": "8065",
+              "type": "dokument",
+              "roller": [
+                "søker"
+              ],
+              "readOnly": true,
+              "beskrivendeId": "faktum.dokument-varsel-om-permittering",
+              "sannsynliggjøresAv": []
+            }
+          ]
+        }
+      ],
+      "filer": [],
+      "gyldigeValg": [
+        "dokumentkrav.svar.send.naa",
+        "dokumentkrav.svar.send.senere",
+        "dokumentkrav.svar.sendt.tidligere",
+        "dokumentkrav.svar.sender.ikke",
+        "dokumentkrav.svar.andre.sender"
+      ],
+      "begrunnelse": "DTETDhgv",
+      "svar": "dokumentkrav.svar.sender.ikke",
+      "bundle": "null"
+    }
+  ]
+}

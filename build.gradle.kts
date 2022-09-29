@@ -80,6 +80,9 @@ dependencies {
     testImplementation(Ktor2.Client.library("mock"))
     testImplementation("org.verapdf:validation-model:1.20.1")
     testRuntimeOnly(Junit5.engine)
+
+    // FOr E2E
+    testImplementation("io.kubernetes:client-java:16.0.0")
 }
 
 spotless {
