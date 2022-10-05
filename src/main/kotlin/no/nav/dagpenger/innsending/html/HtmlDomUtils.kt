@@ -119,53 +119,31 @@ internal fun DIV.dokumentasjonKrav(dokumentKrav: List<Innsending.DokumentKrav>, 
         }
         Innsending.DokumentKrav.Valg.SEND_SENERE -> {
             val innsendts = dokumentKrav.filterIsInstance<Innsending.IkkeInnsendtNå>().filter { it.valg == valg }
-            if (innsendts.isNotEmpty()) {
-                p { +"Du har sagt at du skal følgende vedlegg: " }
-                ul {
-                    innsendts.forEach { dokumentKrav ->
-                        li {
-                            p { +(dokumentKrav.navn as Oppslag.TekstObjekt.FaktaTekstObjekt).text }
-                        }
-                    }
-                }
-            }
+            dokumentKrav(innsendts, "Du har sagt at du skal sende følgende vedlegg:")
         }
         Innsending.DokumentKrav.Valg.SENDT_TIDLIGERE -> {
             val innsendts = dokumentKrav.filterIsInstance<Innsending.IkkeInnsendtNå>().filter { it.valg == valg }
-            if (innsendts.isNotEmpty()) {
-                p { +"Du har sagt at du tidligere har sendt inn vedlegg: " }
-                ul {
-                    innsendts.forEach { dokumentKrav ->
-                        li {
-                            p { +(dokumentKrav.navn as Oppslag.TekstObjekt.FaktaTekstObjekt).text }
-                        }
-                    }
-                }
-            }
+            dokumentKrav(innsendts, "Du har sagt at du tidligere har sendt inn følgende vedlegg:")
         }
         Innsending.DokumentKrav.Valg.SENDER_IKKE -> {
             val innsendts = dokumentKrav.filterIsInstance<Innsending.IkkeInnsendtNå>().filter { it.valg == valg }
-            if (innsendts.isNotEmpty()) {
-                p { +"Du har sagt at du ikke sender vedlegg: " }
-                ul {
-                    innsendts.forEach { dokumentKrav ->
-                        li {
-                            p { +(dokumentKrav.navn as Oppslag.TekstObjekt.FaktaTekstObjekt).text }
-                        }
-                    }
-                }
-            }
+            dokumentKrav(innsendts, "Du har sagt at du ikke sender følgende vedlegg:")
         }
         Innsending.DokumentKrav.Valg.ANDRE_SENDER -> {
             val innsendts = dokumentKrav.filterIsInstance<Innsending.IkkeInnsendtNå>().filter { it.valg == valg }
-            if (innsendts.isNotEmpty()) {
-                p { +"Du har sagt at andre skal sende vedlegg: " }
-                ul {
-                    innsendts.forEach { dokumentKrav ->
-                        li {
-                            p { +(dokumentKrav.navn as Oppslag.TekstObjekt.FaktaTekstObjekt).text }
-                        }
-                    }
+            dokumentKrav(innsendts, "Du har sagt at andre skal sende følgende vedlegg:")
+        }
+    }
+}
+
+private fun DIV.dokumentKrav(innsendts: List<Innsending.IkkeInnsendtNå>, beskrivelse: String) {
+    if (innsendts.isNotEmpty()) {
+        p { +beskrivelse }
+        ul {
+            innsendts.forEach { dokumentKrav ->
+                li {
+                    p { +(dokumentKrav.navn as Oppslag.TekstObjekt.FaktaTekstObjekt).text }
+                    p { +(dokumentKrav.begrunnelse) }
                 }
             }
         }
