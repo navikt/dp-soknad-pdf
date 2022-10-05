@@ -160,7 +160,7 @@ object TestModellHtml {
     )
 
     private val dokumentskrav = Innsending.IkkeInnsendtNå(
-        Oppslag.TekstObjekt.EnkelText("id", "tekst"), "begrunnelse", Innsending.IkkeInnsendtNå.Valg.SEND_SENERE
+        Oppslag.TekstObjekt.EnkelText("id", "tekst"), "begrunnelse", Innsending.DokumentKrav.Valg.SEND_SENERE
     )
 
     internal

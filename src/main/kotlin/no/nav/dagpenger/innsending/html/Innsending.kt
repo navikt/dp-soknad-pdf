@@ -112,15 +112,15 @@ internal data class Innsending(
             "en"
         )
     }
-    internal sealed class DokumentKrav(val navn: Oppslag.TekstObjekt)
-    class Innsendt(navn: Oppslag.TekstObjekt, val bundle: String) : DokumentKrav(navn)
-    class IkkeInnsendtNå(navn: Oppslag.TekstObjekt, val begrunnelse: String, val valg: Valg) : DokumentKrav(navn) {
+
+    internal sealed class DokumentKrav(val navn: Oppslag.TekstObjekt) {
         enum class Valg {
             SEND_NAA,
             SEND_SENERE,
             SENDT_TIDLIGERE,
             SENDER_IKKE,
             ANDRE_SENDER;
+
             companion object {
                 fun fromJson(valg: String): Valg = when (valg) {
                     "dokumentkrav.svar.send.naa" -> SEND_NAA
@@ -133,4 +133,7 @@ internal data class Innsending(
             }
         }
     }
+
+    class Innsendt(navn: Oppslag.TekstObjekt, val bundle: String) : DokumentKrav(navn)
+    class IkkeInnsendtNå(navn: Oppslag.TekstObjekt, val begrunnelse: String, val valg: Valg) : DokumentKrav(navn)
 }

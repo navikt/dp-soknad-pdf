@@ -11,10 +11,7 @@ import kotlinx.html.head
 import kotlinx.html.html
 import kotlinx.html.id
 import kotlinx.html.lang
-import kotlinx.html.li
-import kotlinx.html.p
 import kotlinx.html.title
-import kotlinx.html.ul
 
 internal object HtmlBuilder {
     fun lagNettoHtml(innsending: Innsending) = lagHtml(innsending, DIV::nettoSeksjon)
@@ -51,18 +48,15 @@ internal object HtmlBuilder {
                     }
                 }
                 if (innsending.dokumentasjonskrav.isNotEmpty()) {
-                    h2 {
-                        +"Vedlegg"
-                    }
-                    p {
-                        +"Du har lagt ved følgende vedlegg:"
-                    }
-                    ul {
-                        li {
-                            p {
-                                +"Dokument"
-                            }
+                    div(classes = "vedlegg") {
+                        h2 {
+                            +"Vedlegg"
                         }
+                        dokumentasjonKrav(innsending.dokumentasjonskrav, Innsending.DokumentKrav.Valg.SEND_NAA)
+                        dokumentasjonKrav(innsending.dokumentasjonskrav, Innsending.DokumentKrav.Valg.SEND_SENERE)
+                        dokumentasjonKrav(innsending.dokumentasjonskrav, Innsending.DokumentKrav.Valg.SENDER_IKKE)
+                        dokumentasjonKrav(innsending.dokumentasjonskrav, Innsending.DokumentKrav.Valg.SENDT_TIDLIGERE)
+                        dokumentasjonKrav(innsending.dokumentasjonskrav, Innsending.DokumentKrav.Valg.ANDRE_SENDER)
                     }
                 }
             }

@@ -2,6 +2,32 @@
   "soknad_uuid": "4a5f6767-3513-448f-a3aa-868eec05e412",
   "krav": [
     {
+      "beskrivendeId": "faktum.dokument-varsel-om-permittering",
+      "begrunnelse": "DTETDhgv",
+      "svar": "dokumentkrav.svar.sender.ikke"
+    },
+    {
+      "beskrivendeId": "faktum.dokument-varsel-om-permittering",
+      "begrunnelse": "DTETDhgv",
+      "svar": "dokumentkrav.svar.send.senere"
+    },
+    {
+      "beskrivendeId": "faktum.dokument-varsel-om-permittering",
+      "begrunnelse": "DTETDhgv",
+      "svar": "dokumentkrav.svar.andre.sender"
+    },
+    {
+      "beskrivendeId": "faktum.dokument-varsel-om-permittering",
+      "begrunnelse": "DTETDhgv",
+      "svar": "dokumentkrav.svar.sendt.tidligere"
+    },
+    {
+      "beskrivendeId": "faktum.dokument-varsel-om-permittering",
+      "begrunnelse": "DTETDhgv",
+      "svar": "dokumentkrav.svar.send.naa",
+      "bundle": "urn:vedlegg:hubba"
+    },
+    {
       "id": "8065",
       "beskrivendeId": "faktum.dokument-varsel-om-permittering",
       "fakta": [

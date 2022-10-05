@@ -14,6 +14,7 @@ import kotlinx.html.ul
 import kotlinx.html.unsafe
 import no.nav.dagpenger.innsending.html.Innsending.GenerellTekst
 import no.nav.dagpenger.innsending.html.Innsending.SporsmalSvar
+import no.nav.dagpenger.innsending.serder.Oppslag
 import org.apache.commons.text.translate.EntityArrays.HTML40_EXTENDED_UNESCAPE
 import org.apache.commons.text.translate.EntityArrays.ISO8859_1_UNESCAPE
 
@@ -92,6 +93,77 @@ internal fun DIV.flersvar(svar: Innsending.FlerSvar, brutto: Boolean) {
                         div(classes = "hjelpetekst") {
                             h3 { +tilleggsinformasjonOverskrift(info) }
                             info.unsafeHtmlBody?.let { unsafe { +info.unsafeHtmlBody.kode } }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+internal fun DIV.dokumentasjonKrav(dokumentKrav: List<Innsending.DokumentKrav>, valg: Innsending.DokumentKrav.Valg) {
+
+    when (valg) {
+        Innsending.DokumentKrav.Valg.SEND_NAA -> {
+            val innsendts = dokumentKrav.filterIsInstance<Innsending.Innsendt>()
+            if (innsendts.isNotEmpty()) {
+                p { +"Du har lagt ved følgende vedlegg: " }
+                ul {
+                    innsendts.forEach { dokumentKrav ->
+                        li {
+                            p { +(dokumentKrav.navn as Oppslag.TekstObjekt.FaktaTekstObjekt).text }
+                        }
+                    }
+                }
+            }
+        }
+        Innsending.DokumentKrav.Valg.SEND_SENERE -> {
+            val innsendts = dokumentKrav.filterIsInstance<Innsending.IkkeInnsendtNå>().filter { it.valg == valg }
+            if (innsendts.isNotEmpty()) {
+                p { +"Du har sagt at du skal følgende vedlegg: " }
+                ul {
+                    innsendts.forEach { dokumentKrav ->
+                        li {
+                            p { +(dokumentKrav.navn as Oppslag.TekstObjekt.FaktaTekstObjekt).text }
+                        }
+                    }
+                }
+            }
+        }
+        Innsending.DokumentKrav.Valg.SENDT_TIDLIGERE -> {
+            val innsendts = dokumentKrav.filterIsInstance<Innsending.IkkeInnsendtNå>().filter { it.valg == valg }
+            if (innsendts.isNotEmpty()) {
+                p { +"Du har sagt at du tidligere har sendt inn vedlegg: " }
+                ul {
+                    innsendts.forEach { dokumentKrav ->
+                        li {
+                            p { +(dokumentKrav.navn as Oppslag.TekstObjekt.FaktaTekstObjekt).text }
+                        }
+                    }
+                }
+            }
+        }
+        Innsending.DokumentKrav.Valg.SENDER_IKKE -> {
+            val innsendts = dokumentKrav.filterIsInstance<Innsending.IkkeInnsendtNå>().filter { it.valg == valg }
+            if (innsendts.isNotEmpty()) {
+                p { +"Du har sagt at du ikke sender vedlegg: " }
+                ul {
+                    innsendts.forEach { dokumentKrav ->
+                        li {
+                            p { +(dokumentKrav.navn as Oppslag.TekstObjekt.FaktaTekstObjekt).text }
+                        }
+                    }
+                }
+            }
+        }
+        Innsending.DokumentKrav.Valg.ANDRE_SENDER -> {
+            val innsendts = dokumentKrav.filterIsInstance<Innsending.IkkeInnsendtNå>().filter { it.valg == valg }
+            if (innsendts.isNotEmpty()) {
+                p { +"Du har sagt at andre skal sende vedlegg: " }
+                ul {
+                    innsendts.forEach { dokumentKrav ->
+                        li {
+                            p { +(dokumentKrav.navn as Oppslag.TekstObjekt.FaktaTekstObjekt).text }
                         }
                     }
                 }
