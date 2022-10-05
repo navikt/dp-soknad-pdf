@@ -102,7 +102,6 @@ internal fun DIV.flersvar(svar: Innsending.FlerSvar, brutto: Boolean) {
 }
 
 internal fun DIV.dokumentasjonKrav(dokumentKrav: List<Innsending.DokumentKrav>, valg: Innsending.DokumentKrav.Valg) {
-
     when (valg) {
         Innsending.DokumentKrav.Valg.SEND_NAA -> {
             val innsendts = dokumentKrav.filterIsInstance<Innsending.Innsendt>()
@@ -111,7 +110,7 @@ internal fun DIV.dokumentasjonKrav(dokumentKrav: List<Innsending.DokumentKrav>, 
                 ul {
                     innsendts.forEach { dokumentKrav ->
                         li {
-                            p { +(dokumentKrav.navn as Oppslag.TekstObjekt.FaktaTekstObjekt).text }
+                            p { +(dokumentKrav.navn as Oppslag.TekstObjekt.DokumentkravTekstObjekt).text }
                         }
                     }
                 }
@@ -142,7 +141,7 @@ private fun DIV.dokumentKrav(innsendts: List<Innsending.IkkeInnsendtNå>, beskri
         ul {
             innsendts.forEach { dokumentKrav ->
                 li {
-                    p { +(dokumentKrav.navn as Oppslag.TekstObjekt.FaktaTekstObjekt).text }
+                    p { +(dokumentKrav.navn as Oppslag.TekstObjekt.DokumentkravTekstObjekt).text }
                     p { +(dokumentKrav.begrunnelse) }
                 }
             }

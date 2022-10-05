@@ -22,7 +22,7 @@ internal class Oppslag(private val tekstJson: String) {
     private fun parse(tekstJson: String): Map<String, TekstObjekt> {
         return try {
             objectMapper.readTree(tekstJson).let {
-                it.tilFaktaTekstObjekt() + it.tilSeksjonTekstObjekt() + it.tilSvarAlternativTekstObjekt() + it.tilAppTekstObjekt()
+                it.tilFaktaTekstObjekt() + it.tilSeksjonTekstObjekt() + it.tilSvarAlternativTekstObjekt() + it.tilAppTekstObjekt() + it.tilDokumentkravTekstObjekt()
             }
         } catch (e: NullPointerException) {
             logg.error(e) { "Fikk NullPointerException ved parsing av tekster: $tekstJson" }
@@ -75,6 +75,25 @@ internal class Oppslag(private val tekstJson: String) {
             }
         }
         return map
+    }
+
+    private fun JsonNode.tilDokumentkravTekstObjekt(): Map<String, TekstObjekt> {
+        return dokumentkrav().associate { dokumentkrav ->
+            val textId = dokumentkrav["textId"].asText()
+            withLoggingContext("textId" to textId) {
+                textId to TekstObjekt.DokumentkravTekstObjekt(
+                    textId = textId,
+                    text = dokumentkrav["text"].asText(),
+                    description = dokumentkrav.get("description")?.asRawHtmlString(),
+                    helpText = dokumentkrav["helpText"]?.takeIf { !it.isNull }?.let { helpText ->
+                        TekstObjekt.HelpText(
+                            helpText["title"]?.asText(),
+                            helpText["body"].asRawHtmlString()
+                        )
+                    }
+                )
+            }
+        }
     }
 
     private fun JsonNode.tilSvarAlternativTekstObjekt(): Map<String, TekstObjekt> {
@@ -145,6 +164,12 @@ internal class Oppslag(private val tekstJson: String) {
                 }
             }
         }
+        class DokumentkravTekstObjekt(
+            textId: String,
+            val text: String,
+            description: RawHtmlString? = null,
+            helpText: HelpText? = null
+        ) : TekstObjekt(textId, description, helpText)
 
         class HelpText(val title: String?, val body: RawHtmlString?)
     }
@@ -178,6 +203,7 @@ private fun JsonNode.hjelpetekst(): Oppslag.TekstObjekt.HelpText? =
 
 private fun JsonNode.seksjoner() = this["sanityTexts"]["seksjoner"]
 private fun JsonNode.svaralternativer() = this["sanityTexts"]["svaralternativer"]
+private fun JsonNode.dokumentkrav() = this["sanityTexts"]["dokumentkrav"]
 private fun JsonNode.fakta() = this["sanityTexts"]["fakta"]
 private fun JsonNode.apptekster(): JsonNode = this["sanityTexts"]["apptekster"]
 

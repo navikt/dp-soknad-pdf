@@ -38,7 +38,7 @@ internal class JsonHtmlMapper(
     private fun parseDokumentkrav(dokumentasjonKrav: String): List<Innsending.DokumentKrav> {
         return objectMapper.readTree(dokumentasjonKrav)["krav"].map { krav ->
             val valg = Innsending.DokumentKrav.Valg.fromJson(krav["svar"].asText())
-            val navn = oppslag.lookup(krav["beskrivendeId"].asText())
+            val navn = oppslag.lookup(krav["beskrivendeId"].asText()) as Oppslag.TekstObjekt.DokumentkravTekstObjekt
             when (valg) {
                 Innsending.DokumentKrav.Valg.SEND_NAA -> Innsending.Innsendt(
                     navn = navn,

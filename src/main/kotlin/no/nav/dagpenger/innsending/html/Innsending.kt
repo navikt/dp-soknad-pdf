@@ -113,7 +113,7 @@ internal data class Innsending(
         )
     }
 
-    internal sealed class DokumentKrav(val navn: Oppslag.TekstObjekt) {
+    internal sealed class DokumentKrav(val navn: Oppslag.TekstObjekt.DokumentkravTekstObjekt) {
         enum class Valg {
             SEND_NAA,
             SEND_SENERE,
@@ -134,6 +134,6 @@ internal data class Innsending(
         }
     }
 
-    class Innsendt(navn: Oppslag.TekstObjekt, val bundle: String) : DokumentKrav(navn)
-    class IkkeInnsendtNå(navn: Oppslag.TekstObjekt, val begrunnelse: String, val valg: Valg) : DokumentKrav(navn)
+    class Innsendt(navn: Oppslag.TekstObjekt.DokumentkravTekstObjekt, val bundle: String) : DokumentKrav(navn)
+    class IkkeInnsendtNå(navn: Oppslag.TekstObjekt.DokumentkravTekstObjekt, val begrunnelse: String, val valg: Valg) : DokumentKrav(navn)
 }
