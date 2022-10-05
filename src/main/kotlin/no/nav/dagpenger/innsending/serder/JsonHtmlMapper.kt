@@ -35,6 +35,23 @@ internal class JsonHtmlMapper(
             )
         }
     }
+    private fun parseDokumentkrav(dokumentasjonKrav: String): List<Innsending.DokumentKrav> {
+        return objectMapper.readTree(dokumentasjonKrav)["krav"].map { krav ->
+            val valg = Innsending.IkkeInnsendtNå.Valg.fromJson(krav["svar"].asText())
+            val navn = oppslag.lookup(krav["beskrivendeId"].asText())
+            when (valg) {
+                Innsending.IkkeInnsendtNå.Valg.SEND_NAA -> Innsending.Innsendt(
+                    navn = navn,
+                    bundle = krav["bundle"].asText()
+                )
+                else -> Innsending.IkkeInnsendtNå(
+                    navn = navn,
+                    begrunnelse = krav["begrunnelse"].asText(),
+                    valg = valg
+                )
+            }
+        }
+    }
 
     private fun JsonNode.svar(): Svar {
         return kotlin.runCatching {
@@ -132,7 +149,8 @@ internal class JsonHtmlMapper(
             seksjoner = parse(innsendingsData),
             generellTekst = oppslag.generellTekst(),
             språk = språk,
-            pdfAMetaTagger = oppslag.pdfaMetaTags()
+            pdfAMetaTagger = oppslag.pdfaMetaTags(),
+            dokumentasjonskrav = parseDokumentkrav(dokumentasjonKrav)
         )
     }
 }

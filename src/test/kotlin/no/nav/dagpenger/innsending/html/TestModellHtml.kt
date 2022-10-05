@@ -174,7 +174,8 @@ object TestModellHtml {
             fnr = "fødselsnummer"
         ),
         språk = Innsending.InnsendingsSpråk.BOKMÅL,
-        pdfAMetaTagger = Innsending.DefaultPdfAMetaTagger
+        pdfAMetaTagger = Innsending.DefaultPdfAMetaTagger,
+        dokumentasjonskrav = emptyList()
     ).apply {
         infoBlokk = Innsending.InfoBlokk("12345678910", ZonedDateTime.now())
     }
