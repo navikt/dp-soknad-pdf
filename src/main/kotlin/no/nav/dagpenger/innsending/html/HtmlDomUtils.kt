@@ -14,7 +14,6 @@ import kotlinx.html.ul
 import kotlinx.html.unsafe
 import no.nav.dagpenger.innsending.html.Innsending.GenerellTekst
 import no.nav.dagpenger.innsending.html.Innsending.SporsmalSvar
-import no.nav.dagpenger.innsending.serder.Oppslag
 import org.apache.commons.text.translate.EntityArrays.HTML40_EXTENDED_UNESCAPE
 import org.apache.commons.text.translate.EntityArrays.ISO8859_1_UNESCAPE
 
@@ -107,10 +106,10 @@ internal fun DIV.dokumentasjonKrav(dokumentKrav: List<Innsending.DokumentKrav>, 
             val innsendts = dokumentKrav.filterIsInstance<Innsending.Innsendt>()
             if (innsendts.isNotEmpty()) {
                 p { +"Du har lagt ved følgende vedlegg: " }
-                ul {
+                ul(classes = "dokumentasjonkrav") {
                     innsendts.forEach { dokumentKrav ->
                         li {
-                            p { +(dokumentKrav.navn as Oppslag.TekstObjekt.DokumentkravTekstObjekt).text }
+                            p { +dokumentKrav.navn.text }
                         }
                     }
                 }
@@ -138,10 +137,10 @@ internal fun DIV.dokumentasjonKrav(dokumentKrav: List<Innsending.DokumentKrav>, 
 private fun DIV.dokumentKrav(innsendts: List<Innsending.IkkeInnsendtNå>, beskrivelse: String) {
     if (innsendts.isNotEmpty()) {
         p { +beskrivelse }
-        ul {
+        ul(classes = "dokumentasjonkrav") {
             innsendts.forEach { dokumentKrav ->
                 li {
-                    p { +(dokumentKrav.navn as Oppslag.TekstObjekt.DokumentkravTekstObjekt).text }
+                    p { +dokumentKrav.navn.text }
                     p { +(dokumentKrav.begrunnelse) }
                 }
             }

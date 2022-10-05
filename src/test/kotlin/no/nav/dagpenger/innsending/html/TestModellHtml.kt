@@ -165,8 +165,7 @@ object TestModellHtml {
         Innsending.DokumentKrav.Valg.SEND_SENERE
     )
 
-    internal
-    val innsending = Innsending(
+    internal val innsending = Innsending(
         seksjoner = listOf(
             spmOgSvarSeksjon,
             spmOgSvarMedBarnSeksjon,

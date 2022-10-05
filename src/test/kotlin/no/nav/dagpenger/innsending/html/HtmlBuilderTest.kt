@@ -42,6 +42,8 @@ class HtmlBuilderTest {
             assertEquals(0, antallElementerMedKlassenavn(it, "infotekst"), "Feil antall infotekster")
             assertEquals(0, antallElementerMedKlassenavn(it, "hjelpetekst"), "Feil antall hjelpetekster")
             assertEquals(4, antallElementerMedKlassenavn(it, "seksjon"), "Feil antall seksjoner")
+            assertEquals(1, antallElementerMedKlassenavn(it, "vedlegg"), "Feil antall vedlegg")
+            assertEquals(1, antallElementerMedKlassenavn(it, "dokumentasjonkrav"), "Feil antall dokumentasjonskrav")
         }
     }
 
@@ -51,6 +53,8 @@ class HtmlBuilderTest {
             assertEquals(6, antallElementerMedKlassenavn(it, "infotekst"), "Feil antall infortekster")
             assertEquals(8, antallElementerMedKlassenavn(it, "hjelpetekst"), "Feil antall hjelpetekster")
             assertEquals(4, antallElementerMedKlassenavn(it, "seksjon"), "Feil antall hjelpetekster")
+            assertEquals(1, antallElementerMedKlassenavn(it, "vedlegg"), "Feil antall vedlegg")
+            assertEquals(1, antallElementerMedKlassenavn(it, "dokumentasjonkrav"), "Feil antall dokumentasjonskrav")
         }
     }
 }
