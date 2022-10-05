@@ -2,6 +2,10 @@
   "sanityTexts": {
     "fakta": [
       {
+        "textId": "faktum.dokument-varsel-om-permittering",
+        "text": "Dokumentasjonskrav"
+      },
+      {
         "text": "Legg til barn",
         "unit": null,
         "textId": "faktum.legge-til-egne-barn",

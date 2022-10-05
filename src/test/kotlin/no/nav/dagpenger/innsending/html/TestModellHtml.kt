@@ -3,6 +3,7 @@ package no.nav.dagpenger.innsending.html
 import no.nav.dagpenger.innsending.html.Innsending.EnkeltSvar
 import no.nav.dagpenger.innsending.html.Innsending.SpørmsålOgSvarGruppe
 import no.nav.dagpenger.innsending.html.Innsending.SvarAlternativ
+import no.nav.dagpenger.innsending.serder.Oppslag
 import java.time.ZonedDateTime
 
 object TestModellHtml {
@@ -158,6 +159,10 @@ object TestModellHtml {
         beskrivelse = Innsending.UnsafeHtml("<p>En description er en beskrivelse av en egen elefant</p>")
     )
 
+    private val dokumentskrav = Innsending.IkkeInnsendtNå(
+        Oppslag.TekstObjekt.EnkelText("id", "tekst"), "begrunnelse", Innsending.IkkeInnsendtNå.Valg.SEND_SENERE
+    )
+
     internal
     val innsending = Innsending(
         seksjoner = listOf(
@@ -175,7 +180,7 @@ object TestModellHtml {
         ),
         språk = Innsending.InnsendingsSpråk.BOKMÅL,
         pdfAMetaTagger = Innsending.DefaultPdfAMetaTagger,
-        dokumentasjonskrav = emptyList()
+        dokumentasjonskrav = listOf(dokumentskrav)
     ).apply {
         infoBlokk = Innsending.InfoBlokk("12345678910", ZonedDateTime.now())
     }

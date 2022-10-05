@@ -2,6 +2,10 @@
   "sanityTexts": {
     "fakta": [
       {
+        "textId": "faktum.dokument-varsel-om-permittering",
+        "text": "Dokumentasjonskrav"
+      },
+      {
         "textId": "f15",
         "text": "Her er ett dokumentsak",
         "description": "<p>Dokument som dokumenterer</p>"
