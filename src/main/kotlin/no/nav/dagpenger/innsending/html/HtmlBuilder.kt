@@ -6,11 +6,15 @@ import kotlinx.html.div
 import kotlinx.html.dom.createHTMLDocument
 import kotlinx.html.dom.serialize
 import kotlinx.html.h1
+import kotlinx.html.h2
 import kotlinx.html.head
 import kotlinx.html.html
 import kotlinx.html.id
 import kotlinx.html.lang
+import kotlinx.html.li
+import kotlinx.html.p
 import kotlinx.html.title
+import kotlinx.html.ul
 
 internal object HtmlBuilder {
     fun lagNettoHtml(innsending: Innsending) = lagHtml(innsending, DIV::nettoSeksjon)
@@ -44,6 +48,21 @@ internal object HtmlBuilder {
                 innsending.seksjoner.forEach { seksjon ->
                     div(classes = "seksjon") {
                         seksjonFunksjon(seksjon, generellTekst)
+                    }
+                }
+                if (innsending.dokumentasjonskrav.isNotEmpty()) {
+                    h2 {
+                        +"Vedlegg"
+                    }
+                    p {
+                        +"Du har lagt ved følgende vedlegg:"
+                    }
+                    ul {
+                        li {
+                            p {
+                                +"Dokument"
+                            }
+                        }
                     }
                 }
             }
