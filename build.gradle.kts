@@ -5,14 +5,8 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     application
-    kotlin("jvm")
-    id(Spotless.spotless)
-}
-
-buildscript {
-    repositories {
-        mavenCentral()
-    }
+    kotlin("jvm") version Kotlin.version
+    id(Spotless.spotless) version Spotless.version
 }
 
 apply {
