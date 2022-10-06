@@ -49,7 +49,7 @@ tasks.withType<KotlinCompile>() {
 dependencies {
     implementation(kotlin("stdlib"))
 
-    implementation("com.github.navikt:rapids-and-rivers:2022060808531654671206.908d671b7ae0")
+    implementation("com.github.navikt:rapids-and-rivers:2022092314391663936769.9d5d33074875")
 
     implementation("com.natpryce:konfig:1.6.10.0")
     implementation("io.github.microutils:kotlin-logging:2.1.21")
