@@ -35,18 +35,25 @@ internal class JsonHtmlMapper(
             )
         }
     }
+
     private fun parseDokumentkrav(dokumentasjonKrav: String): List<Innsending.DokumentKrav> {
         return objectMapper.readTree(dokumentasjonKrav)["krav"].map { krav ->
             val valg = Innsending.DokumentKrav.Valg.fromJson(krav["svar"].asText())
-            val navn = oppslag.lookup(krav["beskrivendeId"].asText()) as Oppslag.TekstObjekt.DokumentkravTekstObjekt
+            val tekstObjekt =
+                oppslag.lookup(krav["beskrivendeId"].asText()) as Oppslag.TekstObjekt.DokumentkravTekstObjekt
             when (valg) {
                 Innsending.DokumentKrav.Valg.SEND_NAA -> Innsending.Innsendt(
-                    navn = navn,
-                    bundle = krav["bundle"].asText()
+                    navn = tekstObjekt.text,
+                    beskrivelse = tekstObjekt.description?.let { rawHtml -> Innsending.UnsafeHtml(rawHtml.html) },
+                    hjelpetekst = tekstObjekt.hjelpetekst(),
+                    valg = valg
                 )
+
                 else -> Innsending.IkkeInnsendtNå(
-                    navn = navn,
+                    navn = tekstObjekt.text,
                     begrunnelse = krav["begrunnelse"].asText(),
+                    beskrivelse = tekstObjekt.description?.let { rawHtml -> Innsending.UnsafeHtml(rawHtml.html) },
+                    hjelpetekst = tekstObjekt.hjelpetekst(),
                     valg = valg
                 )
             }
@@ -66,6 +73,7 @@ internal class JsonHtmlMapper(
                     this["svar"]["fom"].asLocalDate().dagMånedÅr()
                     } - ${this["svar"]["tom"]?.asLocalDate()?.dagMånedÅr()}"
                 )
+
                 "generator" -> Innsending.IngenSvar
                 "envalg" -> EnkeltSvar((oppslag.lookup(this["svar"].asText()) as Oppslag.TekstObjekt.SvaralternativTekstObjekt).text)
                 "flervalg" -> Innsending.FlerSvar(this.flerValg())
@@ -92,6 +100,7 @@ internal class JsonHtmlMapper(
                     alertText(jsonAlternativ)
                 )
             }
+
             else -> emptyList()
         }
     }

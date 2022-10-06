@@ -3,7 +3,6 @@ package no.nav.dagpenger.innsending.html
 import no.nav.dagpenger.innsending.html.Innsending.EnkeltSvar
 import no.nav.dagpenger.innsending.html.Innsending.SpørmsålOgSvarGruppe
 import no.nav.dagpenger.innsending.html.Innsending.SvarAlternativ
-import no.nav.dagpenger.innsending.serder.Oppslag
 import java.time.ZonedDateTime
 
 object TestModellHtml {
@@ -160,9 +159,11 @@ object TestModellHtml {
     )
 
     private val dokumentskrav = Innsending.IkkeInnsendtNå(
-        Oppslag.TekstObjekt.DokumentkravTekstObjekt("id", "tekst"),
-        "begrunnelse",
-        Innsending.DokumentKrav.Valg.SEND_SENERE
+        navn = "NAVN",
+        begrunnelse = "Grunn",
+        beskrivelse = null,
+        hjelpetekst = null,
+        valg = Innsending.DokumentKrav.Valg.SEND_SENERE
     )
 
     internal val innsending = Innsending(

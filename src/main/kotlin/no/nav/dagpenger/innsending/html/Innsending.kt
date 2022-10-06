@@ -1,6 +1,5 @@
 package no.nav.dagpenger.innsending.html
 
-import no.nav.dagpenger.innsending.serder.Oppslag
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
@@ -113,7 +112,12 @@ internal data class Innsending(
         )
     }
 
-    internal sealed class DokumentKrav(val navn: Oppslag.TekstObjekt.DokumentkravTekstObjekt) {
+    internal sealed class DokumentKrav(
+        val navn: String,
+        val beskrivelse: UnsafeHtml? = null,
+        val hjelpetekst: Hjelpetekst? = null,
+        val valg: Valg
+    ) {
         enum class Valg {
             SEND_NAA,
             SEND_SENERE,
@@ -134,6 +138,7 @@ internal data class Innsending(
         }
     }
 
-    class Innsendt(navn: Oppslag.TekstObjekt.DokumentkravTekstObjekt, val bundle: String) : DokumentKrav(navn)
-    class IkkeInnsendtNå(navn: Oppslag.TekstObjekt.DokumentkravTekstObjekt, val begrunnelse: String, val valg: Valg) : DokumentKrav(navn)
+    class Innsendt(navn: String, beskrivelse: UnsafeHtml?, hjelpetekst: Hjelpetekst?, valg: Valg) : DokumentKrav(navn, beskrivelse, hjelpetekst, valg)
+    class IkkeInnsendtNå(navn: String, val begrunnelse: String, beskrivelse: UnsafeHtml?, hjelpetekst: Hjelpetekst?, valg: Valg) :
+        DokumentKrav(navn, beskrivelse, hjelpetekst, valg)
 }

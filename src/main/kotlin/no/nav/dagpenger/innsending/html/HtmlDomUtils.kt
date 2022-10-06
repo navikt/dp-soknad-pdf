@@ -108,7 +108,7 @@ internal fun DIV.flersvar(svar: Innsending.FlerSvar, brutto: Boolean) {
     }
 }
 
-internal fun DIV.dokumentasjonKrav(dokumentKrav: List<Innsending.DokumentKrav>, valg: Innsending.DokumentKrav.Valg) {
+internal fun DIV.dokumentasjonKrav(dokumentKrav: List<Innsending.DokumentKrav>, valg: Innsending.DokumentKrav.Valg, brutto: Boolean) {
     when (valg) {
         Innsending.DokumentKrav.Valg.SEND_NAA -> {
             val innsendts = dokumentKrav.filterIsInstance<Innsending.Innsendt>()
@@ -117,7 +117,20 @@ internal fun DIV.dokumentasjonKrav(dokumentKrav: List<Innsending.DokumentKrav>, 
                 ul(classes = "dokumentasjonkrav") {
                     innsendts.forEach { dokumentKrav ->
                         li {
-                            p { +dokumentKrav.navn.text }
+                            p { +dokumentKrav.navn }
+                            if (brutto) {
+                                try {
+                                    dokumentKrav.beskrivelse?.also { unsafe { +dokumentKrav.beskrivelse.medCssKlasse("infotekst") } }
+                                } catch (error: Exception) {
+                                    throw error
+                                }
+                                dokumentKrav.hjelpetekst?.also {
+                                    div(classes = "hjelpetekst") {
+                                        dokumentKrav.hjelpetekst.tittel?.also { tittel -> h3 { +tittel } }
+                                        dokumentKrav.hjelpetekst.unsafeHtmlBody?.let { unsafe { +dokumentKrav.hjelpetekst.unsafeHtmlBody.kode } }
+                                    }
+                                }
+                            }
                         }
                     }
                 }
@@ -125,31 +138,44 @@ internal fun DIV.dokumentasjonKrav(dokumentKrav: List<Innsending.DokumentKrav>, 
         }
         Innsending.DokumentKrav.Valg.SEND_SENERE -> {
             val innsendts = dokumentKrav.filterIsInstance<Innsending.IkkeInnsendtNå>().filter { it.valg == valg }
-            dokumentKrav(innsendts, "Du har sagt at du skal sende følgende vedlegg:")
+            dokumentKrav(innsendts, "Du har sagt at du skal sende følgende vedlegg:", brutto)
         }
         Innsending.DokumentKrav.Valg.SENDT_TIDLIGERE -> {
             val innsendts = dokumentKrav.filterIsInstance<Innsending.IkkeInnsendtNå>().filter { it.valg == valg }
-            dokumentKrav(innsendts, "Du har sagt at du tidligere har sendt inn følgende vedlegg:")
+            dokumentKrav(innsendts, "Du har sagt at du tidligere har sendt inn følgende vedlegg:", brutto)
         }
         Innsending.DokumentKrav.Valg.SENDER_IKKE -> {
             val innsendts = dokumentKrav.filterIsInstance<Innsending.IkkeInnsendtNå>().filter { it.valg == valg }
-            dokumentKrav(innsendts, "Du har sagt at du ikke sender følgende vedlegg:")
+            dokumentKrav(innsendts, "Du har sagt at du ikke sender følgende vedlegg:", brutto)
         }
         Innsending.DokumentKrav.Valg.ANDRE_SENDER -> {
             val innsendts = dokumentKrav.filterIsInstance<Innsending.IkkeInnsendtNå>().filter { it.valg == valg }
-            dokumentKrav(innsendts, "Du har sagt at andre skal sende følgende vedlegg:")
+            dokumentKrav(innsendts, "Du har sagt at andre skal sende følgende vedlegg:", brutto)
         }
     }
 }
 
-private fun DIV.dokumentKrav(innsendts: List<Innsending.IkkeInnsendtNå>, beskrivelse: String) {
+private fun DIV.dokumentKrav(innsendts: List<Innsending.IkkeInnsendtNå>, beskrivelse: String, brutto: Boolean) {
     if (innsendts.isNotEmpty()) {
         p { +beskrivelse }
         ul(classes = "dokumentasjonkrav") {
             innsendts.forEach { dokumentKrav ->
                 li {
-                    p { +dokumentKrav.navn.text }
+                    p { +dokumentKrav.navn }
                     p { +(dokumentKrav.begrunnelse) }
+                    if (brutto) {
+                        try {
+                            dokumentKrav.beskrivelse?.also { unsafe { +dokumentKrav.beskrivelse.medCssKlasse("infotekst") } }
+                        } catch (error: Exception) {
+                            throw error
+                        }
+                        dokumentKrav.hjelpetekst?.also {
+                            div(classes = "hjelpetekst") {
+                                dokumentKrav.hjelpetekst.tittel?.also { tittel -> h3 { +tittel } }
+                                dokumentKrav.hjelpetekst.unsafeHtmlBody?.let { unsafe { +dokumentKrav.hjelpetekst.unsafeHtmlBody.kode } }
+                            }
+                        }
+                    }
                 }
             }
         }
