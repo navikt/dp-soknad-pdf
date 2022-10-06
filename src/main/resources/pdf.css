@@ -49,6 +49,15 @@ p {
     font-weight: bold;
 }
 
+.kursiv {
+    font-style: italic;
+    font-size: 15px;
+}
+
+.listSpacing {
+    margin: 10px 0;
+}
+
 .hjelpetekst {
     background-color: #E5E5E5;
     margin-left: 10px;
@@ -67,11 +76,11 @@ p {
         font-family: 'Source Sans Pro';
         padding-right: 15px;
     }
-    orphans:2;
+    orphans: 2;
 }
 
 @media print {
-    h2,h3 {
+    h2, h3 {
         page-break-after: avoid
     }
 }

@@ -5,6 +5,7 @@ import kotlinx.html.HEAD
 import kotlinx.html.div
 import kotlinx.html.h2
 import kotlinx.html.h3
+import kotlinx.html.i
 import kotlinx.html.id
 import kotlinx.html.li
 import kotlinx.html.meta
@@ -12,7 +13,6 @@ import kotlinx.html.p
 import kotlinx.html.span
 import kotlinx.html.ul
 import kotlinx.html.unsafe
-import no.nav.dagpenger.innsending.html.Innsending.DokumentKrav
 import no.nav.dagpenger.innsending.html.Innsending.GenerellTekst
 import no.nav.dagpenger.innsending.html.Innsending.SporsmalSvar
 import org.apache.commons.text.translate.EntityArrays.HTML40_EXTENDED_UNESCAPE
@@ -86,6 +86,13 @@ internal fun DIV.boldSpanP(boldTekst: String, vanligTekst: String) {
     }
 }
 
+internal fun DIV.begrunnelse(begrunnelse: String) {
+    p {
+        +"Begrunnelse: "
+        i(classes = "kursiv") { +begrunnelse }
+    }
+}
+
 internal fun DIV.flersvar(svar: Innsending.FlerSvar, brutto: Boolean) {
     if (svar.alternativ.isNotEmpty()) {
         ul {
@@ -108,7 +115,11 @@ internal fun DIV.flersvar(svar: Innsending.FlerSvar, brutto: Boolean) {
     }
 }
 
-internal fun DIV.dokumentasjonKrav(dokumentKrav: List<Innsending.DokumentKrav>, valg: Innsending.DokumentKrav.Valg, brutto: Boolean) {
+internal fun DIV.dokumentasjonKrav(
+    dokumentKrav: List<Innsending.DokumentKrav>,
+    valg: Innsending.DokumentKrav.Valg,
+    brutto: Boolean
+) {
     when (valg) {
         Innsending.DokumentKrav.Valg.SEND_NAA -> {
             val innsendts = dokumentKrav.filterIsInstance<Innsending.Innsendt>()
@@ -116,7 +127,7 @@ internal fun DIV.dokumentasjonKrav(dokumentKrav: List<Innsending.DokumentKrav>, 
                 p { +"Du har lagt ved følgende vedlegg: " }
                 ul(classes = "dokumentasjonkrav") {
                     innsendts.forEach { dokumentKrav ->
-                        li {
+                        li(classes = "listSpacing") {
                             p { +dokumentKrav.navn }
                             if (brutto) {
                                 try {
@@ -160,9 +171,11 @@ private fun DIV.dokumentKrav(innsendts: List<Innsending.IkkeInnsendtNå>, beskri
         p { +beskrivelse }
         ul(classes = "dokumentasjonkrav") {
             innsendts.forEach { dokumentKrav ->
-                li {
+                li(classes = "listSpacing") {
                     p { +dokumentKrav.navn }
-                    p { +(dokumentKrav.begrunnelse) }
+                    div {
+                        begrunnelse(dokumentKrav.begrunnelse)
+                    }
                     if (brutto) {
                         try {
                             dokumentKrav.beskrivelse?.also { unsafe { +dokumentKrav.beskrivelse.medCssKlasse("infotekst") } }

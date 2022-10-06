@@ -3,7 +3,7 @@
   "krav": [
     {
       "beskrivendeId": "faktum.dokument-varsel-om-permittering",
-      "begrunnelse": "DTETDhgv",
+      "begrunnelse": "Dette er en tekst som kan være svært lang. Eller ikke så lang da, siden tekst feltene i frontenden er begrenser til maks anntall tegn. Tror vi.",
       "svar": "dokumentkrav.svar.sender.ikke"
     },
     {
