@@ -49,6 +49,7 @@ internal object HtmlBuilder {
                 }
                 if (innsending.dokumentasjonskrav.isNotEmpty()) {
                     div(classes = "vedlegg") {
+                        id = "Vedlegg"
                         h2 {
                             +"Vedlegg"
                         }

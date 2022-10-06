@@ -12,6 +12,7 @@ import kotlinx.html.p
 import kotlinx.html.span
 import kotlinx.html.ul
 import kotlinx.html.unsafe
+import no.nav.dagpenger.innsending.html.Innsending.DokumentKrav
 import no.nav.dagpenger.innsending.html.Innsending.GenerellTekst
 import no.nav.dagpenger.innsending.html.Innsending.SporsmalSvar
 import org.apache.commons.text.translate.EntityArrays.HTML40_EXTENDED_UNESCAPE
@@ -55,7 +56,14 @@ internal fun HEAD.bookmarks(innsending: Innsending) {
 // TODO: Språktilpassning på statiske bokmerker
     val seksjonBokmerker = innsending.seksjoner.map {
         """<bookmark name = "${it.overskrift}" href="#${seksjonId(it.overskrift)}"></bookmark>"""
-    }.joinToString("")
+    }
+
+    val vedleggBookmerke = when {
+        innsending.dokumentasjonskrav.isNotEmpty() -> """<bookmark name = "Vedlegg" href="#Vedlegg"></bookmark>"""
+        else -> null
+    }
+
+    val bokmerker = listOfNotNull(seksjonBokmerker, vedleggBookmerke).joinToString("")
 
     unsafe {
         //language=HTML
@@ -64,7 +72,7 @@ internal fun HEAD.bookmarks(innsending: Innsending) {
                 <bookmarks>
                     <bookmark name="${innsending.generellTekst.hovedOverskrift}" href="#hovedoverskrift"></bookmark>
                     <bookmark name="Info om søknad" href="#infoblokk"></bookmark>
-                    $seksjonBokmerker
+                    $bokmerker
                 </bookmarks>
             """.trimIndent()
         )
