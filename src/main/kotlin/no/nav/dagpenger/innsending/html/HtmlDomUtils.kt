@@ -115,6 +115,20 @@ internal fun DIV.flersvar(svar: Innsending.FlerSvar, brutto: Boolean) {
     }
 }
 
+private fun DIV.dokumentasjonKravBrutto(dokumentKrav: Innsending.DokumentKrav) {
+    try {
+        dokumentKrav.beskrivelse?.also { unsafe { +dokumentKrav.beskrivelse.medCssKlasse("infotekst") } }
+    } catch (error: Exception) {
+        throw error
+    }
+    dokumentKrav.hjelpetekst?.also {
+        div(classes = "hjelpetekst") {
+            dokumentKrav.hjelpetekst.tittel?.also { tittel -> h3 { +tittel } }
+            dokumentKrav.hjelpetekst.unsafeHtmlBody?.let { unsafe { +dokumentKrav.hjelpetekst.unsafeHtmlBody.kode } }
+        }
+    }
+}
+
 internal fun DIV.dokumentasjonKrav(
     dokumentKrav: List<Innsending.DokumentKrav>,
     valg: Innsending.DokumentKrav.Valg,
@@ -129,19 +143,7 @@ internal fun DIV.dokumentasjonKrav(
                     innsendts.forEach { dokumentKrav ->
                         li(classes = "listSpacing") {
                             p { +dokumentKrav.navn }
-                            if (brutto) {
-                                try {
-                                    dokumentKrav.beskrivelse?.also { unsafe { +dokumentKrav.beskrivelse.medCssKlasse("infotekst") } }
-                                } catch (error: Exception) {
-                                    throw error
-                                }
-                                dokumentKrav.hjelpetekst?.also {
-                                    div(classes = "hjelpetekst") {
-                                        dokumentKrav.hjelpetekst.tittel?.also { tittel -> h3 { +tittel } }
-                                        dokumentKrav.hjelpetekst.unsafeHtmlBody?.let { unsafe { +dokumentKrav.hjelpetekst.unsafeHtmlBody.kode } }
-                                    }
-                                }
-                            }
+                            if (brutto) this@dokumentasjonKrav.dokumentasjonKravBrutto(dokumentKrav)
                         }
                     }
                 }
@@ -176,19 +178,7 @@ private fun DIV.dokumentKrav(innsendts: List<Innsending.IkkeInnsendtNå>, beskri
                     div {
                         begrunnelse(dokumentKrav.begrunnelse)
                     }
-                    if (brutto) {
-                        try {
-                            dokumentKrav.beskrivelse?.also { unsafe { +dokumentKrav.beskrivelse.medCssKlasse("infotekst") } }
-                        } catch (error: Exception) {
-                            throw error
-                        }
-                        dokumentKrav.hjelpetekst?.also {
-                            div(classes = "hjelpetekst") {
-                                dokumentKrav.hjelpetekst.tittel?.also { tittel -> h3 { +tittel } }
-                                dokumentKrav.hjelpetekst.unsafeHtmlBody?.let { unsafe { +dokumentKrav.hjelpetekst.unsafeHtmlBody.kode } }
-                            }
-                        }
-                    }
+                    if (brutto) this@dokumentKrav.dokumentasjonKravBrutto(dokumentKrav)
                 }
             }
         }
