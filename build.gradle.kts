@@ -47,33 +47,32 @@ tasks.withType<KotlinCompile>() {
 }
 
 dependencies {
-    val openHtmlToPdfVersion = "1.0.10"
     implementation(kotlin("stdlib"))
 
-    implementation(RapidAndRiversKtor2)
+    implementation("com.github.navikt:rapids-and-rivers:2022060808531654671206.908d671b7ae0")
 
-    implementation(Konfig.konfig)
-    implementation(Kotlin.Logging.kotlinLogging)
+    implementation("com.natpryce:konfig:1.6.10.0")
+    implementation("io.github.microutils:kotlin-logging:2.1.21")
     implementation("com.github.navikt.dp-biblioteker:oauth2-klient:2022.05.30-09.37.623ee13a49dd")
-    implementation(Ktor2.Client.library("logging"))
-    implementation(Ktor2.Client.library("cio"))
-    implementation(Ktor2.Client.library("content-negotiation"))
-    implementation("io.ktor:ktor-serialization-jackson:${Ktor2.version}")
-    implementation(Jackson.jsr310)
-    implementation("com.openhtmltopdf:openhtmltopdf-pdfbox:$openHtmlToPdfVersion")
-    implementation("com.openhtmltopdf:openhtmltopdf-slf4j:$openHtmlToPdfVersion")
-    implementation("com.openhtmltopdf:openhtmltopdf-svg-support:$openHtmlToPdfVersion")
+    implementation("io.ktor:ktor-client-${"logging"}:2.0.2")
+    implementation("io.ktor:ktor-client-${"cio"}:2.0.2")
+    implementation("io.ktor:ktor-client-${"content-negotiation"}:2.0.2")
+    implementation("io.ktor:ktor-serialization-jackson:2.0.2")
+    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.12.3")
+    implementation("com.openhtmltopdf:openhtmltopdf-pdfbox:1.0.10")
+    implementation("com.openhtmltopdf:openhtmltopdf-slf4j:1.0.10")
+    implementation("com.openhtmltopdf:openhtmltopdf-svg-support:1.0.10")
     implementation("org.jsoup:jsoup:1.15.3")
     implementation("org.jetbrains.kotlinx:kotlinx-html-jvm:0.8.0")
     implementation("org.apache.commons:commons-text:1.9")
 
     testImplementation(kotlin("test"))
-    testImplementation(Mockk.mockk)
-    testImplementation(Junit5.api)
-    testImplementation(KoTest.runner)
-    testImplementation(Ktor2.Client.library("mock"))
+    testImplementation("io.mockk:mockk:1.12.1")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.2")
+    testImplementation("io.kotest:kotest-runner-junit5-jvm:4.6.0")
+    testImplementation("io.ktor:ktor-client-${"mock"}:2.0.2")
     testImplementation("org.verapdf:validation-model:1.20.1")
-    testRuntimeOnly(Junit5.engine)
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.7.2")
 
     // FOr E2E
     testImplementation("io.kubernetes:client-java:16.0.0")
@@ -81,11 +80,11 @@ dependencies {
 
 spotless {
     kotlin {
-        ktlint(Ktlint.version)
+        ktlint("0.43.2")
     }
     kotlinGradle {
         target("*.gradle.kts", "buildSrc/**/*.kt*")
-        ktlint(Ktlint.version)
+        ktlint("0.43.2")
     }
 }
 
