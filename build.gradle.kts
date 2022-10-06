@@ -67,7 +67,7 @@ dependencies {
     implementation("org.apache.commons:commons-text:1.9")
 
     testImplementation(kotlin("test"))
-    testImplementation("io.mockk:mockk:1.12.1")
+    testImplementation("io.mockk:mockk:1.13.2")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.2")
     testImplementation("io.kotest:kotest-runner-junit5-jvm:4.6.0")
     testImplementation("io.ktor:ktor-client-${"mock"}:2.0.2")
