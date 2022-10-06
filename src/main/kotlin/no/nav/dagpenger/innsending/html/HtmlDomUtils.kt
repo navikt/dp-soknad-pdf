@@ -5,6 +5,7 @@ import kotlinx.html.HEAD
 import kotlinx.html.div
 import kotlinx.html.h2
 import kotlinx.html.h3
+import kotlinx.html.i
 import kotlinx.html.id
 import kotlinx.html.li
 import kotlinx.html.meta
@@ -51,20 +52,27 @@ internal fun HEAD.pdfaMetaTags(innsending: Innsending) {
     }
 }
 
-internal fun HEAD.bookmarks(seksjoner: List<Innsending.Seksjon>, generellTekst: GenerellTekst) {
+internal fun HEAD.bookmarks(innsending: Innsending) {
 // TODO: Språktilpassning på statiske bokmerker
-    val seksjonBokmerker = seksjoner.map {
+    val seksjonBokmerker = innsending.seksjoner.map {
         """<bookmark name = "${it.overskrift}" href="#${seksjonId(it.overskrift)}"></bookmark>"""
-    }.joinToString("")
+    }
+
+    val vedleggBookmerke = when {
+        innsending.dokumentasjonskrav.isNotEmpty() -> """<bookmark name = "Vedlegg" href="#Vedlegg"></bookmark>"""
+        else -> null
+    }
+
+    val bokmerker = listOfNotNull(seksjonBokmerker, vedleggBookmerke).joinToString("")
 
     unsafe {
         //language=HTML
         raw(
             """
                 <bookmarks>
-                    <bookmark name="${generellTekst.hovedOverskrift}" href="#hovedoverskrift"></bookmark>
+                    <bookmark name="${innsending.generellTekst.hovedOverskrift}" href="#hovedoverskrift"></bookmark>
                     <bookmark name="Info om søknad" href="#infoblokk"></bookmark>
-                    $seksjonBokmerker
+                    $bokmerker
                 </bookmarks>
             """.trimIndent()
         )
@@ -75,6 +83,13 @@ internal fun DIV.boldSpanP(boldTekst: String, vanligTekst: String) {
     p {
         span(classes = "boldSpan") { +"$boldTekst: " }
         +vanligTekst
+    }
+}
+
+internal fun DIV.begrunnelse(begrunnelse: String) {
+    p {
+        +"Begrunnelse: "
+        i(classes = "kursiv") { +begrunnelse }
     }
 }
 
@@ -92,6 +107,86 @@ internal fun DIV.flersvar(svar: Innsending.FlerSvar, brutto: Boolean) {
                         div(classes = "hjelpetekst") {
                             h3 { +tilleggsinformasjonOverskrift(info) }
                             info.unsafeHtmlBody?.let { unsafe { +info.unsafeHtmlBody.kode } }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+internal fun DIV.dokumentasjonKrav(
+    dokumentKrav: List<Innsending.DokumentKrav>,
+    valg: Innsending.DokumentKrav.Valg,
+    brutto: Boolean
+) {
+    when (valg) {
+        Innsending.DokumentKrav.Valg.SEND_NAA -> {
+            val innsendts = dokumentKrav.filterIsInstance<Innsending.Innsendt>()
+            if (innsendts.isNotEmpty()) {
+                p { +"Du har lagt ved følgende vedlegg: " }
+                ul(classes = "dokumentasjonkrav") {
+                    innsendts.forEach { dokumentKrav ->
+                        li(classes = "listSpacing") {
+                            p { +dokumentKrav.navn }
+                            if (brutto) {
+                                try {
+                                    dokumentKrav.beskrivelse?.also { unsafe { +dokumentKrav.beskrivelse.medCssKlasse("infotekst") } }
+                                } catch (error: Exception) {
+                                    throw error
+                                }
+                                dokumentKrav.hjelpetekst?.also {
+                                    div(classes = "hjelpetekst") {
+                                        dokumentKrav.hjelpetekst.tittel?.also { tittel -> h3 { +tittel } }
+                                        dokumentKrav.hjelpetekst.unsafeHtmlBody?.let { unsafe { +dokumentKrav.hjelpetekst.unsafeHtmlBody.kode } }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        Innsending.DokumentKrav.Valg.SEND_SENERE -> {
+            val innsendts = dokumentKrav.filterIsInstance<Innsending.IkkeInnsendtNå>().filter { it.valg == valg }
+            dokumentKrav(innsendts, "Du har sagt at du skal sende følgende vedlegg:", brutto)
+        }
+        Innsending.DokumentKrav.Valg.SENDT_TIDLIGERE -> {
+            val innsendts = dokumentKrav.filterIsInstance<Innsending.IkkeInnsendtNå>().filter { it.valg == valg }
+            dokumentKrav(innsendts, "Du har sagt at du tidligere har sendt inn følgende vedlegg:", brutto)
+        }
+        Innsending.DokumentKrav.Valg.SENDER_IKKE -> {
+            val innsendts = dokumentKrav.filterIsInstance<Innsending.IkkeInnsendtNå>().filter { it.valg == valg }
+            dokumentKrav(innsendts, "Du har sagt at du ikke sender følgende vedlegg:", brutto)
+        }
+        Innsending.DokumentKrav.Valg.ANDRE_SENDER -> {
+            val innsendts = dokumentKrav.filterIsInstance<Innsending.IkkeInnsendtNå>().filter { it.valg == valg }
+            dokumentKrav(innsendts, "Du har sagt at andre skal sende følgende vedlegg:", brutto)
+        }
+    }
+}
+
+private fun DIV.dokumentKrav(innsendts: List<Innsending.IkkeInnsendtNå>, beskrivelse: String, brutto: Boolean) {
+    if (innsendts.isNotEmpty()) {
+        p { +beskrivelse }
+        ul(classes = "dokumentasjonkrav") {
+            innsendts.forEach { dokumentKrav ->
+                li(classes = "listSpacing") {
+                    p { +dokumentKrav.navn }
+                    div {
+                        begrunnelse(dokumentKrav.begrunnelse)
+                    }
+                    if (brutto) {
+                        try {
+                            dokumentKrav.beskrivelse?.also { unsafe { +dokumentKrav.beskrivelse.medCssKlasse("infotekst") } }
+                        } catch (error: Exception) {
+                            throw error
+                        }
+                        dokumentKrav.hjelpetekst?.also {
+                            div(classes = "hjelpetekst") {
+                                dokumentKrav.hjelpetekst.tittel?.also { tittel -> h3 { +tittel } }
+                                dokumentKrav.hjelpetekst.unsafeHtmlBody?.let { unsafe { +dokumentKrav.hjelpetekst.unsafeHtmlBody.kode } }
+                            }
                         }
                     }
                 }

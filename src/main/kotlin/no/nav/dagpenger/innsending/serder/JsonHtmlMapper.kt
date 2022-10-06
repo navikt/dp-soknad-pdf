@@ -17,6 +17,7 @@ private val sikkerlogg = KotlinLogging.logger("tjenestekall")
 
 internal class JsonHtmlMapper(
     private val innsendingsData: String,
+    private val dokumentasjonKrav: String,
     tekst: String,
     private val språk: Innsending.InnsendingsSpråk = Innsending.InnsendingsSpråk.BOKMÅL,
 ) {
@@ -35,6 +36,30 @@ internal class JsonHtmlMapper(
         }
     }
 
+    private fun parseDokumentkrav(dokumentasjonKrav: String): List<Innsending.DokumentKrav> {
+        return objectMapper.readTree(dokumentasjonKrav)["krav"].map { krav ->
+            val valg = Innsending.DokumentKrav.Valg.fromJson(krav["svar"].asText())
+            val tekstObjekt =
+                oppslag.lookup(krav["beskrivendeId"].asText()) as Oppslag.TekstObjekt.DokumentkravTekstObjekt
+            when (valg) {
+                Innsending.DokumentKrav.Valg.SEND_NAA -> Innsending.Innsendt(
+                    navn = tekstObjekt.text,
+                    beskrivelse = tekstObjekt.description?.let { rawHtml -> Innsending.UnsafeHtml(rawHtml.html) },
+                    hjelpetekst = tekstObjekt.hjelpetekst(),
+                    valg = valg
+                )
+
+                else -> Innsending.IkkeInnsendtNå(
+                    navn = tekstObjekt.text,
+                    begrunnelse = krav["begrunnelse"].asText(),
+                    beskrivelse = tekstObjekt.description?.let { rawHtml -> Innsending.UnsafeHtml(rawHtml.html) },
+                    hjelpetekst = tekstObjekt.hjelpetekst(),
+                    valg = valg
+                )
+            }
+        }
+    }
+
     private fun JsonNode.svar(): Svar {
         return kotlin.runCatching {
             when (val type = this["type"].asText()) {
@@ -48,6 +73,7 @@ internal class JsonHtmlMapper(
                     this["svar"]["fom"].asLocalDate().dagMånedÅr()
                     } - ${this["svar"]["tom"]?.asLocalDate()?.dagMånedÅr()}"
                 )
+
                 "generator" -> Innsending.IngenSvar
                 "envalg" -> EnkeltSvar((oppslag.lookup(this["svar"].asText()) as Oppslag.TekstObjekt.SvaralternativTekstObjekt).text)
                 "flervalg" -> Innsending.FlerSvar(this.flerValg())
@@ -74,6 +100,7 @@ internal class JsonHtmlMapper(
                     alertText(jsonAlternativ)
                 )
             }
+
             else -> emptyList()
         }
     }
@@ -131,7 +158,8 @@ internal class JsonHtmlMapper(
             seksjoner = parse(innsendingsData),
             generellTekst = oppslag.generellTekst(),
             språk = språk,
-            pdfAMetaTagger = oppslag.pdfaMetaTags()
+            pdfAMetaTagger = oppslag.pdfaMetaTags(),
+            dokumentasjonskrav = parseDokumentkrav(dokumentasjonKrav)
         )
     }
 }

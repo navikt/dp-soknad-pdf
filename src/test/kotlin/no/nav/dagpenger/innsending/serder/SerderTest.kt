@@ -17,17 +17,21 @@ import java.io.File
 import java.time.ZonedDateTime
 import kotlin.test.assertNotNull
 
+private val resourceRetriever = object {}.javaClass
+
 internal class SerderTest {
-    val faktaJson = object {}.javaClass.getResource("/fakta.json")?.readText()!!
-    val debugfaktaJson = object {}.javaClass.getResource("/debugfakta.json")?.readText()!!
-    val tekstJson = object {}.javaClass.getResource("/tekst.json")?.readText()!!
-    val debugtekstJson = object {}.javaClass.getResource("/debugtekst.json")?.readText()!!
+    private val faktaJson = resourceRetriever.getResource("/fakta.json")?.readText()!!
+    private val debugfaktaJson = resourceRetriever.getResource("/debugfakta.json")?.readText()!!
+    private val tekstJson = resourceRetriever.getResource("/tekst.json")?.readText()!!
+    private val debugtekstJson = resourceRetriever.getResource("/debugtekst.json")?.readText()!!
+    private val dokumentasjonKravJson = resourceRetriever.getResource("/dokumentasjonkrav.json")?.readText()!!
     private val oppslag = Oppslag(tekstJson)
 
     @Test
     fun `Debug test`() {
         val mappetInnsending = JsonHtmlMapper(
             innsendingsData = debugfaktaJson,
+            dokumentasjonKrav = dokumentasjonKravJson,
             tekst = debugtekstJson,
             språk = Innsending.InnsendingsSpråk.BOKMÅL
         ).parse().apply {
@@ -40,7 +44,7 @@ internal class SerderTest {
             PdfBuilder.lagPdf(it)
             assertEquals(
                 0,
-                Jsoup.parse(it).getElementsByClass("hjelpetekst").filter { t -> t.childrenSize() <1 }.size,
+                Jsoup.parse(it).getElementsByClass("hjelpetekst").filter { t -> t.childrenSize() < 1 }.size,
                 "fant tomme hjelpetekster"
             )
         }
@@ -110,17 +114,26 @@ internal class SerderTest {
     @Test
     fun `lager html og pfd fra json`() {
         assertDoesNotThrow {
-            val h = JsonHtmlMapper(
-                innsendingsData = faktaJson,
-                tekst = tekstJson,
+            val innsending = JsonHtmlMapper(
+                innsendingsData = debugfaktaJson,
+                dokumentasjonKrav = dokumentasjonKravJson,
+                tekst = debugtekstJson,
                 språk = Innsending.InnsendingsSpråk.BOKMÅL
             ).parse().apply {
                 infoBlokk = Innsending.InfoBlokk("ident", innsendtTidspunkt = ZonedDateTime.now())
             }
-            HtmlBuilder.lagBruttoHtml(h).also {
-                File("build/tmp/test/søknad2.html").writeText(it)
+
+            HtmlBuilder.lagBruttoHtml(innsending).also {
+                File("build/tmp/test/søknad_brutto.html").writeText(it)
                 PdfBuilder.lagPdf(it).also { generertPdf ->
-                    File("build/tmp/test/søknad2.pdf").writeBytes(generertPdf)
+                    File("build/tmp/test/søknad_brutto.pdf").writeBytes(generertPdf)
+                }
+            }
+
+            HtmlBuilder.lagNettoHtml(innsending).also {
+                File("build/tmp/test/søknad_netto.html").writeText(it)
+                PdfBuilder.lagPdf(it).also { generertPdf ->
+                    File("build/tmp/test/søknad_netto.pdf").writeBytes(generertPdf)
                 }
             }
         }
@@ -162,7 +175,12 @@ private fun assertIngenTommehjelpetekster(innsending: Innsending) {
     innsending.seksjoner.forEach { seksjon ->
         seksjon.hjelpetekst?.let { assertFalse(it.isEmpty(), "Fant tom hjelpetekst i seksjon ${seksjon.overskrift}") }
         seksjon.spmSvar.forEach { spmSvar ->
-            spmSvar.hjelpetekst?.let { assertFalse(it.isEmpty(), "Fant tom hjelpetekst på spørsmål ${spmSvar.sporsmal}") }
+            spmSvar.hjelpetekst?.let {
+                assertFalse(
+                    it.isEmpty(),
+                    "Fant tom hjelpetekst på spørsmål ${spmSvar.sporsmal}"
+                )
+            }
         }
     }
 }

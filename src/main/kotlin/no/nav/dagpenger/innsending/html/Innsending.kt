@@ -7,7 +7,8 @@ internal data class Innsending(
     val seksjoner: List<Seksjon>,
     val generellTekst: GenerellTekst,
     val språk: InnsendingsSpråk,
-    val pdfAMetaTagger: PdfAMetaTagger
+    val pdfAMetaTagger: PdfAMetaTagger,
+    val dokumentasjonskrav: List<DokumentKrav>
 ) {
 
     lateinit var infoBlokk: InfoBlokk
@@ -15,7 +16,7 @@ internal data class Innsending(
     open class PdfAMetaTagger(
         val description: String,
         val subject: String,
-        val author: String,
+        val author: String
     )
 
     object DefaultPdfAMetaTagger :
@@ -33,7 +34,7 @@ internal data class Innsending(
         val svar: Svar,
         val beskrivelse: UnsafeHtml? = null,
         val hjelpetekst: Hjelpetekst? = null,
-        val oppfølgingspørmål: List<SpørmsålOgSvarGruppe> = emptyList(),
+        val oppfølgingspørmål: List<SpørmsålOgSvarGruppe> = emptyList()
     )
 
     data class SpørmsålOgSvarGruppe(val spørsmålOgSvar: List<SporsmalSvar>)
@@ -110,4 +111,34 @@ internal data class Innsending(
             "en"
         )
     }
+
+    internal sealed class DokumentKrav(
+        val navn: String,
+        val beskrivelse: UnsafeHtml? = null,
+        val hjelpetekst: Hjelpetekst? = null,
+        val valg: Valg
+    ) {
+        enum class Valg {
+            SEND_NAA,
+            SEND_SENERE,
+            SENDT_TIDLIGERE,
+            SENDER_IKKE,
+            ANDRE_SENDER;
+
+            companion object {
+                fun fromJson(valg: String): Valg = when (valg) {
+                    "dokumentkrav.svar.send.naa" -> SEND_NAA
+                    "dokumentkrav.svar.send.senere" -> SEND_SENERE
+                    "dokumentkrav.svar.sendt.tidligere" -> SENDT_TIDLIGERE
+                    "dokumentkrav.svar.sender.ikke" -> SENDER_IKKE
+                    "dokumentkrav.svar.andre.sender" -> ANDRE_SENDER
+                    else -> throw IllegalArgumentException("Kjenner ikke til svar: '$valg'")
+                }
+            }
+        }
+    }
+
+    class Innsendt(navn: String, beskrivelse: UnsafeHtml?, hjelpetekst: Hjelpetekst?, valg: Valg) : DokumentKrav(navn, beskrivelse, hjelpetekst, valg)
+    class IkkeInnsendtNå(navn: String, val begrunnelse: String, beskrivelse: UnsafeHtml?, hjelpetekst: Hjelpetekst?, valg: Valg) :
+        DokumentKrav(navn, beskrivelse, hjelpetekst, valg)
 }

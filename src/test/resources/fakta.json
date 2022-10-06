@@ -209,24 +209,6 @@
           ]
         }
       ]
-    },
-    {
-      "beskrivendeId": "dokumentseksjon",
-      "fakta": [
-        {
-          "id": "15",
-          "type": "dokument",
-          "beskrivendeId": "f15",
-          "svar": {
-            "lastOppTidsstempel": "2022-06-27T00:00",
-            "urn": "urn:nav:1234/filnavn.pdf"
-          },
-          "roller": [
-            "søker"
-          ],
-          "readOnly": false
-        }
-      ]
     }
   ]
 }

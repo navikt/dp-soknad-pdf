@@ -251,6 +251,33 @@
         "textId": "oppsummering.endre-svar",
         "valueText": "Endre svar"
       }
+    ],
+    "dokumentkrav": [
+      {
+        "text": "Dokumentasjonskrav",
+        "textId": "faktum.dokument-varsel-om-permittering",
+        "helpText": {
+          "body": [
+            "<p>Du har krysset av for at du har blitt sagt opp. For å behandle søknaden din må du legge ved dokumentasjon som viser:</p>",
+            "<ul><li>datoen du fikk oppsigelsen</li></ul>",
+            "<ul><li>årsaken til at du ble sagt opp</li></ul>",
+            "<p>For å dokumentere dette, kan du legge ved oppsigelsen du fikk av arbeidsgiveren din. Hvis oppsigelsen ikke inneholder opplysningene vi trenger, kan du bruke skjemaet Bekreftelse på sluttårsak eller nedsatt arbeidstid (04-08.03). Arbeidsgiveren din må fylle ut og signere skjemaet. Du kan også be arbeidsgiveren din om å dokumentere opplysningene på en annen måte.</p>"
+          ],
+          "title": "Hva skal dokumentet inneholde"
+        },
+        "description": null
+      },
+      {
+        "text": "Dokumentasjon på helt eller delvis arbeidsforhold",
+        "textId": "dokumentasjonskrav.krav.arbeidsforhold",
+        "helpText": null,
+        "description": [
+          "<p>Du har krysset av for at du har blitt sagt opp. For å behandle søknaden din må du legge ved dokumentasjon som viser</p>",
+          "<ul><li>datoen du fikk oppsigelsen</li></ul>",
+          "<ul><li>årsaken til at du ble sagt opp</li></ul>",
+          "<p>For å dokumentere dette, kan du legge ved oppsigelsen du fikk av arbeidsgiveren din. Hvis oppsigelsen ikke inneholder opplysningene vi trenger, kan du bruke skjemaet <a href=\"https://www.google.com\">Bekreftelse på sluttårsak eller nedsatt arbeidstid (04-08.03)</a>. Arbeidsgiveren din må fylle ut og signere skjemaet. Du kan også be arbeidsgiveren din om å dokumentere opplysningene på en annen måte.</p>"
+        ]
+      }
     ]
   }
 }
