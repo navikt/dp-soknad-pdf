@@ -64,7 +64,7 @@ dependencies {
     implementation("com.openhtmltopdf:openhtmltopdf-svg-support:1.0.10")
     implementation("org.jsoup:jsoup:1.15.3")
     implementation("org.jetbrains.kotlinx:kotlinx-html-jvm:0.8.0")
-    implementation("org.apache.commons:commons-text:1.9")
+    implementation("org.apache.commons:commons-text:1.10.0")
 
     testImplementation(kotlin("test"))
     testImplementation("io.mockk:mockk:1.13.2")
