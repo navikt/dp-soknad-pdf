@@ -51,9 +51,9 @@ internal fun HEAD.pdfaMetaTags(innsending: Innsending) {
     }
 }
 
-internal fun HEAD.bookmarks(seksjoner: List<Innsending.Seksjon>, generellTekst: GenerellTekst) {
+internal fun HEAD.bookmarks(innsending: Innsending) {
 // TODO: Språktilpassning på statiske bokmerker
-    val seksjonBokmerker = seksjoner.map {
+    val seksjonBokmerker = innsending.seksjoner.map {
         """<bookmark name = "${it.overskrift}" href="#${seksjonId(it.overskrift)}"></bookmark>"""
     }.joinToString("")
 
@@ -62,7 +62,7 @@ internal fun HEAD.bookmarks(seksjoner: List<Innsending.Seksjon>, generellTekst: 
         raw(
             """
                 <bookmarks>
-                    <bookmark name="${generellTekst.hovedOverskrift}" href="#hovedoverskrift"></bookmark>
+                    <bookmark name="${innsending.generellTekst.hovedOverskrift}" href="#hovedoverskrift"></bookmark>
                     <bookmark name="Info om søknad" href="#infoblokk"></bookmark>
                     $seksjonBokmerker
                 </bookmarks>

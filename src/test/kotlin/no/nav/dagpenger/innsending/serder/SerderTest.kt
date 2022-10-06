@@ -114,18 +114,26 @@ internal class SerderTest {
     @Test
     fun `lager html og pfd fra json`() {
         assertDoesNotThrow {
-            val h = JsonHtmlMapper(
-                innsendingsData = faktaJson,
+            val innsending = JsonHtmlMapper(
+                innsendingsData = debugfaktaJson,
                 dokumentasjonKrav = dokumentasjonKravJson,
-                tekst = tekstJson,
+                tekst = debugtekstJson,
                 språk = Innsending.InnsendingsSpråk.BOKMÅL
             ).parse().apply {
                 infoBlokk = Innsending.InfoBlokk("ident", innsendtTidspunkt = ZonedDateTime.now())
             }
-            HtmlBuilder.lagBruttoHtml(h).also {
-                File("build/tmp/test/søknad2.html").writeText(it)
+
+            HtmlBuilder.lagBruttoHtml(innsending).also {
+                File("build/tmp/test/søknad_brutto.html").writeText(it)
                 PdfBuilder.lagPdf(it).also { generertPdf ->
-                    File("build/tmp/test/søknad2.pdf").writeBytes(generertPdf)
+                    File("build/tmp/test/søknad_brutto.pdf").writeBytes(generertPdf)
+                }
+            }
+
+            HtmlBuilder.lagNettoHtml(innsending).also {
+                File("build/tmp/test/søknad_netto.html").writeText(it)
+                PdfBuilder.lagPdf(it).also { generertPdf ->
+                    File("build/tmp/test/søknad_netto.pdf").writeBytes(generertPdf)
                 }
             }
         }
