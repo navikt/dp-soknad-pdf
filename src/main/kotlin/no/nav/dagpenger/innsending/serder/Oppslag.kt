@@ -13,7 +13,19 @@ import org.jsoup.safety.Safelist
 internal class Oppslag(private val tekstJson: String) {
     private val objectMapper = jacksonObjectMapper()
     private val tekstMap = parse(tekstJson)
-    fun lookup(id: String): TekstObjekt = tekstMap[id] ?: throw IllegalArgumentException("Fant ikke tekst til id $id")
+    fun lookup(id: String): TekstObjekt {
+        // todo FIXME
+        return when (val tekstObjekt = tekstMap[id]) {
+            null -> {
+                logg.error { "Fant ikke tekst til id $id" }
+                TekstObjekt.EnkelText(id, "FIXME")
+            }
+            else -> {
+                tekstObjekt
+            }
+        }
+//        return tekstMap[id] ?: throw IllegalArgumentException("Fant ikke tekst til id $id")
+    }
 
     companion object {
         private val logg = KotlinLogging.logger {}
@@ -164,6 +176,7 @@ internal class Oppslag(private val tekstJson: String) {
                 }
             }
         }
+
         class DokumentkravTekstObjekt(
             textId: String,
             val text: String,
