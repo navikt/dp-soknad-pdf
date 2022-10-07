@@ -18,7 +18,7 @@ import java.io.FileReader
 import java.time.OffsetDateTime
 import java.util.UUID
 
-internal class E2SupplierTest {
+internal class E2ESupplierTest {
 
     // Hente azuread eller tokenx secret for  app
 // jwker.nais.io -> tokenx,  azurerator.nais.io -> azuread
