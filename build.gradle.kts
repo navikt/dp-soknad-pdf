@@ -5,12 +5,12 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     application
-    kotlin("jvm") version Kotlin.version
-    id(Spotless.spotless) version Spotless.version
+    kotlin("jvm") version "1.7.0"
+    id("com.diffplug.spotless") version "5.14.0"
 }
 
 apply {
-    plugin(Spotless.spotless)
+    plugin("com.diffplug.spotless")
 }
 
 repositories {
@@ -52,13 +52,13 @@ dependencies {
     implementation("com.github.navikt:rapids-and-rivers:2022092314391663936769.9d5d33074875")
 
     implementation("com.natpryce:konfig:1.6.10.0")
-    implementation("io.github.microutils:kotlin-logging:2.1.21")
+    implementation("io.github.microutils:kotlin-logging:3.0.0")
     implementation("com.github.navikt.dp-biblioteker:oauth2-klient:2022.05.30-09.37.623ee13a49dd")
-    implementation("io.ktor:ktor-client-${"logging"}:2.0.2")
-    implementation("io.ktor:ktor-client-${"cio"}:2.0.2")
-    implementation("io.ktor:ktor-client-${"content-negotiation"}:2.0.2")
-    implementation("io.ktor:ktor-serialization-jackson:2.0.2")
-    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.12.3")
+    implementation("io.ktor:ktor-client-logging:2.1.2")
+    implementation("io.ktor:ktor-client-cio:2.1.2")
+    implementation("io.ktor:ktor-client-content-negotiation:2.1.2")
+    implementation("io.ktor:ktor-serialization-jackson:2.1.2")
+    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.13.4")
     implementation("com.openhtmltopdf:openhtmltopdf-pdfbox:1.0.10")
     implementation("com.openhtmltopdf:openhtmltopdf-slf4j:1.0.10")
     implementation("com.openhtmltopdf:openhtmltopdf-svg-support:1.0.10")
@@ -71,8 +71,8 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.1")
     testImplementation("io.kotest:kotest-runner-junit5-jvm:5.5.0")
     testImplementation("io.ktor:ktor-client-${"mock"}:2.0.2")
-    testImplementation("org.verapdf:validation-model:1.20.1")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.7.2")
+    testImplementation("org.verapdf:validation-model:1.22.2")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.0")
 
     // FOr E2E
     testImplementation("io.kubernetes:client-java:16.0.0")
