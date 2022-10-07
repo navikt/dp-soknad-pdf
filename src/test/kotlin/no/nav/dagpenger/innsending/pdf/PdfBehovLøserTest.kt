@@ -7,7 +7,7 @@ import io.mockk.mockk
 import no.nav.dagpenger.innsending.ArkiverbartDokument.DokumentVariant.BRUTTO
 import no.nav.dagpenger.innsending.ArkiverbartDokument.DokumentVariant.NETTO
 import no.nav.dagpenger.innsending.LagretDokument
-import no.nav.dagpenger.innsending.PdfBehovLøser
+import no.nav.dagpenger.innsending.NyDialogPdfBehovLøser
 import no.nav.dagpenger.innsending.html.TestModellHtml.innsending
 import no.nav.helse.rapids_rivers.testsupport.TestRapid
 import org.intellij.lang.annotations.Language
@@ -22,7 +22,7 @@ internal class PdfBehovLøserTest {
     val testFnr = "12345678910"
 
     val testRapid = TestRapid().also {
-        PdfBehovLøser(
+        NyDialogPdfBehovLøser(
             rapidsConnection = it,
             pdfLagring = mockk<PdfLagring>().also {
                 coEvery {
@@ -68,7 +68,7 @@ internal class PdfBehovLøserTest {
 
         assertJsonEquals(
             expectedLøsning,
-            testRapid.inspektør.message(0)["@løsning"][PdfBehovLøser.BEHOV]
+            testRapid.inspektør.message(0)["@løsning"][NyDialogPdfBehovLøser.BEHOV]
         )
     }
 
@@ -90,6 +90,7 @@ internal class PdfBehovLøserTest {
         "dokument_språk": "en",
         "søknad_uuid": "$soknadId",
         "ident": "$testFnr",
+        "type": "NY_DIALOG",
         "innsendtTidspunkt": "${ZonedDateTime.now(ZoneId.of("Europe/Oslo"))}"
             }
     """.trimIndent()

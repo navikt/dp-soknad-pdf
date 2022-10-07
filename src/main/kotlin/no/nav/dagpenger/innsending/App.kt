@@ -14,7 +14,7 @@ internal object App : RapidsConnection.StatusListener {
 
     init {
         rapidsConnection.register(this)
-        PdfBehovLøser(
+        NyDialogPdfBehovLøser(
             rapidsConnection = rapidsConnection,
             pdfLagring = PdfLagring(
                 baseUrl = Configuration.dpMellomlagringBaseUrl, tokenSupplier = Configuration.mellomlagringTokenSupplier

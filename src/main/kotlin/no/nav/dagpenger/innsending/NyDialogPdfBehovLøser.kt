@@ -15,7 +15,7 @@ import no.nav.helse.rapids_rivers.River
 import java.time.ZonedDateTime
 import java.util.UUID
 
-internal class PdfBehovLøser(
+internal class NyDialogPdfBehovLøser(
     rapidsConnection: RapidsConnection,
     private val pdfLagring: PdfLagring,
     private val innsendingSupplier: suspend (soknadId: UUID, innsendingsSpråk: Innsending.InnsendingsSpråk) -> Innsending
@@ -31,6 +31,7 @@ internal class PdfBehovLøser(
             validate { it.demandAll("@behov", listOf(BEHOV)) }
             validate { it.rejectKey("@løsning") }
             validate { it.requireKey("søknad_uuid", "ident", "innsendtTidspunkt") }
+            validate { it.requireValue("type", "NY_DIALOG") }
             validate { it.interestedIn("dokument_språk") }
         }.register(this)
     }
