@@ -68,7 +68,7 @@ internal class NyDialogPdfBehovLøser(
                 }
             } catch (e: Exception) {
                 logg.error(e) { "Kunne ikke lage PDF for søknad med id: $soknadId" }
-                throw e
+//                throw e
             }
         }
     }
