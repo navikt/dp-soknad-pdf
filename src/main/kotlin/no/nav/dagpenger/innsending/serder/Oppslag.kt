@@ -29,7 +29,7 @@ class Oppslag(private val tekstJson: String) {
         return this.getOrElse(tekstId) {
             logg.error { "Fant ikke tekst for tekstId: $tekstId" }
             when (T::class.java.canonicalName.split(".").last()) {
-                "EnkelTest" -> EnkelText(textId = tekstId, text = tekstId)
+                "EnkelText" -> EnkelText(textId = tekstId, text = tekstId)
                 "FaktaTekstObjekt" -> FaktaTekstObjekt(textId = tekstId, text = tekstId)
                 "SeksjonTekstObjekt" -> SeksjonTekstObjekt(textId = tekstId, title = tekstId)
                 "SvaralternativTekstObjekt" -> SvaralternativTekstObjekt(
