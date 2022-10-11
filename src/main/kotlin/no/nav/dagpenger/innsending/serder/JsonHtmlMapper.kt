@@ -168,13 +168,7 @@ internal class JsonHtmlMapper(
     fun parseEttersending(): Innsending {
         return Innsending(
             seksjoner = emptyList(),
-            generellTekst = Innsending.GenerellTekst(
-                "ETTERSENDING",
-                "tittel",
-                "svar",
-                "dato",
-                "123456789"
-            ),
+            generellTekst = oppslag.generellTekstEttersending(),
             språk = språk,
             pdfAMetaTagger = oppslag.pdfaMetaTags(),
             dokumentasjonskrav = parseDokumentkrav(dokumentasjonKrav)

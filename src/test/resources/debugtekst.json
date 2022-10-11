@@ -1192,6 +1192,10 @@
         "valueText": "Søknad om dagpenger"
       },
       {
+        "textId": "pdf.ettersending.hovedoverskrift",
+        "valueText": "Ettersending til søknad om dagpenger"
+      },
+      {
         "textId": "pdf.svar",
         "valueText": "svar"
       },

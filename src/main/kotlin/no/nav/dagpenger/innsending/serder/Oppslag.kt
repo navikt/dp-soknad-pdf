@@ -127,6 +127,16 @@ internal class Oppslag(private val tekstJson: String) {
         )
     }
 
+    internal fun generellTekstEttersending(): Innsending.GenerellTekst {
+        return Innsending.GenerellTekst(
+            hovedOverskrift = (lookup("pdf.ettersending.hovedoverskrift") as TekstObjekt.EnkelText).text,
+            tittel = (lookup("pdf.tittel") as TekstObjekt.EnkelText).text,
+            svar = (lookup("pdf.svar") as TekstObjekt.EnkelText).text,
+            datoSendt = (lookup("pdf.datosendt") as TekstObjekt.EnkelText).text,
+            fnr = (lookup("pdf.fnr") as TekstObjekt.EnkelText).text
+        )
+    }
+
     fun pdfaMetaTags(): Innsending.PdfAMetaTagger =
         objectMapper.readTree(tekstJson).apptekster().let {
             Innsending.PdfAMetaTagger(
