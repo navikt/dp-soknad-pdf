@@ -15,34 +15,44 @@ import no.nav.dagpenger.innsending.serder.Oppslag.TekstObjekt.SeksjonTekstObjekt
 import no.nav.dagpenger.innsending.serder.Oppslag.TekstObjekt.SvaralternativTekstObjekt
 import org.jsoup.Jsoup
 import org.jsoup.safety.Safelist
+import java.lang.ClassCastException
 
-class Oppslag(private val tekstJson: String) {
+internal class Oppslag(private val tekstJson: String) {
     companion object {
-        val logg = KotlinLogging.logger {}
-    }
+        private val logg = KotlinLogging.logger {}
 
-    private val objectMapper = jacksonObjectMapper()
-    val tekstMap = parse(tekstJson)
-    inline fun <reified T : TekstObjekt> lookup(id: String): T = tekstMap.lookup(id)
+        inline fun <reified T : TekstObjekt> Map<String, TekstObjekt>.lookup(tekstId: String): T {
+            val objekt: TekstObjekt = this.getOrElse(tekstId) {
+                logg.error { "Fant ikke tekst for tekstId: $tekstId" }
+                lagDummyTekstObjekt<T>(tekstId)
+            }
+            return try {
+                objekt as T
+            } catch (e: ClassCastException) {
+                logg.error { "Feil type for $tekstId: $e" }
+                lagDummyTekstObjekt<T>(tekstId) as T
+            }
+        }
 
-    inline fun <reified T : TekstObjekt> Map<String, TekstObjekt>.lookup(tekstId: String): T {
-        return this.getOrElse(tekstId) {
-            logg.error { "Fant ikke tekst for tekstId: $tekstId" }
-            when (T::class.java.canonicalName.split(".").last()) {
-                "EnkelText" -> EnkelText(textId = tekstId, text = tekstId)
-                "FaktaTekstObjekt" -> FaktaTekstObjekt(textId = tekstId, text = tekstId)
-                "SeksjonTekstObjekt" -> SeksjonTekstObjekt(textId = tekstId, title = tekstId)
-                "SvaralternativTekstObjekt" -> SvaralternativTekstObjekt(
+        inline fun <reified T : TekstObjekt> lagDummyTekstObjekt(tekstId: String) =
+            when (T::class) {
+                EnkelText::class -> EnkelText(textId = tekstId, text = tekstId)
+                FaktaTekstObjekt::class -> FaktaTekstObjekt(textId = tekstId, text = tekstId)
+                SeksjonTekstObjekt::class -> SeksjonTekstObjekt(textId = tekstId, title = tekstId)
+                SvaralternativTekstObjekt::class -> SvaralternativTekstObjekt(
                     textId = tekstId,
                     text = tekstId,
                     alertText = null
                 )
-                "DokumentkravTekstObjekt" -> DokumentkravTekstObjekt(textId = tekstId, text = tekstId)
+                DokumentkravTekstObjekt::class -> DokumentkravTekstObjekt(textId = tekstId, text = tekstId)
                 else -> throw IllegalArgumentException("Ukjent klasse: ${T::class.java.name}")
             }
-        } as T
     }
 
+    internal inline fun <reified T : TekstObjekt> lookup(id: String): T = tekstMap.lookup(id)
+
+    private val objectMapper = jacksonObjectMapper()
+    private val tekstMap = parse(tekstJson)
     private fun parse(tekstJson: String): Map<String, TekstObjekt> {
         return try {
             objectMapper.readTree(tekstJson).let {
@@ -110,7 +120,7 @@ class Oppslag(private val tekstJson: String) {
                     text = dokumentkrav["text"].asText(),
                     description = dokumentkrav.get("description")?.asRawHtmlString(),
                     helpText = dokumentkrav["helpText"]?.takeIf { !it.isNull }?.let { helpText ->
-                        TekstObjekt.HelpText(
+                        HelpText(
                             helpText["title"]?.asText(),
                             helpText["body"].asRawHtmlString()
                         )

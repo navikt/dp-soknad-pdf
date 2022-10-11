@@ -90,7 +90,7 @@ internal class SerderTest {
             oppslag.alertText.also { alerttext ->
                 assertEquals(
                     "<p>Her er ett og annet som er greit å vite hvios du har valgt svaralternativ1</p>",
-                    alerttext!!.body!!.html
+                    alerttext.body!!.html
                 )
                 assertEquals("Her er noe info", alerttext.title)
                 assertEquals("info", alerttext.type)
@@ -99,7 +99,7 @@ internal class SerderTest {
         assertDoesNotThrow {
             oppslag.lookup<SvaralternativTekstObjekt>("flervalg1").also {
                 assertNotNull(it.alertText)
-                assertNull(it.alertText!!.title)
+                assertNull(it.alertText.title)
             }
             oppslag.lookup<SvaralternativTekstObjekt>("flervalg2").also {
                 assertNull(it.alertText)

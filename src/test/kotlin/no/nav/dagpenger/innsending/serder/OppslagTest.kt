@@ -1,12 +1,31 @@
 package no.nav.dagpenger.innsending.serder
 
-import io.kotest.matchers.shouldNotBe
+import io.kotest.assertions.throwables.shouldNotThrowAny
+import io.kotest.matchers.shouldBe
 import org.intellij.lang.annotations.Language
 import org.junit.jupiter.api.Test
 
 internal class OppslagTest {
+    @Test
+    fun `Lager default tekst objekter`() {
+        Oppslag(testTekster).let { oppslag ->
+            shouldNotThrowAny {
+                oppslag.lookup<Oppslag.TekstObjekt.EnkelText>("id")
+                oppslag.lookup<Oppslag.TekstObjekt.SvaralternativTekstObjekt>("id")
+                oppslag.lookup<Oppslag.TekstObjekt.DokumentkravTekstObjekt>("id")
+                oppslag.lookup<Oppslag.TekstObjekt.SeksjonTekstObjekt>("id")
+                oppslag.lookup<Oppslag.TekstObjekt.FaktaTekstObjekt>("id")
+            }
+        }
+    }
+
+    @Test
+    fun `Håndterer feil type`() {
+        Oppslag(testTekster).lookup<Oppslag.TekstObjekt.DokumentkravTekstObjekt>("id2").text shouldBe "id2"
+    }
+
     @Language("JSON")
-    private val tommeTekster = """
+    private val testTekster = """
        {
   "sanityTexts": {
     "fakta": [
@@ -16,22 +35,14 @@ internal class OppslagTest {
     "svaralternativer": [
     ],
     "apptekster": [
+     {
+        "textId": "id2",
+        "valueText": "Legg til barn"
+      }
     ],
     "dokumentkrav": [
     ]
   }
 }
- 
     """.trimIndent()
-
-    @Test
-    fun `Lager default tekst objekter`() {
-        Oppslag(tommeTekster).let { oppslag ->
-            oppslag.lookup<Oppslag.TekstObjekt.EnkelText>("id") shouldNotBe null
-            oppslag.lookup<Oppslag.TekstObjekt.SvaralternativTekstObjekt>("id") shouldNotBe null
-            oppslag.lookup<Oppslag.TekstObjekt.DokumentkravTekstObjekt>("id") shouldNotBe null
-            oppslag.lookup<Oppslag.TekstObjekt.SeksjonTekstObjekt>("id") shouldNotBe null
-            oppslag.lookup<Oppslag.TekstObjekt.FaktaTekstObjekt>("id") shouldNotBe null
-        }
-    }
 }
