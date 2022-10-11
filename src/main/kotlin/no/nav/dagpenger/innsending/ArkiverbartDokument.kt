@@ -21,7 +21,19 @@ internal class LagretDokument(
     val urn: String,
     val variant: ArkiverbartDokument.DokumentVariant,
     val filnavn: String
-)
+) {
+    companion object {
+        internal fun List<LagretDokument>.behovSvar(): List<BehovSvar> = this.map {
+            BehovSvar(
+                urn = it.urn,
+                metainfo = BehovSvar.MetaInfo(
+                    innhold = it.filnavn,
+                    variant = it.variant.name
+                )
+            )
+        }
+    }
+}
 
 internal fun lagArkiverbartDokument(innsending: Innsending): List<ArkiverbartDokument> {
     return listOf(

@@ -17,7 +17,7 @@ import java.time.ZonedDateTime
 import java.util.UUID
 import kotlin.test.assertEquals
 
-internal class PdfBehovLøserTest {
+internal class NyDialogPdfBehovLøserTest {
     val soknadId = UUID.randomUUID()
     val testFnr = "12345678910"
 
