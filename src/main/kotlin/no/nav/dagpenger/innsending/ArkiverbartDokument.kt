@@ -31,3 +31,8 @@ internal fun lagArkiverbartDokument(innsending: Innsending): List<ArkiverbartDok
         )
     )
 }
+internal fun lagArkiverbarEttersending(innsending: Innsending): List<ArkiverbartDokument> {
+    return listOf(
+        ArkiverbartDokument.netto(HtmlBuilder.lagEttersendingHtml(innsending).let { PdfBuilder.lagPdf(it) }),
+    )
+}

@@ -17,6 +17,11 @@ internal object HtmlBuilder {
     fun lagNettoHtml(innsending: Innsending) = lagHtml(innsending, DIV::nettoSeksjon, false)
     fun lagBruttoHtml(innsending: Innsending) = lagHtml(innsending, DIV::bruttoSeksjon, true)
 
+    fun lagEttersendingHtml(innsending: Innsending): String {
+
+        return lagHtml(innsending, { _, _ -> }, false)
+    }
+
     private fun lagHtml(
         innsending: Innsending,
         seksjonFunksjon: DIV.(Innsending.Seksjon, Innsending.GenerellTekst) -> Unit = DIV::nettoSeksjon,

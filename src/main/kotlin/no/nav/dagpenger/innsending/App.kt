@@ -21,6 +21,13 @@ internal object App : RapidsConnection.StatusListener {
             ),
             innsendingSupplier = InnsendingSupplier(Configuration.dpSoknadUrl, Configuration.soknadTokenSupplier)::hentSoknad,
         )
+        EttersendingPdfBehovLøser(
+            rapidsConnection = rapidsConnection,
+            pdfLagring = PdfLagring(
+                baseUrl = Configuration.dpMellomlagringBaseUrl, tokenSupplier = Configuration.mellomlagringTokenSupplier
+            ),
+            innsendingSupplier = InnsendingSupplier(Configuration.dpSoknadUrl, Configuration.soknadTokenSupplier)::hentEttersending,
+        )
     }
 
     fun start() = rapidsConnection.start()

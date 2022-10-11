@@ -140,6 +140,27 @@ internal class SerderTest {
     }
 
     @Test
+    fun `lager html og pfd for ettersending`() {
+        assertDoesNotThrow {
+            val innsending = JsonHtmlMapper(
+                innsendingsData = null,
+                dokumentasjonKrav = dokumentasjonKravJson,
+                tekst = debugtekstJson,
+                språk = Innsending.InnsendingsSpråk.BOKMÅL
+            ).parseEttersending().apply {
+                infoBlokk = Innsending.InfoBlokk("ident", innsendtTidspunkt = ZonedDateTime.now())
+            }
+
+            HtmlBuilder.lagEttersendingHtml(innsending).also {
+                File("build/tmp/test/ettersending.html").writeText(it)
+                PdfBuilder.lagPdf(it).also { generertPdf ->
+                    File("build/tmp/test/ettersending.pdf").writeBytes(generertPdf)
+                }
+            }
+        }
+    }
+
+    @Test
     fun `fjerner tags som ikke er tillatt`() {
         oppslag.`portable objekter i testfil`().forEach { tekstobjekt ->
             tekstobjekt.description?.let { assertIngenUlovligeTagger(it) }

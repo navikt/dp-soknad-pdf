@@ -16,7 +16,7 @@ import java.time.format.DateTimeFormatter
 private val sikkerlogg = KotlinLogging.logger("tjenestekall")
 
 internal class JsonHtmlMapper(
-    private val innsendingsData: String,
+    private val innsendingsData: String?,
     private val dokumentasjonKrav: String,
     tekst: String,
     private val språk: Innsending.InnsendingsSpråk = Innsending.InnsendingsSpråk.BOKMÅL,
@@ -24,16 +24,18 @@ internal class JsonHtmlMapper(
     private val oppslag = Oppslag(tekst)
     private val objectMapper = jacksonObjectMapper()
 
-    private fun parse(innsendingsData: String): List<Innsending.Seksjon> {
-        return objectMapper.readTree(innsendingsData)["seksjoner"].map {
-            val tekstObjekt = oppslag.lookup(it["beskrivendeId"].asText()) as Oppslag.TekstObjekt.SeksjonTekstObjekt
-            Innsending.Seksjon(
-                overskrift = tekstObjekt.title,
-                beskrivelse = tekstObjekt.description?.let { rawHtml -> Innsending.UnsafeHtml(rawHtml.html) },
-                hjelpetekst = tekstObjekt.hjelpetekst(),
-                spmSvar = it.fakta()
-            )
-        }
+    private fun parse(innsendingsData: String?): List<Innsending.Seksjon> {
+        return innsendingsData?.let {
+            objectMapper.readTree(innsendingsData)["seksjoner"].map {
+                val tekstObjekt = oppslag.lookup(it["beskrivendeId"].asText()) as Oppslag.TekstObjekt.SeksjonTekstObjekt
+                Innsending.Seksjon(
+                    overskrift = tekstObjekt.title,
+                    beskrivelse = tekstObjekt.description?.let { rawHtml -> Innsending.UnsafeHtml(rawHtml.html) },
+                    hjelpetekst = tekstObjekt.hjelpetekst(),
+                    spmSvar = it.fakta()
+                )
+            }
+        } ?: emptyList()
     }
 
     private fun parseDokumentkrav(dokumentasjonKrav: String): List<Innsending.DokumentKrav> {
@@ -157,6 +159,22 @@ internal class JsonHtmlMapper(
         return Innsending(
             seksjoner = parse(innsendingsData),
             generellTekst = oppslag.generellTekst(),
+            språk = språk,
+            pdfAMetaTagger = oppslag.pdfaMetaTags(),
+            dokumentasjonskrav = parseDokumentkrav(dokumentasjonKrav)
+        )
+    }
+
+    fun parseEttersending(): Innsending {
+        return Innsending(
+            seksjoner = emptyList(),
+            generellTekst = Innsending.GenerellTekst(
+                "ETTERSENDING",
+                "tittel",
+                "svar",
+                "dato",
+                "123456789"
+            ),
             språk = språk,
             pdfAMetaTagger = oppslag.pdfaMetaTags(),
             dokumentasjonskrav = parseDokumentkrav(dokumentasjonKrav)

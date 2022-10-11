@@ -48,6 +48,19 @@ internal class InnsendingSupplier(
         }
     }
 
+    suspend fun hentEttersending(id: UUID, språk: Innsending.InnsendingsSpråk): Innsending {
+        return withContext(Dispatchers.IO) {
+            val tekst = async { hentTekst(id) }
+            val dokumentasjonsKrav = async { hentDokumentasjonKrav(id) }
+            JsonHtmlMapper(
+                innsendingsData = null,
+                dokumentasjonKrav = dokumentasjonsKrav.await(),
+                tekst = tekst.await(),
+                språk = språk
+            ).parseEttersending()
+        }
+    }
+
     private suspend fun hentFakta(id: UUID): String {
         return httpKlient.get("$dpSoknadBaseUrl/$id/ferdigstilt/fakta").bodyAsText()
     }
