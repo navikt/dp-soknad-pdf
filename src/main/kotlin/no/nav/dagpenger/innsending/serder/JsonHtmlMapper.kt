@@ -7,6 +7,11 @@ import no.nav.dagpenger.innsending.LandOppslag
 import no.nav.dagpenger.innsending.html.Innsending
 import no.nav.dagpenger.innsending.html.Innsending.EnkeltSvar
 import no.nav.dagpenger.innsending.html.Innsending.Svar
+import no.nav.dagpenger.innsending.serder.Oppslag.TekstObjekt
+import no.nav.dagpenger.innsending.serder.Oppslag.TekstObjekt.DokumentkravTekstObjekt
+import no.nav.dagpenger.innsending.serder.Oppslag.TekstObjekt.FaktaTekstObjekt
+import no.nav.dagpenger.innsending.serder.Oppslag.TekstObjekt.SeksjonTekstObjekt
+import no.nav.dagpenger.innsending.serder.Oppslag.TekstObjekt.SvaralternativTekstObjekt
 import no.nav.helse.rapids_rivers.asLocalDate
 import no.nav.helse.rapids_rivers.asLocalDateTime
 import java.time.LocalDate
@@ -27,7 +32,7 @@ internal class JsonHtmlMapper(
     private fun parse(innsendingsData: String?): List<Innsending.Seksjon> {
         return innsendingsData?.let {
             objectMapper.readTree(innsendingsData)["seksjoner"].map {
-                val tekstObjekt = oppslag.lookup(it["beskrivendeId"].asText()) as Oppslag.TekstObjekt.SeksjonTekstObjekt
+                val tekstObjekt = oppslag.lookup<SeksjonTekstObjekt>(it["beskrivendeId"].asText())
                 Innsending.Seksjon(
                     overskrift = tekstObjekt.title,
                     beskrivelse = tekstObjekt.description?.let { rawHtml -> Innsending.UnsafeHtml(rawHtml.html) },
@@ -42,7 +47,7 @@ internal class JsonHtmlMapper(
         return objectMapper.readTree(dokumentasjonKrav)["krav"].map { krav ->
             val valg = Innsending.DokumentKrav.Valg.fromJson(krav["svar"].asText())
             val tekstObjekt =
-                oppslag.lookup(krav["beskrivendeId"].asText()) as Oppslag.TekstObjekt.DokumentkravTekstObjekt
+                oppslag.lookup<DokumentkravTekstObjekt>(krav["beskrivendeId"].asText())
             when (valg) {
                 Innsending.DokumentKrav.Valg.SEND_NAA -> Innsending.Innsendt(
                     navn = tekstObjekt.text,
@@ -68,7 +73,7 @@ internal class JsonHtmlMapper(
                 "tekst" -> EnkeltSvar(this["svar"].asText())
                 "double" -> EnkeltSvar(this["svar"].asText())
                 "int" -> EnkeltSvar(this["svar"].asText())
-                "boolean" -> EnkeltSvar((oppslag.lookup(this.booleanTextId()) as Oppslag.TekstObjekt.SvaralternativTekstObjekt).text)
+                "boolean" -> EnkeltSvar((oppslag.lookup<SvaralternativTekstObjekt>(this.booleanTextId())).text)
                 "localdate" -> EnkeltSvar(this["svar"].asLocalDate().dagMånedÅr())
                 "periode" -> EnkeltSvar(
                     "${
@@ -77,7 +82,7 @@ internal class JsonHtmlMapper(
                 )
 
                 "generator" -> Innsending.IngenSvar
-                "envalg" -> EnkeltSvar((oppslag.lookup(this["svar"].asText()) as Oppslag.TekstObjekt.SvaralternativTekstObjekt).text)
+                "envalg" -> EnkeltSvar((oppslag.lookup<SvaralternativTekstObjekt>(this["svar"].asText())).text)
                 "flervalg" -> Innsending.FlerSvar(this.flerValg())
                 "land" -> EnkeltSvar(LandOppslag.hentLand(språk, this["svar"].asText()))
                 "dokument" -> EnkeltSvar(this.dokumentTekst())
@@ -95,8 +100,7 @@ internal class JsonHtmlMapper(
     private fun JsonNode.flerValg(): List<Innsending.SvarAlternativ> {
         return when (this["type"].asText()) {
             "flervalg" -> this["svar"].toList().map { jsonNode ->
-                val jsonAlternativ =
-                    (oppslag.lookup(jsonNode.asText()) as Oppslag.TekstObjekt.SvaralternativTekstObjekt)
+                val jsonAlternativ = oppslag.lookup<SvaralternativTekstObjekt>(jsonNode.asText())
                 Innsending.SvarAlternativ(
                     jsonAlternativ.text,
                     alertText(jsonAlternativ)
@@ -107,7 +111,7 @@ internal class JsonHtmlMapper(
         }
     }
 
-    private fun alertText(tekstObjekt: Oppslag.TekstObjekt.SvaralternativTekstObjekt): Innsending.InfoTekst? {
+    private fun alertText(tekstObjekt: SvaralternativTekstObjekt): Innsending.InfoTekst? {
         return tekstObjekt.alertText?.let { alerttext ->
             Innsending.Infotype.fraSanityJson(typenøkkel = alerttext.type)?.let { infotype ->
                 Innsending.InfoTekst.nyEllerNull(
@@ -125,7 +129,7 @@ internal class JsonHtmlMapper(
                 Innsending.SpørmsålOgSvarGruppe(
                     liste.toList().map { node ->
                         val tekstObjekt =
-                            oppslag.lookup(node["beskrivendeId"].asText()) as Oppslag.TekstObjekt.FaktaTekstObjekt
+                            oppslag.lookup<FaktaTekstObjekt>(node["beskrivendeId"].asText())
                         Innsending.SporsmalSvar(
                             sporsmal = tekstObjekt.text,
                             svar = node.svar(),
@@ -144,7 +148,7 @@ internal class JsonHtmlMapper(
 
     private fun JsonNode.fakta(): List<Innsending.SporsmalSvar> {
         return this["fakta"].map { node ->
-            val tekstObjekt = oppslag.lookup(node["beskrivendeId"].asText()) as Oppslag.TekstObjekt.FaktaTekstObjekt
+            val tekstObjekt = oppslag.lookup<FaktaTekstObjekt>(node["beskrivendeId"].asText())
             Innsending.SporsmalSvar(
                 sporsmal = tekstObjekt.text,
                 svar = node.svar(),
@@ -196,7 +200,7 @@ private fun LocalDate.dagMånedÅr(): String =
 private fun LocalDateTime.dagMånedÅr(): String =
     this.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
 
-private fun Oppslag.TekstObjekt.hjelpetekst(): Innsending.Hjelpetekst? {
+private fun TekstObjekt.hjelpetekst(): Innsending.Hjelpetekst? {
     return this.helpText?.let { oppslag ->
         val unsafeHtml = oppslag.body?.let { Innsending.UnsafeHtml(it.html) }
         Innsending.Hjelpetekst.nyEllerNull(unsafeHtmlBody = unsafeHtml, tittel = oppslag.title)

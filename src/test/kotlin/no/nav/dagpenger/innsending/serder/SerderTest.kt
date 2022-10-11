@@ -6,6 +6,7 @@ import no.nav.dagpenger.innsending.html.Innsending.Hjelpetekst
 import no.nav.dagpenger.innsending.pdf.PdfBuilder
 import no.nav.dagpenger.innsending.serder.Oppslag.TekstObjekt.FaktaTekstObjekt
 import no.nav.dagpenger.innsending.serder.Oppslag.TekstObjekt.SeksjonTekstObjekt
+import no.nav.dagpenger.innsending.serder.Oppslag.TekstObjekt.SvaralternativTekstObjekt
 import org.intellij.lang.annotations.Language
 import org.jsoup.Jsoup
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -53,8 +54,7 @@ internal class SerderTest {
     @Test
     fun `parser søknadstekst riktig`() {
 
-        oppslag.lookup("seksjon1").also {
-            require(it is SeksjonTekstObjekt)
+        oppslag.lookup<SeksjonTekstObjekt>("seksjon1").also {
             assertEquals("seksjon1", it.textId)
             assertEquals("Tittel for seksjon 1", it.title)
             assertEquals("Hjelpetekst med overskrift til seksjon", it.helpText?.title)
@@ -67,8 +67,7 @@ internal class SerderTest {
             assertEquals(expectedDescription, it.description?.html?.replace("\n", ""))
         }
 
-        oppslag.lookup("f3").also {
-            require(it is FaktaTekstObjekt)
+        oppslag.lookup<FaktaTekstObjekt>("f3").also {
             assertEquals("f3", it.textId)
             assertEquals(
                 "Her blir det spurt om noe som du kan svare ja eller nei på. Svarer du ja eller nei?",
@@ -81,8 +80,7 @@ internal class SerderTest {
 
     @Test
     fun `parser svaralternativ riktig`() {
-        oppslag.lookup("svaralternativ1").also { oppslag ->
-            require(oppslag is Oppslag.TekstObjekt.SvaralternativTekstObjekt)
+        oppslag.lookup<SvaralternativTekstObjekt>("svaralternativ1").also { oppslag ->
             assertEquals("svaralternativ1", oppslag.textId)
             assertEquals(
                 "Vet ikke helt hva dte her skal brukes til enda, men gjetter på at vi finner det ut",
@@ -92,20 +90,18 @@ internal class SerderTest {
             oppslag.alertText.also { alerttext ->
                 assertEquals(
                     "<p>Her er ett og annet som er greit å vite hvios du har valgt svaralternativ1</p>",
-                    alerttext.body!!.html
+                    alerttext!!.body!!.html
                 )
                 assertEquals("Her er noe info", alerttext.title)
                 assertEquals("info", alerttext.type)
             }
         }
         assertDoesNotThrow {
-            oppslag.lookup("flervalg1").also {
-                require(it is Oppslag.TekstObjekt.SvaralternativTekstObjekt)
+            oppslag.lookup<SvaralternativTekstObjekt>("flervalg1").also {
                 assertNotNull(it.alertText)
-                assertNull(it.alertText.title)
+                assertNull(it.alertText!!.title)
             }
-            oppslag.lookup("flervalg2").also {
-                require(it is Oppslag.TekstObjekt.SvaralternativTekstObjekt)
+            oppslag.lookup<SvaralternativTekstObjekt>("flervalg2").also {
                 assertNull(it.alertText)
             }
         }
@@ -180,16 +176,16 @@ private fun assertIngenUlovligeTagger(htmlString: RawHtmlString) {
 
 private fun Oppslag.`portable objekter i testfil`() =
     listOf(
-        this.lookup("f15"),
-        this.lookup("flervalg7"),
-        this.lookup("flervalg1"),
-        this.lookup("periode10"),
-        this.lookup("desimaltall3"),
-        this.lookup("f1"),
-        this.lookup("f3"),
-        this.lookup("f67"),
-        this.lookup("seksjon1"),
-        this.lookup("svaralternativ1")
+        this.lookup<FaktaTekstObjekt>("f15"),
+        this.lookup<FaktaTekstObjekt>("flervalg7"),
+        this.lookup<SvaralternativTekstObjekt>("flervalg1"),
+        this.lookup<FaktaTekstObjekt>("periode10"),
+        this.lookup<FaktaTekstObjekt>("desimaltall3"),
+        this.lookup<FaktaTekstObjekt>("f1"),
+        this.lookup<FaktaTekstObjekt>("f3"),
+        this.lookup<FaktaTekstObjekt>("f67"),
+        this.lookup<SeksjonTekstObjekt>("seksjon1"),
+        this.lookup<SvaralternativTekstObjekt>("svaralternativ1")
     )
 
 private fun assertIngenTommehjelpetekster(innsending: Innsending) {

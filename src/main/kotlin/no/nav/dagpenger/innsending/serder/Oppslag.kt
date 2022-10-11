@@ -7,16 +7,40 @@ import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import mu.KotlinLogging
 import mu.withLoggingContext
 import no.nav.dagpenger.innsending.html.Innsending
+import no.nav.dagpenger.innsending.serder.Oppslag.TekstObjekt.DokumentkravTekstObjekt
+import no.nav.dagpenger.innsending.serder.Oppslag.TekstObjekt.EnkelText
+import no.nav.dagpenger.innsending.serder.Oppslag.TekstObjekt.FaktaTekstObjekt
+import no.nav.dagpenger.innsending.serder.Oppslag.TekstObjekt.HelpText
+import no.nav.dagpenger.innsending.serder.Oppslag.TekstObjekt.SeksjonTekstObjekt
+import no.nav.dagpenger.innsending.serder.Oppslag.TekstObjekt.SvaralternativTekstObjekt
 import org.jsoup.Jsoup
 import org.jsoup.safety.Safelist
 
-internal class Oppslag(private val tekstJson: String) {
-    private val objectMapper = jacksonObjectMapper()
-    private val tekstMap = parse(tekstJson)
-    fun lookup(id: String): TekstObjekt = tekstMap[id] ?: throw IllegalArgumentException("Fant ikke tekst til id $id")
-
+class Oppslag(private val tekstJson: String) {
     companion object {
-        private val logg = KotlinLogging.logger {}
+        val logg = KotlinLogging.logger {}
+    }
+
+    private val objectMapper = jacksonObjectMapper()
+    val tekstMap = parse(tekstJson)
+    inline fun <reified T : TekstObjekt> lookup(id: String): T = tekstMap.lookup(id)
+
+    inline fun <reified T : TekstObjekt> Map<String, TekstObjekt>.lookup(tekstId: String): T {
+        return this.getOrElse(tekstId) {
+            logg.error { "Fant ikke tekst for tekstId: $tekstId" }
+            when (T::class.java.canonicalName.split(".").last()) {
+                "EnkelTest" -> EnkelText(textId = tekstId, text = tekstId)
+                "FaktaTekstObjekt" -> FaktaTekstObjekt(textId = tekstId, text = tekstId)
+                "SeksjonTekstObjekt" -> SeksjonTekstObjekt(textId = tekstId, title = tekstId)
+                "SvaralternativTekstObjekt" -> SvaralternativTekstObjekt(
+                    textId = tekstId,
+                    text = tekstId,
+                    alertText = null
+                )
+                "DokumentkravTekstObjekt" -> DokumentkravTekstObjekt(textId = tekstId, text = tekstId)
+                else -> throw IllegalArgumentException("Ukjent klasse: ${T::class.java.name}")
+            }
+        } as T
     }
 
     private fun parse(tekstJson: String): Map<String, TekstObjekt> {
@@ -35,7 +59,7 @@ internal class Oppslag(private val tekstJson: String) {
         fakta().forEach { tekst ->
             val textId = tekst["textId"].asText()
             withLoggingContext("textId" to textId) {
-                map[textId] = TekstObjekt.FaktaTekstObjekt(
+                map[textId] = FaktaTekstObjekt(
                     textId = textId,
                     text = tekst["text"].asText(),
                     description = tekst.get("description")?.asRawHtmlString(),
@@ -52,7 +76,7 @@ internal class Oppslag(private val tekstJson: String) {
         seksjoner().forEach { tekst ->
             val textId = tekst["textId"].asText()
             withLoggingContext("textId" to textId) {
-                map[textId] = TekstObjekt.SeksjonTekstObjekt(
+                map[textId] = SeksjonTekstObjekt(
                     textId = textId,
                     title = tekst["title"].asText(),
                     description = tekst.get("description")?.asRawHtmlString(),
@@ -68,7 +92,7 @@ internal class Oppslag(private val tekstJson: String) {
         apptekster().forEach { tekst ->
             val textId = tekst["textId"].asText()
             withLoggingContext("textId" to textId) {
-                map[textId] = TekstObjekt.EnkelText(
+                map[textId] = EnkelText(
                     textId = textId,
                     text = tekst["valueText"].asText()
                 )
@@ -81,7 +105,7 @@ internal class Oppslag(private val tekstJson: String) {
         return dokumentkrav().associate { dokumentkrav ->
             val textId = dokumentkrav["textId"].asText()
             withLoggingContext("textId" to textId) {
-                textId to TekstObjekt.DokumentkravTekstObjekt(
+                textId to DokumentkravTekstObjekt(
                     textId = textId,
                     text = dokumentkrav["text"].asText(),
                     description = dokumentkrav.get("description")?.asRawHtmlString(),
@@ -101,7 +125,7 @@ internal class Oppslag(private val tekstJson: String) {
         svaralternativer().forEach { tekst ->
             val textId = tekst["textId"].asText()
             withLoggingContext("textId" to textId) {
-                map[textId] = TekstObjekt.SvaralternativTekstObjekt(
+                map[textId] = SvaralternativTekstObjekt(
                     textId = textId,
                     text = tekst["text"].asText(),
                     alertText = tekst["alertText"]?.takeIf { !it.isNull }?.let { alerttext ->
@@ -119,30 +143,30 @@ internal class Oppslag(private val tekstJson: String) {
 
     internal fun generellTekst(): Innsending.GenerellTekst {
         return Innsending.GenerellTekst(
-            hovedOverskrift = (lookup("pdf.hovedoverskrift") as TekstObjekt.EnkelText).text,
-            tittel = (lookup("pdf.tittel") as TekstObjekt.EnkelText).text,
-            svar = (lookup("pdf.svar") as TekstObjekt.EnkelText).text,
-            datoSendt = (lookup("pdf.datosendt") as TekstObjekt.EnkelText).text,
-            fnr = (lookup("pdf.fnr") as TekstObjekt.EnkelText).text
+            hovedOverskrift = (lookup<EnkelText>("pdf.hovedoverskrift")).text,
+            tittel = (lookup<EnkelText>("pdf.tittel")).text,
+            svar = (lookup<EnkelText>("pdf.svar")).text,
+            datoSendt = (lookup<EnkelText>("pdf.datosendt")).text,
+            fnr = (lookup<EnkelText>("pdf.fnr")).text
         )
     }
 
     internal fun generellTekstEttersending(): Innsending.GenerellTekst {
         return Innsending.GenerellTekst(
-            hovedOverskrift = (lookup("pdf.ettersending.hovedoverskrift") as TekstObjekt.EnkelText).text,
-            tittel = (lookup("pdf.tittel") as TekstObjekt.EnkelText).text,
-            svar = (lookup("pdf.svar") as TekstObjekt.EnkelText).text,
-            datoSendt = (lookup("pdf.datosendt") as TekstObjekt.EnkelText).text,
-            fnr = (lookup("pdf.fnr") as TekstObjekt.EnkelText).text
+            hovedOverskrift = lookup<EnkelText>("pdf.ettersending.hovedoverskrift").text,
+            tittel = lookup<EnkelText>("pdf.tittel").text,
+            svar = lookup<EnkelText>("pdf.svar").text,
+            datoSendt = lookup<EnkelText>("pdf.datosendt").text,
+            fnr = lookup<EnkelText>("pdf.fnr").text
         )
     }
 
-    fun pdfaMetaTags(): Innsending.PdfAMetaTagger =
+    internal fun pdfaMetaTags(): Innsending.PdfAMetaTagger =
         objectMapper.readTree(tekstJson).apptekster().let {
             Innsending.PdfAMetaTagger(
-                description = (lookup("pdfa.description") as TekstObjekt.EnkelText).text,
-                subject = (lookup("pdfa.subject") as TekstObjekt.EnkelText).text,
-                author = (lookup("pdfa.author") as TekstObjekt.EnkelText).text
+                description = (lookup<EnkelText>("pdfa.description")).text,
+                subject = (lookup<EnkelText>("pdfa.subject")).text,
+                author = (lookup<EnkelText>("pdfa.author")).text
             )
         }
 
@@ -174,6 +198,7 @@ internal class Oppslag(private val tekstJson: String) {
                 }
             }
         }
+
         class DokumentkravTekstObjekt(
             textId: String,
             val text: String,
@@ -206,9 +231,9 @@ class RawHtmlString private constructor(htmlFraSanity: String) {
     }
 }
 
-private fun JsonNode.hjelpetekst(): Oppslag.TekstObjekt.HelpText? =
+private fun JsonNode.hjelpetekst(): HelpText? =
     get("helpText")?.let {
-        Oppslag.TekstObjekt.HelpText(it.get("title")?.asText(), it.get("body")?.asRawHtmlString())
+        HelpText(it.get("title")?.asText(), it.get("body")?.asRawHtmlString())
     }
 
 private fun JsonNode.seksjoner() = this["sanityTexts"]["seksjoner"]
