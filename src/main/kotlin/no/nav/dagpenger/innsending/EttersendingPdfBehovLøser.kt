@@ -59,10 +59,11 @@ internal class EttersendingPdfBehovLøser(
                                 søknadUUid = soknadId.toString(),
                                 arkiverbartDokument = dokumenter,
                                 fnr = ident
-                            ).also {
-                                logg.info { "Svar fra dp-mellomlagring: $it" }
-                                logg.info { "Mappet til packet: $it" }
-                                packet["@løsning"] = mapOf(BEHOV to it.behovSvar())
+                            ).let {
+                                with(it.behovSvar()) {
+                                    logg.info { "@Løsning satt til $this" }
+                                    packet["@løsning"] = mapOf(BEHOV to this)
+                                }
                             }
                         }
                     context.publish(packet.toJson())
