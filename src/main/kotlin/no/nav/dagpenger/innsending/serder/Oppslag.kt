@@ -142,7 +142,7 @@ internal class Oppslag(private val tekstJson: String) {
                         // todo fixme
                         TekstObjekt.AlertText(
                             alerttext["title"]?.asText(),
-                            alerttext["type"]?.asText() ?: "ALERT TYPE MANGLER ",
+                            alerttext["type"]?.asText() ?: "error",
                             alerttext["body"]?.asRawHtmlString()
                         )
                     }
