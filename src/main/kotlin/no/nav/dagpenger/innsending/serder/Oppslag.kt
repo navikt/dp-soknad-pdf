@@ -139,9 +139,10 @@ internal class Oppslag(private val tekstJson: String) {
                     textId = textId,
                     text = tekst["text"].asText(),
                     alertText = tekst["alertText"]?.takeIf { !it.isNull }?.let { alerttext ->
+                        // todo fixme
                         TekstObjekt.AlertText(
                             alerttext["title"]?.asText(),
-                            alerttext["type"].asText(),
+                            alerttext["type"]?.asText() ?: "ALERT TYPE MANGLER ",
                             alerttext["body"]?.asRawHtmlString()
                         )
                     }
