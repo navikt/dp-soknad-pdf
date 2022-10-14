@@ -244,11 +244,11 @@ internal fun DIV.bruttoSeksjon(seksjon: Innsending.Seksjon, tekst: GenerellTekst
 private fun DIV.bruttoSpørsmål(spmSvar: SporsmalSvar, tekst: GenerellTekst) {
     div {
         h3 { +spmSvar.sporsmal }
-        //todo
+        // todo
         try {
             spmSvar.beskrivelse?.also { unsafe { +spmSvar.beskrivelse.medCssKlasse("infotekst") } }
         } catch (e: Exception) {
-            logg.error { "Feil i generering av bruttoSpm.beskrivelse" }
+            logg.error { "Feil i generering av bruttoSpm.beskrivelse. Beskrivelse:${spmSvar.beskrivelse}" }
         }
         spmSvar.hjelpetekst?.also {
             div(classes = "hjelpetekst") {
@@ -264,7 +264,5 @@ private fun DIV.bruttoSpørsmål(spmSvar: SporsmalSvar, tekst: GenerellTekst) {
         }
     }
 }
-
-internal fun unsafe
 
 private fun seksjonId(overskrift: String) = "seksjon-${overskrift.replace(" ", "-").lowercase()}"
