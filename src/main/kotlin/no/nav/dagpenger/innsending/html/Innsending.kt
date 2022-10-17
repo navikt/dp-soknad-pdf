@@ -99,6 +99,8 @@ internal data class Innsending(
             private fun String.leggTilPåHtmlPtag(kode: String): String =
                 """<p class="$this"${kode.substringAfter("<p")}"""
         }
+
+        override fun toString() = "UnsafeHtml($kode)"
     }
 
     enum class InnsendingsSpråk(
@@ -138,7 +140,15 @@ internal data class Innsending(
         }
     }
 
-    class Innsendt(navn: String, beskrivelse: UnsafeHtml?, hjelpetekst: Hjelpetekst?, valg: Valg) : DokumentKrav(navn, beskrivelse, hjelpetekst, valg)
-    class IkkeInnsendtNå(navn: String, val begrunnelse: String, beskrivelse: UnsafeHtml?, hjelpetekst: Hjelpetekst?, valg: Valg) :
+    class Innsendt(navn: String, beskrivelse: UnsafeHtml?, hjelpetekst: Hjelpetekst?, valg: Valg) :
+        DokumentKrav(navn, beskrivelse, hjelpetekst, valg)
+
+    class IkkeInnsendtNå(
+        navn: String,
+        val begrunnelse: String,
+        beskrivelse: UnsafeHtml?,
+        hjelpetekst: Hjelpetekst?,
+        valg: Valg
+    ) :
         DokumentKrav(navn, beskrivelse, hjelpetekst, valg)
 }
