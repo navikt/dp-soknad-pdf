@@ -248,7 +248,7 @@ private fun DIV.bruttoSpørsmål(spmSvar: SporsmalSvar, tekst: GenerellTekst) {
         try {
             spmSvar.beskrivelse?.also { unsafe { +spmSvar.beskrivelse.medCssKlasse("infotekst") } }
         } catch (e: Exception) {
-            logg.error { "Feil i generering av bruttoSpm.beskrivelse. Beskrivelse:${spmSvar.beskrivelse}" }
+            logg.error { "Feil i generering av bruttoSpm.beskrivelse. Beskrivelse:${spmSvar.beskrivelse}. Error: $e" }
         }
         spmSvar.hjelpetekst?.also {
             div(classes = "hjelpetekst") {
