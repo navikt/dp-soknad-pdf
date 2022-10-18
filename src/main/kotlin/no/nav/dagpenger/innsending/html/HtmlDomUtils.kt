@@ -253,7 +253,9 @@ private fun DIV.bruttoSpørsmål(spmSvar: SporsmalSvar, tekst: GenerellTekst) {
         spmSvar.hjelpetekst?.also {
             div(classes = "hjelpetekst") {
                 spmSvar.hjelpetekst.tittel?.also { tittel -> h3 { +tittel } }
-                // unsafe { +spmSvar.hjelpetekst.unsafeHtmlBody.kode }
+                spmSvar.hjelpetekst.unsafeHtmlBody?.let {
+                    unsafe { +spmSvar.hjelpetekst.unsafeHtmlBody.kode }
+                }
             }
         }
         svar(tekst, spmSvar.svar, true)
