@@ -258,7 +258,7 @@
     ],
     "dokumentkrav": [
       {
-        "text": "Dokumentasjonskrav",
+        "title": "Dokumentasjonskrav",
         "textId": "faktum.dokument-varsel-om-permittering",
         "helpText": {
           "body": [
@@ -272,7 +272,7 @@
         "description": null
       },
       {
-        "text": "Dokumentasjon på helt eller delvis arbeidsforhold",
+        "title": "Dokumentasjon på helt eller delvis arbeidsforhold",
         "textId": "dokumentasjonskrav.krav.arbeidsforhold",
         "helpText": null,
         "description": [

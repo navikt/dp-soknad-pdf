@@ -44,7 +44,7 @@ internal class Oppslag(private val tekstJson: String) {
                     text = tekstId,
                     alertText = null
                 )
-                DokumentkravTekstObjekt::class -> DokumentkravTekstObjekt(textId = tekstId, text = tekstId)
+                DokumentkravTekstObjekt::class -> DokumentkravTekstObjekt(textId = tekstId, title = tekstId)
                 else -> throw IllegalArgumentException("Ukjent klasse: ${T::class.java.name}")
             }
     }
@@ -117,7 +117,7 @@ internal class Oppslag(private val tekstJson: String) {
             withLoggingContext("textId" to textId) {
                 textId to DokumentkravTekstObjekt(
                     textId = textId,
-                    text = dokumentkrav["text"].asText(),
+                    title = dokumentkrav["title"].asText(),
                     description = dokumentkrav.get("description")?.asRawHtmlString(),
                     helpText = dokumentkrav["helpText"]?.takeIf { !it.isNull }?.let { helpText ->
                         HelpText(
@@ -212,7 +212,7 @@ internal class Oppslag(private val tekstJson: String) {
 
         class DokumentkravTekstObjekt(
             textId: String,
-            val text: String,
+            val title: String,
             description: RawHtmlString? = null,
             helpText: HelpText? = null
         ) : TekstObjekt(textId, description, helpText)

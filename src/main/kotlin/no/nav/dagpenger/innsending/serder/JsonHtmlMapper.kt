@@ -50,14 +50,14 @@ internal class JsonHtmlMapper(
                 oppslag.lookup<DokumentkravTekstObjekt>(krav["beskrivendeId"].asText())
             when (valg) {
                 Innsending.DokumentKrav.Valg.SEND_NAA -> Innsending.Innsendt(
-                    navn = tekstObjekt.text,
+                    navn = tekstObjekt.title,
                     beskrivelse = tekstObjekt.description?.let { rawHtml -> Innsending.UnsafeHtml(rawHtml.html) },
                     hjelpetekst = tekstObjekt.hjelpetekst(),
                     valg = valg
                 )
 
                 else -> Innsending.IkkeInnsendtNå(
-                    navn = tekstObjekt.text,
+                    navn = tekstObjekt.title,
                     begrunnelse = krav["begrunnelse"].asText(),
                     beskrivelse = tekstObjekt.description?.let { rawHtml -> Innsending.UnsafeHtml(rawHtml.html) },
                     hjelpetekst = tekstObjekt.hjelpetekst(),

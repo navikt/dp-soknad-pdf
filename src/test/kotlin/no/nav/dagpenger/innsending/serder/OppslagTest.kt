@@ -21,7 +21,7 @@ internal class OppslagTest {
 
     @Test
     fun `Håndterer feil type`() {
-        Oppslag(testTekster).lookup<Oppslag.TekstObjekt.DokumentkravTekstObjekt>("id2").text shouldBe "id2"
+        Oppslag(testTekster).lookup<Oppslag.TekstObjekt.DokumentkravTekstObjekt>("id2").title shouldBe "id2"
     }
 
     @Language("JSON")
