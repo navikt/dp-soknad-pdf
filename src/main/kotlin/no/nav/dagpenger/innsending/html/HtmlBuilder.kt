@@ -11,7 +11,9 @@ import kotlinx.html.head
 import kotlinx.html.html
 import kotlinx.html.id
 import kotlinx.html.lang
+import kotlinx.html.p
 import kotlinx.html.title
+import no.nav.dagpenger.innsending.html.Innsending.InnsendingsSpråk.BOKMÅL
 
 internal object HtmlBuilder {
     fun lagNettoHtml(innsending: Innsending) = lagHtml(innsending, DIV::nettoSeksjon, false)
@@ -60,10 +62,30 @@ internal object HtmlBuilder {
                             +"Dokumentasjon"
                         }
                         dokumentasjonKrav(innsending.dokumentasjonskrav, Innsending.DokumentKrav.Valg.SEND_NAA, brutto)
-                        dokumentasjonKrav(innsending.dokumentasjonskrav, Innsending.DokumentKrav.Valg.SEND_SENERE, brutto)
-                        dokumentasjonKrav(innsending.dokumentasjonskrav, Innsending.DokumentKrav.Valg.SENDER_IKKE, brutto)
-                        dokumentasjonKrav(innsending.dokumentasjonskrav, Innsending.DokumentKrav.Valg.SENDT_TIDLIGERE, brutto)
-                        dokumentasjonKrav(innsending.dokumentasjonskrav, Innsending.DokumentKrav.Valg.ANDRE_SENDER, brutto)
+                        dokumentasjonKrav(
+                            innsending.dokumentasjonskrav,
+                            Innsending.DokumentKrav.Valg.SEND_SENERE,
+                            brutto
+                        )
+                        dokumentasjonKrav(
+                            innsending.dokumentasjonskrav,
+                            Innsending.DokumentKrav.Valg.SENDER_IKKE,
+                            brutto
+                        )
+                        dokumentasjonKrav(
+                            innsending.dokumentasjonskrav,
+                            Innsending.DokumentKrav.Valg.SENDT_TIDLIGERE,
+                            brutto
+                        )
+                        dokumentasjonKrav(
+                            innsending.dokumentasjonskrav,
+                            Innsending.DokumentKrav.Valg.ANDRE_SENDER,
+                            brutto
+                        )
+                        // todo engelsk tekst
+                        if (innsending.språk == BOKMÅL) {
+                            p { +"Frist for innsendinger er 14 dager etter at du sendte søknaden. Vi trenger dokumentasjonen for å vurdere om du har rett til dagpenger. Du er ansvarlig for at dokumentasjonen sendes til oss. Hvis du ikke sender alle dokumentene innen fristen kan du få avslag på søknaden, fordi NAV mangler viktige opplysninger i saken din. Ta kontakt hvis du ikke rekker å ettersende alle dokumentene." }
+                        }
                     }
                 }
             }
