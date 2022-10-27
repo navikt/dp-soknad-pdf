@@ -54,10 +54,10 @@ internal object HtmlBuilder {
                     }
                 }
                 if (innsending.dokumentasjonskrav.isNotEmpty()) {
-                    div(classes = "vedlegg") {
-                        id = "Vedlegg"
+                    div(classes = "dokumentasjon") {
+                        id = "Dokumentasjon"
                         h2 {
-                            +"Vedlegg"
+                            +"Dokumentasjon"
                         }
                         dokumentasjonKrav(innsending.dokumentasjonskrav, Innsending.DokumentKrav.Valg.SEND_NAA, brutto)
                         dokumentasjonKrav(innsending.dokumentasjonskrav, Innsending.DokumentKrav.Valg.SEND_SENERE, brutto)

@@ -61,12 +61,12 @@ internal fun HEAD.bookmarks(innsending: Innsending) {
         """<bookmark name = "${it.overskrift}" href="#${seksjonId(it.overskrift)}"></bookmark>"""
     }
 
-    val vedleggBookmerke = when {
-        innsending.dokumentasjonskrav.isNotEmpty() -> """<bookmark name = "Vedlegg" href="#Vedlegg"></bookmark>"""
+    val dokumentasjonBookmark = when {
+        innsending.dokumentasjonskrav.isNotEmpty() -> """<bookmark name = "Dokumentasjon" href="#Dokumentasjon"></bookmark>"""
         else -> null
     }
 
-    val bokmerker = listOfNotNull(seksjonBokmerker, vedleggBookmerke).joinToString("")
+    val bokmerker = listOfNotNull(seksjonBokmerker, dokumentasjonBookmark).joinToString("")
 
     unsafe {
         //language=HTML
@@ -141,7 +141,7 @@ internal fun DIV.dokumentasjonKrav(
         Innsending.DokumentKrav.Valg.SEND_NAA -> {
             val innsendts = dokumentKrav.filterIsInstance<Innsending.Innsendt>()
             if (innsendts.isNotEmpty()) {
-                p { +"Du har lagt ved følgende vedlegg: " }
+                p { +"Du har lagt ved følgende dokumentasjon: " }
                 ul(classes = "dokumentasjonkrav") {
                     innsendts.forEach { dokumentKrav ->
                         li(classes = "listSpacing") {
@@ -154,19 +154,19 @@ internal fun DIV.dokumentasjonKrav(
         }
         Innsending.DokumentKrav.Valg.SEND_SENERE -> {
             val innsendts = dokumentKrav.filterIsInstance<Innsending.IkkeInnsendtNå>().filter { it.valg == valg }
-            dokumentKrav(innsendts, "Du har sagt at du skal sende følgende vedlegg:", brutto)
+            dokumentKrav(innsendts, "Du har sagt at du skal sende følgende dokumentasjon:", brutto)
         }
         Innsending.DokumentKrav.Valg.SENDT_TIDLIGERE -> {
             val innsendts = dokumentKrav.filterIsInstance<Innsending.IkkeInnsendtNå>().filter { it.valg == valg }
-            dokumentKrav(innsendts, "Du har sagt at du tidligere har sendt inn følgende vedlegg:", brutto)
+            dokumentKrav(innsendts, "Du har sagt at du tidligere har sendt inn følgende dokumentasjon:", brutto)
         }
         Innsending.DokumentKrav.Valg.SENDER_IKKE -> {
             val innsendts = dokumentKrav.filterIsInstance<Innsending.IkkeInnsendtNå>().filter { it.valg == valg }
-            dokumentKrav(innsendts, "Du har sagt at du ikke sender følgende vedlegg:", brutto)
+            dokumentKrav(innsendts, "Du har sagt at du ikke sender følgende dokumentasjon:", brutto)
         }
         Innsending.DokumentKrav.Valg.ANDRE_SENDER -> {
             val innsendts = dokumentKrav.filterIsInstance<Innsending.IkkeInnsendtNå>().filter { it.valg == valg }
-            dokumentKrav(innsendts, "Du har sagt at andre skal sende følgende vedlegg:", brutto)
+            dokumentKrav(innsendts, "Du har sagt at andre skal sende følgende dokumentasjon:", brutto)
         }
     }
 }
