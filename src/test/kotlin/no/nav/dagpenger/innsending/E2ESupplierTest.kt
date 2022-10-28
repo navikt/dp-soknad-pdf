@@ -12,6 +12,7 @@ import no.nav.dagpenger.innsending.html.Innsending.InnsendingsSpråk.BOKMÅL
 import no.nav.dagpenger.innsending.html.InnsendingSupplier
 import no.nav.dagpenger.oauth2.CachedOauth2Client
 import no.nav.dagpenger.oauth2.OAuth2Config
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import java.io.File
 import java.io.FileReader
@@ -62,7 +63,7 @@ internal class E2ESupplierTest {
     }
 
     @Test
-//    @Disabled
+    @Disabled
     fun `hent dokumentasjonskrav`() {
         val ids = listOf<String>(
             "e7ed5915-1b5e-42b4-b56f-9c1d1ae95955"
