@@ -55,7 +55,7 @@ dependencies {
     implementation("io.github.microutils:kotlin-logging:3.0.2")
     implementation("com.github.navikt.dp-biblioteker:oauth2-klient:2022.10.22-09.05.6fcf3395aa4f")
     implementation("io.ktor:ktor-client-logging:2.1.2")
-    implementation("io.ktor:ktor-client-cio:2.1.2")
+    implementation("io.ktor:ktor-client-cio:2.1.3")
     implementation("io.ktor:ktor-client-content-negotiation:2.1.2")
     implementation("io.ktor:ktor-serialization-jackson:2.1.3")
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.13.4")
