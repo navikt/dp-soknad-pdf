@@ -132,7 +132,7 @@ internal class Oppslag(private val tekstJson: String) {
 
     private fun JsonNode.tilSvarAlternativTekstObjekt(): Map<String, TekstObjekt> {
         val map = mutableMapOf<String, TekstObjekt>()
-        svaralternativer().forEach { tekst ->
+        (dokumentkravSvaralternativer() + svaralternativer()).forEach { tekst ->
             val textId = tekst["textId"].asText()
             withLoggingContext("textId" to textId) {
                 map[textId] = SvaralternativTekstObjekt(
@@ -249,6 +249,7 @@ private fun JsonNode.hjelpetekst(): HelpText? =
 
 private fun JsonNode.seksjoner() = this["sanityTexts"]["seksjoner"]
 private fun JsonNode.svaralternativer() = this["sanityTexts"]["svaralternativer"]
+private fun JsonNode.dokumentkravSvaralternativer() = this["sanityTexts"]["dokumentkravSvar"] ?: emptyList<JsonNode>()
 private fun JsonNode.dokumentkrav() = this["sanityTexts"]["dokumentkrav"]
 private fun JsonNode.fakta() = this["sanityTexts"]["fakta"]
 private fun JsonNode.apptekster(): JsonNode = this["sanityTexts"]["apptekster"]

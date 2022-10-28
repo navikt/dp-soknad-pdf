@@ -2,11 +2,14 @@
   "sanityTexts": {
     "fakta": [
       {
-        "text": "Legg til barn",
+        "text": "Har du flere barn som du forsørger?",
         "unit": null,
         "textId": "faktum.legge-til-egne-barn",
         "helpText": null,
-        "description": null
+        "description": [
+          "<p>Hvis du har forsørgeransvar for barn under 18 år som ikke vises her, kan du legge dem til.</p>"
+        ],
+        "errorMessage": null
       },
       {
         "text": "Hvilket land bor du i?",
@@ -14,13 +17,14 @@
         "textId": "faktum.hvilket-land-bor-du-i",
         "helpText": {
           "body": [
-            "<p>Er du usikker på hva du skal svare, kan du lese mer om hvor du skal søke penger fra på <a href=\"https://www.nav.no/\">nav.no</a>.</p>"
+            "<p>Er du usikker på hva du skal svare, kan du <a href=\"https://www.nav.no/no/person/arbeid/dagpenger-ved-arbeidsloshet-og-permittering/relatert-informasjon/hvordan-s%C3%B8ker-du-arbeidsledighetstrygd-etter-jobb-i-E%C3%98S-land\">lese mer om hvor du skal søke penger fra</a></p>"
           ],
-          "title": "Har du pendlet mellom flere land?"
+          "title": "For deg som har pendlet mellom flere land"
         },
         "description": [
           "<p>Med bostedsland mener vi ditt vanlige oppholdssted, som er der du eier eller leier bolig og tilbringer mesteparten av tiden din.</p>"
-        ]
+        ],
+        "errorMessage": null
       },
       {
         "text": "Har du reist tilbake til bostedslandet ditt etter at du ble arbeidsledig eller permittert?",
@@ -32,60 +36,68 @@
             "<p>Om du heller skal søke om penger fra bostedslandet ditt, avhenger av hvor lenge du har vært borte fra Norge etter at du ble arbeidsledig og hva som var formålet med å reise tilbake.</p>",
             "<p>Husk at du må søke om dagpenger for at vi skal kunne vurdere om du oppfyller vilkårene for å få penger fra Norge.</p>"
           ],
-          "title": "Hvorfor spør vi om dette?"
+          "title": "Grunnen til at vi spør om dette"
         },
         "description": [
           "<p>Hvis du velger å reise tilbake til landet du er bosatt i, kan du miste retten til å få dagpenger fra Norge og må søke om økonomisk støtte fra landet du bor i.</p>"
-        ]
+        ],
+        "errorMessage": null
       },
       {
         "text": "Dato for avreise",
         "unit": null,
         "textId": "faktum.reist-tilbake-periode",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
         "text": "Hvorfor reiste du fra Norge?",
         "unit": null,
         "textId": "faktum.reist-tilbake-aarsak",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
         "text": "Reiste du hjem til landet du bor i én gang i uken eller mer, mens du jobbet i Norge?",
         "unit": null,
         "textId": "faktum.reist-tilbake-en-gang-eller-mer",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
         "text": "Reiste du i takt med rotasjon?",
         "unit": null,
         "textId": "faktum.reist-i-takt-med-rotasjon",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
         "text": "Har du mottatt dagpenger fra NAV i løpet av de siste 52 ukene?",
         "unit": null,
         "textId": "faktum.mottatt-dagpenger-siste-12-mnd",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
         "text": "faktum.register.barn-liste",
         "unit": null,
         "textId": "faktum.register.barn-liste",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
         "text": "faktum.barn-liste",
         "unit": null,
         "textId": "faktum.barn-liste",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
         "text": "Hvilken dato søker du dagpenger fra?",
@@ -93,22 +105,27 @@
         "textId": "faktum.dagpenger-soknadsdato",
         "helpText": null,
         "description": [
-          "<p>Du bør søke om dagpenger fra den første dagen du er helt eller delvis arbeidsledig, eller permittert.</p>"
-        ]
+          "<p>Du bør søke om dagpenger fra den første dagen du er helt eller delvis arbeidsledig, eller permittert. Du kan tidligst få dagpenger fra den dagen du sender inn søknaden om dagpenger.</p>"
+        ],
+        "errorMessage": null
       },
       {
-        "text": "Hvilken type arbeidstid har du hatt?",
+        "text": "Velg det alternativet som passer best for deg",
         "unit": null,
         "textId": "faktum.type-arbeidstid",
         "helpText": null,
-        "description": null
+        "description": [
+          "<p>Vi trenger informasjon om dine arbeidsforhold og hvor mye du har jobbet. Basert på hvor mye du har jobbet vil vi vurdere om du har rett til dagpenger, og eventuelt hvor mye deltid du kan jobbe ved siden av dagpengene.</p>"
+        ],
+        "errorMessage": null
       },
       {
         "text": "Har du jobbet siden sist du fikk dagpenger?",
         "unit": null,
         "textId": "faktum.arbeidsforhold.gjenopptak.jobbet-siden-sist",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
         "text": "Skriv årsaken til at dagpengene ble stanset (Maks 500 tegn)",
@@ -117,7 +134,8 @@
         "helpText": null,
         "description": [
           "<p>For eksempel om du har vært syk, på ferie, glemt å sende meldekort, vært i utdanning eller hatt foreldrepermisjon.</p>"
-        ]
+        ],
+        "errorMessage": null
       },
       {
         "text": "Hvilken dato søker du gjenopptak av dagpenger fra?\n",
@@ -127,11 +145,12 @@
           "body": [
             "<p>Du kan tidligst få dagpenger fra den dagen du sender inn søknaden om gjenopptak om dagpenger.</p>"
           ],
-          "title": "Når kan jeg tidligst få dagpenger fra?"
+          "title": "Les om når du tidligst kan få dagpenger fra"
         },
         "description": [
           "<p>Hvis du har jobbet siden sist skal du oppgi den første dagen du ble helt eller delvis arbeidsledig.</p>"
-        ]
+        ],
+        "errorMessage": null
       },
       {
         "text": "Har du hatt endringer i ett eller flere arbeidsforhold siden sist du fikk dagpenger?",
@@ -140,7 +159,8 @@
         "helpText": null,
         "description": [
           "<p>Vi trenger informasjon om arbeidsforholdene dine som har endret seg siden sist du fikk dagpenger. For eksempel at arbeidsgiveren din har gått konkurs.</p>"
-        ]
+        ],
+        "errorMessage": null
       },
       {
         "text": "Ønsker du at NAV skal gjøre en ny beregning av hvor mye du skal få i dagpenger?",
@@ -150,61 +170,72 @@
           "body": [
             "<p>Har du jobbet i minst 12 uker, kan du ved å svare “ja” på dette spørsmålet få en ny vurdering av hvor mye du skal få i dagpenger. Ber du oss om å gjøre en ny vurdering, vil vi velge det alternativet som lønner seg for deg.</p>"
           ],
-          "title": "Hva vil dette bety for meg?"
+          "title": "Les om hva det betyr det for deg"
         },
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
         "text": "Ønsker du å få fastsatt ny vanlig arbeidstid?",
         "unit": null,
         "textId": "faktum.arbeidsforhold.gjenopptak.onsker-faa-fastsatt-ny-vanlig-arbeidstid",
         "helpText": {
-          "body": null,
-          "title": "Hva vil dette bety for meg?"
+          "body": [
+            "<p>Hvis du har arbeidet flere timer siden forrige gang du mottok dagpenger, kan det lønne seg å få fastsatt ny arbeidstid. Dette betyr at du kan arbeide mer og samtidig motta dagpenger. Ber du oss om å gjøre en ny vurdering, vil vi velge det alternativet som lønner seg for deg.</p>"
+          ],
+          "title": "Les om hva dette betyr for deg"
         },
-        "description": [
-          "<p>Hvis du har arbeidet flere timer siden forrige gang du mottok dagpenger, kan det lønne seg å få fastsatt ny arbeidstid. Dette betyr at du kan arbeide mer og samtidig motta dagpenger. Ber du oss om å gjøre en ny vurdering, vil vi velge det alternativet som lønner seg for deg.</p>"
-        ]
+        "description": null,
+        "errorMessage": null
       },
       {
-        "text": "faktum.arbeidsforhold",
+        "text": "Dine arbeidsforhold",
         "unit": null,
         "textId": "faktum.arbeidsforhold",
         "helpText": null,
-        "description": null
+        "description": [
+          "<p>Her kan du legge til arbeidsforhold</p>"
+        ],
+        "errorMessage": null
       },
       {
-        "text": "Har du jobbet i Sveits, eller et annet EØS-land enn Norge i løpet av de siste 36 månedene?",
+        "text": "Har du jobbet i et annet EØS-land eller i Sveits, i løpet av de siste 36 månedene?",
         "unit": null,
         "textId": "faktum.eos-arbeid-siste-36-mnd",
         "helpText": {
           "body": [
             "<p>Hvis du har jobbet i et annet EØS-land eller i Sveits, kan du ha rett til å få overført arbeidsperioder du har hatt der. Da vil de regnes med i vurderingen av retten til dagpenger i Norge.</p>"
           ],
-          "title": "Hvorfor må jeg svare på dette?"
+          "title": "Grunnen til at vi spør om dette"
         },
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
-        "text": "faktum.eos-arbeidsforhold",
+        "text": "Dine arbeidsforhold i EØS og Sveits",
         "unit": null,
         "textId": "faktum.eos-arbeidsforhold",
         "helpText": null,
-        "description": null
+        "description": [
+          "<p>Legg til alle arbeidsforhold du har hatt i andre EØS-land eller i Sveits de siste 36 månedene, slik at vi kan ta dem med i vurderingen av din rett til dagpenger i Norge.<br/><br/>Hvis arbeidsforhold du la til i forrige steg var i et annet EØS-land eller i Sveits må du legge det til her også.</p>"
+        ],
+        "errorMessage": null
       },
       {
         "text": "Driver du egen næringsvirksomhet?",
         "unit": null,
         "textId": "faktum.driver-du-egen-naering",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
         "text": "Skriv inn hvor mange timer du jobbet i egen næring før arbeidstiden ble redusert",
         "unit": "timer",
         "textId": "faktum.egen-naering-arbeidstimer-for",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
         "text": "Skriv inn hvor mange timer du jobber i egen næring nå",
@@ -212,169 +243,209 @@
         "textId": "faktum.egen-naering-arbeidstimer-naa",
         "helpText": null,
         "description": [
-          "<p>Hvis du jobber mer enn 60 prosent av den totale arbeidstiden du hadde før, har du ikke rett til dagpenger</p>"
-        ]
+          "<p>Hvis du jobber mer enn 50 prosent av den totale arbeidstiden du hadde før, har du ikke rett til dagpenger</p>"
+        ],
+        "errorMessage": null
       },
       {
         "text": "Driver du eget gårdsbruk?",
         "unit": null,
         "textId": "faktum.driver-du-eget-gaardsbruk",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
         "text": "Gårdsbrukets organisasjonsnummer",
         "unit": null,
         "textId": "faktum.eget-gaardsbruk-organisasjonsnummer",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
         "text": "Hvilken type gårdsbruk driver du? ",
         "unit": null,
         "textId": "faktum.eget-gaardsbruk-type-gaardsbruk",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
         "text": "Hvem eier gårdsbruket? Du kan krysse for flere.",
         "unit": null,
         "textId": "faktum.eget-gaardsbruk-hvem-eier",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
-        "text": "Hvor mye av inntekten går til deg?",
+        "text": "Hvor mange prosent av inntekten går til deg?",
         "unit": "%",
         "textId": "faktum.eget-gaardsbruk-jeg-andel-inntekt",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
         "text": "Hvor mye av inntekten går til ektefelle/samboer?",
         "unit": "%",
         "textId": "faktum.eget-gaardsbruk-ektefelle-samboer-andel-inntekt",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
-        "text": "Hvor mye av inntekten går til  andre?",
+        "text": "Hvor mange prosent av inntekten går til  andre?",
         "unit": "%",
         "textId": "faktum.eget-gaardsbruk-andre-andel-inntekt",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
         "text": "Skriv hvor mange arbeidstimer som ble brukt",
         "unit": "timer",
         "textId": "faktum.eget-gaardsbruk-arbeidstimer-aar",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
         "text": "Hvor mange arbeidstimer blir brukt på gårdsbruket totalt i løpet av ett år?",
         "unit": null,
         "textId": "faktum.eget-gaardsbruk-arbeidsaar-for-timer",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
         "text": "Forklar kort hvordan du har beregnet antall arbeidstimer totalt",
         "unit": null,
         "textId": "faktum.eget-gaardsbruk-arbeidstimer-beregning",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
-        "text": "faktum.egen-naering-organisasjonsnummer-liste",
+        "text": "Næringens organisasjonsnummer",
         "unit": null,
         "textId": "faktum.egen-naering-organisasjonsnummer-liste",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
-        "text": "Har du avtjent verneplikt i minst tre måneder de siste 12 månedene?",
+        "text": "Har du avtjent verneplikt i minst tre måneder de siste tolv månedene?",
         "unit": null,
         "textId": "faktum.avtjent-militaer-sivilforsvar-tjeneste-siste-12-mnd",
         "helpText": null,
-        "description": null
+        "description": [
+          "<p>Du kan ha rett til dagpenger hvis du har avtjent militærtjeneste eller obligatorisk sivilforsvarstjeneste i minst tre av de siste tolv månedene</p>"
+        ],
+        "errorMessage": null
       },
       {
         "text": "Mottar du eller har du søkt om ytelser fra andre enn NAV?",
         "unit": null,
         "textId": "faktum.andre-ytelser-mottatt-eller-sokt",
-        "helpText": null,
-        "description": null
+        "helpText": {
+          "body": [
+            "<p>Hvis du mottar ytelser fra andre enn NAV, kan det ha betydning for retten din til dagpenger.</p>"
+          ],
+          "title": "Grunnen til at vi spør om dette"
+        },
+        "description": [
+          "<ul><li>Pensjon fra andre enn NAV</li></ul>",
+          "<ul><li>Etterlønn</li></ul>",
+          "<ul><li>Dagpenger fra andre EØS-land</li></ul>",
+          "<ul><li>Garantilott for fiskere</li></ul>",
+          "<ul><li>Stønad under arbeidsløshet fra Garantikassen for fiskere</li></ul>",
+          "<ul><li>Annen ytelse</li></ul>"
+        ],
+        "errorMessage": null
       },
       {
-        "text": "Hvilke andre ytelser?",
+        "text": "Velg hvilke av disse ytelsene du mottar eller har søkt om",
         "unit": null,
         "textId": "faktum.hvilke-andre-ytelser",
         "helpText": null,
-        "description": null
+        "description": [
+          "<p>Hvis du mottar ytelser fra andre enn NAV, kan det ha betydning for retten din til dagpenger.</p>"
+        ],
+        "errorMessage": null
       },
       {
         "text": " Hvem utbetaler pensjonen?",
         "unit": null,
         "textId": "faktum.tjenestepensjon-hvem-utbetaler",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
         "text": "Hvilken periode gjelder ytelsen for?",
         "unit": null,
         "textId": "faktum.tjenestepensjon-hvilken-periode",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
         "text": " Hvem utbetaler etterlønnen?",
         "unit": null,
         "textId": "faktum.etterlonn-arbeidsgiver-hvem-utbetaler",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
-        "text": "Hvem utbetaler etterlønnen?",
+        "text": "Hvilken periode gjelder ytelsen for?",
         "unit": null,
         "textId": "faktum.etterlonn-arbeidsgiver-hvilken-periode",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
         "text": "Hvilket land utbetaler pengene?",
         "unit": null,
         "textId": "faktum.dagpenger-hvilket-eos-land-utbetaler",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
         "text": "Hvilken periode gjelder ytelsen for?",
         "unit": null,
         "textId": "faktum.dagpenger-eos-land-hvilken-periode",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
         "text": "Hvilken ytelse er det?",
         "unit": null,
         "textId": "faktum.hvilken-annen-ytelse",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
         "text": "Hvem utbetaler ytelsen?",
         "unit": null,
         "textId": "faktum.annen-ytelse-hvem-utebetaler",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
         "text": "Hvilken periode gjelder ytelsen for?",
         "unit": null,
         "textId": "faktum.annen-ytelse-hvilken-periode",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
         "text": "Får du eller kommer du til å få en utbetaling eller andre økonomiske goder fra tidligere arbeidsgiver?",
@@ -384,32 +455,41 @@
           "body": [
             "<p>Du kan ikke få dagpenger samtidig som du er dekket av lønn fra arbeidsgiver. Det er ikke når du får utbetalingen som er avgjørende, men hvilken periode utbetalingen gjelder for.</p>"
           ],
-          "title": "Hvorfor spør vi om dette?"
+          "title": "Grunnen til at vi spør om dette"
         },
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
         "text": "Skriv inn hva du får eller beholder",
         "unit": null,
         "textId": "faktum.okonomisk-gode-tidligere-arbeidsgiver-hva-omfatter-avtalen",
-        "helpText": null,
+        "helpText": {
+          "body": [
+            "<p>Vi vil bruke disse opplysningene til å beregne når du kan få dagpenger fra.</p>"
+          ],
+          "title": "Grunnen til at vi spør om dette"
+        },
         "description": [
           "<p>Du må opplyse hvor mye du får utbetalt. Hvis du beholder noen gjenstander, må du skrive hvilke. Du trenger ikke opplyse om feriepenger.</p>"
-        ]
+        ],
+        "errorMessage": null
       },
       {
         "text": "Hvilken periode gjelder ytelsen for?",
         "unit": null,
-        "textId": "faktum.arbeidsløs-GFF-hvilken-periode",
+        "textId": "faktum.arbeidslos-GFF-hvilken-periode",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
         "text": "Hvilken periode gjelder ytelsen for?",
         "unit": null,
         "textId": "faktum.garantilott-GFF-hvilken-periode",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
         "text": "Kan du jobbe både heltid og deltid?",
@@ -418,23 +498,31 @@
         "helpText": null,
         "description": [
           "<p>Som hovedregel må du kunne ta både hel- og deltidsjobb for å ha rett til dagpenger.</p>"
-        ]
+        ],
+        "errorMessage": null
       },
       {
         "text": "Velg situasjonen som gjelder deg.",
         "unit": null,
         "textId": "faktum.kun-deltid-aarsak",
-        "helpText": null,
+        "helpText": {
+          "body": [
+            "<p>Hvis du har svart nei og ingen av disse situasjonene gjelder for deg, kan du få avslag på søknaden din om dagpenger. Du kan allikevel velge annen situasjon og få dagpengesøknaden din behandlet.</p>"
+          ],
+          "title": "Hvis ingen av disse situasjonene passer deg"
+        },
         "description": [
           "<p>Du kan krysse av for flere alternativer. Du må dokumentere årsaken.</p>"
-        ]
+        ],
+        "errorMessage": null
       },
       {
         "text": "Skriv kort om situasjonen din",
         "unit": null,
         "textId": "faktum.kort-om-hvorfor-kun-deltid",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
         "text": "Skriv inn antall timer du kan jobbe per uke",
@@ -448,7 +536,8 @@
         },
         "description": [
           "<p>For å få rett til dagpenger må du normalt kunne jobbe minst 18,75 timer per uke.</p>"
-        ]
+        ],
+        "errorMessage": null
       },
       {
         "text": "Kan du jobbe i hele Norge?",
@@ -457,7 +546,8 @@
         "helpText": null,
         "description": [
           "<p>Som hovedregel må du være villig til å ta arbeid i hele Norge for å ha rett til dagpenger</p>"
-        ]
+        ],
+        "errorMessage": null
       },
       {
         "text": "Velg situasjonen som gjelder deg.",
@@ -466,14 +556,16 @@
         "helpText": null,
         "description": [
           "<p>Du kan krysse av for flere alternativer. Du må dokumentere årsaken.</p>"
-        ]
+        ],
+        "errorMessage": null
       },
       {
         "text": "Skriv kort om situasjonen din",
         "unit": null,
         "textId": "faktum.kort-om-hvorfor-ikke-jobbe-hele-norge",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
         "text": "Kan du ta alle typer arbeid?",
@@ -483,12 +575,13 @@
           "body": [
             "<p>Med helsemessige begrensninger mener vi funksjonshemming, sykdom, allergier som hindrer deg i arbeidet eller andre årsaker som må tas hensyn til når du skal finne nytt arbeid. Du må oppgi hva som gjelder for deg, og dokumentere de helsemessige årsakene du viser til.</p>"
           ],
-          "title": "Hva regnes som helsemessige begrensninger?"
+          "title": "Dette regnes som helsemessige begrensninger"
         },
         "description": [
           "<p>Som hovedregel må du kunne ta alle typer arbeid for å ha rett til dagpenger.</p>",
           "<p>Hvis du har helsemessige begrensninger og ikke kan ta alle typer arbeid, vil vi ta hensyn til dette.<br/></p>"
-        ]
+        ],
+        "errorMessage": null
       },
       {
         "text": "Er du villig til å bytte yrke eller gå ned i lønn?",
@@ -497,7 +590,8 @@
         "helpText": null,
         "description": [
           "<p>For å ha rett til dagpenger må du være villig til å ta ethvert arbeid du er kvalifisert for. Dette gjelder også innenfor yrker du ikke er utdannet til eller har arbeidserfaring fra. Dette betyr også at du må være villig til å gå ned i lønn. Du trenger ikke å ta arbeid som ikke er lønnet etter tariff.</p>"
-        ]
+        ],
+        "errorMessage": null
       },
       {
         "text": "Tar du utdanning eller opplæring?",
@@ -506,154 +600,176 @@
         "helpText": null,
         "description": [
           "<p>Som hovedregel har du ikke rett til dagpenger når du er under utdanning eller opplæring.</p>"
-        ]
+        ],
+        "errorMessage": null
       },
       {
         "text": "Avsluttet du utdanning i løpet av de siste seks månedene?",
         "unit": null,
         "textId": "faktum.avsluttet-utdanning-siste-6-mnd",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
         "text": "Planlegger du å starte eller fullføre utdanning eller opplæring samtidig som du mottar dagpenger?",
         "unit": null,
         "textId": "faktum.planlegger-utdanning-med-dagpenger",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
-        "text": "Hvis du har flere opplysninger du mener er viktige for søknaden din kan du skrive dem her",
+        "text": "Skriv inn tilleggsopplysningene her",
         "unit": null,
         "textId": "faktum.tilleggsopplysninger",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
         "text": "Har du flere opplysninger du mener er viktige for søknaden din?",
         "unit": null,
         "textId": "faktum.tilleggsopplysninger.har-tilleggsopplysninger",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
         "text": "faktum.dokument-verneplikt-tjenestebevis",
         "unit": null,
         "textId": "faktum.dokument-verneplikt-tjenestebevis",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
         "text": "faktum.dokument-verneplikt-tjenestebevis-tilgjengelig",
         "unit": null,
         "textId": "faktum.dokument-verneplikt-tjenestebevis-tilgjengelig",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
         "text": "faktum.dokument-verneplikt-tjenestebevis-årsak",
         "unit": null,
         "textId": "faktum.dokument-verneplikt-tjenestebevis-årsak",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
         "text": "faktum.dokument-utdanning-sluttdato",
         "unit": null,
         "textId": "faktum.dokument-utdanning-sluttdato",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
         "text": "faktum.dokument-utdanning-sluttdato-tilgjengelig",
         "unit": null,
         "textId": "faktum.dokument-utdanning-sluttdato-tilgjengelig",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
         "text": "faktum.dokument-utdanning-sluttdato-årsak",
         "unit": null,
         "textId": "faktum.dokument-utdanning-sluttdato-årsak",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
         "text": "faktum.dokument-egen-næring-arbeidstimer",
         "unit": null,
         "textId": "faktum.dokument-egen-næring-arbeidstimer",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
         "text": "faktum.dokument-egen-næring-arbeidstimer-tilgjengelig",
         "unit": null,
         "textId": "faktum.dokument-egen-næring-arbeidstimer-tilgjengelig",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
         "text": "faktum.dokument-egen-næring-arbeidstimer-ikke-tilgjengelig-årsak",
         "unit": null,
         "textId": "faktum.dokument-egen-næring-arbeidstimer-ikke-tilgjengelig-årsak",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
         "text": "faktum.dokument-egen-næring-gårdsbruk-arbeidstimer",
         "unit": null,
         "textId": "faktum.dokument-egen-næring-gårdsbruk-arbeidstimer",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
         "text": "faktum-dokument-egen-næring-gårdsbruk-arbeidstimer-tilgjengelig",
         "unit": null,
         "textId": "faktum-dokument-egen-næring-gårdsbruk-arbeidstimer-tilgjengelig",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
         "text": "faktum.dokument-egen-næring-gårdsbruk-arbeidstimer-ikke-tilgjengelig-årsak",
         "unit": null,
         "textId": "faktum.dokument-egen-næring-gårdsbruk-arbeidstimer-ikke-tilgjengelig-årsak",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
         "text": "Etternavn",
         "unit": null,
         "textId": "faktum.barn-etternavn",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
         "text": "Fødselsdato (dd.mm.ååå)",
         "unit": null,
         "textId": "faktum.barn-foedselsdato",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
         "text": "Forsørger du barnet?",
         "unit": null,
         "textId": "faktum.forsoerger-du-barnet",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
         "text": "Fornavn og mellomnavn",
         "unit": null,
         "textId": "faktum.barn-fornavn-mellomnavn",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
         "text": "Bostedsland til barnet",
         "unit": null,
         "textId": "faktum.barn-statsborgerskap",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
         "text": "Har barnet en årsinntekt på over 1 G?",
@@ -662,42 +778,48 @@
         "helpText": null,
         "description": [
           "<p>Dersom barnet har årsinntekt over 1 G, får du ikke barnetillegg for dette barnet.</p>"
-        ]
+        ],
+        "errorMessage": null
       },
       {
         "text": "Skriv inn inntekten til barnet i norske kroner",
         "unit": "NOK",
         "textId": "faktum.barn-inntekt",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
         "text": "Navnet på bedriften",
         "unit": null,
         "textId": "faktum.arbeidsforhold.navn-bedrift",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
         "text": "Hvilket land har du jobbet i?",
         "unit": null,
         "textId": "faktum.arbeidsforhold.land",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
         "text": "Hvordan har dette arbeidsforholdet endret seg?",
         "unit": null,
         "textId": "faktum.arbeidsforhold.endret",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
         "text": "Vet du hvor mange timer du jobber i arbeidsforholdet?",
         "unit": null,
         "textId": "faktum.arbeidsforhold.kjent-antall-timer-jobbet",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
         "text": "Hvor mange timer i uka jobber du i dette arbeidsforholdet?",
@@ -707,135 +829,159 @@
           "body": [
             "<p>Jobber du like mye hver uke, oppgir du denne arbeidstiden.<br/><br/>Hvis du ikke jobber like mye hver uke, oppgir du antall timer du forventer å jobbe per uke i denne måneden.</p>"
           ],
-          "title": "Hva skal jeg oppgi som arbeidstid?"
+          "title": "Dette skal du oppgi som arbeidstid"
         },
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
         "text": "Har du tilleggsopplysninger til dette arbeidsforholdet?",
         "unit": null,
         "textId": "faktum.arbeidsforhold.har-tilleggsopplysninger",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
-        "text": "Tilleggsopplysninger",
+        "text": "Tilleggsopplysninger (maks 500 tegn)",
         "unit": null,
         "textId": "faktum.arbeidsforhold.tilleggsopplysninger",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
-        "text": "Når startet du i jobben?",
+        "text": "Hvilken dato startet arbeidsforholdet? (dd.mm.åååå)",
         "unit": null,
         "textId": "faktum.arbeidsforhold.startdato-arbeidsforhold",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
         "text": " Fra hvilken dato er arbeidstiden din redusert? (dd.mm.åååå)",
         "unit": null,
         "textId": "faktum.arbeidsforhold.arbeidstid-redusert-fra-dato",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
         "text": "Er dette et midlertidig arbeidsforhold med en kontraktfestet sluttdato?",
         "unit": null,
         "textId": "faktum.arbeidsforhold.midlertidig-med-kontraktfestet-sluttdato",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
         "text": "Oppgi den kontraktsfestede sluttdatoen på dette arbeidsforholdet",
         "unit": null,
         "textId": "faktum.arbeidsforhold.kontraktfestet-sluttdato",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
         "text": "Når startet du i denne jobben?",
         "unit": null,
         "textId": "faktum.arbeidsforhold.midlertidig-arbeidsforhold-oppstartsdato",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
         "text": "Er du permittert fra fiskeforedlings- eller fiskeoljeindustrien?",
         "unit": null,
         "textId": "faktum.arbeidsforhold.permittertert-fra-fiskeri-naering",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
         "text": "Varighet på arbeidsforholdet",
         "unit": null,
         "textId": "faktum.arbeidsforhold.varighet",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
         "text": "Vet du hvor mange timer du har jobbet i uka før du ble sagt opp?",
         "unit": null,
         "textId": "faktum.arbeidsforhold.vet-du-antall-timer-foer-mistet-jobb",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
         "text": "Vet du hvor mange timer du har jobbet i uka før arbeidsgiveren gikk konkurs?",
         "unit": null,
         "textId": "faktum.arbeidsforhold.vet-du-antall-timer-foer-konkurs",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
         "text": "Vet du hvor mange timer du har jobbet i uka før kontrakten utgikk?",
         "unit": null,
         "textId": "faktum.arbeidsforhold.vet-du-antall-timer-foer-kontrakt-utgikk",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
         "text": "Vet du hvor mange timer du har jobbet i uka før du sa opp jobben?",
         "unit": null,
         "textId": "faktum.arbeidsforhold.vet-du-antall-timer-foer-du-sa-opp",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
         "text": "Vet du hvor mange timer du har jobbet i uka før arbeidstiden ble redusert?",
         "unit": null,
         "textId": "faktum.arbeidsforhold.vet-du-antall-timer-foer-redusert-arbeidstid",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
         "text": "Vet du hvor mange timer du har jobbet i uka før du ble permittert?",
         "unit": null,
         "textId": "faktum.arbeidsforhold.vet-du-antall-timer-foer-permittert",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
-        "text": "Hvor mange timer jobber du i uka?",
+        "text": "Skriv inn antall timer",
         "unit": null,
         "textId": "faktum.arbeidsforhold.antall-timer-dette-arbeidsforhold",
-        "helpText": null,
-        "description": null
+        "helpText": {
+          "body": [
+            "<p>Har du jobbet like mye hver uke, oppgir du denne arbeidstiden. Hvis du ikke har jobbet like mye hver uke, oppgir du det antall timer du har jobbet i snitt de tre siste månedene.</p>"
+          ],
+          "title": "Dette skal du oppgi som arbeidstid"
+        },
+        "description": null,
+        "errorMessage": null
       },
       {
         "text": "Legg inn siste permitteringsperiode",
         "unit": null,
         "textId": "faktum.arbeidsforhold.permittert-periode",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
         "text": "Hvor mange prosent er du permittert?",
         "unit": "%",
         "textId": "faktum.arbeidsforhold.permittert-prosent",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
         "text": "Vet du hva lønnspliktsperioden til arbeidsgiveren din er eller var?",
@@ -844,42 +990,48 @@
         "helpText": null,
         "description": [
           "<p>Du finner informasjon om arbeidsgivers lønnspliktperiode i permitteringsvarselet. Fra-datoen er den første dagen du ikke arbeider som normalt fordi du er permittert.</p>"
-        ]
+        ],
+        "errorMessage": null
       },
       {
         "text": "Når var lønnspliktsperioden?",
         "unit": null,
         "textId": "faktum.arbeidsforhold.naar-var-lonnsplikt-periode",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
         "text": " Hva er årsaken til at du har sagt opp? (Maks 500 tegn) ",
         "unit": null,
         "textId": "faktum.arbeidsforhold.aarsak-til-du-sa-opp",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
         "text": "Har du fått tilbud om forlengelse av arbeidskontrakten eller tilbud om annen stilling hos arbeidsgiveren din?",
         "unit": null,
         "textId": "faktum.arbeidsforhold.tilbud-om-forlengelse-eller-annen-stilling",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
         "text": "Hva har du svart på tilbudet?",
         "unit": null,
         "textId": "faktum.arbeidsforhold.svar-paa-forlengelse-eller-annen-stilling",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
-        "text": "Hva er årsaken til at du ikke har tatt imot tilbudet?",
+        "text": "Hva er årsaken til at du ikke har tatt imot tilbudet? (Maks 500 tegn)",
         "unit": null,
         "textId": "faktum.arbeidsforhold.aarsak-til-ikke-akseptert-tilbud",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
         "text": "Ønsker du å søke om forskudd på lønnsgarantimidler?",
@@ -889,11 +1041,12 @@
           "body": [
             "<p>Lønnsgarantiordningen skal sikre at du som arbeidstaker får lønn som du ikke har fått utbetalt når arbeidsgiveren din går konkurs. Søknaden til lønnsgarantiordningen skal sendes via bostyrer i konkursboet.<br/><br/>Det kan ta lang tid før du får svar på søknaden om lønnsgarantimidler. Du kan derfor søke om forskudd på lønnsgarantimidler. Forskuddet blir utbetalt som dagpenger, i inntil en måned etter at arbeidsgiveren din er konkurs.<br/><br/>Er du usikker på om du har rett på lønnsgarantimidler, anbefaler vi at du søker om forskudd her. Da må du også sende en egen søknad om lønnsgarantimidler, i tillegg til denne søknaden.</p>"
           ],
-          "title": "Hva er lønnsgarantiordningen?"
+          "title": "Dette er lønnsgarantiordningen"
         },
         "description": [
           "<p><br/></p>"
-        ]
+        ],
+        "errorMessage": null
       },
       {
         "text": "Ønsker du å søke om dagpenger i tillegg til forskudd om lønnsgarantimidler?",
@@ -903,9 +1056,10 @@
           "body": [
             "<p>Forskudd på lønnsgarantimidler blir utbetalt i inntil én måned.<br/><br/>Hvis du er uten arbeid etter at perioden med forskudd på lønnsgarantimidler er ferdig, kan du ha rett på dagpenger. Det kan du søke om ved å svare ja på dette spørsmålet.</p>"
           ],
-          "title": "Hvem kan ha rett på dagpenger?"
+          "title": "Les om hvem som kan ha rett på dagpenger"
         },
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
         "text": "Godtar du at NAV trekker forskuddet om lønnsgarantimidler direkte fra lønnsgarantiordningen?",
@@ -914,7 +1068,8 @@
         "helpText": null,
         "description": [
           "<p>Når du får innvilget lønnsgarantimidler, trekker vi forskuddet fra lønnsgarantimidlene. Dette er fordi forskuddet kun skal dekke den første måneden du venter på svar på søknaden om lønnsgarantimidler. Du taper ikke penger totalt sett.<br/><br/>Du får likt beløp i lønnsgarantimidler totalt, uavhengig av om du velger forskudd eller ikke.</p>"
-        ]
+        ],
+        "errorMessage": null
       },
       {
         "text": "Har du søkt om lønnsgarantimidler?",
@@ -923,130 +1078,249 @@
         "helpText": null,
         "description": [
           "<p>For å ha rett til forskudd på lønnsgarantimidler må du søke lønnsgarantiordningen om lønnsgarantimidler. Dette kan bostyrer i konkursboet hjelpe deg med.</p>"
-        ]
+        ],
+        "errorMessage": null
       },
       {
         "text": "Dekker lønnsgarantiordningen lønnskravet ditt?",
         "unit": null,
         "textId": "faktum.arbeidsforhold.dekker-lonnsgarantiordningen-lonnskravet-ditt",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
         "text": "Har du fått utbetalt lønn for dager etter datoen arbeidsgiveren din gikk konkurs eller ble tvangsavviklet?",
         "unit": null,
         "textId": "faktum.arbeidsforhold.utbetalt-lonn-etter-konkurs",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
         "text": "Velg den siste dagen du har fått utbetalt lønn for",
         "unit": null,
         "textId": "faktum.arbeidsforhold.siste-dag-utbetalt-for-konkurs",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
-        "text": "Hva var årsaken til at du ble sagt opp?",
+        "text": "Hva var årsaken til at du ble avskjediget? (Maks 500 tegn)",
         "unit": null,
         "textId": "faktum.arbeidsforhold.hva-er-aarsak-til-avskjediget",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
-        "text": "Hva var årsaken til at du ble sagt opp?",
+        "text": "Hva var årsaken til at du ble sagt opp? (Maks 500 tegn)",
         "unit": null,
         "textId": "faktum.arbeidsforhold.vet-du-aarsak-til-sagt-opp-av-arbeidsgiver",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
-        "text": "Hva er årsaken til at arbeidstiden din ble redusert?",
+        "text": "Hva er årsaken til at arbeidstiden din ble redusert? (Maks 500 tegn)",
         "unit": null,
         "textId": "faktum.arbeidsforhold.vet-du-aarsak-til-redusert-arbeidstid",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
         "text": "Er dette et midlertidig arbeidsforhold med en kontraktfestet sluttdato?",
         "unit": null,
         "textId": "faktum.arbeidsforhold.midlertidig-arbeidsforhold-med-sluttdato",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
         "text": "Har du fått tilbud om å fortsette hos arbeidsgiveren din i en annen stilling eller et annet sted i Norge?",
         "unit": null,
         "textId": "faktum.arbeidsforhold.tilbud-om-annen-stilling-eller-annet-sted-i-norge",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
-        "text": "Arbeidet du skift eller turnus?",
+        "text": "Jobbet du skift eller turnus?",
         "unit": null,
         "textId": "faktum.arbeidsforhold.skift-eller-turnus",
-        "helpText": null,
+        "helpText": {
+          "body": [
+            "<p>Hvis du arbeider skift eller turnus, opparbeider du deg friperioder eller avspasering. For å kunne gi deg dagpenger fra riktig dato, trenger vi informasjon om eventuell skift-, eller turnusordning.</p>"
+          ],
+          "title": "Grunnen til at vi spør om dette"
+        },
         "description": [
           "<p>Skift eller turnus kan være når du har avtale om å arbeide ulike tider i ulike uker, som for eksempel dagtid en uke og kveldstid en uke, eller har fri hver tredje helg.</p>"
-        ]
+        ],
+        "errorMessage": null
       },
       {
-        "text": "Arbeidet du rotasjon?",
+        "text": "Jobbet du rotasjon?",
         "unit": null,
         "textId": "faktum.arbeidsforhold.rotasjon",
-        "helpText": null,
+        "helpText": {
+          "body": [
+            "<p>Hvis du arbeider rotasjon, opparbeider du deg friperioder eller avspasering. For å kunne gi deg dagpenger fra riktig dato, trenger vi informasjon om eventuell rotasjonsordning.</p>"
+          ],
+          "title": "Grunnen til at vi spør om dette"
+        },
         "description": [
           "<p>En rotasjon er for eksempel at du arbeider to uker og har fri i to uker.</p>"
-        ]
+        ],
+        "errorMessage": null
       },
       {
         "text": "Hvor mange arbeidsdager hadde du i den siste rotasjonen din?",
         "unit": null,
         "textId": "faktum.arbeidsforhold.arbeidsdager-siste-rotasjon",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
         "text": "Hvor mange fridager hadde du i den siste rotasjonen din?",
         "unit": null,
         "textId": "faktum.arbeidsforhold.fridager-siste-rotasjon",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
         "text": "Navnet på bedriften",
         "unit": null,
         "textId": "faktum.eos-arbeidsforhold.arbeidsgivernavn",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
         "text": "Hvilket land har du jobbet i?",
         "unit": null,
         "textId": "faktum.eos-arbeidsforhold.land",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
         "text": "Oppgi personnummeret (PIN) som du hadde i dette landet",
         "unit": null,
         "textId": "faktum.eos-arbeidsforhold.personnummer",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
         "text": "Varighet på arbeidsforholdet",
         "unit": null,
         "textId": "faktum.eos-arbeidsforhold.varighet",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
       },
       {
         "text": "Næringens organisasjonsnummer",
         "unit": null,
         "textId": "faktum.egen-naering-organisasjonsnummer",
         "helpText": null,
-        "description": null
+        "description": null,
+        "errorMessage": null
+      }
+    ],
+    "infosider": [
+      {
+        "body": [
+          "<h1>Dokumentasjon</h1>",
+          "<p>Du må laste opp dokumentasjon som bekrefter opplysningene i søknaden. Du får raskere svar på søknaden din hvis vi har all dokumentasjonen når vi starter behandlingen. Du kan bruke filformatene PDF, JPG og PNG.</p>",
+          "<p>Slik bruker du bilder som dokumentasjon i søknaden:</p>",
+          "<ol><li>Ta bilde av dokumentet med smarttelefon eller nettbrett</li></ol>",
+          "<ol><li>Sjekk at dokumentet er lett å lese</li></ol>",
+          "<ol><li>Last opp bildene her</li></ol>",
+          "<h2>Mangler du noen dokumenter?</h2>",
+          "<p>Du kan sende inn det du har nå og ettersende resten innen 14 dager. Hvis du ikke sender alle dokumentene innen fristen kan du få avslag på søknaden, fordi NAV mangler viktige opplysninger i saken din. Ta kontakt hvis du ikke rekker å ettersende alle dokumentene.</p>",
+          "<h3>Har du sendt inn dokumentene til NAV tidligere?</h3>",
+          "<p>Hvis du har sendt inn dokumentene sammen med en tidligere søknad om dagpenger, trenger du ikke å sende det på nytt.</p>"
+        ],
+        "slug": "dokumentasjonskrav"
+      },
+      {
+        "body": [
+          "<p>Søknaden din er ferdig behandlet, og du har fått et svar. Det er viktig at du leser svaret.</p>",
+          "<p>Du må huske å sende meldekort innen fristen, også mens du venter på svar på søknaden din.</p>"
+        ],
+        "slug": "kvittering.soknad-status.description.ferdig-behehandlet"
+      },
+      {
+        "body": [
+          "<p>Dagpenger er økonomisk støtte på veien tilbake i arbeid.<br/>For å ha rett til dagpenger må du fylle noen krav, her kan du lese om du har rett til dagpenger</p>",
+          "<p></p>",
+          "<h2>Når du søker dagpenger må du:</h2>",
+          {
+            "_key": "fb24e2ef6155",
+            "_type": "timeline",
+            "elements": [
+              {
+                "_key": "d6e593882f59",
+                "body": [
+                  "<p>Du må være registrert som arbeidssøker i hele perioden du mottar dagpenger, også mens du venter på svar på søknaden.<br/></p>",
+                  "<p>På hvert meldekort bekrefter du at du fortsatt vil være registrert som arbeidssøker, og du gir informasjon til NAV for at vi skal kunne beregne hvor mye du skal få i dagpenger.</p>"
+                ],
+                "_type": "timelineElement",
+                "title": "Du må være registrert som arbeidssøker og sende meldekort hver 14. dag",
+                "iconName": "Applicant"
+              },
+              {
+                "_key": "d63caf16aa78",
+                "body": [
+                  "<p>I tillegg til å sende meldekort er det viktig at du gir oss beskjed hvis situasjonen din endrer seg, for eksempel hvis du er tilbake i jobb, er syk eller oppholder deg i utlandet.</p>"
+                ],
+                "_type": "timelineElement",
+                "title": "Gi beskjed hvis situasjonen din endrer seg",
+                "iconName": "DirectionSign"
+              },
+              {
+                "_key": "2cdf88cdc4eb",
+                "body": [
+                  "<p>I søknaden må du svare på spørsmål om du frisk nok til å jobbe og om du kan til å ta alle typer arbeid hvor som helst i Norge. Du må i tillegg være aktiv jobbsøker og takke ja til arbeidsmarkedstiltak.</p>"
+                ],
+                "_type": "timelineElement",
+                "title": "Du må være reell jobbsøker",
+                "iconName": "Bag"
+              }
+            ]
+          },
+          "<h2>Slik søker du</h2>",
+          "<p>I søknaden stiller vi kun spørsmål som er relevante i din situasjon. Antall spørsmål og tiden det tar å søke vil derfor kunne variere. De fleste bruker 20-30 minutter.</p>",
+          "<p><br/>Noen av opplysningene du gir i søknaden må du dokumentere. Du får beskjed underveis i søknaden om hvilken dokumentasjon du må sende inn.<br/>Du kan ta pauser når du fyller ut søknaden. Vi lagrer søknaden i opptil sju dager mens du fyller ut.</p>",
+          "<h2>Vi vil hente og bruke informasjon om deg</h2>",
+          "<p>I tillegg til den informasjonen du oppgir i søknaden, henter vi inn informasjon om deg for å avgjøre om du har rett til stønad. Vi deler også noe av informasjonen din med andre offentlige virksomheter.</p>",
+          "<h2>Automatisk behandling</h2>",
+          "<p>Noen søknader vil bli behandlet automatisk. Det betyr at du får svar på søknaden uten at en saksbehandler har sett på saken din. Hvis du er uenig i svaret du får, kan du klage. Les mer om automatisk behandling og dine rettigheter</p>",
+          "<h2>Vi trenger riktige opplysninger for å vurdere om du har rett til dagpenger</h2>",
+          "<p>Hvis du gir feil eller mangelfulle opplysninger</p>",
+          "<ul><li>mister du retten til dagpenger</li></ul>",
+          "<ul><li>må du betale tilbake penger du ikke har rett til</li></ul>"
+        ],
+        "slug": "startside"
+      },
+      {
+        "body": [
+          "<p>Vi har fått søknaden din, men vi mangler dokumenter for å kunne behandle søknaden. Når du har sendt alle dokumentene vil vi behandle søknaden, og du får beskjed når svaret er klart. Se hvor lang tid saksbehandlingstiden for dagpenger er nå.</p>",
+          "<p></p>",
+          "<p>Du må huske å sende meldekort innen fristen, også mens du venter på svar på søknaden din.</p>"
+        ],
+        "slug": "kvittering.soknad-status.description.mangler-dokumenter"
+      },
+      {
+        "body": [
+          "<p>Vi har fått søknaden din. Du vil få beskjed når svaret er klart. Se hvor lang tid saksbehandlingstiden for dagpenger er nå.</p>"
+        ],
+        "slug": "kvittering.soknad-status.description.under-behandling"
       }
     ],
     "seksjoner": [
@@ -1073,8 +1347,12 @@
         "textId": "barnetillegg",
         "helpText": null,
         "description": [
-          "<p>Forsørger du barn (biologiske og/eller adoptivbarn) under 18 år, kan du ha rett på barnetillegg.</p>",
-          "<p><br/>Du kan også ha rett på barnetillegg dersom du er pliktig til å betale bidrag.</p>"
+          "<p>Du kan ha rett på barnetillegg hvis:</p>",
+          "<ul><li>Du har ansvar for biologiske barn eller adoptivbarn, som er under 18 år.</li></ul>",
+          "<ul><li>Du betaler barnebidrag.</li></ul>",
+          "<ul><li>Barnet er bosatt i Norge, eller et annet EØS-land og forsørges av deg. Barnet trenger ikke å bo sammen med deg.</li></ul>",
+          "<p>Du får ikke barnetillegg hvis barnet oppholder seg utenfor EØS i over 90 dager i løpet av 12 måneder.</p>",
+          "<p>Under vises barna som vi har registrert på deg.</p>"
         ]
       },
       {
@@ -1099,17 +1377,13 @@
         "title": "Verneplikt",
         "textId": "verneplikt",
         "helpText": null,
-        "description": [
-          "<p>Du kan ha rett til dagpenger etter særlige regler hvis du har avtjent militærtjeneste eller obligatorisk sivilforsvarstjeneste i minst tre av de siste tolv månedene.</p>"
-        ]
+        "description": null
       },
       {
         "title": "Andre ytelser",
         "textId": "andre-ytelser",
         "helpText": null,
-        "description": [
-          "<p>Dersom du mottar ytelser fra andre enn NAV, kan det ha betydning for retten din til dagpenger.</p>"
-        ]
+        "description": null
       },
       {
         "title": "Reell arbeidssøker",
@@ -1121,151 +1395,766 @@
         "title": "Utdanning",
         "textId": "utdanning",
         "helpText": null,
-        "description": [
-          "<p>Som hovedregel har du ikke rett til dagpenger når du er under utdanning eller opplæring.</p>"
-        ]
+        "description": null
       },
       {
         "title": "Tilleggsopplysninger",
         "textId": "tilleggsopplysninger",
         "helpText": null,
-        "description": [
-          "<p>Hvis du har flere opplysninger du mener er viktige for søknaden din kan du skrive dem her.</p>"
-        ]
+        "description": null
       },
       {
-        "title": "Reell arbeidssøker",
-        "textId": "reell-arbeidssoker",
-        "helpText": {
-          "body": [
-            "<p>Du må svare «ja» på alle spørsmål under «reel arbeidssøker». Det vil likevel ikke bli stilt like strenge krav til deg, som de som er helt arbeidsledige.</p>"
-          ],
-          "title": "For deg som er delvis eller kortvarig permittert"
-        },
+        "title": "Personalia",
+        "textId": "personalia",
+        "helpText": null,
         "description": [
-          "<p>For å få dagpenger må du være reell arbeidssøker. Dette betyr at du som hovedregel</p>",
-          "<ul><li>er frisk nok til å jobbe minst 50 prosent som tilsvarer 18,75 timer i uka</li></ul>",
-          "<ul><li>kan ta ethvert arbeid hvor som helst i Norge</li></ul>",
-          "<ul><li>kan delta i arbeidsmarkedstiltak</li></ul>"
+          "<p>NAV har registrert følgende kontaktinformasjon. Du kan gjøre endringer på Ditt NAV.</p>"
         ]
       }
     ],
     "apptekster": [
       {
-        "textId": "barn.legg-til",
+        "textId": "soknad.auto-lagret.tekst",
+        "valueText": "Lagret automatisk"
+      },
+      {
+        "textId": "dokumentkrav.bundle-error-modal.knapp.avbryt",
+        "valueText": "Prøv på nytt"
+      },
+      {
+        "textId": "filopplaster.dra.filene.hit",
+        "valueText": "Dra filene hit eller"
+      },
+      {
+        "textId": "dokumentkrav.feilmelding.mangler-filer",
+        "valueText": "Du må velge en eller flere filer"
+      },
+      {
+        "textId": "slett-soknad.modal.tittel",
+        "valueText": "Er du sikker på at du  vil slette søknaden?"
+      },
+      {
+        "textId": "arbeidssoker.registrer-som-arbeidssoker-knapp",
+        "valueText": "Registrer deg som arbeidssøker"
+      },
+      {
+        "textId": "kvittering.arbeidssokerstatus.info-tekst.uregistrert",
+        "valueText": "Du er ikke registrert som arbeidssøker, og du risikerer å få avslag på søknaden din. Etter du har registrert deg må du sende hvert meldekort innen fristen, også når du venter på svar på søknaden din. Hvis du ikke sender meldekort kan du miste retten til dagpenger."
+      },
+      {
+        "textId": "kvittering.heading.mangler-dokumenter",
+        "valueText": "Manglende dokumenter"
+      },
+      {
+        "textId": "filopplaster.feil.beskrivelse",
+        "valueText": "Klarte ikke å laste opp følgende filer:"
+      },
+      {
+        "textId": "kvittering.tekst.antall-sendt",
+        "valueText": "sendt"
+      },
+      {
+        "textId": "personalia.kontonummer",
+        "valueText": "Kontonummer"
+      },
+      {
+        "textId": "faktum.tjenestepensjon-hvilken-periode.til",
+        "valueText": "Til dato"
+      },
+      {
+        "textId": "arbeidssoker.sok-om-dagpenger-likevel.beskrivelse",
+        "valueText": ", og er klar over at jeg mest sannsynlig vil få av slag på søknaden"
+      },
+      {
+        "textId": "validering.dato-faktum.soknadsdato-varsel",
+        "valueText": "Vi anbefaler at du sender søknaden tidligst én uke før den oppgitte datoen. Sender du søknaden for tidlig, kan du få avslag. Søker du for sent, kan du tape dager med rett til dagpenger."
+      },
+      {
+        "textId": "kvittering.tekst.skal-sendes-av.deg",
+        "valueText": "Skal sendes av deg"
+      },
+      {
+        "textId": "barn.knapp.legg-til",
         "valueText": "Legg til barn"
       },
       {
-        "textId": "start-soknad.start-knapp",
+        "textId": "kvittering.soknad-status.tag.ferdig-behehandlet",
+        "valueText": "Ferdig behandlet"
+      },
+      {
+        "textId": "faktum.annen-ytelse-hvilken-periode.til",
+        "valueText": "Til dato"
+      },
+      {
+        "textId": "dokumentkrav.feilmelding.trenger.begrunnelse",
+        "valueText": "Du må skrive inn en begrunnelse"
+      },
+      {
+        "textId": "faktum.dagpenger-eos-land-hvilken-periode.til",
+        "valueText": "Til dato"
+      },
+      {
+        "textId": "faktum.eos-arbeidsforhold.varighet.fra",
+        "valueText": "Fra dato"
+      },
+      {
+        "textId": "kvittering.soknad-status.tag.under-behandling",
+        "valueText": "Under behandling"
+      },
+      {
+        "textId": "dokumentkrav.feilmelding.maa-velge-filer",
+        "valueText": "Du må velge en eller flere filer"
+      },
+      {
+        "textId": "start-soknad.ny-soknad-info.lenke-tekst",
+        "valueText": "den gamle søknaden"
+      },
+      {
+        "textId": "kvittering.soknad-status.title.mottatt",
+        "valueText": "Søknad mottatt"
+      },
+      {
+        "textId": "faktum.etterlonn-arbeidsgiver-hvilken-periode.fra",
+        "valueText": "Fra dato"
+      },
+      {
+        "textId": "faktum.arbeidslos-GFF-hvilken-periode.fra",
+        "valueText": "Fra dato"
+      },
+      {
+        "textId": "slett-soknad.modal.beskrivelse",
+        "valueText": "Alle svarene dine blir slettet og du må begynne på nytt hvis du skal søke om dagpenger."
+      },
+      {
+        "textId": "slett-soknad.modal.knapp.avbryt",
+        "valueText": "Avbryt"
+      },
+      {
+        "textId": "start-soknad.knapp.start",
         "valueText": "Start søknad"
       },
       {
-        "textId": "arbeidsforhold.legg-til",
+        "textId": "kvittering.tekst.sendt-tidligere",
+        "valueText": "Du har sagt at du har sendt dette tidligere"
+      },
+      {
+        "textId": "arbeidsforhold.knapp.legg-til",
         "valueText": "Legg til arbeidsforhold"
       },
       {
-        "textId": "generator.fjern",
-        "valueText": "Fjern dette svaret"
+        "textId": "dokumentkrav.bundle-error-modal.knapp.send-senere",
+        "valueText": "Send dokumenter senere"
       },
       {
-        "textId": "knapp.neste",
+        "textId": "personalia.kontonummer.finnes-ikke",
+        "valueText": "Vi har ikke registrert kontonummeret ditt, og anbefaler at du legger det inn på Min side."
+      },
+      {
+        "textId": "personalia.fodselsnummer",
+        "valueText": "Fødselsnummer"
+      },
+      {
+        "textId": "faktum.reist-tilbake-periode.til",
+        "valueText": "Til dato"
+      },
+      {
+        "textId": "personalia.folkeregistert-adresse",
+        "valueText": "Folkeregistrert adresse"
+      },
+      {
+        "textId": "inngang.paabegyntsoknad.start-en-ny-knapp",
+        "valueText": "Start en ny søknad"
+      },
+      {
+        "textId": "validering.faktum.ubesvart",
+        "valueText": "Du må svare på dette spørsmålet"
+      },
+      {
+        "textId": "kvittering.tekst.skal-sendes-av.noen-andre",
+        "valueText": "Skal sendes av noen andre"
+      },
+      {
+        "textId": "kvittering.tekst.antall-mangler",
+        "valueText": "mangler"
+      },
+      {
+        "textId": "dokumentkrav.feilmelding.validering.header",
+        "valueText": "Du må fikse feil på disse stedene før du kan gå videre:"
+      },
+      {
+        "textId": "soknad.knapp.fortsett-senere",
+        "valueText": "Fortsett senere"
+      },
+      {
+        "textId": "arbeidssoker.registrer-som-arbeidssoker-knapp",
+        "valueText": "Registrer deg som arbeidssøker"
+      },
+      {
+        "textId": "inngang.send-dokument.knapp-tekst",
+        "valueText": "Send inn vedlegg til søknad sendt"
+      },
+      {
+        "textId": "slett-soknad.modal.varsel.klarte-ikke-slette",
+        "valueText": "Beklager, vi fikk ikke til å slette søknaden din akkurat nå. Du kan prøve igjen senere, søknaden finner du på Mine dagpenger."
+      },
+      {
+        "textId": "dokumentkrav.bundle-error.beskrivelse",
+        "valueText": "Det skjedde noe feil når vi skulle lagre filene dine. Du kan prøve på nytt eller sende de senere. Det er viktig at du sender inn søknaden så fort som mulig."
+      },
+      {
+        "textId": "soknad.knapp.neste-steg",
         "valueText": "Neste steg"
       },
       {
-        "textId": "oppsummering.slett-soknad",
+        "textId": "oppsummering.knapp.slett-soknad",
         "valueText": "Slett søknad"
       },
       {
-        "textId": "pdfa.description",
-        "valueText": "Søknad om dagpenger"
+        "textId": "start-soknad.checkbox.samtykke-riktige-opplysninger.label",
+        "valueText": "Jeg bekrefter at jeg har lest og forstått denne veiledningen"
       },
       {
-        "textId": "pdfa.subject",
-        "valueText": "Dagpenger"
+        "textId": "arbeidssoker.avbryt-knapp",
+        "valueText": "Avbryt"
       },
       {
-        "textId": "laster-sporsmal.tittel",
-        "valueText": "Laster neste spørsmål"
+        "textId": "teknisk-feil.modal.tittel",
+        "valueText": "Det har skjedd en teknisk feil"
       },
       {
-        "textId": "pdf.hovedoverskrift",
-        "valueText": "Søknad om dagpenger"
+        "textId": "inngang.paabegyntsoknad.header.du-har-en-paabegynt",
+        "valueText": "Du har en påbegynt søknad, sist endret"
       },
       {
-        "textId": "pdf.ettersending.hovedoverskrift",
-        "valueText": "Ettersending til søknad om dagpenger"
+        "textId": "dokumentkrav.bundle-error-modal.tittel",
+        "valueText": "Det skjedde noe feil med en eller flere av filene"
       },
       {
-        "textId": "pdf.svar",
-        "valueText": "svar"
+        "textId": "soknad.knapp.slett",
+        "valueText": "Slett"
       },
       {
-        "textId": "oppsummering.send-soknad",
+        "textId": "teknisk-feil.helside.detaljer",
+        "valueText": "Beklager, vi får ikke kontakt med systemene våre. Svarene dine er lagret og du kan prøve igjen om litt."
+      },
+      {
+        "textId": "filopplaster.knapp.velg-filer",
+        "valueText": "Velg filer"
+      },
+      {
+        "textId": "faktum.garantilott-GFF-hvilken-periode.til",
+        "valueText": "Til dato"
+      },
+      {
+        "textId": "start-soknad.ny-soknad-info.slutt-tekst",
+        "valueText": "hvis du vil."
+      },
+      {
+        "textId": "kvittering.soknad-status.tag.paabegynt",
+        "valueText": "Påbegynt"
+      },
+      {
+        "textId": "faktum.arbeidsforhold.varighet.fra",
+        "valueText": "Fra dato"
+      },
+      {
+        "textId": "kvittering.soknad-status.title.ferdig",
+        "valueText": "Søknad behandlet"
+      },
+      {
+        "textId": "faktum.tjenestepensjon-hvilken-periode.fra",
+        "valueText": "Fra dato"
+      },
+      {
+        "textId": "start-soknad.ny-soknad-info.start-tekst",
+        "valueText": "Du har kommet til en ny versjon av dagpengesøknaden. Du kan bruke"
+      },
+      {
+        "textId": "dokumentkrav.bundle-error.send.senere",
+        "valueText": "Send dokumenter senere"
+      },
+      {
+        "textId": "kvittering.tekst.sendt-av-deg",
+        "valueText": "Sendt av deg"
+      },
+      {
+        "textId": "soknad.loader.laster-neste",
+        "valueText": "Lagrer svaret ditt"
+      },
+      {
+        "textId": "arbeidssoker.arbeidssoker-status.varsel-tekst",
+        "valueText": "Beklager, på grunn av tekniske problemer klarer vi ikke å se om du er registert som arbeidssøker. Hvis du eikke hae registert må du prøve å registrere ddeg senere. Du kan fortsatt søke om dagpenger, men du må registrere deg så fort som mulig for å unngå å få av avslag på søknaden."
+      },
+      {
+        "textId": "teknisk-feil.helside.tittel",
+        "valueText": "Vi har tekniske problemer akkurat nå"
+      },
+      {
+        "textId": "personalia.over-67.tittel",
+        "valueText": "Vi har registrert at du er over 67 år"
+      },
+      {
+        "textId": "faktum.garantilott-GFF-hvilken-periode.fra",
+        "valueText": "Fra dato"
+      },
+      {
+        "textId": "dokumentkrav.velg-svaralternativ",
+        "valueText": "Velg hva du vil gjøre"
+      },
+      {
+        "textId": "arbeidssoker.header",
+        "valueText": "Du må være registert som arbeidssøker for å ha rett til dagpenger"
+      },
+      {
+        "textId": "kvittering.arbeidssokerstatus.info-tekst.registrert",
+        "valueText": "Du må huske å sende meldekort innen fristen, også mens du venter på svar på søknaden din."
+      },
+      {
+        "textId": "soknad-slettet.modal.beskrivelse",
+        "valueText": "Søknaden og alle svarene dine er nå slettet."
+      },
+      {
+        "textId": "fortsett-soknad-senere.modal.tittel",
+        "valueText": "Søknaden din er lagret og du kan fortsette  senere"
+      },
+      {
+        "textId": "slett-soknad.modal.knapp.ikke-slett-soknad",
+        "valueText": "Nei, ikke slett søknaden"
+      },
+      {
+        "textId": "faktum.arbeidsforhold.varighet.til",
+        "valueText": "Til dato"
+      },
+      {
+        "textId": "slett-soknad.modal.knapp.slett",
+        "valueText": "Slett søknaden"
+      },
+      {
+        "textId": "personalia.over-67.beskrivelse",
+        "valueText": "Du har ikke rett på dagpenger fordi du er over 67 år. Hvis du ikke har søkt om alderspensjon, kan du"
+      },
+      {
+        "textId": "faktum.dagpenger-eos-land-hvilken-periode.fra",
+        "valueText": "Fra dato"
+      },
+      {
+        "textId": "personalia.over-67.lenketekst",
+        "valueText": "søke om alderspensjon her"
+      },
+      {
+        "textId": "faktum.arbeidslos-GFF-hvilken-periode.til",
+        "valueText": "Til dato"
+      },
+      {
+        "textId": "teknisk-feil.modal.knapp.prov-paa-nytt",
+        "valueText": "Prøv på nytt"
+      },
+      {
+        "textId": "kvittering.heading.andre-dokumenter",
+        "valueText": "Andre dokumenter"
+      },
+      {
+        "textId": "fortsett-soknad-senere.modal.knapp.til-mine-dagpenger",
+        "valueText": "Gå til Mine dagpenger"
+      },
+      {
+        "textId": "oppsummering.knapp.send-soknad",
         "valueText": "Send inn søknad"
       },
       {
-        "textId": "knapp.forrige",
+        "textId": "soknad-slettet.modal.tittel",
+        "valueText": "Søknaden din er slettet"
+      },
+      {
+        "textId": "personalia.navn",
+        "valueText": "Navn"
+      },
+      {
+        "textId": "soknad.knapp.forrige-steg",
         "valueText": "Forrige steg"
       },
       {
-        "textId": "pdf.datosendt",
-        "valueText": "Dato sendt"
+        "textId": "fortsett-soknad-senere.modal.beskrivelse",
+        "valueText": "Du finner den påbegynte søknaden på Min side."
+      },
+      {
+        "textId": "validering.delvis-ubesvart-faktum.varsel-tekst",
+        "valueText": "Du må svare på alle spørsmålene"
+      },
+      {
+        "textId": "faktum.reist-tilbake-periode.fra",
+        "valueText": "Fra dato"
+      },
+      {
+        "textId": "dokumentkrav.antall-krav-av",
+        "valueText": "av"
+      },
+      {
+        "textId": "dokumentkrav.feilmelding.mangler-svaralternativ",
+        "valueText": "Du må velge hva du vil gjøre med dokumentasjonen"
+      },
+      {
+        "textId": "start-soknad.checkbox.samtykke-innhenting-data.validering-tekst",
+        "valueText": "For å komme videre må du gi oss lov til å hente inn og bruke opplysninger om deg."
       },
       {
         "textId": "oppsummering.feil",
         "valueText": "Noe skjedde feil med innsendingen av søknaden."
       },
       {
-        "textId": "arbeidsforhold.fjern",
-        "valueText": "Fjern dette arbeidsforholdet"
+        "textId": "validering.ugyldig-dato",
+        "valueText": "Ugyldig dato"
       },
       {
-        "textId": "pdf.fnr",
-        "valueText": "Fødselsnummer"
+        "textId": "soknad.faktum-maa-dokumenteres.del-2",
+        "valueText": "Dette gjør du på slutten av søknaden."
       },
       {
-        "textId": "barn.fjern",
-        "valueText": "Fjern dette barnet"
+        "textId": "dokumentasjonskrav.feilmelding.validering.header",
+        "valueText": "Du må fikse feil på disse stedene før du kan gå videre:"
       },
       {
-        "textId": "pdf.tittel",
-        "valueText": "Søknad om dagpenger"
+        "textId": "kvittering.heading.sender-ikke-dokumenter",
+        "valueText": "Dokumenter du ikke skal sende"
       },
       {
-        "textId": "soknad.til-oppsummering",
+        "textId": "dokumentkrav.bundle-error.tittel",
+        "valueText": "Det skjedde noe feil med en eller flere av filene"
+      },
+      {
+        "textId": "oppsummering.checkbox.samtykke-riktige-opplysninger.tekst",
+        "valueText": "Takk for at du er ærlig"
+      },
+      {
+        "textId": "kvittering.soknad-status.tag.mangler-dokumenter",
+        "valueText": "Mangler dokumenter"
+      },
+      {
+        "textId": "dokumentkrav.velg.svaralternativ",
+        "valueText": "Velg hva du vil gjøre"
+      },
+      {
+        "textId": "inngang.paabegyntsoknad.fortsett-paabegynt-knapp",
+        "valueText": "Fortsett pågebynt søknad"
+      },
+      {
+        "textId": "soknad.faktum-maa-dokumenteres.del-1",
+        "valueText": "Du må legge ved"
+      },
+      {
+        "textId": "soknad-slettet.modal.knapp.lukk",
+        "valueText": "Lukk"
+      },
+      {
+        "textId": "soknad-slettet.modal.knapp.start-ny-soknad",
+        "valueText": "Start ny søknad"
+      },
+      {
+        "textId": "kvittering.heading.mottatte-dokumenter",
+        "valueText": "Mottatte dokumenter"
+      },
+      {
+        "textId": "soknad.knapp.til-oppsummering",
         "valueText": "Gå til oppsummering"
+      },
+      {
+        "textId": "slett-soknad.modal.knapp.til-mine-dagpenger",
+        "valueText": "Gå til Mine dagpenger"
+      },
+      {
+        "textId": "filopplaster.velg.filer",
+        "valueText": "Velg filer"
       },
       {
         "textId": "start-soknad.tittel",
         "valueText": "Søknad om dagpenger"
       },
       {
-        "textId": "knapp.avbryt",
+        "textId": "dokumentkrav.bundle-error.avbryt",
+        "valueText": "Prøv på nytt"
+      },
+      {
+        "textId": "soknad.knapp.avbryt",
         "valueText": "Avbryt"
+      },
+      {
+        "textId": "arbeidssoker.beskrivelse",
+        "valueText": " Du kan tidligst få dagpenger fra datoen du både har registrert deg som arbeidssøker og sendt søknad om dagpenger"
+      },
+      {
+        "textId": "teknisk-feil.modal.detaljer.lagre-faktum",
+        "valueText": "Beklager, vi fikk ikke til å lagre svaret ditt."
+      },
+      {
+        "textId": "faktum.eos-arbeidsforhold.varighet.til",
+        "valueText": "Til dato"
       },
       {
         "textId": "laster-sporsmal.tekst",
         "valueText": "Tenk på noe som gjør deg glad."
       },
       {
-        "textId": "generator.legg-til",
-        "valueText": "Legg til svar"
+        "textId": "dokumentkrav.feilmelding.klarte-ikke-bundle",
+        "valueText": "Vi klarte ikke lagre filene, du kan slette filene og laste opp på nytt eller velge \"Jeg sender det senere\"."
       },
       {
-        "textId": "pdfa.author",
-        "valueText": "NAV Dagpenger"
+        "textId": "inngang.paabegyntsoknad.header.fortsett-eller-starte-ny",
+        "valueText": "Vil du fortsette på denne eller starte en ny?"
       },
       {
-        "textId": "oppsummering.endre-svar",
+        "textId": "soknad.generator-faktum.knapp.legg-til",
+        "valueText": "Legg til"
+      },
+      {
+        "textId": "soknad.knapp.til-dokumentasjon",
+        "valueText": "Gå til dokumentasjon"
+      },
+      {
+        "textId": "arbeidssoker.sok-dagpenger.knapp",
+        "valueText": "Søk dagpenger"
+      },
+      {
+        "textId": "dokumentkrav.feilmelding.velg.svaralternativ",
+        "valueText": "Du må velge hva du vil gjøre med dokumentasjonen"
+      },
+      {
+        "textId": "arbeidssoker.sok-om-dagpenger-likevel.lenke-tekst",
+        "valueText": "Jeg vil søke om dagpenger likevel"
+      },
+      {
+        "textId": "faktum.annen-ytelse-hvilken-periode.fra",
+        "valueText": "Fra dato"
+      },
+      {
+        "textId": "personalia.alder",
+        "valueText": "Alder"
+      },
+      {
+        "textId": "dokumentkrav.bundle-error-modal.beskrivelse",
+        "valueText": "Det skjedde noe feil når vi skulle lagre filene dine. Du kan prøve på nytt eller sende de senere. Det er viktig at du sender inn søknaden så fort som mulig."
+      },
+      {
+        "textId": "inngang.send-dokument.beskrivelse",
+        "valueText": "Du har nylig sendt inn en søknad. Vil du ettersende vedlegg til en innsendt søknad eller sende inn en ny?"
+      },
+      {
+        "textId": "filopplaster.feil.beskrivelse-format-storrelse",
+        "valueText": "Du kan kun laste opp filer av typen JPG, JPEG, PNG og PDF. Maks 30MB per dokumentasjonskrav."
+      },
+      {
+        "textId": "oppsummering.checkbox.samtykke-riktige-opplysninger.label",
+        "valueText": "Jeg bekrefter at jeg har gitt riktige og fullstendige opplysninger. Får jeg penger jeg ikke har rett til, er jeg forberedt på at jeg må betale tilbake. Jeg vet at jeg kan miste retten til dagpenger hvis jeg med vilje gir uriktige opplysninger."
+      },
+      {
+        "textId": "faktum.etterlonn-arbeidsgiver-hvilken-periode.til",
+        "valueText": "Til dato"
+      },
+      {
+        "textId": "oppsummering.knapp.endre-svar",
         "valueText": "Endre svar"
+      },
+      {
+        "textId": "kvittering.soknad-status.tag.ukjent",
+        "valueText": "Ukjent"
       }
     ],
     "landgrupper": [],
+    "dokumentkrav": [
+      {
+        "title": "Ny arbeidsavtale",
+        "textId": "faktum.dokument-ny-arbeidsavtale",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "title": null,
+        "textId": "faktum.dokument-etterlonn",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "title": "Arbeidsavtale",
+        "textId": "faktum.dokument-arbeidsavtale",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "title": "Hvem skal sende inn dokumentet? ",
+        "textId": "dokumentkrav.svar.andre.sender.begrunnelse",
+        "helpText": null,
+        "description": [
+          "<p>Husk at det er du som er ansvarlig for at dokumentet blir sendt inn.</p>"
+        ]
+      },
+      {
+        "title": "Avtale om økonomiske goder",
+        "textId": "faktum.dokument-okonomiske-goder-tidligere-arbeidsgiver",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "title": "Bekreftelse fra lege eller annen behandler",
+        "textId": "faktum.dokument-bekreftelse-fra-lege-eller-annen-behandler",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "title": "Hva er grunnen til at du sender dokumentet senere? ",
+        "textId": "dokumentkrav.svar.send.senere.begrunnelse",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "title": null,
+        "textId": "faktum.dokument-foedselsattest-bostedsbevis-for-barn-under-18aar",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "title": null,
+        "textId": "faktum.dokument-fulltid-bekreftelse-fra-relevant-fagpersonell",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "title": "Tjenestebevis",
+        "textId": "faktum.dokument-avtjent-militaer-sivilforsvar-tjeneste-siste-12-mnd-dokumentasjon",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "title": "Bekreftelse fra relevant fagpersonell",
+        "textId": "faktum.dokument-alle-typer-bekreftelse-fra-relevant-fagpersonell",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "title": null,
+        "textId": "faktum.dokument-dagpenger-eos-land",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "title": null,
+        "textId": "faktum.dokument-utdanning-sluttdato",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "title": "Varsel om permittering",
+        "textId": "faktum.dokument-permitteringsvarsel",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "title": null,
+        "textId": "faktum.dokument-garantilott-GFF-hvilken-periode",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "title": "Hva er grunnen til at du ikke inn dokumentet? ",
+        "textId": "dokumentkrav.svar.sender.ikke.begrunnelse",
+        "helpText": null,
+        "description": [
+          "<p>Du vil mest sannsynlig få avslag på søknaden din hvis du ikke sender inn dokumentene vi trenger for å behandle saken din. Ta kontakt med NAV hvis du ikke får tak i dokumentet.</p>"
+        ]
+      },
+      {
+        "title": null,
+        "textId": "faktum.dokument-tjenestepensjon",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "title": "Bekreftelse fra relevant fagpersonell",
+        "textId": "faktum.dokument-hele-norge-bekreftelse-fra-relevant-fagpersonell",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "title": "Dokumentasjon på helt eller delvis avsluttet arbeidsforhold",
+        "textId": "faktum.dokument-dokumentasjon-av-arbeidsforhold",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "title": null,
+        "textId": "faktum.dokument-arbeidslos-GFF-hvilken-periode",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "title": "Brev fra bobestyrer/konkursforvalter",
+        "textId": "faktum.dokument-brev-fra-bobestyrer-eller-konkursforvalter",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "title": "Dokumentasjon av andre ytelser",
+        "textId": "faktum.dokument-annen-ytelse",
+        "helpText": null,
+        "description": null
+      },
+      {
+        "title": "Når sendte du dokumentet? ",
+        "textId": "dokumentkrav.svar.sendt.tidligere.begrunnelse",
+        "helpText": null,
+        "description": [
+          "<p>Er du usikker på om du har sendt dokumentet i en tidligere søknad om dagpenger, bør du sende det på nytt.</p>"
+        ]
+      },
+      {
+        "title": "Timelister",
+        "textId": "faktum.dokument-timelister",
+        "helpText": null,
+        "description": null
+      }
+    ],
+    "dokumentkravSvar": [
+      {
+        "text": "Laste opp nå",
+        "textId": "dokumentkrav.svar.send.naa",
+        "alertText": null
+      },
+      {
+        "text": "Jeg sender det ikke",
+        "textId": "dokumentkrav.svar.sender.ikke",
+        "alertText": {
+          "body": [
+            "<p>Du vil mest sannsynlig få avslag på søknaden din hvis du ikke sender inn dokumentene vi trenger for å behandle saken din. Ta kontakt med NAV hvis du ikke får tak i dokumentet</p>"
+          ],
+          "type": "warning"
+        }
+      },
+      {
+        "text": "Jeg har sendt det i en tidligere søknad om dagpenger",
+        "textId": "dokumentkrav.svar.sendt.tidligere",
+        "alertText": null
+      },
+      {
+        "text": "Jeg sender det senere",
+        "textId": "dokumentkrav.svar.send.senere",
+        "alertText": null
+      },
+      {
+        "text": "Noen andre sender det for meg",
+        "textId": "dokumentkrav.svar.andre.sender",
+        "alertText": {
+          "body": [
+            "<p>Er du usikker på om du har sendt dokumentet i en tidligere søknad om dagpenger, bør du sende det på nytt.</p>"
+          ],
+          "type": "info"
+        }
+      }
+    ],
     "svaralternativer": [
       {
         "text": "Ja",
         "textId": "faktum.reist-tilbake-etter-arbeidsledig.svar.ja",
-        "alertText": null
+        "alertText": {
+          "type": "info"
+        }
       },
       {
         "text": "Nei",
@@ -1300,7 +2189,9 @@
       {
         "text": "Nei",
         "textId": "faktum.mottatt-dagpenger-siste-12-mnd.svar.nei",
-        "alertText": null
+        "alertText": {
+          "type": "info"
+        }
       },
       {
         "text": "Vet ikke",
@@ -1308,24 +2199,44 @@
         "alertText": null
       },
       {
-        "text": "Fast arbeidstid",
+        "text": "Jeg har hatt fast arbeidstid i minst seks måneder",
         "textId": "faktum.type-arbeidstid.svar.fast",
-        "alertText": null
+        "alertText": {
+          "body": [
+            "<p>Fast arbeidstid betyr at du har en arbeidsavtale med fast stillingsprosent eller fast antall arbeidstimer. Du må ha jobbet i minst seks måneder før arbeidstiden din sist ble redusert. Du må legge til arbeidsforholdet under.</p>"
+          ],
+          "type": "info"
+        }
       },
       {
-        "text": "Varierende arbeidstid",
+        "text": "Jeg har hatt varierende arbeidstid, eller fast arbeidstid i mindre enn seks måneder",
         "textId": "faktum.type-arbeidstid.svar.varierende",
-        "alertText": null
+        "alertText": {
+          "body": [
+            "<p>Velg dette alternativet hvis du har hatt varierende arbeidstid, en kombinasjon av fast og varierende arbeidstid eller fast arbeidstid i mindre enn seks måneder. Varierende arbeidstid kan være hvis du for eksempel har hatt vikartjeneste, ringehjelp eller annen tilfeldig arbeidstid. Vi vil da gjøre en gjennomsnittsberegning av din arbeidstid de siste 12 månedene. Du må legge til alle arbeidsforhold du har hatt de siste 12 månedene.</p>"
+          ],
+          "type": "info"
+        }
       },
       {
-        "text": "En kombinasjon av fast og varierende arbeidstid",
+        "text": "Jeg har jobbet mer i gjennomsnitt de siste 36 månedene enn de siste 12 månedene",
         "textId": "faktum.type-arbeidstid.svar.kombinasjon",
-        "alertText": null
+        "alertText": {
+          "body": [
+            "<p>Hvis du har jobbet mer i gjennomsnitt de siste 36 månedene enn de siste 12 månedene, kan vi gjøre en gjennomsnittsberegning og finne ut om det lønner seg for deg å ta med arbeidstiden de siste 36 månedene i vurderingen. Velg dette alternativet hvis du ønsker at vi skal gjøre det. Du må da legge til alle arbeidsforhold du har hatt de siste 36 månedene, sammen med dokumentasjon fra dine arbeidsgivere.</p>"
+          ],
+          "type": "info"
+        }
       },
       {
-        "text": "Ingen av alternativene passer for meg",
+        "text": "Jeg har ikke vært i jobb",
         "textId": "faktum.type-arbeidstid.svar.ingen-passer",
-        "alertText": null
+        "alertText": {
+          "body": [
+            "<p>Dersom du ikke har vært i arbeid, har du i utgangspunktet ikke rett til dagpenger. Du må derfor regne med å få avslag på søknaden din. Unntaket er hvis du har avtjent verneplikt i minst tre av de siste tolv månedene. Du legger ved dokumentasjon på at du har avtjent verneplikt senere i søknaden.</p>"
+          ],
+          "type": "warning"
+        }
       },
       {
         "text": "Ja",
@@ -1382,8 +2293,7 @@
         "textId": "faktum.driver-du-egen-naering.svar.ja",
         "alertText": {
           "body": [
-            "<p>Selv om du driver et eget selskap eller egen næring må du være villig til å ta annet arbeid.</p>",
-            "<p><br/>Hvis du jobber mer enn 60 prosent av tidligere arbeidstid har du ikke rett til dagpenger.</p>"
+            "<p>Selv om du driver et eget selskap eller egen næring må du være villig til å ta annet arbeid.</p>"
           ],
           "type": "info"
         }
@@ -1396,7 +2306,12 @@
       {
         "text": "Ja",
         "textId": "faktum.driver-du-eget-gaardsbruk.svar.ja",
-        "alertText": null
+        "alertText": {
+          "body": [
+            "<p>Selv om du driver et eget gårdsbruk må du være villig til å ta annet arbeid.<br/><br/>Hvis du jobber mer enn 60 prosent av tidligere arbeidstid har du ikke rett til dagpenger.<br/><br/>Når du driver gårdsbruk tar NAV utgangspunkt i størrelsen på bruket, arbeidsomfang, mekaniseringsgrad og beliggenhet.</p>"
+          ],
+          "type": "info"
+        }
       },
       {
         "text": "Nei",
@@ -1461,32 +2376,68 @@
       {
         "text": "Pensjon fra en offentlig tjenestepensjonsordning",
         "textId": "faktum.hvilke-andre-ytelser.svar.pensjon-offentlig-tjenestepensjon",
-        "alertText": null
+        "alertText": {
+          "body": [
+            "<p>Du må legge ved dokumentasjon på hvem som utbetaler pensjonen, og hvilken periode den gjelder for.</p>"
+          ],
+          "type": "info"
+        }
       },
       {
         "text": "Stønad under arbeidsløshet fra Garantikassen for fiskere (GFF)",
         "textId": "faktum.hvilke-andre-ytelser.svar.arbeidsloshet-garantikassen-for-fiskere",
-        "alertText": null
+        "alertText": {
+          "body": [
+            "<p>Du må dokumentasjon hvilken periode Garantikassen for fiskere utbetaler ytelsen.</p>"
+          ],
+          "type": "info"
+        }
       },
       {
         "text": "Garantilott fra Garantikassen for fiskere",
         "textId": "faktum.hvilke-andre-ytelser.svar.garantilott-garantikassen-for-fiskere",
-        "alertText": null
+        "alertText": {
+          "body": [
+            "<p>Du må dokumentasjon hvilken periode Garantikassen for fiskere utbetaler ytelsen.</p>"
+          ],
+          "type": "info"
+        }
       },
       {
         "text": "Etterlønn fra arbeidsgiver",
         "textId": "faktum.hvilke-andre-ytelser.svar.etterlonn-arbeidsgiver",
-        "alertText": null
+        "alertText": {
+          "body": [
+            "<p>Etterlønn er en ytelse som helt eller delvis dekker bortfall av inntekt for en periode du ikke er omfattet av arbeidsavtalen.</p>",
+            "<p>Dette er ikke etterlønn:</p>",
+            "<ul><li>Vanlig oppsigelsestid.</li></ul>",
+            "<ul><li>Godtgjørelse som avtales i forbindelse med opphør av arbeidsforholdet.</li></ul>",
+            "<ul><li>Erstatning for usaklig oppsigelse, som ikke er lønn.</li></ul>",
+            "<ul><li>Sluttvederlag etter tariffavtale.</li></ul>",
+            "<p>Du må legge ved dokumentasjon av hvem som utbetaler etterlønnen, og hvilken periode den gjelder for.</p>"
+          ],
+          "type": "info"
+        }
       },
       {
         "text": "Dagpenger fra et annet EØS-land",
         "textId": "faktum.hvilke-andre-ytelser.svar.dagpenger-annet-eos-land",
-        "alertText": null
+        "alertText": {
+          "body": [
+            "<p>Du må legge ved dokumentasjon av hvilket land som utbetaler dagpengene, og hvilken periode den gjelder for.</p>"
+          ],
+          "type": "info"
+        }
       },
       {
         "text": "Annen ytelse",
         "textId": "faktum.hvilke-andre-ytelser.svar.annen-ytelse",
-        "alertText": null
+        "alertText": {
+          "body": [
+            "<p>Du må legge ved dokumentasjon av hvilken ytelse dette er, hvem som utbetaler den, og hvilken periode den gjelder for.</p>"
+          ],
+          "type": "info"
+        }
       },
       {
         "text": "Ja",
@@ -1536,12 +2487,22 @@
       {
         "text": "Har fylt 60 år",
         "textId": "faktum.kun-deltid-aarsak.svar.har-fylt-60",
-        "alertText": null
+        "alertText": {
+          "body": [
+            "<p>Siden du er over 60 år, kan du søke om dagpenger selv om du bare ønsker å jobbe deltid. Du trenger ikke begrunne valget ditt, men du må føre opp hvor mange timer du vil arbeide per uke. Dette antallet vil anses som full arbeidstid for deg, og vil bli lagt til grunn ved beregning av dagpengene.</p>"
+          ],
+          "type": "info"
+        }
       },
       {
         "text": "Annen situasjon",
         "textId": "faktum.kun-deltid-aarsak.svar.annen-situasjon",
-        "alertText": null
+        "alertText": {
+          "body": [
+            "<p>Hvis du svarer “annen situasjon” og du ikke kan dokumentere svært gode grunner til at du ikke kan jobbe heltid, vil du sannsynligvis få avslag på søknaden din om dagpenger.<br/><br/>Annen situasjon kan for eksempel være hvis du har pleietrengende familie, eller den andre forelderen ikke kan delta i den daglige omsorgen for barn på grunn av sykdom eller institusjonsopphold.</p>"
+          ],
+          "type": "warning"
+        }
       },
       {
         "text": "Ja",
@@ -1581,12 +2542,22 @@
       {
         "text": "Har fylt 60 år",
         "textId": "faktum.ikke-jobbe-hele-norge.svar.har-fylt-60",
-        "alertText": null
+        "alertText": {
+          "body": [
+            "<p>Siden du er over 60 år, kan du søke om dagpenger selv om du ikke ønsker å ta jobb i hele Norge. Du trenger ikke begrunne valget ditt.</p>"
+          ],
+          "type": "info"
+        }
       },
       {
         "text": "Annen situasjon",
         "textId": "faktum.ikke-jobbe-hele-norge.svar.annen-situasjon",
-        "alertText": null
+        "alertText": {
+          "body": [
+            "<p>Hvis du svarer “annen situasjon” og du ikke kan dokumentere svært gode grunner til at du ikke kan jobbe i hele Norge, vil du sannsynligvis få avslag på søknaden din om dagpenger.<br/><br/>Annen situasjon kan for eksempel være hvis du har pleietrengende familie, eller den andre forelderen ikke kan delta i den daglige omsorgen for barn på grunn av sykdom eller institusjonsopphold.</p>"
+          ],
+          "type": "warning"
+        }
       },
       {
         "text": "Ja",
@@ -1606,12 +2577,22 @@
       {
         "text": "Nei",
         "textId": "faktum.bytte-yrke-ned-i-lonn.svar.nei",
-        "alertText": null
+        "alertText": {
+          "body": [
+            "<p>For å ha rett til dagpenger må du være villig til å bytte yrke eller gå ned i lønn. Hvis du svarer “Nei” på spørsmålet vil du mest sannsynlig få avslag på søknaden din om dagpenger.</p>"
+          ],
+          "type": "warning"
+        }
       },
       {
         "text": "Ja",
         "textId": "faktum.tar-du-utdanning.svar.ja",
-        "alertText": null
+        "alertText": {
+          "body": [
+            "<p>For å få innvilget dagpenger mens du tar utdanning eller opplæring, må du sende inn <a href=\"https://www.nav.no/fyllut/nav040605\">Søknad om å beholde dagpengene mens du tar utdanning eller opplæring - NAV 04-06.05</a>, i tillegg til å sende inn denne søknaden om dagpenger.<br/><br/>Hvis du ikke sender søknaden om å beholde dagpengene mens du tar utdanning eller opplæring, kan vi avslå søknaden din om dagpenger.</p>"
+          ],
+          "type": "warning"
+        }
       },
       {
         "text": "Nei",
@@ -1621,7 +2602,12 @@
       {
         "text": "Ja",
         "textId": "faktum.avsluttet-utdanning-siste-6-mnd.svar.ja",
-        "alertText": null
+        "alertText": {
+          "body": [
+            "<p>Du må dokumentere sluttdatoen. Du kan legge ved bekreftelse på når du avla siste avsluttende eksamen eller aktivitet. Hvis du har avbrutt skolegangen, kan du legge ved bekreftelse fra skolen på dette.</p>"
+          ],
+          "type": "info"
+        }
       },
       {
         "text": "Nei",
@@ -1631,7 +2617,12 @@
       {
         "text": "Ja",
         "textId": "faktum.planlegger-utdanning-med-dagpenger.svar.ja",
-        "alertText": null
+        "alertText": {
+          "body": [
+            "<p>For å få innvilget dagpenger mens du tar utdanning eller opplæring, må du sende inn Søknad om å beholde dagpengene mens du tar utdanning eller opplæring - NAV 04-06.05, i tillegg til å sende inn denne søknaden om dagpenger.<br/><br/>Hvis du ikke sender søknaden om å beholde dagpengene mens du tar utdanning eller opplæring, kan vi avslå søknaden din om dagpenger.</p>"
+          ],
+          "type": "warning"
+        }
       },
       {
         "text": "Nei",
@@ -1720,13 +2711,18 @@
           "body": [
             "<p>Avskjediget betyr at du er oppsagt med øyeblikkelig virkning, uten oppsigelsestid. Hvis du er avskjediget, vil du normalt ikke få dagpenger de første 18 ukene. Denne ventetiden løper først fra den datoen dagpengeperioden starter.<br/><br/>Det er viktig at du ikke venter med å søke om dagpenger. Du må sende søknaden din nå, selv om du kan få en ventetid på 18 uker.<br/><br/>Du må være registrert som arbeidssøker hos NAV og sende meldekort i ventetiden.</p>"
           ],
-          "type": "warning"
+          "type": "info"
         }
       },
       {
         "text": "Arbeidsgiver har sagt meg opp",
         "textId": "faktum.arbeidsforhold.endret.svar.sagt-opp-av-arbeidsgiver",
-        "alertText": null
+        "alertText": {
+          "body": [
+            "<p>Hvis du har blitt sagt opp av arbeidsgiveren din vil du ikke få dagpenger de 3 første dagene. Disse dagene kalles ventedager. Hvis du selv har skyld i at du ble oppsagt vil du normalt ikke få dagpenger de første 18 ukene. Denne ventetiden løper først fra den datoen dagpengeperioden starter.<br/><br/>Det er viktig at du ikke venter med å søke om dagpenger. Du må sende søknaden din nå, selv om du kan få en ventetid på 18 uker.<br/><br/>Du må være registrert som arbeidssøker og sende meldekort i ventetiden.</p>"
+          ],
+          "type": "info"
+        }
       },
       {
         "text": "Argeidsgiver er konkurs",
@@ -1741,17 +2737,32 @@
       {
         "text": "Jeg har sagt opp selv",
         "textId": "faktum.arbeidsforhold.endret.svar.sagt-opp-selv",
-        "alertText": null
+        "alertText": {
+          "body": [
+            "<p>Dersom du har sagt opp selv vil du vanligvis ikke få dagpenger de første 18 ukene. Har du sagt opp selv som følge av for eksempel nedbemanning eller helsemessige årsaker, vil du vanligvis ikke få dagpenger de første 3 dagene. Denne ventetiden løper først fra den datoen dagpengeperioden starter.<br/><br/>Det er viktig at du ikke venter med å søke om dagpenger. Du må sende søknaden din nå, selv om du kan få en ventetid på 18 uker.<br/><br/>Du må være registrert som arbeidssøker hos NAV og sende meldekort i ventetiden.</p>"
+          ],
+          "type": "info"
+        }
       },
       {
         "text": "Arbeidstiden er redusert",
         "textId": "faktum.arbeidsforhold.endret.svar.redusert-arbeidstid",
-        "alertText": null
+        "alertText": {
+          "body": [
+            "<p>Hvis arbeidstiden din er redusert med minst 50 prosent, kan du søke om dagpenger for den reduserte arbeidstiden.</p>"
+          ],
+          "type": "info"
+        }
       },
       {
         "text": "Jeg er permittert",
         "textId": "faktum.arbeidsforhold.endret.svar.permittert",
-        "alertText": null
+        "alertText": {
+          "body": [
+            "<p>For å ha rett til dagpenger under permittering, må arbeidstiden din være redusert med minst 50 prosent. Årsaken til permitteringen må være mangel på arbeid eller andre forhold som arbeidsgiver ikke kan påvirke.</p>"
+          ],
+          "type": "info"
+        }
       },
       {
         "text": "Ja",
@@ -1804,7 +2815,7 @@
         "alertText": null
       },
       {
-        "text": "Nei",
+        "text": "Nei, jeg er usikker, bruk opplysninger fra skatteetaten.no/mineinntekter for å beregne min vanlige arbeidstid.",
         "textId": "faktum.arbeidsforhold.vet-du-antall-timer-foer-mistet-jobb.svar.nei",
         "alertText": null
       },
@@ -1886,7 +2897,12 @@
       {
         "text": "Nei",
         "textId": "faktum.arbeidsforhold.svar-paa-forlengelse-eller-annen-stilling.svar.nei",
-        "alertText": null
+        "alertText": {
+          "body": [
+            "<p>Takket du nei til et tilbud om å fortsette hos arbeidsgiveren din, vil du normalt ikke få dagpenger de første 18 ukene. Denne ventetiden løper først fra den datoen dagpengeperioden starter.<br/><br/>Det er viktig at du ikke venter med å søke om dagpenger. Du må sende søknaden din nå, selv om du kan få en ventetid på 18 uker.<br/><br/>Du må være registrert som arbeidssøker og sende meldekort i ventetiden.</p>"
+          ],
+          "type": "info"
+        }
       },
       {
         "text": "Har ikke svart",
@@ -1896,7 +2912,12 @@
       {
         "text": "Ja",
         "textId": "faktum.arbeidsforhold.soke-forskudd-lonnsgarantimidler.svar.ja",
-        "alertText": null
+        "alertText": {
+          "body": [
+            "<p>Det er viktig at du i tillegg til denne søknaden sender egen søknad om lønnsgarantimidler når du søker om forskudd på lønnsgarantimidler. Dette kan du få hjelp til av bostyrer i konkursboet.</p>"
+          ],
+          "type": "info"
+        }
       },
       {
         "text": "Nei",
@@ -1921,12 +2942,22 @@
       {
         "text": "Nei",
         "textId": "faktum.arbeidsforhold.godta-trekk-fra-nav-av-forskudd-fra-lonnsgarantimidler.svar.nei",
-        "alertText": null
+        "alertText": {
+          "body": [
+            "<p>Når du får innvilget lønnsgarantimidler, trekker vi forskuddet fra lønnsgarantimidlene.<br/><br/>Hvis du ikke godtar dette, vil du få avslag på søknaden om forskudd på lønnsgarantimidler.<br/><br/>Da får du utbetalt hele summen når søknaden din om lønnsgarantimidler er behandlet. Du får likt beløp i lønnsgarantimidler totalt, uavhengig av om du velger forskudd eller ikke.</p>"
+          ],
+          "type": "info"
+        }
       },
       {
         "text": "Nei",
         "textId": "faktum.arbeidsforhold.har-sokt-om-lonnsgarantimidler.svar.nei",
-        "alertText": null
+        "alertText": {
+          "body": [
+            "<p>Hvis du ikke søker om lønnsgarantimidler, har du ikke rett til forskudd, og du vil få avslag på søknaden din.</p>"
+          ],
+          "type": "warning"
+        }
       },
       {
         "text": "Nei, men jeg skal søke om lønnsgarantimidler",
@@ -2001,7 +3032,12 @@
       {
         "text": "Ja",
         "textId": "faktum.arbeidsforhold.rotasjon.svar.ja",
-        "alertText": null
+        "alertText": {
+          "body": [
+            "<p>Du må dokumentere den siste rotasjonen du hadde med timeliste eller lignende.</p>"
+          ],
+          "type": "info"
+        }
       },
       {
         "text": "Nei",
@@ -2017,33 +3053,6 @@
         "text": "Nei",
         "textId": "faktum.legge-til-egne-barn.svar.nei",
         "alertText": null
-      }
-    ],
-    "dokumentkrav": [
-      {
-        "title": "Dokumentasjonskrav",
-        "textId": "faktum.dokument-varsel-om-permittering",
-        "helpText": {
-          "body": [
-            "<p>Du har krysset av for at du har blitt sagt opp. For å behandle søknaden din må du legge ved dokumentasjon som viser:</p>",
-            "<ul><li>datoen du fikk oppsigelsen</li></ul>",
-            "<ul><li>årsaken til at du ble sagt opp</li></ul>",
-            "<p>For å dokumentere dette, kan du legge ved oppsigelsen du fikk av arbeidsgiveren din. Hvis oppsigelsen ikke inneholder opplysningene vi trenger, kan du bruke skjemaet Bekreftelse på sluttårsak eller nedsatt arbeidstid (04-08.03). Arbeidsgiveren din må fylle ut og signere skjemaet. Du kan også be arbeidsgiveren din om å dokumentere opplysningene på en annen måte.</p>"
-          ],
-          "title": "Hva skal dokumentet inneholde"
-        },
-        "description": null
-      },
-      {
-        "title": "Dokumentasjon på helt eller delvis arbeidsforhold",
-        "textId": "dokumentasjonskrav.krav.arbeidsforhold",
-        "helpText": null,
-        "description": [
-          "<p>Du har krysset av for at du har blitt sagt opp. For å behandle søknaden din må du legge ved dokumentasjon som viser</p>",
-          "<ul><li>datoen du fikk oppsigelsen</li></ul>",
-          "<ul><li>årsaken til at du ble sagt opp</li></ul>",
-          "<p>For å dokumentere dette, kan du legge ved oppsigelsen du fikk av arbeidsgiveren din. Hvis oppsigelsen ikke inneholder opplysningene vi trenger, kan du bruke skjemaet <a href=\"https://www.google.com\">Bekreftelse på sluttårsak eller nedsatt arbeidstid (04-08.03)</a>. Arbeidsgiveren din må fylle ut og signere skjemaet. Du kan også be arbeidsgiveren din om å dokumentere opplysningene på en annen måte.</p>"
-        ]
       }
     ]
   }
