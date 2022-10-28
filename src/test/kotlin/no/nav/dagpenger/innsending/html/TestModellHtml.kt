@@ -53,7 +53,7 @@ object TestModellHtml {
             ),
             Innsending.SporsmalSvar(
                 sporsmal = "Funker flersvar?",
-                svar = Innsending.FlerSvar(svarAlternativ)
+                svar = Innsending.ValgSvar(svarAlternativ)
             )
         )
     )

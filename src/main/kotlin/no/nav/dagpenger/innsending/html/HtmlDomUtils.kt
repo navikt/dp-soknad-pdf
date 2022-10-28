@@ -96,7 +96,7 @@ internal fun DIV.begrunnelse(begrunnelse: String) {
     }
 }
 
-internal fun DIV.flersvar(svar: Innsending.FlerSvar, brutto: Boolean) {
+internal fun DIV.flersvar(svar: Innsending.ValgSvar, brutto: Boolean) {
     if (svar.alternativ.isNotEmpty()) {
         ul {
             svar.alternativ.forEach {
@@ -199,7 +199,7 @@ private fun tilleggsinformasjonOverskrift(info: Innsending.InfoTekst): String {
 private fun DIV.svar(tekst: GenerellTekst, svar: Innsending.Svar, brutto: Boolean = false) {
     when (svar) {
         is Innsending.EnkeltSvar -> boldSpanP(tekst.svar, svar.tekst)
-        is Innsending.FlerSvar -> flersvar(svar, brutto)
+        is Innsending.ValgSvar -> flersvar(svar, brutto)
         Innsending.IngenSvar -> {}
     }
 }

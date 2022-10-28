@@ -41,7 +41,7 @@ internal data class Innsending(
 
     sealed class Svar
     data class EnkeltSvar(val tekst: String) : Svar()
-    data class FlerSvar(val alternativ: List<SvarAlternativ>) : Svar()
+    data class ValgSvar(val alternativ: List<SvarAlternativ>) : Svar()
     data class SvarAlternativ(val tekst: String, val tilleggsinformasjon: InfoTekst?)
     object IngenSvar : Svar()
 

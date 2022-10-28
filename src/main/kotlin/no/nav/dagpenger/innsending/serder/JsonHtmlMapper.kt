@@ -73,7 +73,7 @@ internal class JsonHtmlMapper(
                 "tekst" -> EnkeltSvar(this["svar"].asText())
                 "double" -> EnkeltSvar(this["svar"].asText())
                 "int" -> EnkeltSvar(this["svar"].asText())
-                "boolean" -> EnkeltSvar((oppslag.lookup<SvaralternativTekstObjekt>(this.booleanTextId())).text)
+                "boolean" -> Innsending.ValgSvar(this.booleanEnValg())
                 "localdate" -> EnkeltSvar(this["svar"].asLocalDate().dagMånedÅr())
                 "periode" -> EnkeltSvar(
                     "${
@@ -82,8 +82,8 @@ internal class JsonHtmlMapper(
                 )
 
                 "generator" -> Innsending.IngenSvar
-                "envalg" -> EnkeltSvar((oppslag.lookup<SvaralternativTekstObjekt>(this["svar"].asText())).text)
-                "flervalg" -> Innsending.FlerSvar(this.flerValg())
+                "envalg" -> Innsending.ValgSvar(this.envalg())
+                "flervalg" -> Innsending.ValgSvar(this.flerValg())
                 "land" -> EnkeltSvar(LandOppslag.hentLand(språk, this["svar"].asText()))
                 "dokument" -> EnkeltSvar(this.dokumentTekst())
                 else -> throw IllegalArgumentException("Ukjent faktumtype $type")
@@ -95,6 +95,28 @@ internal class JsonHtmlMapper(
                 throw e
             }
         )
+    }
+
+    private fun JsonNode.envalg(): List<Innsending.SvarAlternativ> {
+        return oppslag.lookup<SvaralternativTekstObjekt>(this["svar"].asText()).let { jsonAlternativ ->
+            listOf(
+                Innsending.SvarAlternativ(
+                    jsonAlternativ.text,
+                    alertText(jsonAlternativ)
+                )
+            )
+        }
+    }
+
+    private fun JsonNode.booleanEnValg(): List<Innsending.SvarAlternativ> {
+        return oppslag.lookup<SvaralternativTekstObjekt>(this.booleanTextId()).let { jsonAlternativ ->
+            listOf(
+                Innsending.SvarAlternativ(
+                    jsonAlternativ.text,
+                    alertText(jsonAlternativ)
+                )
+            )
+        }
     }
 
     private fun JsonNode.flerValg(): List<Innsending.SvarAlternativ> {

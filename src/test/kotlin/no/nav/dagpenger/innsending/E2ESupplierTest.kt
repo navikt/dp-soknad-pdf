@@ -7,15 +7,16 @@ import io.kubernetes.client.openapi.models.V1Secret
 import io.kubernetes.client.util.ClientBuilder
 import io.kubernetes.client.util.KubeConfig
 import kotlinx.coroutines.runBlocking
+import no.nav.dagpenger.innsending.html.Innsending
 import no.nav.dagpenger.innsending.html.Innsending.InnsendingsSpråk.BOKMÅL
 import no.nav.dagpenger.innsending.html.InnsendingSupplier
 import no.nav.dagpenger.oauth2.CachedOauth2Client
 import no.nav.dagpenger.oauth2.OAuth2Config
-import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import java.io.File
 import java.io.FileReader
 import java.time.OffsetDateTime
+import java.time.ZonedDateTime
 import java.util.UUID
 
 internal class E2ESupplierTest {
@@ -61,13 +62,10 @@ internal class E2ESupplierTest {
     }
 
     @Test
-    @Disabled
+//    @Disabled
     fun `hent dokumentasjonskrav`() {
         val ids = listOf<String>(
-            "803e5fa5-f235-42db-9590-7e410b3bd661",
-            "4a5f6767-3513-448f-a3aa-868eec05e412",
-            "9fc062d6-934a-4c06-9c51-54df8d8ee308",
-            "963c9444-a682-4c24-8733-7b09febf99b4",
+            "e7ed5915-1b5e-42b4-b56f-9c1d1ae95955"
         )
         val innsendingSupplier = InnsendingSupplier(
             dpSoknadBaseUrl = "https://arbeid.dev.nav.no/arbeid/dagpenger/soknadapi",
@@ -75,8 +73,26 @@ internal class E2ESupplierTest {
         )
         runBlocking {
             ids.forEach { id ->
-                innsendingSupplier.hentSoknad(UUID.fromString(id), BOKMÅL).also {
-                    File("./build/tmp/$id.json").writeText(it.toString())
+                val uuid = UUID.fromString(id)
+                innsendingSupplier.hentSoknad(uuid, BOKMÅL).let { innsending ->
+                    innsending.infoBlokk = Innsending.InfoBlokk(
+                        fødselsnummer = "123",
+                        innsendtTidspunkt = ZonedDateTime.now()
+                    )
+                    lagArkiverbartDokument(innsending).forEach { doc ->
+                        File("./build/tmp/søknad-${doc.variant.name}.pdf").writeBytes(doc.pdf)
+                    }
+                }
+
+                innsendingSupplier.hentDokumentasjonKrav(uuid).also {
+                    File("./build/tmp/dokkrav-$id.json").writeText(it)
+                }
+                innsendingSupplier.hentFakta(uuid).also {
+                    File("./build/tmp/fakta-$id.json").writeText(it)
+                }
+
+                innsendingSupplier.hentTekst(uuid).also {
+                    File("./build/tmp/tekst-$id.json").writeText(it)
                 }
             }
         }

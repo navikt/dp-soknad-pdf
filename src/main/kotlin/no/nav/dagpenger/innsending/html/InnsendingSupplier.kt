@@ -61,15 +61,15 @@ internal class InnsendingSupplier(
         }
     }
 
-    private suspend fun hentFakta(id: UUID): String {
+    internal suspend fun hentFakta(id: UUID): String {
         return httpKlient.get("$dpSoknadBaseUrl/$id/ferdigstilt/fakta").bodyAsText()
     }
 
-    private suspend fun hentTekst(id: UUID): String {
+    internal suspend fun hentTekst(id: UUID): String {
         return httpKlient.get("$dpSoknadBaseUrl/$id/ferdigstilt/tekst").bodyAsText()
     }
 
-    private suspend fun hentDokumentasjonKrav(id: UUID): String {
+    internal suspend fun hentDokumentasjonKrav(id: UUID): String {
         return httpKlient.get("$dpSoknadBaseUrl/soknad/$id/dokumentasjonskrav").bodyAsText()
     }
 }
