@@ -96,21 +96,26 @@ internal fun DIV.begrunnelse(begrunnelse: String) {
     }
 }
 
-internal fun DIV.flersvar(svar: Innsending.ValgSvar, brutto: Boolean) {
-    if (svar.alternativ.isNotEmpty()) {
-        ul {
-            svar.alternativ.forEach {
-                li { +it.tekst }
+internal fun DIV.valgsvar(boldTekst: String, svar: Innsending.ValgSvar, brutto: Boolean) {
+    p {
+        span(classes = "boldSpan") { +"$boldTekst: " }
+        if (svar.alternativ.size == 1) {
+            +svar.alternativ.first().tekst
+        } else if (svar.alternativ.size > 1) {
+            ul {
+                svar.alternativ.forEach {
+                    li { +it.tekst }
+                }
             }
         }
-        if (brutto) {
-            div {
-                svar.alternativ.forEach { svaralternativ ->
-                    svaralternativ.tilleggsinformasjon?.also { info ->
-                        div(classes = "hjelpetekst") {
-                            h3 { +tilleggsinformasjonOverskrift(info) }
-                            info.unsafeHtmlBody?.let { unsafe { +info.unsafeHtmlBody.kode } }
-                        }
+    }
+    if (svar.alternativ.isNotEmpty() && brutto) {
+        div {
+            svar.alternativ.forEach { svaralternativ ->
+                svaralternativ.tilleggsinformasjon?.also { info ->
+                    div(classes = "hjelpetekst") {
+                        h3 { +tilleggsinformasjonOverskrift(info) }
+                        info.unsafeHtmlBody?.let { unsafe { +info.unsafeHtmlBody.kode } }
                     }
                 }
             }
@@ -189,7 +194,7 @@ private fun DIV.dokumentKrav(innsendts: List<Innsending.IkkeInnsendtNå>, beskri
 }
 
 private fun tilleggsinformasjonOverskrift(info: Innsending.InfoTekst): String {
-    var overskrift = info.type.name.lowercase()
+    var overskrift = info.type.name.lowercase().replaceFirstChar { it.uppercase() }
     if (info.tittel != null) {
         overskrift += ": ${info.tittel}"
     }
@@ -199,7 +204,7 @@ private fun tilleggsinformasjonOverskrift(info: Innsending.InfoTekst): String {
 private fun DIV.svar(tekst: GenerellTekst, svar: Innsending.Svar, brutto: Boolean = false) {
     when (svar) {
         is Innsending.EnkeltSvar -> boldSpanP(tekst.svar, svar.tekst)
-        is Innsending.ValgSvar -> flersvar(svar, brutto)
+        is Innsending.ValgSvar -> valgsvar(tekst.svar, svar, brutto)
         Innsending.IngenSvar -> {}
     }
 }
