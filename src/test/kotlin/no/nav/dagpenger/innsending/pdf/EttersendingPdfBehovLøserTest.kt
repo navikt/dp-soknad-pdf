@@ -80,7 +80,7 @@ internal class EttersendingPdfBehovLøserTest {
         "dokument_språk": "en",
         "søknad_uuid": "$soknadId",
         "ident": "$testFnr",
-        "type": "ETTERSENDING",
+        "type": "ETTERSENDING_TIL_DIALOG",
         "innsendtTidspunkt": "${ZonedDateTime.now(ZoneId.of("Europe/Oslo"))}"
             }
     """.trimIndent()

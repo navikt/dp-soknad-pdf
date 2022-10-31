@@ -32,7 +32,7 @@ internal class EttersendingPdfBehovLøser(
             validate { it.demandAll("@behov", listOf(BEHOV)) }
             validate { it.rejectKey("@løsning") }
             validate { it.requireKey("søknad_uuid", "ident", "innsendtTidspunkt") }
-            validate { it.requireValue("type", "ETTERSENDING") }
+            validate { it.requireValue("type", "ETTERSENDING_TIL_DIALOG") }
             validate { it.interestedIn("dokument_språk") }
         }.register(this)
     }
