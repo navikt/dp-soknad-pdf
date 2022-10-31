@@ -114,10 +114,19 @@ internal class Oppslag(private val tekstJson: String) {
     private fun JsonNode.tilDokumentkravTekstObjekt(): Map<String, TekstObjekt> {
         return dokumentkrav().associate { dokumentkrav ->
             val textId = dokumentkrav["textId"].asText()
+            val title: String = when {
+                dokumentkrav["title"].isNull -> {
+                    logg.error { "Fant ikke title for $textId" }
+                    textId
+                }
+                else -> {
+                    dokumentkrav["title"].asText()
+                }
+            }
             withLoggingContext("textId" to textId) {
                 textId to DokumentkravTekstObjekt(
                     textId = textId,
-                    title = dokumentkrav["title"].asText(),
+                    title = title,
                     description = dokumentkrav.get("description")?.asRawHtmlString(),
                     helpText = dokumentkrav["helpText"]?.takeIf { !it.isNull }?.let { helpText ->
                         HelpText(
