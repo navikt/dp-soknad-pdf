@@ -75,7 +75,7 @@ dependencies {
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.1")
 
     // FOr E2E
-    testImplementation("io.kubernetes:client-java:16.0.1")
+    testImplementation("io.kubernetes:client-java:16.0.2")
 }
 
 spotless {
