@@ -45,11 +45,15 @@ internal class JsonHtmlMapper(
 
     private fun parseDokumentkrav(dokumentasjonKrav: String): List<Innsending.DokumentKrav> {
         return objectMapper.readTree(dokumentasjonKrav)["krav"].map { krav ->
+            val kravId = krav["id"].asText()
+            val kravSvar = krav["beskrivelse"]?.asText()
             val valg = Innsending.DokumentKrav.Valg.fromJson(krav["svar"].asText())
             val tekstObjekt =
                 oppslag.lookup<DokumentkravTekstObjekt>(krav["beskrivendeId"].asText())
             when (valg) {
                 Innsending.DokumentKrav.Valg.SEND_NAA -> Innsending.Innsendt(
+                    kravId = kravId,
+                    kravSvar = kravSvar,
                     navn = tekstObjekt.title,
                     beskrivelse = tekstObjekt.description?.let { rawHtml -> Innsending.UnsafeHtml(rawHtml.html) },
                     hjelpetekst = tekstObjekt.hjelpetekst(),
@@ -57,6 +61,8 @@ internal class JsonHtmlMapper(
                 )
 
                 else -> Innsending.IkkeInnsendtNå(
+                    kravId = kravId,
+                    kravSvar = kravSvar,
                     navn = tekstObjekt.title,
                     begrunnelse = krav["begrunnelse"].asText(),
                     beskrivelse = tekstObjekt.description?.let { rawHtml -> Innsending.UnsafeHtml(rawHtml.html) },

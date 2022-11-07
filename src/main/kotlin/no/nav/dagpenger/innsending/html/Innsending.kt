@@ -115,6 +115,8 @@ internal data class Innsending(
     }
 
     internal sealed class DokumentKrav(
+        val kravId: String,
+        val kravSvar: String?,
         val navn: String,
         val beskrivelse: UnsafeHtml? = null,
         val hjelpetekst: Hjelpetekst? = null,
@@ -140,15 +142,24 @@ internal data class Innsending(
         }
     }
 
-    class Innsendt(navn: String, beskrivelse: UnsafeHtml?, hjelpetekst: Hjelpetekst?, valg: Valg) :
-        DokumentKrav(navn, beskrivelse, hjelpetekst, valg)
+    class Innsendt(
+        kravId: String,
+        kravSvar: String?,
+        navn: String,
+        beskrivelse: UnsafeHtml?,
+        hjelpetekst: Hjelpetekst?,
+        valg: Valg
+    ) :
+        DokumentKrav(kravId, kravSvar, navn, beskrivelse, hjelpetekst, valg)
 
     class IkkeInnsendtNå(
+        kravId: String,
+        kravSvar: String?,
         navn: String,
         val begrunnelse: String,
         beskrivelse: UnsafeHtml?,
         hjelpetekst: Hjelpetekst?,
         valg: Valg
     ) :
-        DokumentKrav(navn, beskrivelse, hjelpetekst, valg)
+        DokumentKrav(kravId, kravSvar, navn, beskrivelse, hjelpetekst, valg)
 }

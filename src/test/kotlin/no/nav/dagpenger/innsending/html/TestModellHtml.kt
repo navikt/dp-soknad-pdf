@@ -159,6 +159,8 @@ object TestModellHtml {
     )
 
     private val dokumentskrav = Innsending.IkkeInnsendtNå(
+        kravId = "kravId",
+        kravSvar = "kravSvar",
         navn = "NAVN",
         begrunnelse = "Grunn",
         beskrivelse = null,

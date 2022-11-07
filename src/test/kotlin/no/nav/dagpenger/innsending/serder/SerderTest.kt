@@ -65,7 +65,7 @@ internal class SerderTest {
             val expectedDescription =
                 """<p>description for seksjon</p><p>tadda, det her går jo bra!</p>"""
             assertEquals(expectedDescription, it.description?.html?.replace("\n", ""))
-        }
+        t }
 
         oppslag.lookup<FaktaTekstObjekt>("f3").also {
             assertEquals("f3", it.textId)
