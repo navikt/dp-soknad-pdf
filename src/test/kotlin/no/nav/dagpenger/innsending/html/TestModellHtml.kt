@@ -171,7 +171,7 @@ object TestModellHtml {
     internal val dokumentskrav1 = Innsending.Innsendt(
         kravId = "kravId1",
         kravSvar = "kravSvar",
-        navn = "NAVN",
+        navn = "NAVN 1",
         beskrivelse = null,
         hjelpetekst = null,
         valg = Innsending.DokumentKrav.Valg.SEND_NAA
@@ -179,7 +179,7 @@ object TestModellHtml {
     internal val dokumentskrav2 = Innsending.Innsendt(
         kravId = "kravId2",
         kravSvar = "kravSvar",
-        navn = "NAVN",
+        navn = "NAVN 2",
         beskrivelse = null,
         hjelpetekst = null,
         valg = Innsending.DokumentKrav.Valg.SEND_NAA
