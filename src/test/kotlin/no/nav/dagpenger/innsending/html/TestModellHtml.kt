@@ -158,14 +158,31 @@ object TestModellHtml {
         beskrivelse = Innsending.UnsafeHtml("<p>En description er en beskrivelse av en egen elefant</p>")
     )
 
-    private val dokumentskrav = Innsending.IkkeInnsendtNå(
-        kravId = "kravId",
+    internal val dokumentskrav0 = Innsending.IkkeInnsendtNå(
+        kravId = "kravId0",
         kravSvar = "kravSvar",
         navn = "NAVN",
         begrunnelse = "Grunn",
         beskrivelse = null,
         hjelpetekst = null,
         valg = Innsending.DokumentKrav.Valg.SEND_SENERE
+    )
+
+    internal val dokumentskrav1 = Innsending.Innsendt(
+        kravId = "kravId1",
+        kravSvar = "kravSvar",
+        navn = "NAVN",
+        beskrivelse = null,
+        hjelpetekst = null,
+        valg = Innsending.DokumentKrav.Valg.SEND_NAA
+    )
+    internal val dokumentskrav2 = Innsending.Innsendt(
+        kravId = "kravId2",
+        kravSvar = "kravSvar",
+        navn = "NAVN",
+        beskrivelse = null,
+        hjelpetekst = null,
+        valg = Innsending.DokumentKrav.Valg.SEND_NAA
     )
 
     internal val innsending = Innsending(
@@ -184,7 +201,7 @@ object TestModellHtml {
         ),
         språk = Innsending.InnsendingsSpråk.BOKMÅL,
         pdfAMetaTagger = Innsending.DefaultPdfAMetaTagger,
-        dokumentasjonskrav = listOf(dokumentskrav)
+        dokumentasjonskrav = listOf(dokumentskrav0, dokumentskrav1, dokumentskrav2)
     ).apply {
         infoBlokk = Innsending.InfoBlokk("12345678910", ZonedDateTime.now())
     }

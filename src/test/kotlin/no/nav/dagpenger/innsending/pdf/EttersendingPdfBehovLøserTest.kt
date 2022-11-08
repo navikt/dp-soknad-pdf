@@ -7,6 +7,8 @@ import io.mockk.mockk
 import no.nav.dagpenger.innsending.ArkiverbartDokument.DokumentVariant.NETTO
 import no.nav.dagpenger.innsending.EttersendingPdfBehovLøser
 import no.nav.dagpenger.innsending.LagretDokument
+import no.nav.dagpenger.innsending.html.Innsending
+import no.nav.dagpenger.innsending.html.TestModellHtml
 import no.nav.dagpenger.innsending.html.TestModellHtml.innsending
 import no.nav.helse.rapids_rivers.testsupport.TestRapid
 import org.intellij.lang.annotations.Language
@@ -15,10 +17,13 @@ import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.util.UUID
 import kotlin.test.assertEquals
+import kotlin.test.assertNotNull
 
 internal class EttersendingPdfBehovLøserTest {
     val soknadId = UUID.randomUUID()
     val testFnr = "12345678910"
+
+    val mockInnsending = MockInnsendingSupplier(innsending)
 
     val testRapid = TestRapid().also {
         EttersendingPdfBehovLøser(
@@ -34,7 +39,7 @@ internal class EttersendingPdfBehovLøserTest {
                     LagretDokument("urn:vedlegg:soknadId/ettersending.pdf", NETTO, "ettersending.pdf"),
                 )
             },
-            innsendingSupplier = { _, _ -> innsending },
+            innsendingSupplier = mockInnsending::hentEttersending
         )
     }
 
@@ -55,6 +60,11 @@ internal class EttersendingPdfBehovLøserTest {
                   }
                 ]
         """.trimIndent()
+
+        assertNotNull(mockInnsending.kopiertInnsending)
+        mockInnsending.kopiertInnsending?.let {
+            assertEquals(listOf("kravId1", "kravId2"), it.dokumentasjonskrav.map { it.kravId })
+        }
 
         assertJsonEquals(
             expectedLøsning,
@@ -78,6 +88,7 @@ internal class EttersendingPdfBehovLøserTest {
         "@event_name": "behov",
         "@behov": ["ArkiverbarSøknad"],
         "dokument_språk": "en",
+        "dokumentasjonKravId": ["${TestModellHtml.dokumentskrav1.kravId}", "${TestModellHtml.dokumentskrav2.kravId}"],
         "søknad_uuid": "$soknadId",
         "ident": "$testFnr",
         "type": "ETTERSENDING_TIL_DIALOG",
@@ -94,4 +105,17 @@ internal class EttersendingPdfBehovLøserTest {
         "ident": "12345678910",
         "innsendtTidspunkt": "${ZonedDateTime.now(ZoneId.of("Europe/Oslo"))}}"
     """.trimIndent()
+
+    internal class MockInnsendingSupplier(val innsending: Innsending) {
+        var kopiertInnsending: Innsending? = null
+        fun hentEttersending(
+            soknadId: UUID,
+            innsendingsSpråk: Innsending.InnsendingsSpråk,
+            block: Innsending.() -> Innsending
+        ): Innsending {
+            return innsending.block().also {
+                kopiertInnsending = it
+            }
+        }
+    }
 }

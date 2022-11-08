@@ -48,7 +48,11 @@ internal class InnsendingSupplier(
         }
     }
 
-    suspend fun hentEttersending(id: UUID, språk: Innsending.InnsendingsSpråk): Innsending {
+    suspend fun hentEttersending(
+        id: UUID,
+        språk: Innsending.InnsendingsSpråk,
+        innsendingCopyFunc: Innsending.() -> Innsending = { this }
+    ): Innsending {
         return withContext(Dispatchers.IO) {
             val tekst = async { hentTekst(id) }
             val dokumentasjonsKrav = async { hentDokumentasjonKrav(id) }
@@ -57,7 +61,7 @@ internal class InnsendingSupplier(
                 dokumentasjonKrav = dokumentasjonsKrav.await(),
                 tekst = tekst.await(),
                 språk = språk
-            ).parseEttersending()
+            ).parseEttersending().innsendingCopyFunc()
         }
     }
 
