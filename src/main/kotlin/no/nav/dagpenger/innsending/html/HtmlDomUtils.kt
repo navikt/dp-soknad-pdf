@@ -137,6 +137,15 @@ private fun DIV.dokumentasjonKravBrutto(dokumentKrav: Innsending.DokumentKrav) {
     }
 }
 
+private fun Innsending.DokumentKrav.tittel(): String {
+    return when (this.kravSvar) {
+        null -> this.navn
+        else -> {
+            "$navn ($kravSvar)"
+        }
+    }
+}
+
 internal fun DIV.dokumentasjonKrav(
     dokumentKrav: List<Innsending.DokumentKrav>,
     valg: Innsending.DokumentKrav.Valg,
@@ -150,7 +159,7 @@ internal fun DIV.dokumentasjonKrav(
                 ul(classes = "dokumentasjonkrav") {
                     innsendts.forEach { dokumentKrav ->
                         li(classes = "listSpacing") {
-                            p { +dokumentKrav.navn }
+                            p { +(dokumentKrav.tittel()) }
                             if (brutto) this@dokumentasjonKrav.dokumentasjonKravBrutto(dokumentKrav)
                         }
                     }
@@ -182,7 +191,7 @@ private fun DIV.dokumentKrav(innsendts: List<Innsending.IkkeInnsendtNå>, beskri
         ul(classes = "dokumentasjonkrav") {
             innsendts.forEach { dokumentKrav ->
                 li(classes = "listSpacing") {
-                    p { +dokumentKrav.navn }
+                    p { +dokumentKrav.tittel() }
                     div {
                         begrunnelse(dokumentKrav.begrunnelse)
                     }

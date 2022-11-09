@@ -122,6 +122,7 @@ internal data class Innsending(
         val hjelpetekst: Hjelpetekst? = null,
         val valg: Valg
     ) {
+
         enum class Valg {
             SEND_NAA,
             SEND_SENERE,
