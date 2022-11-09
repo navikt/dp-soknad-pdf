@@ -93,7 +93,13 @@ internal data class Innsending(
 
     internal class UnsafeHtml(val kode: String) {
         // TODO: må fungere i arrays også
-        fun medCssKlasse(klasse: String) = """<p class="$klasse"${kode.substringAfter("<p")}"""
+        // TODO: GTC Vet ikke helt hva some er hensikten med denne. Hack så det ikke tryner på Arrays
+        fun medCssKlasse(klasse: String): String {
+            return when (kode.lowercase().startsWith("<p")) {
+                true -> """<p class="$klasse"${kode.substringAfter("<p")}"""
+                else -> kode
+            }
+        }
 
         companion object {
             private fun String.leggTilPåHtmlPtag(kode: String): String =
