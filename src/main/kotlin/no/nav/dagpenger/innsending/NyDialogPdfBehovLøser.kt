@@ -5,6 +5,7 @@ import mu.KotlinLogging
 import mu.withLoggingContext
 import no.nav.dagpenger.innsending.LagretDokument.Companion.behovSvar
 import no.nav.dagpenger.innsending.html.Innsending
+import no.nav.dagpenger.innsending.html.InnsendingSupplier
 import no.nav.dagpenger.innsending.pdf.PdfLagring
 import no.nav.dagpenger.innsending.serder.dokumentSpråk
 import no.nav.dagpenger.innsending.serder.ident
@@ -14,12 +15,11 @@ import no.nav.helse.rapids_rivers.JsonMessage
 import no.nav.helse.rapids_rivers.MessageContext
 import no.nav.helse.rapids_rivers.RapidsConnection
 import no.nav.helse.rapids_rivers.River
-import java.util.UUID
 
 internal class NyDialogPdfBehovLøser(
     rapidsConnection: RapidsConnection,
     private val pdfLagring: PdfLagring,
-    private val innsendingSupplier: suspend (soknadId: UUID, innsendingsSpråk: Innsending.InnsendingsSpråk) -> Innsending
+    private val innsendingSupplier: InnsendingSupplier
 ) : River.PacketListener {
     companion object {
         private val logg = KotlinLogging.logger {}
@@ -45,7 +45,10 @@ internal class NyDialogPdfBehovLøser(
                 logg.info("Mottok behov for PDF av søknad")
 
                 runBlocking {
-                    innsendingSupplier(soknadId, packet.dokumentSpråk())
+                    innsendingSupplier.hentSoknad(
+                        soknadId,
+                        packet.dokumentSpråk()
+                    )
                         .apply {
                             infoBlokk =
                                 Innsending.InfoBlokk(

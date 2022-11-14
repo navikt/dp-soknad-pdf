@@ -163,7 +163,7 @@ internal class Oppslag(private val tekstJson: String) {
 
     internal fun generellTekst(): Innsending.GenerellTekst {
         return Innsending.GenerellTekst(
-            hovedOverskrift = (lookup<EnkelText>("pdf.hovedoverskrift")).text,
+            hovedOverskrift = (lookup<EnkelText>("innsending.title")).text,
             tittel = (lookup<EnkelText>("pdf.tittel")).text,
             svar = (lookup<EnkelText>("pdf.svar")).text,
             datoSendt = (lookup<EnkelText>("pdf.datosendt")).text,

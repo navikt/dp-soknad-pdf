@@ -19,14 +19,14 @@ internal object App : RapidsConnection.StatusListener {
             pdfLagring = PdfLagring(
                 baseUrl = Configuration.dpMellomlagringBaseUrl, tokenSupplier = Configuration.mellomlagringTokenSupplier
             ),
-            innsendingSupplier = InnsendingSupplier(Configuration.dpSoknadUrl, Configuration.soknadTokenSupplier)::hentSoknad,
+            innsendingSupplier = InnsendingSupplier(Configuration.dpSoknadUrl, Configuration.soknadTokenSupplier)
         )
         EttersendingPdfBehovLøser(
             rapidsConnection = rapidsConnection,
             pdfLagring = PdfLagring(
                 baseUrl = Configuration.dpMellomlagringBaseUrl, tokenSupplier = Configuration.mellomlagringTokenSupplier
             ),
-            innsendingSupplier = InnsendingSupplier(Configuration.dpSoknadUrl, Configuration.soknadTokenSupplier)::hentEttersending,
+            innsendingSupplier = InnsendingSupplier(Configuration.dpSoknadUrl, Configuration.soknadTokenSupplier)::hentEttersending
         )
     }
 

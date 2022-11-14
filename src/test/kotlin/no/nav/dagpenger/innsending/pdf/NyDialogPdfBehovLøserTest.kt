@@ -8,6 +8,7 @@ import no.nav.dagpenger.innsending.ArkiverbartDokument.DokumentVariant.BRUTTO
 import no.nav.dagpenger.innsending.ArkiverbartDokument.DokumentVariant.NETTO
 import no.nav.dagpenger.innsending.LagretDokument
 import no.nav.dagpenger.innsending.NyDialogPdfBehovLøser
+import no.nav.dagpenger.innsending.html.InnsendingSupplier
 import no.nav.dagpenger.innsending.html.TestModellHtml.innsending
 import no.nav.helse.rapids_rivers.testsupport.TestRapid
 import org.intellij.lang.annotations.Language
@@ -20,6 +21,10 @@ import kotlin.test.assertEquals
 internal class NyDialogPdfBehovLøserTest {
     val soknadId = UUID.randomUUID()
     val testFnr = "12345678910"
+
+    val mockInnsendingSupplier = mockk<InnsendingSupplier>().also {
+        coEvery { it.hentSoknad(soknadId, any()) } returns innsending
+    }
 
     val testRapid = TestRapid().also {
         NyDialogPdfBehovLøser(
@@ -36,7 +41,7 @@ internal class NyDialogPdfBehovLøserTest {
                     LagretDokument("urn:vedlegg:soknadId/brutto.pdf", BRUTTO, "brutto.pdf"),
                 )
             },
-            innsendingSupplier = { _, _ -> innsending },
+            innsendingSupplier = mockInnsendingSupplier
         )
     }
 
