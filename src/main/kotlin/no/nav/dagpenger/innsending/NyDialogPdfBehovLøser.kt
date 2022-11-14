@@ -24,6 +24,12 @@ internal class NyDialogPdfBehovLøser(
     companion object {
         private val logg = KotlinLogging.logger {}
         const val BEHOV = "ArkiverbarSøknad"
+        private fun JsonMessage.innsendingType(): InnsendingSupplier.InnsendingType {
+            return when (this["skjemakode"].asText()) {
+                "GENERELL_INNSENDING" -> InnsendingSupplier.InnsendingType.GENERELL
+                else -> InnsendingSupplier.InnsendingType.DAGPENGER
+            }
+        }
     }
 
     init {
@@ -31,7 +37,7 @@ internal class NyDialogPdfBehovLøser(
             validate { it.demandValue("@event_name", "behov") }
             validate { it.demandAll("@behov", listOf(BEHOV)) }
             validate { it.rejectKey("@løsning") }
-            validate { it.requireKey("søknad_uuid", "ident", "innsendtTidspunkt") }
+            validate { it.requireKey("søknad_uuid", "ident", "innsendtTidspunkt", "skjemakode") }
             validate { it.requireValue("type", "NY_DIALOG") }
             validate { it.interestedIn("dokument_språk") }
         }.register(this)
@@ -48,7 +54,7 @@ internal class NyDialogPdfBehovLøser(
                     innsendingSupplier.hentSoknad(
                         soknadId,
                         packet.dokumentSpråk(),
-                        InnsendingSupplier.InnsendingType.DAGPENGER
+                        packet.innsendingType()
                     )
                         .apply {
                             infoBlokk =

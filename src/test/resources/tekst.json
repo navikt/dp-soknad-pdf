@@ -184,11 +184,11 @@
         "valueText": "Laster neste spørsmål"
       },
       {
-        "textId": "pdf.hovedoverskrift",
+        "textId": "soknad.header.tittel",
         "valueText": "Søknad om dagpenger"
       },
       {
-        "textId": "pdf.ettersending.hovedoverskrift",
+        "textId": "ettersending.tittel",
         "valueText": "Ettersending til søknad om dagpenger"
       },
       {
