@@ -47,7 +47,8 @@ internal class NyDialogPdfBehovLøser(
                 runBlocking {
                     innsendingSupplier.hentSoknad(
                         soknadId,
-                        packet.dokumentSpråk()
+                        packet.dokumentSpråk(),
+                        InnsendingSupplier.InnsendingType.DAGPENGER
                     )
                         .apply {
                             infoBlokk =

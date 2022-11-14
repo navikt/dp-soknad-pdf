@@ -72,10 +72,12 @@ internal class E2ESupplierTest {
             dpSoknadBaseUrl = "https://arbeid.dev.nav.no/arbeid/dagpenger/soknadapi",
             tokenSupplier = { getAzureAdToken("dp-behov-soknad-pdf") },
         )
+
+        val innsendingType = InnsendingSupplier.InnsendingType.DAGPENGER
         runBlocking {
             ids.forEach { id ->
                 val uuid = UUID.fromString(id)
-                innsendingSupplier.hentSoknad(uuid, BOKMÅL).let { innsending ->
+                innsendingSupplier.hentSoknad(uuid, BOKMÅL, innsendingType).let { innsending ->
                     innsending.infoBlokk = Innsending.InfoBlokk(
                         fødselsnummer = "123",
                         innsendtTidspunkt = ZonedDateTime.now()

@@ -7,6 +7,7 @@ import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import mu.KotlinLogging
 import mu.withLoggingContext
 import no.nav.dagpenger.innsending.html.Innsending
+import no.nav.dagpenger.innsending.html.InnsendingSupplier
 import no.nav.dagpenger.innsending.serder.Oppslag.TekstObjekt.DokumentkravTekstObjekt
 import no.nav.dagpenger.innsending.serder.Oppslag.TekstObjekt.EnkelText
 import no.nav.dagpenger.innsending.serder.Oppslag.TekstObjekt.FaktaTekstObjekt
@@ -161,10 +162,14 @@ internal class Oppslag(private val tekstJson: String) {
         return map
     }
 
-    internal fun generellTekst(): Innsending.GenerellTekst {
+    internal fun generellTekst(innsendingType: InnsendingSupplier.InnsendingType): Innsending.GenerellTekst {
+        val tittel = when (innsendingType) {
+            InnsendingSupplier.InnsendingType.DAGPENGER -> lookup<EnkelText>("soknad.header.tittel").text
+            InnsendingSupplier.InnsendingType.GENERELL -> lookup<EnkelText>("innsending.header.tittel").text
+        }
         return Innsending.GenerellTekst(
-            hovedOverskrift = (lookup<EnkelText>("innsending.title")).text,
-            tittel = (lookup<EnkelText>("pdf.tittel")).text,
+            hovedOverskrift = tittel,
+            tittel = tittel,
             svar = (lookup<EnkelText>("pdf.svar")).text,
             datoSendt = (lookup<EnkelText>("pdf.datosendt")).text,
             fnr = (lookup<EnkelText>("pdf.fnr")).text
@@ -172,9 +177,10 @@ internal class Oppslag(private val tekstJson: String) {
     }
 
     internal fun generellTekstEttersending(): Innsending.GenerellTekst {
+        val tittel = lookup<EnkelText>("ettersending.tittel").text
         return Innsending.GenerellTekst(
-            hovedOverskrift = lookup<EnkelText>("pdf.ettersending.hovedoverskrift").text,
-            tittel = lookup<EnkelText>("pdf.tittel").text,
+            hovedOverskrift = tittel,
+            tittel = tittel,
             svar = lookup<EnkelText>("pdf.svar").text,
             datoSendt = lookup<EnkelText>("pdf.datosendt").text,
             fnr = lookup<EnkelText>("pdf.fnr").text

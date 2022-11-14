@@ -34,7 +34,16 @@ internal class InnsendingSupplier(
         }
     }
 
-    suspend fun hentSoknad(id: UUID, språk: Innsending.InnsendingsSpråk): Innsending {
+    internal enum class InnsendingType {
+        DAGPENGER,
+        GENERELL
+    }
+
+    suspend fun hentSoknad(
+        id: UUID,
+        språk: Innsending.InnsendingsSpråk,
+        innsendingType: InnsendingType
+    ): Innsending {
         return withContext(Dispatchers.IO) {
             val fakta = async { hentFakta(id) }
             val tekst = async { hentTekst(id) }
@@ -44,7 +53,7 @@ internal class InnsendingSupplier(
                 dokumentasjonKrav = dokumentasjonsKrav.await(),
                 tekst = tekst.await(),
                 språk = språk
-            ).parse()
+            ).parse(innsendingType)
         }
     }
 

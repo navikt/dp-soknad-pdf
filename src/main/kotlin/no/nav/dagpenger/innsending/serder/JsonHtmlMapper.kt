@@ -7,6 +7,7 @@ import no.nav.dagpenger.innsending.LandOppslag
 import no.nav.dagpenger.innsending.html.Innsending
 import no.nav.dagpenger.innsending.html.Innsending.EnkeltSvar
 import no.nav.dagpenger.innsending.html.Innsending.Svar
+import no.nav.dagpenger.innsending.html.InnsendingSupplier
 import no.nav.dagpenger.innsending.serder.Oppslag.TekstObjekt
 import no.nav.dagpenger.innsending.serder.Oppslag.TekstObjekt.DokumentkravTekstObjekt
 import no.nav.dagpenger.innsending.serder.Oppslag.TekstObjekt.FaktaTekstObjekt
@@ -187,10 +188,10 @@ internal class JsonHtmlMapper(
         }
     }
 
-    fun parse(): Innsending {
+    fun parse(innsendingType: InnsendingSupplier.InnsendingType = InnsendingSupplier.InnsendingType.DAGPENGER): Innsending {
         return Innsending(
             seksjoner = parse(innsendingsData),
-            generellTekst = oppslag.generellTekst(),
+            generellTekst = oppslag.generellTekst(innsendingType),
             språk = språk,
             pdfAMetaTagger = oppslag.pdfaMetaTags(),
             dokumentasjonskrav = parseDokumentkrav(dokumentasjonKrav)

@@ -3,6 +3,7 @@ package no.nav.dagpenger.innsending.serder
 import no.nav.dagpenger.innsending.html.HtmlBuilder
 import no.nav.dagpenger.innsending.html.Innsending
 import no.nav.dagpenger.innsending.html.Innsending.Hjelpetekst
+import no.nav.dagpenger.innsending.html.InnsendingSupplier
 import no.nav.dagpenger.innsending.pdf.PdfBuilder
 import no.nav.dagpenger.innsending.serder.Oppslag.TekstObjekt.FaktaTekstObjekt
 import no.nav.dagpenger.innsending.serder.Oppslag.TekstObjekt.SeksjonTekstObjekt
@@ -115,7 +116,7 @@ internal class SerderTest {
                 dokumentasjonKrav = dokumentasjonKravJson,
                 tekst = debugtekstJson,
                 språk = Innsending.InnsendingsSpråk.BOKMÅL
-            ).parse().apply {
+            ).parse(InnsendingSupplier.InnsendingType.DAGPENGER).apply {
                 infoBlokk = Innsending.InfoBlokk("ident", innsendtTidspunkt = ZonedDateTime.now())
             }
 

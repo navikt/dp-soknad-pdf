@@ -23,7 +23,7 @@ internal class NyDialogPdfBehovLøserTest {
     val testFnr = "12345678910"
 
     val mockInnsendingSupplier = mockk<InnsendingSupplier>().also {
-        coEvery { it.hentSoknad(soknadId, any()) } returns innsending
+        coEvery { it.hentSoknad(soknadId, any(), any()) } returns innsending
     }
 
     val testRapid = TestRapid().also {
