@@ -8,7 +8,8 @@ internal data class Innsending(
     val generellTekst: GenerellTekst,
     val språk: InnsendingsSpråk,
     val pdfAMetaTagger: PdfAMetaTagger,
-    val dokumentasjonskrav: List<DokumentKrav>
+    val dokumentasjonskrav: List<DokumentKrav>,
+    val type: InnsendingSupplier.InnsendingType = InnsendingSupplier.InnsendingType.DAGPENGER
 ) {
 
     lateinit var infoBlokk: InfoBlokk

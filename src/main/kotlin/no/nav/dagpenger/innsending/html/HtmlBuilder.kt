@@ -82,9 +82,12 @@ internal object HtmlBuilder {
                             Innsending.DokumentKrav.Valg.ANDRE_SENDER,
                             brutto
                         )
-                        // todo engelsk tekst
-                        if (innsending.språk == BOKMÅL) {
-                            p { +"Frist for innsendinger er 14 dager etter at du sendte søknaden. Vi trenger dokumentasjonen for å vurdere om du har rett til dagpenger. Du er ansvarlig for at dokumentasjonen sendes til oss. Hvis du ikke sender alle dokumentene innen fristen kan du få avslag på søknaden, fordi NAV mangler viktige opplysninger i saken din. Ta kontakt hvis du ikke rekker å ettersende alle dokumentene." }
+
+                        // todo engelsk tekst. Hack
+                        if (innsending.type == InnsendingSupplier.InnsendingType.DAGPENGER) {
+                            if (innsending.språk == BOKMÅL) {
+                                p { +"Frist for innsendinger er 14 dager etter at du sendte søknaden. Vi trenger dokumentasjonen for å vurdere om du har rett til dagpenger. Du er ansvarlig for at dokumentasjonen sendes til oss. Hvis du ikke sender alle dokumentene innen fristen kan du få avslag på søknaden, fordi NAV mangler viktige opplysninger i saken din. Ta kontakt hvis du ikke rekker å ettersende alle dokumentene." }
+                            }
                         }
                     }
                 }

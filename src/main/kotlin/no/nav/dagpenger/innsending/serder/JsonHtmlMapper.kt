@@ -194,7 +194,8 @@ internal class JsonHtmlMapper(
             generellTekst = oppslag.generellTekst(innsendingType),
             språk = språk,
             pdfAMetaTagger = oppslag.pdfaMetaTags(),
-            dokumentasjonskrav = parseDokumentkrav(dokumentasjonKrav)
+            dokumentasjonskrav = parseDokumentkrav(dokumentasjonKrav),
+            type = innsendingType
         )
     }
 
