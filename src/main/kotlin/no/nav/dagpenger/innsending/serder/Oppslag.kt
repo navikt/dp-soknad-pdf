@@ -165,7 +165,7 @@ internal class Oppslag(private val tekstJson: String) {
     internal fun generellTekst(innsendingType: InnsendingSupplier.InnsendingType): Innsending.GenerellTekst {
         val tittel = when (innsendingType) {
             InnsendingSupplier.InnsendingType.DAGPENGER -> lookup<EnkelText>("soknad.header.tittel").text
-            InnsendingSupplier.InnsendingType.GENERELL -> lookup<EnkelText>("innsending.header.tittel").text
+            InnsendingSupplier.InnsendingType.GENERELL -> lookup<EnkelText>("pdf.generell-innsending.hovedoverskrift").text
         }
         return Innsending.GenerellTekst(
             hovedOverskrift = tittel,
