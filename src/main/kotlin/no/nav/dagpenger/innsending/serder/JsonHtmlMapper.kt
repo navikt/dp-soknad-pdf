@@ -45,7 +45,7 @@ internal class JsonHtmlMapper(
     }
 
     private fun parseDokumentkrav(dokumentasjonKrav: String): List<Innsending.DokumentKrav> {
-        return objectMapper.readTree(dokumentasjonKrav)["krav"].map { krav ->
+        return objectMapper.readTree(dokumentasjonKrav)["krav"].filter { it.has("svar") }.map { krav ->
             val kravId = krav["id"].asText()
             val kravSvar = krav["beskrivelse"]?.asText()
             val valg = Innsending.DokumentKrav.Valg.fromJson(krav["svar"].asText())
@@ -74,40 +74,39 @@ internal class JsonHtmlMapper(
         }
     }
 
-    private fun JsonNode.textEllerTomSvar(): String {
-        return if (this.has("svar")) {
-            val node = this["svar"]
-            return when {
-                node.isNull -> {
-                    ""
-                }
-                else -> node.asText()
+    private fun JsonNode.sjekkSvarFinnes(block: () -> Svar): Svar {
+        return when {
+            this.has("svar") -> {
+                block.invoke()
             }
-        } else {
-            sikkerlogg.error { "Faktum uten 'svar' ? $this" }
-            ""
+            else -> {
+                sikkerlogg.error { "Faktum uten 'svar' ? $this" }
+                Innsending.IngenSvar
+            }
         }
     }
 
     private fun JsonNode.svar(): Svar {
         return kotlin.runCatching {
             when (val type = this["type"].asText()) {
-                "tekst" -> EnkeltSvar(this.textEllerTomSvar())
-                "double" -> EnkeltSvar(this.textEllerTomSvar())
-                "int" -> EnkeltSvar(this.textEllerTomSvar())
-                "boolean" -> Innsending.ValgSvar(this.booleanEnValg())
-                "localdate" -> EnkeltSvar(this["svar"].asLocalDate().dagMånedÅr())
-                "periode" -> EnkeltSvar(
-                    "${
-                    this["svar"]["fom"].asLocalDate().dagMånedÅr()
-                    } - ${this["svar"]["tom"]?.asLocalDate()?.dagMånedÅr()}"
-                )
+                "tekst" -> this.sjekkSvarFinnes { EnkeltSvar(this["svar"].asText()) }
+                "double" -> this.sjekkSvarFinnes { EnkeltSvar(this["svar"].asText()) }
+                "int" -> this.sjekkSvarFinnes { EnkeltSvar(this["svar"].asText()) }
+                "boolean" -> this.sjekkSvarFinnes { Innsending.ValgSvar(this.booleanEnValg()) }
+                "localdate" -> this.sjekkSvarFinnes { EnkeltSvar(this["svar"].asLocalDate().dagMånedÅr()) }
+                "periode" -> this.sjekkSvarFinnes {
+                    EnkeltSvar(
+                        "${
+                        this["svar"]["fom"].asLocalDate().dagMånedÅr()
+                        } - ${this["svar"]["tom"]?.asLocalDate()?.dagMånedÅr()}"
+                    )
+                }
 
                 "generator" -> Innsending.IngenSvar
-                "envalg" -> Innsending.ValgSvar(this.envalg())
-                "flervalg" -> Innsending.ValgSvar(this.flerValg())
-                "land" -> EnkeltSvar(LandOppslag.hentLand(språk, this["svar"].asText()))
-                "dokument" -> EnkeltSvar(this.dokumentTekst())
+                "envalg" -> this.sjekkSvarFinnes { Innsending.ValgSvar(this.envalg()) }
+                "flervalg" -> this.sjekkSvarFinnes { Innsending.ValgSvar(this.flerValg()) }
+                "land" -> this.sjekkSvarFinnes { EnkeltSvar(LandOppslag.hentLand(språk, this["svar"].asText())) }
+                "dokument" -> this.sjekkSvarFinnes { EnkeltSvar(this.dokumentTekst()) }
                 else -> throw IllegalArgumentException("Ukjent faktumtype $type")
             }
         }.fold(
