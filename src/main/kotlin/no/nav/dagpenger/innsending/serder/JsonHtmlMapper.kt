@@ -100,7 +100,6 @@ internal class JsonHtmlMapper(
             onSuccess = { it },
             onFailure = { e ->
                 sikkerlogg.error { "Kunne ikke parse json node: $this" }
-                logger.error { "Kunne ikke parse json node: $this" }
                 throw e
             }
         )
