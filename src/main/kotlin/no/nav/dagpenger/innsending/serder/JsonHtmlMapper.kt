@@ -20,7 +20,6 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 private val sikkerlogg = KotlinLogging.logger("tjenestekall")
-private val logger = KotlinLogging.logger {}
 
 internal class JsonHtmlMapper(
     private val innsendingsData: String?,
@@ -75,17 +74,27 @@ internal class JsonHtmlMapper(
         }
     }
 
+    private fun JsonNode.textEllerTomSvar(): String {
+        val node = this["svar"]
+        return when {
+            node.isNull -> {
+                ""
+            }
+            else -> node.asText()
+        }
+    }
+
     private fun JsonNode.svar(): Svar {
         return kotlin.runCatching {
             when (val type = this["type"].asText()) {
-                "tekst" -> EnkeltSvar(this["svar"].asText())
-                "double" -> EnkeltSvar(this["svar"].asText())
-                "int" -> EnkeltSvar(this["svar"].asText())
+                "tekst" -> EnkeltSvar(this.textEllerTomSvar())
+                "double" -> EnkeltSvar(this.textEllerTomSvar())
+                "int" -> EnkeltSvar(this.textEllerTomSvar())
                 "boolean" -> Innsending.ValgSvar(this.booleanEnValg())
                 "localdate" -> EnkeltSvar(this["svar"].asLocalDate().dagMånedÅr())
                 "periode" -> EnkeltSvar(
                     "${
-                        this["svar"]["fom"].asLocalDate().dagMånedÅr()
+                    this["svar"]["fom"].asLocalDate().dagMånedÅr()
                     } - ${this["svar"]["tom"]?.asLocalDate()?.dagMånedÅr()}"
                 )
 
@@ -167,7 +176,7 @@ internal class JsonHtmlMapper(
                             hjelpetekst = tekstObjekt.hjelpetekst(),
                             oppfølgingspørmål = node.generatorfakta(),
 
-                            )
+                        )
                     }
                 )
             }
