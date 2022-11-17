@@ -20,6 +20,7 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 private val sikkerlogg = KotlinLogging.logger("tjenestekall")
+private val logger = KotlinLogging.logger {}
 
 internal class JsonHtmlMapper(
     private val innsendingsData: String?,
@@ -84,7 +85,7 @@ internal class JsonHtmlMapper(
                 "localdate" -> EnkeltSvar(this["svar"].asLocalDate().dagMånedÅr())
                 "periode" -> EnkeltSvar(
                     "${
-                    this["svar"]["fom"].asLocalDate().dagMånedÅr()
+                        this["svar"]["fom"].asLocalDate().dagMånedÅr()
                     } - ${this["svar"]["tom"]?.asLocalDate()?.dagMånedÅr()}"
                 )
 
@@ -99,6 +100,7 @@ internal class JsonHtmlMapper(
             onSuccess = { it },
             onFailure = { e ->
                 sikkerlogg.error { "Kunne ikke parse json node: $this" }
+                logger.error { "Kunne ikke parse json node: $this" }
                 throw e
             }
         )
@@ -166,7 +168,7 @@ internal class JsonHtmlMapper(
                             hjelpetekst = tekstObjekt.hjelpetekst(),
                             oppfølgingspørmål = node.generatorfakta(),
 
-                        )
+                            )
                     }
                 )
             }
