@@ -27,7 +27,7 @@ spec:
     requests:
       cpu: 200m
       memory: 256Mi
-  securelog:
+  secureLogs:
     enabled: true
   env:
     - name: DP_MELLOMLAGRING_SCOPE
