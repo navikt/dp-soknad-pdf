@@ -2,6 +2,7 @@ package no.nav.dagpenger.innsending
 
 import com.fasterxml.jackson.databind.node.ArrayNode
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.slf4j.MDCContext
 import mu.KotlinLogging
 import mu.withLoggingContext
 import no.nav.dagpenger.innsending.LagretDokument.Companion.behovSvar
@@ -46,7 +47,7 @@ internal class EttersendingPdfBehovLøser(
             try {
                 logg.info("Mottok behov for PDF av ettersending")
 
-                runBlocking {
+                runBlocking(MDCContext()) {
                     innsendingSupplier(soknadId, packet.dokumentSpråk()) {
                         this.filtrerInnsendteDokumentasjonsKrav(
                             innsendtDokumentajonsKravId

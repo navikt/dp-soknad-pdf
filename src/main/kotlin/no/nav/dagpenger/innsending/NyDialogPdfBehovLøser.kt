@@ -1,6 +1,7 @@
 package no.nav.dagpenger.innsending
 
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.slf4j.MDCContext
 import mu.KotlinLogging
 import mu.withLoggingContext
 import no.nav.dagpenger.innsending.LagretDokument.Companion.behovSvar
@@ -50,7 +51,7 @@ internal class NyDialogPdfBehovLøser(
             try {
                 logg.info("Mottok behov for PDF av søknad")
 
-                runBlocking {
+                runBlocking(MDCContext()) {
                     innsendingSupplier.hentSoknad(
                         soknadId,
                         packet.dokumentSpråk(),

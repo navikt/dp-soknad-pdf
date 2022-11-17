@@ -65,6 +65,7 @@ dependencies {
     implementation("org.jsoup:jsoup:1.15.3")
     implementation("org.jetbrains.kotlinx:kotlinx-html-jvm:0.8.0")
     implementation("org.apache.commons:commons-text:1.10.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-slf4j:1.6.4")
 
     testImplementation(kotlin("test"))
     testImplementation("io.mockk:mockk:1.13.2")
