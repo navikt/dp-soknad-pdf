@@ -75,12 +75,17 @@ internal class JsonHtmlMapper(
     }
 
     private fun JsonNode.textEllerTomSvar(): String {
-        val node = this["svar"]
-        return when {
-            node.isNull -> {
-                ""
+        return if (this.has("svar")) {
+            val node = this["svar"]
+            return when {
+                node.isNull -> {
+                    ""
+                }
+                else -> node.asText()
             }
-            else -> node.asText()
+        } else {
+            sikkerlogg.error { "Faktum uten 'svar' ? $this" }
+            ""
         }
     }
 
