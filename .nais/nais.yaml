@@ -18,15 +18,15 @@ spec:
   kafka:
     pool: {{ kafka_pool }}
   replicas:
-    min: 2
-    max: 2
+    min: 3
+    max: 3
   resources:
     limits:
-      cpu: 500m
-      memory: 512Mi
+      cpu: 3000m
+      memory: 1024Mi
     requests:
-      cpu: 200m
-      memory: 256Mi
+      cpu: 2000m
+      memory: 1024Mi
   secureLogs:
     enabled: true
   env:
