@@ -49,13 +49,14 @@ internal class NyDialogPdfBehovLøser(
         val ident = packet.ident()
         withLoggingContext("søknadId" to soknadId.toString()) {
             try {
-                logg.info("Mottok behov for PDF av søknad")
 
                 runBlocking(MDCContext()) {
+                    val innsendingType = packet.innsendingType()
+                    logg.info("Mottok behov for PDF av søknad. Skjemakode: $innsendingType ")
                     innsendingSupplier.hentSoknad(
                         soknadId,
                         packet.dokumentSpråk(),
-                        packet.innsendingType()
+                        innsendingType
                     )
                         .apply {
                             infoBlokk =

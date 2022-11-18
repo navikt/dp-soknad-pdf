@@ -45,9 +45,8 @@ internal class EttersendingPdfBehovLøser(
         val innsendtDokumentajonsKravId = packet.innsendtDokumentajonsKravId()
         withLoggingContext("søknadId" to soknadId.toString()) {
             try {
-                logg.info("Mottok behov for PDF av ettersending")
-
                 runBlocking(MDCContext()) {
+                    logg.info("Mottok behov for PDF av ettersending")
                     innsendingSupplier(soknadId, packet.dokumentSpråk()) {
                         this.filtrerInnsendteDokumentasjonsKrav(
                             innsendtDokumentajonsKravId
