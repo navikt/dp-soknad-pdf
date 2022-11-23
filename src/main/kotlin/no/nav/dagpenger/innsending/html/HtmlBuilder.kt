@@ -18,11 +18,7 @@ import no.nav.dagpenger.innsending.html.Innsending.InnsendingsSpråk.BOKMÅL
 internal object HtmlBuilder {
     fun lagNettoHtml(innsending: Innsending) = lagHtml(innsending, DIV::nettoSeksjon, false)
     fun lagBruttoHtml(innsending: Innsending) = lagHtml(innsending, DIV::bruttoSeksjon, true)
-
-    fun lagEttersendingHtml(innsending: Innsending): String {
-
-        return lagHtml(innsending, { _, _ -> }, false)
-    }
+    fun lagEttersendingHtml(innsending: Innsending) = lagHtml(innsending, { _, _ -> }, false)
 
     private fun lagHtml(
         innsending: Innsending,
@@ -82,7 +78,6 @@ internal object HtmlBuilder {
                             Innsending.DokumentKrav.Valg.ANDRE_SENDER,
                             brutto
                         )
-
                         // todo engelsk tekst. Hack
                         if (innsending.type == InnsendingSupplier.InnsendingType.DAGPENGER) {
                             if (innsending.språk == BOKMÅL) {
