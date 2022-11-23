@@ -20,7 +20,6 @@ import org.apache.commons.text.translate.EntityArrays.HTML40_EXTENDED_UNESCAPE
 import org.apache.commons.text.translate.EntityArrays.ISO8859_1_UNESCAPE
 
 private val logg = KotlinLogging.logger {}
-
 private val html5CharEntities by lazy {
     (ISO8859_1_UNESCAPE + HTML40_EXTENDED_UNESCAPE).entries.associate {
         it.key.toString() to it.value.toString()
@@ -35,6 +34,10 @@ internal fun String.xhtmlCompliant() = this
     )
     .replace(
         Regex("&#55357;&#56832;"),
+        ""
+    )
+    .replace(
+        Regex("&#55357;&#56876;"),
         ""
     )
 
@@ -64,12 +67,10 @@ internal fun HEAD.bookmarks(innsending: Innsending) {
     val seksjonBokmerker = innsending.seksjoner.map {
         """<bookmark name = "${it.overskrift}" href="#${seksjonId(it.overskrift)}"></bookmark>"""
     }
-
     val dokumentasjonBookmark = when {
         innsending.dokumentasjonskrav.isNotEmpty() -> """<bookmark name = "Dokumentasjon" href="#Dokumentasjon"></bookmark>"""
         else -> null
     }
-
     val bokmerker = listOfNotNull(seksjonBokmerker, dokumentasjonBookmark).joinToString("")
 
     unsafe {
@@ -170,18 +171,22 @@ internal fun DIV.dokumentasjonKrav(
                 }
             }
         }
+
         Innsending.DokumentKrav.Valg.SEND_SENERE -> {
             val innsendts = dokumentKrav.filterIsInstance<Innsending.IkkeInnsendtNå>().filter { it.valg == valg }
             dokumentKrav(innsendts, "Du har sagt at du skal sende følgende dokumentasjon:", brutto)
         }
+
         Innsending.DokumentKrav.Valg.SENDT_TIDLIGERE -> {
             val innsendts = dokumentKrav.filterIsInstance<Innsending.IkkeInnsendtNå>().filter { it.valg == valg }
             dokumentKrav(innsendts, "Du har sagt at du tidligere har sendt inn følgende dokumentasjon:", brutto)
         }
+
         Innsending.DokumentKrav.Valg.SENDER_IKKE -> {
             val innsendts = dokumentKrav.filterIsInstance<Innsending.IkkeInnsendtNå>().filter { it.valg == valg }
             dokumentKrav(innsendts, "Du har sagt at du ikke sender følgende dokumentasjon:", brutto)
         }
+
         Innsending.DokumentKrav.Valg.ANDRE_SENDER -> {
             val innsendts = dokumentKrav.filterIsInstance<Innsending.IkkeInnsendtNå>().filter { it.valg == valg }
             dokumentKrav(innsendts, "Du har sagt at andre skal sende følgende dokumentasjon:", brutto)
