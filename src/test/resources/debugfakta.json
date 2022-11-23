@@ -668,7 +668,7 @@
       "fakta": [
         {
           "id": "4002",
-          "svar": false,
+          "svar": true,
           "type": "boolean",
           "roller": [
             "søker"
@@ -678,7 +678,19 @@
             "faktum.tilleggsopplysninger.har-tilleggsopplysninger.svar.ja",
             "faktum.tilleggsopplysninger.har-tilleggsopplysninger.svar.nei"
           ],
-          "beskrivendeId": "faktum.tilleggsopplysninger.har-tilleggsopplysninger"
+          "beskrivendeId": "faktum.tilleggsopplysninger.har-tilleggsopplysninger",
+          "sannsynliggjoresAv": []
+        },
+        {
+          "id": "4001",
+          "svar": "Har fosterbarn😀",
+          "type": "tekst",
+          "roller": [
+            "søker"
+          ],
+          "readOnly": false,
+          "beskrivendeId": "faktum.tilleggsopplysninger",
+          "sannsynliggjoresAv": []
         }
       ],
       "ferdig": true,

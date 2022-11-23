@@ -33,6 +33,10 @@ internal fun String.xhtmlCompliant() = this
         Regex("(<(meta|link).*?)>", RegexOption.IGNORE_CASE),
         replacement = "$1></$2>"
     )
+    .replace(
+        Regex("&#55357;&#56832;"),
+        ""
+    )
 
 fun String.replace(pairs: Map<String, String>) =
     pairs.entries.fold(this) { acc, (old, new) -> acc.replace(old, new) }
