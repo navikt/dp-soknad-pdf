@@ -36,7 +36,7 @@ object TestModellHtml {
         overskrift = "Reel arbeidsøker",
         spmSvar = listOf(
             Innsending.SporsmalSvar(
-                sporsmal = "Kan du jobbe både heltid og deltid?",
+                sporsmal = "Kan du jobbe både 🏉 heltid og deltid?",
                 svar = EnkeltSvar("Ja")
             ),
             Innsending.SporsmalSvar(

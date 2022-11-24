@@ -3,8 +3,6 @@ package no.nav.dagpenger.innsending.html
 import kotlinx.html.DIV
 import kotlinx.html.body
 import kotlinx.html.div
-import kotlinx.html.dom.createHTMLDocument
-import kotlinx.html.dom.serialize
 import kotlinx.html.h1
 import kotlinx.html.h2
 import kotlinx.html.head
@@ -12,6 +10,7 @@ import kotlinx.html.html
 import kotlinx.html.id
 import kotlinx.html.lang
 import kotlinx.html.p
+import kotlinx.html.stream.createHTML
 import kotlinx.html.title
 import no.nav.dagpenger.innsending.html.Innsending.InnsendingsSpråk.BOKMÅL
 
@@ -26,8 +25,7 @@ internal object HtmlBuilder {
         brutto: Boolean
     ): String {
         val generellTekst = innsending.generellTekst
-        return createHTMLDocument().html {
-            attributes["xmlns"] = "http://www.w3.org/1999/xhtml"
+        return createHTML(prettyPrint = false, xhtmlCompatible = true).html {
             lang = innsending.språk.langAtributt
             head {
                 title(innsending.generellTekst.tittel)
@@ -87,6 +85,6 @@ internal object HtmlBuilder {
                     }
                 }
             }
-        }.serialize(true).xhtmlCompliant()
+        }
     }
 }
