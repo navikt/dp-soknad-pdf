@@ -8,21 +8,8 @@ import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import java.io.File
-import kotlin.test.assertContains
 
 class HtmlBuilderTest {
-    @Test
-    fun xHtmlCompliantErstatterShorttags() {
-        assertEquals(
-            "før <meta content=\"NAV\" name=\"author\"></meta> etter",
-            "før <meta content=\"NAV\" name=\"author\"> etter".xhtmlCompliant()
-        )
-        with(foo.xhtmlCompliant()) {
-            assertContains(this, "<meta content=\"NAV\" name=\"author\"></meta>")
-            assertContains(this, "<link href=\"https://fonts.googleapis.com\" rel=\"preconnect\"></link>")
-        }
-    }
-
     @Disabled
     @Test
     fun manuellTest() {

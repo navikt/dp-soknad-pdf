@@ -16,33 +16,8 @@ import kotlinx.html.unsafe
 import mu.KotlinLogging
 import no.nav.dagpenger.innsending.html.Innsending.GenerellTekst
 import no.nav.dagpenger.innsending.html.Innsending.SporsmalSvar
-import org.apache.commons.text.translate.EntityArrays.HTML40_EXTENDED_UNESCAPE
-import org.apache.commons.text.translate.EntityArrays.ISO8859_1_UNESCAPE
 
 private val logg = KotlinLogging.logger {}
-private val html5CharEntities by lazy {
-    (ISO8859_1_UNESCAPE + HTML40_EXTENDED_UNESCAPE).entries.associate {
-        it.key.toString() to it.value.toString()
-    }
-}
-
-internal fun String.xhtmlCompliant() = this
-    .replace(html5CharEntities)
-    .replace(
-        Regex("(<(meta|link).*?)>", RegexOption.IGNORE_CASE),
-        replacement = "$1></$2>"
-    )
-    .replace(
-        Regex("&#55357;&#56832;"),
-        ""
-    )
-    .replace(
-        Regex("&#55357;&#56876;"),
-        ""
-    )
-
-fun String.replace(pairs: Map<String, String>) =
-    pairs.entries.fold(this) { acc, (old, new) -> acc.replace(old, new) }
 
 internal fun HEAD.pdfaMetaTags(innsending: Innsending) {
     with(innsending.pdfAMetaTagger) {
