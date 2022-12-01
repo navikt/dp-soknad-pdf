@@ -17,6 +17,8 @@ import no.nav.helse.rapids_rivers.MessageContext
 import no.nav.helse.rapids_rivers.RapidsConnection
 import no.nav.helse.rapids_rivers.River
 
+private val sikkerlogg = KotlinLogging.logger("tjenestekall")
+
 internal class NyDialogPdfBehovLøser(
     rapidsConnection: RapidsConnection,
     private val pdfLagring: PdfLagring,
@@ -73,12 +75,14 @@ internal class NyDialogPdfBehovLøser(
                                 fnr = ident
                             ).let {
                                 with(it.behovSvar()) {
-                                    logg.info { "@Løsning satt til $this" }
                                     packet["@løsning"] = mapOf(BEHOV to this)
                                 }
                             }
                         }
-                    context.publish(packet.toJson())
+                    with(packet.toJson()) {
+                        context.publish(this)
+                        sikkerlogg.info { "Sender løsning for $BEHOV: $this" }
+                    }
                 }
             } catch (e: Exception) {
                 logg.error(e) { "Kunne ikke lage PDF for søknad med id: $soknadId" }

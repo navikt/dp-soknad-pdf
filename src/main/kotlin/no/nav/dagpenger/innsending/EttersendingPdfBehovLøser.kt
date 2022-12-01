@@ -25,6 +25,7 @@ internal class EttersendingPdfBehovLøser(
 ) : River.PacketListener {
     companion object {
         private val logg = KotlinLogging.logger {}
+        private val sikkerlogg = KotlinLogging.logger("tjenestekall")
         const val BEHOV = "ArkiverbarSøknad"
     }
 
@@ -67,12 +68,14 @@ internal class EttersendingPdfBehovLøser(
                                 fnr = ident
                             ).let {
                                 with(it.behovSvar()) {
-                                    logg.info { "@Løsning satt til $this" }
                                     packet["@løsning"] = mapOf(BEHOV to this)
                                 }
                             }
                         }
-                    context.publish(packet.toJson())
+                    with(packet.toJson()) {
+                        context.publish(this)
+                        sikkerlogg.info { "Sender løsning for $BEHOV: $this" }
+                    }
                 }
             } catch (e: Exception) {
                 logg.error(e) { "Kunne ikke lage PDF for søknad med id: $soknadId" }
