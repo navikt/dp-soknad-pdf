@@ -15,8 +15,12 @@ h1 {
 h2 {
     margin-bottom: 10px;
     font-weight: 600;
-    font-size: 20px;
+    font-size: 30px;
     line-height: 28px;
+}
+
+.seksjon {
+    margin-bottom: 50px;
 }
 
 .seksjon h3 {

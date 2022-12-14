@@ -66,7 +66,7 @@ internal class E2ESupplierTest {
     @Disabled
     fun `hent dokumentasjonskrav`() {
         val ids = listOf<String>(
-            "2f545ae9-b82d-45d4-ba95-7e3c9c503308"
+            "1a2bed68-68e4-4794-990a-7bfae60b4139"
         )
         val innsendingSupplier = InnsendingSupplier(
             dpSoknadBaseUrl = "https://arbeid.dev.nav.no/arbeid/dagpenger/soknadapi",

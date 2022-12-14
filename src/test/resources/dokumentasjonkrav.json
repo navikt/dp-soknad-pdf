@@ -1,45 +1,58 @@
 {
-  "soknad_uuid": "4a5f6767-3513-448f-a3aa-868eec05e412",
+  "soknad_uuid": "1a2bed68-68e4-4794-990a-7bfae60b4139",
   "krav": [
     {
-      "id": "1",
-      "beskrivendeId": "faktum.dokument-varsel-om-permittering",
-      "begrunnelse": "Dette er en tekst som kan være svært lang. Eller ikke så lang da, siden tekst feltene i frontenden er begrenser til maks anntall tegn. Tror vi.",
-      "svar": "dokumentkrav.svar.sender.ikke"
-    },
-    {
-      "id": "2",
-      "beskrivendeId": "faktum.dokument-varsel-om-permittering",
-      "begrunnelse": "DTETDhgv",
+      "id": "1014.1",
+      "beskrivendeId": "faktum.dokument-foedselsattest-bostedsbevis-for-barn-under-18aar",
+      "beskrivelse": "Barn En",
+      "fakta": [
+        {
+          "id": "1006.1",
+          "svar": true,
+          "type": "boolean",
+          "roller": [
+            "søker"
+          ],
+          "readOnly": false,
+          "gyldigeValg": [
+            "faktum.forsoerger-du-barnet.svar.ja",
+            "faktum.forsoerger-du-barnet.svar.nei"
+          ],
+          "beskrivendeId": "faktum.forsoerger-du-barnet",
+          "sannsynliggjoresAv": [
+            {
+              "id": "1014.1",
+              "type": "dokument",
+              "roller": [
+                "søker"
+              ],
+              "readOnly": true,
+              "generertAv": "Barn En",
+              "beskrivendeId": "faktum.dokument-foedselsattest-bostedsbevis-for-barn-under-18aar",
+              "sannsynliggjoresAv": []
+            }
+          ]
+        }
+      ],
+      "filer": [],
+      "gyldigeValg": [
+        "dokumentkrav.svar.send.naa",
+        "dokumentkrav.svar.send.senere",
+        "dokumentkrav.svar.sendt.tidligere",
+        "dokumentkrav.svar.sender.ikke",
+        "dokumentkrav.svar.andre.sender"
+      ],
+      "begrunnelse": "Sender senere ",
       "svar": "dokumentkrav.svar.send.senere"
     },
     {
-      "id": "3",
-      "beskrivendeId": "faktum.dokument-varsel-om-permittering",
-      "begrunnelse": "DTETDhgv",
-      "svar": "dokumentkrav.svar.andre.sender"
-    },
-    {
-      "id": "4",
-      "beskrivendeId": "faktum.dokument-varsel-om-permittering",
-      "begrunnelse": "DTETDhgv",
-      "svar": "dokumentkrav.svar.sendt.tidligere"
-    },
-    {
-      "id": "4",
-      "beskrivendeId": "faktum.dokument-varsel-om-permittering",
-      "begrunnelse": "DTETDhgv",
-      "svar": "dokumentkrav.svar.send.naa",
-      "bundle": "urn:vedlegg:hubba"
-    },
-    {
-      "id": "8065",
-      "beskrivelse": "Bedriften",
-      "beskrivendeId": "faktum.dokument-varsel-om-permittering",
+      "id": "155.1",
+      "beskrivendeId": "faktum.dokument-arbeidsavtale",
+      "beskrivelse": "Bedrift 1",
       "fakta": [
         {
-          "id": "8006.1",
-          "svar": "faktum.arbeidsforhold.endret.svar.permittert",
+          "id": "112.1",
+          "svar": "faktum.arbeidsforhold.endret.svar.avskjediget",
           "type": "envalg",
           "roller": [
             "søker"
@@ -56,16 +69,28 @@
             "faktum.arbeidsforhold.endret.svar.permittert"
           ],
           "beskrivendeId": "faktum.arbeidsforhold.endret",
-          "sannsynliggjøresAv": [
+          "sannsynliggjoresAv": [
             {
-              "id": "8065",
+              "id": "155.1",
               "type": "dokument",
               "roller": [
                 "søker"
               ],
               "readOnly": true,
-              "beskrivendeId": "faktum.dokument-varsel-om-permittering",
-              "sannsynliggjøresAv": []
+              "generertAv": "Bedrift 1",
+              "beskrivendeId": "faktum.dokument-arbeidsavtale",
+              "sannsynliggjoresAv": []
+            },
+            {
+              "id": "156.1",
+              "type": "dokument",
+              "roller": [
+                "søker"
+              ],
+              "readOnly": true,
+              "generertAv": "Bedrift 1",
+              "beskrivendeId": "faktum.dokument-arbeidsforhold-avskjediget",
+              "sannsynliggjoresAv": []
             }
           ]
         }
@@ -78,9 +103,235 @@
         "dokumentkrav.svar.sender.ikke",
         "dokumentkrav.svar.andre.sender"
       ],
-      "begrunnelse": "DTETDhgv",
-      "svar": "dokumentkrav.svar.sender.ikke",
-      "bundle": "null"
+      "begrunnelse": "Sender senere ",
+      "svar": "dokumentkrav.svar.send.senere"
+    },
+    {
+      "id": "156.1",
+      "beskrivendeId": "faktum.dokument-arbeidsforhold-avskjediget",
+      "beskrivelse": "Bedrift 1",
+      "fakta": [
+        {
+          "id": "112.1",
+          "svar": "faktum.arbeidsforhold.endret.svar.avskjediget",
+          "type": "envalg",
+          "roller": [
+            "søker"
+          ],
+          "readOnly": false,
+          "gyldigeValg": [
+            "faktum.arbeidsforhold.endret.svar.ikke-endret",
+            "faktum.arbeidsforhold.endret.svar.avskjediget",
+            "faktum.arbeidsforhold.endret.svar.sagt-opp-av-arbeidsgiver",
+            "faktum.arbeidsforhold.endret.svar.arbeidsgiver-konkurs",
+            "faktum.arbeidsforhold.endret.svar.kontrakt-utgaatt",
+            "faktum.arbeidsforhold.endret.svar.sagt-opp-selv",
+            "faktum.arbeidsforhold.endret.svar.redusert-arbeidstid",
+            "faktum.arbeidsforhold.endret.svar.permittert"
+          ],
+          "beskrivendeId": "faktum.arbeidsforhold.endret",
+          "sannsynliggjoresAv": [
+            {
+              "id": "155.1",
+              "type": "dokument",
+              "roller": [
+                "søker"
+              ],
+              "readOnly": true,
+              "generertAv": "Bedrift 1",
+              "beskrivendeId": "faktum.dokument-arbeidsavtale",
+              "sannsynliggjoresAv": []
+            },
+            {
+              "id": "156.1",
+              "type": "dokument",
+              "roller": [
+                "søker"
+              ],
+              "readOnly": true,
+              "generertAv": "Bedrift 1",
+              "beskrivendeId": "faktum.dokument-arbeidsforhold-avskjediget",
+              "sannsynliggjoresAv": []
+            }
+          ]
+        }
+      ],
+      "filer": [],
+      "gyldigeValg": [
+        "dokumentkrav.svar.send.naa",
+        "dokumentkrav.svar.send.senere",
+        "dokumentkrav.svar.sendt.tidligere",
+        "dokumentkrav.svar.sender.ikke",
+        "dokumentkrav.svar.andre.sender"
+      ],
+      "begrunnelse": "Sender senere",
+      "svar": "dokumentkrav.svar.send.senere"
+    },
+    {
+      "id": "155.2",
+      "beskrivendeId": "faktum.dokument-arbeidsavtale",
+      "beskrivelse": "Bedrift 2",
+      "fakta": [
+        {
+          "id": "112.2",
+          "svar": "faktum.arbeidsforhold.endret.svar.avskjediget",
+          "type": "envalg",
+          "roller": [
+            "søker"
+          ],
+          "readOnly": false,
+          "gyldigeValg": [
+            "faktum.arbeidsforhold.endret.svar.ikke-endret",
+            "faktum.arbeidsforhold.endret.svar.avskjediget",
+            "faktum.arbeidsforhold.endret.svar.sagt-opp-av-arbeidsgiver",
+            "faktum.arbeidsforhold.endret.svar.arbeidsgiver-konkurs",
+            "faktum.arbeidsforhold.endret.svar.kontrakt-utgaatt",
+            "faktum.arbeidsforhold.endret.svar.sagt-opp-selv",
+            "faktum.arbeidsforhold.endret.svar.redusert-arbeidstid",
+            "faktum.arbeidsforhold.endret.svar.permittert"
+          ],
+          "beskrivendeId": "faktum.arbeidsforhold.endret",
+          "sannsynliggjoresAv": [
+            {
+              "id": "155.2",
+              "type": "dokument",
+              "roller": [
+                "søker"
+              ],
+              "readOnly": true,
+              "generertAv": "Bedrift 2",
+              "beskrivendeId": "faktum.dokument-arbeidsavtale",
+              "sannsynliggjoresAv": []
+            },
+            {
+              "id": "156.2",
+              "type": "dokument",
+              "roller": [
+                "søker"
+              ],
+              "readOnly": true,
+              "generertAv": "Bedrift 2",
+              "beskrivendeId": "faktum.dokument-arbeidsforhold-avskjediget",
+              "sannsynliggjoresAv": []
+            }
+          ]
+        }
+      ],
+      "filer": [],
+      "gyldigeValg": [
+        "dokumentkrav.svar.send.naa",
+        "dokumentkrav.svar.send.senere",
+        "dokumentkrav.svar.sendt.tidligere",
+        "dokumentkrav.svar.sender.ikke",
+        "dokumentkrav.svar.andre.sender"
+      ],
+      "begrunnelse": "Sender senere",
+      "svar": "dokumentkrav.svar.send.senere"
+    },
+    {
+      "id": "156.2",
+      "beskrivendeId": "faktum.dokument-arbeidsforhold-avskjediget",
+      "beskrivelse": "Bedrift 2",
+      "fakta": [
+        {
+          "id": "112.2",
+          "svar": "faktum.arbeidsforhold.endret.svar.avskjediget",
+          "type": "envalg",
+          "roller": [
+            "søker"
+          ],
+          "readOnly": false,
+          "gyldigeValg": [
+            "faktum.arbeidsforhold.endret.svar.ikke-endret",
+            "faktum.arbeidsforhold.endret.svar.avskjediget",
+            "faktum.arbeidsforhold.endret.svar.sagt-opp-av-arbeidsgiver",
+            "faktum.arbeidsforhold.endret.svar.arbeidsgiver-konkurs",
+            "faktum.arbeidsforhold.endret.svar.kontrakt-utgaatt",
+            "faktum.arbeidsforhold.endret.svar.sagt-opp-selv",
+            "faktum.arbeidsforhold.endret.svar.redusert-arbeidstid",
+            "faktum.arbeidsforhold.endret.svar.permittert"
+          ],
+          "beskrivendeId": "faktum.arbeidsforhold.endret",
+          "sannsynliggjoresAv": [
+            {
+              "id": "155.2",
+              "type": "dokument",
+              "roller": [
+                "søker"
+              ],
+              "readOnly": true,
+              "generertAv": "Bedrift 2",
+              "beskrivendeId": "faktum.dokument-arbeidsavtale",
+              "sannsynliggjoresAv": []
+            },
+            {
+              "id": "156.2",
+              "type": "dokument",
+              "roller": [
+                "søker"
+              ],
+              "readOnly": true,
+              "generertAv": "Bedrift 2",
+              "beskrivendeId": "faktum.dokument-arbeidsforhold-avskjediget",
+              "sannsynliggjoresAv": []
+            }
+          ]
+        }
+      ],
+      "filer": [],
+      "gyldigeValg": [
+        "dokumentkrav.svar.send.naa",
+        "dokumentkrav.svar.send.senere",
+        "dokumentkrav.svar.sendt.tidligere",
+        "dokumentkrav.svar.sender.ikke",
+        "dokumentkrav.svar.andre.sender"
+      ],
+      "begrunnelse": "Sender senere ",
+      "svar": "dokumentkrav.svar.send.senere"
+    },
+    {
+      "id": "1014.2",
+      "beskrivendeId": "faktum.dokument-foedselsattest-bostedsbevis-for-barn-under-18aar",
+      "beskrivelse": "Barn To",
+      "fakta": [
+        {
+          "id": "1006.2",
+          "svar": true,
+          "type": "boolean",
+          "roller": [
+            "søker"
+          ],
+          "readOnly": false,
+          "gyldigeValg": [
+            "faktum.forsoerger-du-barnet.svar.ja",
+            "faktum.forsoerger-du-barnet.svar.nei"
+          ],
+          "beskrivendeId": "faktum.forsoerger-du-barnet",
+          "sannsynliggjoresAv": [
+            {
+              "id": "1014.2",
+              "type": "dokument",
+              "roller": [
+                "søker"
+              ],
+              "readOnly": true,
+              "generertAv": "Barn To",
+              "beskrivendeId": "faktum.dokument-foedselsattest-bostedsbevis-for-barn-under-18aar",
+              "sannsynliggjoresAv": []
+            }
+          ]
+        }
+      ],
+      "filer": [],
+      "gyldigeValg": [
+        "dokumentkrav.svar.send.naa",
+        "dokumentkrav.svar.send.senere",
+        "dokumentkrav.svar.sendt.tidligere",
+        "dokumentkrav.svar.sender.ikke",
+        "dokumentkrav.svar.andre.sender"
+      ],
+      "begrunnelse": "Sender senere ",
+      "svar": "dokumentkrav.svar.send.senere"
     }
   ]
 }
