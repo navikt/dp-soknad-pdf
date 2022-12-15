@@ -203,6 +203,10 @@ object TestModellHtml {
         pdfAMetaTagger = Innsending.DefaultPdfAMetaTagger,
         dokumentasjonskrav = listOf(dokumentskrav0, dokumentskrav1, dokumentskrav2)
     ).apply {
-        infoBlokk = Innsending.InfoBlokk("12345678910", ZonedDateTime.now())
+        infoBlokk = Innsending.InfoBlokk(
+            fødselsnummer = "12345678910",
+            navn = "Ola Nordmann",
+            innsendtTidspunkt = ZonedDateTime.now(),
+        )
     }
 }

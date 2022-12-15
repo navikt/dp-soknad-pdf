@@ -12,7 +12,11 @@ import io.ktor.http.HttpHeaders
 import io.ktor.serialization.jackson.jackson
 import no.nav.dagpenger.pdl.createPersonOppslag
 
-internal class PersonOppslag(pdlUrl: String, private val tokenProvider: () -> String) {
+internal interface PersonaliaOppslag {
+    suspend fun hentPerson(ident: String): Personalia
+}
+
+internal class PDLPersonaliaOppslag(pdlUrl: String, private val tokenProvider: () -> String) : PersonaliaOppslag {
     private val httpClient = HttpClient(CIO) {
         install(ContentNegotiation) {
             jackson {
@@ -28,9 +32,9 @@ internal class PersonOppslag(pdlUrl: String, private val tokenProvider: () -> St
 
     private val personOppslag = createPersonOppslag(pdlUrl, httpClient)
 
-    suspend fun hentPerson(fnr: String) {
-        personOppslag.hentPerson(
-            fnr,
+    override suspend fun hentPerson(ident: String): Personalia {
+        return personOppslag.hentPerson(
+            ident,
             mapOf(
                 HttpHeaders.Authorization to "Bearer ${tokenProvider()}"
             )
@@ -53,5 +57,7 @@ internal data class Personalia(
         val forNavn: String,
         val mellomNavn: String?,
         val etterNavn: String,
-    )
+    ) {
+        val formatertNavn: String = listOfNotNull(forNavn, mellomNavn, etterNavn).joinToString(" ")
+    }
 }

@@ -37,7 +37,7 @@ internal object HtmlBuilder {
             body {
                 h1 {
                     id = "hovedoverskrift"
-                    +innsending.generellTekst.hovedOverskrift
+                    +"${innsending.generellTekst.hovedOverskrift}: ${innsending.infoBlokk.navn}"
                 }
                 div(classes = "infoblokk") {
                     id = "infoblokk"

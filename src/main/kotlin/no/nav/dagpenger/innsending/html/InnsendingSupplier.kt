@@ -1,7 +1,6 @@
 package no.nav.dagpenger.innsending.html
 
 import io.ktor.client.HttpClient
-import io.ktor.client.engine.HttpClientEngine
 import io.ktor.client.engine.cio.CIO
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.defaultRequest
@@ -15,15 +14,16 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
 import no.nav.dagpenger.innsending.serder.JsonHtmlMapper
+import no.nav.dagpenger.innsending.tjenester.PersonaliaOppslag
 import java.time.ZonedDateTime
 import java.util.UUID
 
 internal class InnsendingSupplier(
     private val dpSoknadBaseUrl: String,
     tokenSupplier: () -> String,
-    engine: HttpClientEngine = CIO.create()
+    private val personaliOppslag: PersonaliaOppslag
 ) {
-    private val httpKlient: HttpClient = HttpClient(engine) {
+    private val httpKlient: HttpClient = HttpClient(CIO) {
         defaultRequest {
             header("Authorization", "Bearer ${tokenSupplier.invoke()}")
         }
@@ -51,6 +51,7 @@ internal class InnsendingSupplier(
             val fakta = async { hentFakta(id) }
             val tekst = async { hentTekst(id) }
             val dokumentasjonsKrav = async { hentDokumentasjonKrav(id) }
+            val person = async { personaliOppslag.hentPerson(fnr) }
             JsonHtmlMapper(
                 innsendingsData = fakta.await(),
                 dokumentasjonKrav = dokumentasjonsKrav.await(),
@@ -59,7 +60,8 @@ internal class InnsendingSupplier(
             ).parse(innsendingType).also {
                 it.infoBlokk = Innsending.InfoBlokk(
                     fødselsnummer = fnr,
-                    innsendtTidspunkt = innsendtTidspunkt
+                    innsendtTidspunkt = innsendtTidspunkt,
+                    navn = person.await().navn.formatertNavn
                 )
             }
         }
@@ -75,6 +77,7 @@ internal class InnsendingSupplier(
         return withContext(Dispatchers.IO) {
             val tekst = async { hentTekst(id) }
             val dokumentasjonsKrav = async { hentDokumentasjonKrav(id) }
+            val person = async { personaliOppslag.hentPerson(fnr) }
             JsonHtmlMapper(
                 innsendingsData = null,
                 dokumentasjonKrav = dokumentasjonsKrav.await(),
@@ -83,7 +86,8 @@ internal class InnsendingSupplier(
             ).parseEttersending().also {
                 it.infoBlokk = Innsending.InfoBlokk(
                     fødselsnummer = fnr,
-                    innsendtTidspunkt = innsendtTidspunkt
+                    innsendtTidspunkt = innsendtTidspunkt,
+                    navn = person.await().navn.formatertNavn
                 )
             }.innsendingCopyFunc()
         }

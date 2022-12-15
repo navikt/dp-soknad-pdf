@@ -37,7 +37,11 @@ internal class SerderTest {
             tekst = debugtekstJson,
             språk = Innsending.InnsendingsSpråk.BOKMÅL
         ).parse().apply {
-            infoBlokk = Innsending.InfoBlokk("ident", innsendtTidspunkt = ZonedDateTime.now())
+            infoBlokk = Innsending.InfoBlokk(
+                fødselsnummer = "ident",
+                innsendtTidspunkt = ZonedDateTime.now(),
+                navn = "Ola Nordmann"
+            )
         }
 
         assertIngenTommehjelpetekster(mappetInnsending)
@@ -117,7 +121,11 @@ internal class SerderTest {
                 tekst = debugtekstJson,
                 språk = Innsending.InnsendingsSpråk.BOKMÅL
             ).parse(InnsendingSupplier.InnsendingType.DAGPENGER).apply {
-                infoBlokk = Innsending.InfoBlokk("ident", innsendtTidspunkt = ZonedDateTime.now())
+                infoBlokk = Innsending.InfoBlokk(
+                    fødselsnummer = "ident",
+                    innsendtTidspunkt = ZonedDateTime.now(),
+                    navn = "Ola Nordmann"
+                )
             }
 
             HtmlBuilder.lagBruttoHtml(innsending).also {
@@ -145,7 +153,11 @@ internal class SerderTest {
                 tekst = debugtekstJson,
                 språk = Innsending.InnsendingsSpråk.BOKMÅL
             ).parseEttersending().apply {
-                infoBlokk = Innsending.InfoBlokk("ident", innsendtTidspunkt = ZonedDateTime.now())
+                infoBlokk = Innsending.InfoBlokk(
+                    fødselsnummer = "ident",
+                    innsendtTidspunkt = ZonedDateTime.now(),
+                    navn = "Ola Nordmann"
+                )
             }
 
             HtmlBuilder.lagEttersendingHtml(innsending).also {

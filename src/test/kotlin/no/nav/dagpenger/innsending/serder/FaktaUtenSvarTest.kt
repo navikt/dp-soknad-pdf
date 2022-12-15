@@ -24,9 +24,14 @@ class FaktaUtenSvarTest {
                 tekst = tekstJson,
                 språk = Innsending.InnsendingsSpråk.BOKMÅL
             ).parse().apply {
-                infoBlokk = Innsending.InfoBlokk("ident", innsendtTidspunkt = ZonedDateTime.now())
+                infoBlokk = Innsending.InfoBlokk(
+                    fødselsnummer = "ident",
+                    innsendtTidspunkt = ZonedDateTime.now(),
+                    navn = "Ola Nordmann"
+                )
             }.let {
-                PdfBuilder.lagPdf(HtmlBuilder.lagBruttoHtml(it)).let { pdf -> File("build/tmp/test/bug_tom_svar.pdf").writeBytes(pdf) }
+                PdfBuilder.lagPdf(HtmlBuilder.lagBruttoHtml(it))
+                    .let { pdf -> File("build/tmp/test/bug_tom_svar.pdf").writeBytes(pdf) }
             }
         }
     }

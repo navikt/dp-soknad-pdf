@@ -25,6 +25,8 @@ internal object Configuration {
             "DP_MELLOMLAGRING_SCOPE" to "api://dev-gcp.teamdagpenger.dp-mellomlagring/.default",
             "DP_SOKNAD_BASE_URL" to "http://dp-soknad/arbeid/dagpenger/soknadapi",
             "DP_SOKNAD_SCOPE" to "api://dev-gcp.teamdagpenger.dp-soknad/.default",
+            "PDL_API_URL" to "https://pdl-api.dev-fss-pub.nais.io/graphql",
+            "PDL_API_SCOPE" to "api://dev-fss.pdl.pdl-api/.default"
         )
     )
 
@@ -32,8 +34,13 @@ internal object Configuration {
         ConfigurationProperties.systemProperties() overriding EnvironmentVariables() overriding defaultProperties
 
     val dpMellomlagringBaseUrl = properties[Key("DP_MELLOMLAGRING_BASE_URL", stringType)]
+    val pdlApiUrl = properties[Key("PDL_API_URL", stringType)]
+
     val dpSoknadUrl = properties[Key("DP_SOKNAD_BASE_URL", stringType)]
 
+    val pdlTokenSupplier: () -> String by lazy {
+        azureAdTokenSupplier(properties[Key("PDL_API_SCOPE", stringType)])
+    }
     val mellomlagringTokenSupplier: () -> String by lazy {
         azureAdTokenSupplier(properties[Key("DP_MELLOMLAGRING_SCOPE", stringType)])
     }
