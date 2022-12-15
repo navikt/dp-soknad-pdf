@@ -20,6 +20,7 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 private val sikkerlogg = KotlinLogging.logger("tjenestekall")
+private val logg = KotlinLogging.logger {}
 
 internal class JsonHtmlMapper(
     private val innsendingsData: String?,
@@ -106,7 +107,10 @@ internal class JsonHtmlMapper(
                 "envalg" -> this.sjekkSvarFinnes { Innsending.ValgSvar(this.envalg()) }
                 "flervalg" -> this.sjekkSvarFinnes { Innsending.ValgSvar(this.flerValg()) }
                 "land" -> this.sjekkSvarFinnes { EnkeltSvar(LandOppslag.hentLand(språk, this["svar"].asText())) }
-                "dokument" -> this.sjekkSvarFinnes { EnkeltSvar(this.dokumentTekst()) }
+                "dokument" -> this.sjekkSvarFinnes {
+                    logg.error { "Fant dokument i fakta: ${this.dokumentTekst()}" }
+                    Innsending.IngenSvar
+                }
                 else -> throw IllegalArgumentException("Ukjent faktumtype $type")
             }
         }.fold(
