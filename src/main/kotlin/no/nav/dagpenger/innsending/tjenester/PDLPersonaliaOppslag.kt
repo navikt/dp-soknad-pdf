@@ -5,13 +5,17 @@ import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.cio.CIO
+import io.ktor.client.plugins.HttpRequestRetry
+import io.ktor.client.plugins.HttpTimeout
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.defaultRequest
+import io.ktor.client.plugins.logging.LogLevel
+import io.ktor.client.plugins.logging.Logging
 import io.ktor.client.request.header
-import io.ktor.http.HttpHeaders
 import io.ktor.serialization.jackson.jackson
 import mu.KotlinLogging
 import no.nav.dagpenger.pdl.createPersonOppslag
+import kotlin.time.Duration.Companion.seconds
 
 private val sikkerlogg = KotlinLogging.logger("tjenestekall")
 private val logg = KotlinLogging.logger {}
@@ -29,8 +33,24 @@ internal class PDLPersonaliaOppslag(pdlUrl: String, private val tokenProvider: (
                 registerModules(JavaTimeModule())
             }
         }
+        install(HttpRequestRetry) {
+            retryOnServerErrors(maxRetries = 5)
+            exponentialDelay()
+        }
+
+        install(HttpTimeout) {
+            this.connectTimeoutMillis = 5.seconds.inWholeMilliseconds
+            this.requestTimeoutMillis = 15.seconds.inWholeMilliseconds
+            this.socketTimeoutMillis = 5.seconds.inWholeMilliseconds
+        }
+
+        install(Logging) {
+            level = LogLevel.INFO
+        }
+
         defaultRequest {
             header("TEMA", "DAG")
+            header("Authorization", "Bearer ${tokenProvider.invoke()}")
         }
     }
 
@@ -38,12 +58,7 @@ internal class PDLPersonaliaOppslag(pdlUrl: String, private val tokenProvider: (
 
     override suspend fun hentPerson(ident: String): Personalia {
         return try {
-            personOppslag.hentPerson(
-                ident,
-                mapOf(
-                    HttpHeaders.Authorization to "Bearer ${tokenProvider()}"
-                )
-            ).let {
+            personOppslag.hentPerson(ident).let {
                 Personalia(
                     navn = Personalia.Navn(
                         forNavn = it.fornavn,
