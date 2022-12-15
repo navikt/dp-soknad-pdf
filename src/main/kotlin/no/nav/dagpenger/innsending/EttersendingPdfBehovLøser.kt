@@ -16,12 +16,19 @@ import no.nav.helse.rapids_rivers.JsonMessage
 import no.nav.helse.rapids_rivers.MessageContext
 import no.nav.helse.rapids_rivers.RapidsConnection
 import no.nav.helse.rapids_rivers.River
+import java.time.ZonedDateTime
 import java.util.UUID
 
 internal class EttersendingPdfBehovLøser(
     rapidsConnection: RapidsConnection,
     private val pdfLagring: PdfLagring,
-    private val innsendingSupplier: suspend (soknadId: UUID, innsendingsSpråk: Innsending.InnsendingsSpråk, block: Innsending.() -> Innsending) -> Innsending
+    private val innsendingSupplier: suspend (
+        soknadId: UUID,
+        fnr: String,
+        innsendtTidspunkt: ZonedDateTime,
+        innsendingsSpråk: Innsending.InnsendingsSpråk,
+        block: Innsending.() -> Innsending
+    ) -> Innsending
 ) : River.PacketListener {
     companion object {
         private val logg = KotlinLogging.logger {}
@@ -43,23 +50,18 @@ internal class EttersendingPdfBehovLøser(
     override fun onPacket(packet: JsonMessage, context: MessageContext) {
         val soknadId = packet.søknadUuid()
         val ident = packet.ident()
+        val innsendtTidspunkt = packet.innsendtTidspunkt()
         val innsendtDokumentajonsKravId = packet.innsendtDokumentajonsKravId()
         withLoggingContext("søknadId" to soknadId.toString()) {
             try {
                 runBlocking(MDCContext()) {
                     logg.info("Mottok behov for PDF av ettersending")
-                    innsendingSupplier(soknadId, packet.dokumentSpråk()) {
-                        this.filtrerInnsendteDokumentasjonsKrav(
-                            innsendtDokumentajonsKravId
-                        )
-                    }
-                        .apply {
-                            infoBlokk =
-                                Innsending.InfoBlokk(
-                                    fødselsnummer = ident,
-                                    innsendtTidspunkt = packet.innsendtTidspunkt()
-                                )
-                        }
+                    innsendingSupplier(
+                        soknadId,
+                        ident,
+                        innsendtTidspunkt,
+                        packet.dokumentSpråk()
+                    ) { this.filtrerInnsendteDokumentasjonsKrav(innsendtDokumentajonsKravId) }
                         .let { lagArkiverbarEttersending(it) }
                         .let { dokumenter ->
                             pdfLagring.lagrePdf(
@@ -95,5 +97,7 @@ private fun Innsending.filtrerInnsendteDokumentasjonsKrav(innsendtDokumentajonsK
         dokumentasjonskrav = this.dokumentasjonskrav.filter { dokumentKrav ->
             dokumentKrav.kravId in innsendtDokumentajonsKravId
         }
-    )
+    ).also {
+        it.infoBlokk = this.infoBlokk
+    }
 }

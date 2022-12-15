@@ -5,7 +5,6 @@ import kotlinx.coroutines.slf4j.MDCContext
 import mu.KotlinLogging
 import mu.withLoggingContext
 import no.nav.dagpenger.innsending.LagretDokument.Companion.behovSvar
-import no.nav.dagpenger.innsending.html.Innsending
 import no.nav.dagpenger.innsending.html.InnsendingSupplier
 import no.nav.dagpenger.innsending.pdf.PdfLagring
 import no.nav.dagpenger.innsending.serder.dokumentSpråk
@@ -49,6 +48,7 @@ internal class NyDialogPdfBehovLøser(
     override fun onPacket(packet: JsonMessage, context: MessageContext) {
         val soknadId = packet.søknadUuid()
         val ident = packet.ident()
+        val innsendtTidspunkt = packet.innsendtTidspunkt()
         withLoggingContext("søknadId" to soknadId.toString()) {
             try {
 
@@ -57,16 +57,11 @@ internal class NyDialogPdfBehovLøser(
                     logg.info("Mottok behov for PDF av søknad. Skjemakode: $innsendingType ")
                     innsendingSupplier.hentSoknad(
                         soknadId,
+                        ident,
+                        innsendtTidspunkt,
                         packet.dokumentSpråk(),
                         innsendingType
                     )
-                        .apply {
-                            infoBlokk =
-                                Innsending.InfoBlokk(
-                                    fødselsnummer = ident,
-                                    innsendtTidspunkt = packet.innsendtTidspunkt()
-                                )
-                        }
                         .let { lagArkiverbartDokument(it) }
                         .let { dokumenter ->
                             pdfLagring.lagrePdf(

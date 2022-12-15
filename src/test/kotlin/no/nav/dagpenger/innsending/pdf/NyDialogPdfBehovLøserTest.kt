@@ -26,8 +26,8 @@ internal class NyDialogPdfBehovLøserTest {
     val testFnr = "12345678910"
 
     val mockInnsendingSupplier = mockk<InnsendingSupplier>().also {
-        coEvery { it.hentSoknad(soknadId, any(), DAGPENGER) } returns innsending
-        coEvery { it.hentSoknad(soknadId, any(), GENERELL) } returns innsending
+        coEvery { it.hentSoknad(soknadId, any(), any(), any(), DAGPENGER) } returns innsending
+        coEvery { it.hentSoknad(soknadId, any(), any(), any(), GENERELL) } returns innsending
     }
 
     val testRapid = TestRapid().also {
@@ -57,7 +57,7 @@ internal class NyDialogPdfBehovLøserTest {
             expectedLøsning,
             testRapid.inspektør.message(0)["@løsning"][NyDialogPdfBehovLøser.BEHOV]
         )
-        coVerify(exactly = 1) { mockInnsendingSupplier.hentSoknad(soknadId, any(), DAGPENGER) }
+        coVerify(exactly = 1) { mockInnsendingSupplier.hentSoknad(soknadId, any(), any(), any(), DAGPENGER) }
     }
 
     @Test
@@ -68,7 +68,7 @@ internal class NyDialogPdfBehovLøserTest {
             expectedLøsning,
             testRapid.inspektør.message(0)["@løsning"][NyDialogPdfBehovLøser.BEHOV]
         )
-        coVerify(exactly = 1) { mockInnsendingSupplier.hentSoknad(soknadId, any(), GENERELL) }
+        coVerify(exactly = 1) { mockInnsendingSupplier.hentSoknad(soknadId, any(), any(), any(), GENERELL) }
     }
 
     private fun assertJsonEquals(expected: String, actual: JsonNode) {

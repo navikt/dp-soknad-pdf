@@ -12,7 +12,6 @@ import io.ktor.http.HttpHeaders
 import io.ktor.serialization.jackson.jackson
 import no.nav.dagpenger.pdl.createPersonOppslag
 
-
 internal class PersonOppslag(pdlUrl: String, private val tokenProvider: () -> String) {
     private val httpClient = HttpClient(CIO) {
         install(ContentNegotiation) {

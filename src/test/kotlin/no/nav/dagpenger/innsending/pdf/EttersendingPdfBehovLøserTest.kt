@@ -110,7 +110,9 @@ internal class EttersendingPdfBehovLøserTest {
         var kopiertInnsending: Innsending? = null
         fun hentEttersending(
             soknadId: UUID,
-            innsendingsSpråk: Innsending.InnsendingsSpråk,
+            fnr: String,
+            innsendtTidspunkt: ZonedDateTime,
+            språk: Innsending.InnsendingsSpråk,
             block: Innsending.() -> Innsending
         ): Innsending {
             return innsending.block().also {

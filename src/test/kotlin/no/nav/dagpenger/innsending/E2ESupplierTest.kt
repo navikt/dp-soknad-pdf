@@ -77,7 +77,13 @@ internal class E2ESupplierTest {
         runBlocking {
             ids.forEach { id ->
                 val uuid = UUID.fromString(id)
-                innsendingSupplier.hentSoknad(uuid, BOKMÅL, innsendingType).let { innsending ->
+                innsendingSupplier.hentSoknad(
+                    id = uuid,
+                    fnr = "123",
+                    innsendtTidspunkt = ZonedDateTime.now(),
+                    språk = BOKMÅL,
+                    innsendingType = innsendingType
+                ).let { innsending ->
                     innsending.infoBlokk = Innsending.InfoBlokk(
                         fødselsnummer = "123",
                         innsendtTidspunkt = ZonedDateTime.now()

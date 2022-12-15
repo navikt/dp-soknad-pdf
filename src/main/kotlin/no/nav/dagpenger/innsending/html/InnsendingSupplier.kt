@@ -15,6 +15,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
 import no.nav.dagpenger.innsending.serder.JsonHtmlMapper
+import java.time.ZonedDateTime
 import java.util.UUID
 
 internal class InnsendingSupplier(
@@ -41,6 +42,8 @@ internal class InnsendingSupplier(
 
     suspend fun hentSoknad(
         id: UUID,
+        fnr: String,
+        innsendtTidspunkt: ZonedDateTime,
         språk: Innsending.InnsendingsSpråk,
         innsendingType: InnsendingType
     ): Innsending {
@@ -53,12 +56,19 @@ internal class InnsendingSupplier(
                 dokumentasjonKrav = dokumentasjonsKrav.await(),
                 tekst = tekst.await(),
                 språk = språk
-            ).parse(innsendingType)
+            ).parse(innsendingType).also {
+                it.infoBlokk = Innsending.InfoBlokk(
+                    fødselsnummer = fnr,
+                    innsendtTidspunkt = innsendtTidspunkt
+                )
+            }
         }
     }
 
     suspend fun hentEttersending(
         id: UUID,
+        fnr: String,
+        innsendtTidspunkt: ZonedDateTime,
         språk: Innsending.InnsendingsSpråk,
         innsendingCopyFunc: Innsending.() -> Innsending = { this }
     ): Innsending {
@@ -70,7 +80,12 @@ internal class InnsendingSupplier(
                 dokumentasjonKrav = dokumentasjonsKrav.await(),
                 tekst = tekst.await(),
                 språk = språk
-            ).parseEttersending().innsendingCopyFunc()
+            ).parseEttersending().also {
+                it.infoBlokk = Innsending.InfoBlokk(
+                    fødselsnummer = fnr,
+                    innsendtTidspunkt = innsendtTidspunkt
+                )
+            }.innsendingCopyFunc()
         }
     }
 
