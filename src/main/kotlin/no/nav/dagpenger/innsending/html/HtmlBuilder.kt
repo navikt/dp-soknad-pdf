@@ -42,6 +42,7 @@ internal object HtmlBuilder {
                 div(classes = "infoblokk") {
                     id = "infoblokk"
                     boldSpanP(boldTekst = generellTekst.fnr, vanligTekst = innsending.infoBlokk.fødselsnummer)
+                    boldSpanP(boldTekst = "Adressse", vanligTekst = innsending.infoBlokk.adresse)
                     boldSpanP(boldTekst = generellTekst.datoSendt, vanligTekst = innsending.infoBlokk.datoSendt)
                 }
                 innsending.seksjoner.forEach { seksjon ->

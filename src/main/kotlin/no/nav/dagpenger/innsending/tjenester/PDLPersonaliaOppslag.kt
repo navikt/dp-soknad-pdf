@@ -14,6 +14,7 @@ import io.ktor.client.plugins.logging.Logging
 import io.ktor.client.request.header
 import io.ktor.serialization.jackson.jackson
 import mu.KotlinLogging
+import no.nav.dagpenger.pdl.adresse.AdresseVisitor
 import no.nav.dagpenger.pdl.createPersonOppslag
 import kotlin.time.Duration.Companion.seconds
 
@@ -64,7 +65,8 @@ internal class PDLPersonaliaOppslag(pdlUrl: String, private val tokenProvider: (
                         forNavn = it.fornavn,
                         mellomNavn = it.mellomnavn,
                         etterNavn = it.etternavn
-                    )
+                    ),
+                    adresse = AdresseMapper(AdresseVisitor(it).adresser).folkeregistertAdresse ?: Adresse.TOM_ADRESSE
                 )
             }
         } catch (e: Exception) {
@@ -77,6 +79,7 @@ internal class PDLPersonaliaOppslag(pdlUrl: String, private val tokenProvider: (
 
 internal data class Personalia(
     val navn: Navn,
+    val adresse: Adresse
 ) {
     companion object {
         val TOM_PERSONALIA = Personalia(
@@ -84,7 +87,8 @@ internal data class Personalia(
                 forNavn = "",
                 mellomNavn = null,
                 etterNavn = ""
-            )
+            ),
+            adresse = Adresse.TOM_ADRESSE
         )
     }
 

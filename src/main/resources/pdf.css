@@ -69,6 +69,12 @@ p {
     padding: 2px;
 }
 
+.gruppering {
+    background-color: #E6F0FF;
+    margin: 20px 0 ;
+    padding: 20px;
+}
+
 .infotekst {
     margin: 5px 0 0 0;
 }

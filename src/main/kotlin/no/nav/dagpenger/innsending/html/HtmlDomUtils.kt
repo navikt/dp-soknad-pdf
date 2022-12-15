@@ -213,8 +213,10 @@ private fun DIV.nettoSpørsmål(spmSvar: SporsmalSvar, tekst: GenerellTekst) {
         h3 { +spmSvar.sporsmal }
         svar(tekst, spmSvar.svar)
         spmSvar.oppfølgingspørmål.forEach { oppfølging ->
-            oppfølging.spørsmålOgSvar.forEach {
-                nettoSpørsmål(it, tekst)
+            div(classes = "gruppering") {
+                oppfølging.spørsmålOgSvar.forEach {
+                    nettoSpørsmål(it, tekst)
+                }
             }
         }
     }

@@ -11,6 +11,7 @@ import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
 import no.nav.dagpenger.innsending.html.Innsending.InnsendingsSpråk.BOKMÅL
 import no.nav.dagpenger.innsending.html.InnsendingSupplier
+import no.nav.dagpenger.innsending.tjenester.Adresse
 import no.nav.dagpenger.innsending.tjenester.PDLPersonaliaOppslag
 import no.nav.dagpenger.innsending.tjenester.Personalia
 import no.nav.dagpenger.innsending.tjenester.PersonaliaOppslag
@@ -71,8 +72,9 @@ internal class E2ESupplierTest {
             navn = Personalia.Navn(
                 forNavn = "fornavn",
                 mellomNavn = "mellomnavn",
-                etterNavn = "etternavn"
-            )
+                etterNavn = "etternavn",
+            ),
+            adresse = Adresse.TOM_ADRESSE
         )
     }
 

@@ -72,7 +72,12 @@ internal data class Innsending(
         val fnr: String
     )
 
-    data class InfoBlokk(val fødselsnummer: String, val navn: String?, val innsendtTidspunkt: ZonedDateTime) {
+    data class InfoBlokk(
+        val fødselsnummer: String,
+        val navn: String?,
+        val adresse: String,
+        val innsendtTidspunkt: ZonedDateTime
+    ) {
         val datoSendt = innsendtTidspunkt.format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"))
     }
 

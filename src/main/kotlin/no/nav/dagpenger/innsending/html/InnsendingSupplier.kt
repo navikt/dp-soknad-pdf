@@ -51,17 +51,19 @@ internal class InnsendingSupplier(
             val fakta = async { hentFakta(id) }
             val tekst = async { hentTekst(id) }
             val dokumentasjonsKrav = async { hentDokumentasjonKrav(id) }
-            val person = async { personaliOppslag.hentPerson(fnr) }
+            val deferredPerson = async { personaliOppslag.hentPerson(fnr) }
             JsonHtmlMapper(
                 innsendingsData = fakta.await(),
                 dokumentasjonKrav = dokumentasjonsKrav.await(),
                 tekst = tekst.await(),
                 språk = språk
             ).parse(innsendingType).also {
+                val person = deferredPerson.await()
                 it.infoBlokk = Innsending.InfoBlokk(
                     fødselsnummer = fnr,
                     innsendtTidspunkt = innsendtTidspunkt,
-                    navn = person.await().navn.formatertNavn
+                    navn = person.navn.formatertNavn,
+                    adresse = person.adresse.formatertAdresse
                 )
             }
         }
@@ -77,17 +79,19 @@ internal class InnsendingSupplier(
         return withContext(Dispatchers.IO) {
             val tekst = async { hentTekst(id) }
             val dokumentasjonsKrav = async { hentDokumentasjonKrav(id) }
-            val person = async { personaliOppslag.hentPerson(fnr) }
+            val deferredPerson = async { personaliOppslag.hentPerson(fnr) }
             JsonHtmlMapper(
                 innsendingsData = null,
                 dokumentasjonKrav = dokumentasjonsKrav.await(),
                 tekst = tekst.await(),
                 språk = språk
             ).parseEttersending().also {
+                val person = deferredPerson.await()
                 it.infoBlokk = Innsending.InfoBlokk(
                     fødselsnummer = fnr,
                     innsendtTidspunkt = innsendtTidspunkt,
-                    navn = person.await().navn.formatertNavn
+                    navn = person.navn.formatertNavn,
+                    adresse = person.adresse.formatertAdresse
                 )
             }.innsendingCopyFunc()
         }

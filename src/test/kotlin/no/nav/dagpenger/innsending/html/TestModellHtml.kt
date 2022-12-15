@@ -207,6 +207,7 @@ object TestModellHtml {
             fødselsnummer = "12345678910",
             navn = "Ola Nordmann",
             innsendtTidspunkt = ZonedDateTime.now(),
+            adresse = "Kardemomme By, 4609 Kristiansand, Norge"
         )
     }
 }

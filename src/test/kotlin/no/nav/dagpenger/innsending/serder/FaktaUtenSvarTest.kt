@@ -27,7 +27,9 @@ class FaktaUtenSvarTest {
                 infoBlokk = Innsending.InfoBlokk(
                     fødselsnummer = "ident",
                     innsendtTidspunkt = ZonedDateTime.now(),
-                    navn = "Ola Nordmann"
+                    navn = "Ola Nordmann",
+                    adresse = "Kardemomme By, 4609 Kristiansand, Norge"
+
                 )
             }.let {
                 PdfBuilder.lagPdf(HtmlBuilder.lagBruttoHtml(it))

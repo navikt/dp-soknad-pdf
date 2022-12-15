@@ -40,7 +40,8 @@ internal class SerderTest {
             infoBlokk = Innsending.InfoBlokk(
                 fødselsnummer = "ident",
                 innsendtTidspunkt = ZonedDateTime.now(),
-                navn = "Ola Nordmann"
+                navn = "Ola Nordmann",
+                adresse = "Kardemomme By, 4609 Kristiansand, Norge"
             )
         }
 
@@ -124,7 +125,9 @@ internal class SerderTest {
                 infoBlokk = Innsending.InfoBlokk(
                     fødselsnummer = "ident",
                     innsendtTidspunkt = ZonedDateTime.now(),
-                    navn = "Ola Nordmann"
+                    navn = "Ola Nordmann",
+                    adresse = "Kardemomme By, 4609 Kristiansand, Norge"
+
                 )
             }
 
@@ -156,7 +159,8 @@ internal class SerderTest {
                 infoBlokk = Innsending.InfoBlokk(
                     fødselsnummer = "ident",
                     innsendtTidspunkt = ZonedDateTime.now(),
-                    navn = "Ola Nordmann"
+                    navn = "Ola Nordmann",
+                    adresse = "Kardemomme By, 4609 Kristiansand, Norge"
                 )
             }
 
