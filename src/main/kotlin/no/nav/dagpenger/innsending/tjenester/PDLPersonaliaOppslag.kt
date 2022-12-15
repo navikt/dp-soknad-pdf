@@ -10,7 +10,11 @@ import io.ktor.client.plugins.defaultRequest
 import io.ktor.client.request.header
 import io.ktor.http.HttpHeaders
 import io.ktor.serialization.jackson.jackson
+import mu.KotlinLogging
 import no.nav.dagpenger.pdl.createPersonOppslag
+
+private val sikkerlogg = KotlinLogging.logger("tjenestekall")
+private val logg = KotlinLogging.logger {}
 
 internal interface PersonaliaOppslag {
     suspend fun hentPerson(ident: String): Personalia
@@ -33,19 +37,25 @@ internal class PDLPersonaliaOppslag(pdlUrl: String, private val tokenProvider: (
     private val personOppslag = createPersonOppslag(pdlUrl, httpClient)
 
     override suspend fun hentPerson(ident: String): Personalia {
-        return personOppslag.hentPerson(
-            ident,
-            mapOf(
-                HttpHeaders.Authorization to "Bearer ${tokenProvider()}"
-            )
-        ).let {
-            Personalia(
-                navn = Personalia.Navn(
-                    forNavn = it.fornavn,
-                    mellomNavn = it.mellomnavn,
-                    etterNavn = it.etternavn
+        return try {
+            personOppslag.hentPerson(
+                ident,
+                mapOf(
+                    HttpHeaders.Authorization to "Bearer ${tokenProvider()}"
                 )
-            )
+            ).let {
+                Personalia(
+                    navn = Personalia.Navn(
+                        forNavn = it.fornavn,
+                        mellomNavn = it.mellomnavn,
+                        etterNavn = it.etternavn
+                    )
+                )
+            }
+        } catch (e: Exception) {
+            logg.error(e) { "Feil ved henting av person. Se sikkerlogg ident" }
+            sikkerlogg.error { "Feil ved henting av person: $ident" }
+            Personalia.TOM_PERSONALIA
         }
     }
 }
@@ -53,6 +63,16 @@ internal class PDLPersonaliaOppslag(pdlUrl: String, private val tokenProvider: (
 internal data class Personalia(
     val navn: Navn,
 ) {
+    companion object {
+        val TOM_PERSONALIA = Personalia(
+            navn = Navn(
+                forNavn = "",
+                mellomNavn = null,
+                etterNavn = ""
+            )
+        )
+    }
+
     data class Navn(
         val forNavn: String,
         val mellomNavn: String?,
