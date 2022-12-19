@@ -1,6 +1,6 @@
 package no.nav.dagpenger.innsending.html
 
-import no.nav.dagpenger.innsending.pdf.PdfBuilder.lagPdf
+import no.nav.dagpenger.innsending.pdf.PdfBuilder2.lagPdf
 import org.intellij.lang.annotations.Language
 import org.jsoup.Jsoup
 import org.junit.jupiter.api.Assertions.assertEquals

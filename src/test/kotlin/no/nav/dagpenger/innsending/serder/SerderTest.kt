@@ -4,7 +4,7 @@ import no.nav.dagpenger.innsending.html.HtmlBuilder
 import no.nav.dagpenger.innsending.html.Innsending
 import no.nav.dagpenger.innsending.html.Innsending.Hjelpetekst
 import no.nav.dagpenger.innsending.html.InnsendingSupplier
-import no.nav.dagpenger.innsending.pdf.PdfBuilder
+import no.nav.dagpenger.innsending.pdf.PdfBuilder2
 import no.nav.dagpenger.innsending.serder.Oppslag.TekstObjekt.FaktaTekstObjekt
 import no.nav.dagpenger.innsending.serder.Oppslag.TekstObjekt.SeksjonTekstObjekt
 import no.nav.dagpenger.innsending.serder.Oppslag.TekstObjekt.SvaralternativTekstObjekt
@@ -46,9 +46,9 @@ internal class SerderTest {
         }
 
         assertIngenTommehjelpetekster(mappetInnsending)
-        HtmlBuilder.lagNettoHtml(mappetInnsending).also { PdfBuilder.lagPdf(it) }
+        HtmlBuilder.lagNettoHtml(mappetInnsending).also { PdfBuilder2.lagPdf(it) }
         HtmlBuilder.lagBruttoHtml(mappetInnsending).also {
-            PdfBuilder.lagPdf(it)
+            PdfBuilder2.lagPdf(it)
             assertEquals(
                 0,
                 Jsoup.parse(it).getElementsByClass("hjelpetekst").filter { t -> t.childrenSize() < 1 }.size,
@@ -133,14 +133,14 @@ internal class SerderTest {
 
             HtmlBuilder.lagBruttoHtml(innsending).also {
                 File("build/tmp/test/søknad_brutto.html").writeText(it)
-                PdfBuilder.lagPdf(it).also { generertPdf ->
+                PdfBuilder2.lagPdf(it).also { generertPdf ->
                     File("build/tmp/test/søknad_brutto.pdf").writeBytes(generertPdf)
                 }
             }
 
             HtmlBuilder.lagNettoHtml(innsending).also {
                 File("build/tmp/test/søknad_netto.html").writeText(it)
-                PdfBuilder.lagPdf(it).also { generertPdf ->
+                PdfBuilder2.lagPdf(it).also { generertPdf ->
                     File("build/tmp/test/søknad_netto.pdf").writeBytes(generertPdf)
                 }
             }
@@ -166,7 +166,7 @@ internal class SerderTest {
 
             HtmlBuilder.lagEttersendingHtml(innsending).also {
                 File("build/tmp/test/ettersending.html").writeText(it)
-                PdfBuilder.lagPdf(it).also { generertPdf ->
+                PdfBuilder2.lagPdf(it).also { generertPdf ->
                     File("build/tmp/test/ettersending.pdf").writeBytes(generertPdf)
                 }
             }

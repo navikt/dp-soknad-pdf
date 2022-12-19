@@ -28,7 +28,7 @@ internal object HtmlBuilder {
         return createHTML(prettyPrint = false, xhtmlCompatible = true).html {
             lang = innsending.språk.langAtributt
             head {
-                title(innsending.generellTekst.tittel)
+                this.title(innsending.generellTekst.tittel)
                 pdfaMetaTags(innsending)
                 fontimports()
                 bookmarks(innsending)

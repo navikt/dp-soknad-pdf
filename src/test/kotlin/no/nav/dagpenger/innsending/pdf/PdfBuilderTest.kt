@@ -33,7 +33,10 @@ internal class PdfBuilderTest {
                 val result = validator.validate(parser).testAssertions.filter {
                     it.status == TestAssertion.Status.FAILED
                 }.distinctBy { it.ruleId }
-                assertTrue(result.isEmpty(), "PDF-A verifisering feiler på :\n ${result.map { it.ruleId }}, se https://docs.verapdf.org/validation/pdfa-parts-2-and-3/")
+                assertTrue(
+                    result.isEmpty(),
+                    "PDF-A verifisering feiler på :\n ${result.map { it.ruleId }}, se https://docs.verapdf.org/validation/pdfa-parts-2-and-3/"
+                )
             }
         }
     }

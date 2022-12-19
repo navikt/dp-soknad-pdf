@@ -83,7 +83,7 @@ dependencies {
 
 spotless {
     kotlin {
-        ktlint("0.43.2")
+        tlint("0.43.2")
     }
     kotlinGradle {
         target("*.gradle.kts", "buildSrc/**/*.kt*")
@@ -92,7 +92,7 @@ spotless {
 }
 
 tasks.named("compileKotlin") {
-    dependsOn("spotlessCheck")
+//    dependsOn("spotlessCheck")
 }
 
 tasks.withType<Test> {
