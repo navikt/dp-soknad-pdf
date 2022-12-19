@@ -3,7 +3,7 @@ package no.nav.dagpenger.innsending.serder
 import io.kotest.assertions.throwables.shouldNotThrowAny
 import no.nav.dagpenger.innsending.html.HtmlBuilder
 import no.nav.dagpenger.innsending.html.Innsending
-import no.nav.dagpenger.innsending.pdf.PdfBuilder2
+import no.nav.dagpenger.innsending.pdf.PdfBuilder
 import org.junit.jupiter.api.Test
 import java.io.File
 import java.time.ZonedDateTime
@@ -32,12 +32,8 @@ class FaktaUtenSvarTest {
 
                 )
             }.let {
-<<<<<<< Updated upstream
                 PdfBuilder.lagPdf(HtmlBuilder.lagBruttoHtml(it))
                     .let { pdf -> File("build/tmp/test/bug_tom_svar.pdf").writeBytes(pdf) }
-=======
-                PdfBuilder2.lagPdf(HtmlBuilder.lagBruttoHtml(it)).let { pdf -> File("build/tmp/test/bug_tom_svar.pdf").writeBytes(pdf) }
->>>>>>> Stashed changes
             }
         }
     }

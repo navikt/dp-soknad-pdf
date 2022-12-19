@@ -83,7 +83,7 @@ dependencies {
 
 spotless {
     kotlin {
-        tlint("0.43.2")
+        ktlint("0.43.2")
     }
     kotlinGradle {
         target("*.gradle.kts", "buildSrc/**/*.kt*")

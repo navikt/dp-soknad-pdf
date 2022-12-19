@@ -4,6 +4,7 @@ import no.nav.dagpenger.innsending.html.HtmlBuilder2
 import no.nav.dagpenger.innsending.html.HtmlInliner
 import no.nav.dagpenger.innsending.html.HtmlParser
 import no.nav.dagpenger.innsending.html.TestHtml
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import org.verapdf.gf.foundry.VeraGreenfieldFoundryProvider
 import org.verapdf.pdfa.Foundries
@@ -37,7 +38,7 @@ internal class PdfBuilder2Test {
 
     @Test
     fun e2e() {
-        val parsedHtml = HtmlParser.parse(TestHtml.simpleHtml)
+        val parsedHtml = HtmlParser(TestHtml.simpleHtml, "https://arbeid.dev.nav.no").parse()
         PdfBuilder2.lagPdf(
             HtmlBuilder2.build(parsedHtml).also {
                 File("build/tmp/test/htmlbuilder2.html").writeText(it)
@@ -49,6 +50,8 @@ internal class PdfBuilder2Test {
     }
 
     @Test
+    @Disabled
+    // todo remove
     fun `Hubba bubba`() {
         val inliner = HtmlInliner("https://arbeid.dev.nav.no")
 
