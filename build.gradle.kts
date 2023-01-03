@@ -56,7 +56,7 @@ dependencies {
     implementation("com.github.navikt.dp-biblioteker:pdl-klient:2022.11.24-14.34.528555d5f3df")
     implementation("com.github.navikt.dp-biblioteker:oauth2-klient:2022.11.24-14.34.528555d5f3df")
     implementation("io.ktor:ktor-client-logging:2.2.1")
-    implementation("io.ktor:ktor-client-cio:2.2.1")
+    implementation("io.ktor:ktor-client-cio:2.2.2")
     implementation("io.ktor:ktor-client-content-negotiation:2.2.1")
     implementation("io.ktor:ktor-serialization-jackson:2.2.1")
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.14.1")
