@@ -2442,8 +2442,8 @@
     "landgrupper": [],
     "dokumentkrav": [
       {
-        "title": "Ny arbeidsavtale",
-        "textId": "faktum.dokument-ny-arbeidsavtale",
+        "title": "Arbeidsavtale",
+        "textId": "faktum.dokument-arbeidsavtale",
         "helpText": null,
         "description": null
       },
@@ -2587,7 +2587,7 @@
       },
       {
         "title": "Varsel om permittering",
-        "textId": "faktum.dokument-permitteringsvarsel",
+        "textId": "faktum.dokument-arbeidsforhold-permittert",
         "helpText": null,
         "description": null
       },
@@ -2672,12 +2672,6 @@
       {
         "title": "Generell innsending",
         "textId": "faktum.generell-innsending.dokumentasjon",
-        "helpText": null,
-        "description": null
-      },
-      {
-        "title": "Dokumentasjon på helt eller delvis avsluttet arbeidsforhold",
-        "textId": "faktum.dokument-dokumentasjon-av-arbeidsforhold",
         "helpText": null,
         "description": null
       },
