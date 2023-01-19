@@ -80,6 +80,7 @@ internal class JsonHtmlMapper(
             this.has("svar") -> {
                 block.invoke()
             }
+
             else -> {
                 sikkerlogg.error { "Faktum uten 'svar' ? $this" }
                 Innsending.IngenSvar
@@ -111,6 +112,7 @@ internal class JsonHtmlMapper(
                     logg.error { "Fant dokument i fakta: ${this.dokumentTekst()}" }
                     Innsending.IngenSvar
                 }
+
                 else -> throw IllegalArgumentException("Ukjent faktumtype $type")
             }
         }.fold(
@@ -172,7 +174,7 @@ internal class JsonHtmlMapper(
 
     private fun JsonNode.generatorfakta(): List<Innsending.SpørmsålOgSvarGruppe> {
         return when (this["type"].asText()) {
-            "generator" -> this["svar"].toList().map { liste ->
+            "generator" -> this["svar"]?.toList()?.map { liste ->
                 Innsending.SpørmsålOgSvarGruppe(
                     liste.toList().map { node ->
                         val tekstObjekt =
@@ -187,7 +189,7 @@ internal class JsonHtmlMapper(
                         )
                     }
                 )
-            }
+            } ?: emptyList()
 
             else -> emptyList()
         }
