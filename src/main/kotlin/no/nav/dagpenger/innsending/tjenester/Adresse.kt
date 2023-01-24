@@ -35,7 +35,7 @@ data class Adresse(
                 .joinToString(separator = " ")
             return listOfNotNull(l1, l2, land)
                 .filterNot(String::isBlank)
-                .joinToString(separator = ",")
+                .joinToString(separator = ", ")
         }
 }
 

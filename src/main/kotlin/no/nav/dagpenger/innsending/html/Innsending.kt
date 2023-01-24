@@ -2,6 +2,8 @@ package no.nav.dagpenger.innsending.html
 
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
+import java.time.format.FormatStyle
+import java.util.Locale
 
 internal data class Innsending(
     val seksjoner: List<Seksjon>,
@@ -78,7 +80,14 @@ internal data class Innsending(
         val adresse: String,
         val innsendtTidspunkt: ZonedDateTime
     ) {
-        val datoSendt = innsendtTidspunkt.format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"))
+        companion object {
+            private val datetimeFormatter: DateTimeFormatter = DateTimeFormatter.ofLocalizedDateTime(
+                FormatStyle.LONG,
+                FormatStyle.SHORT
+            ).withLocale(Locale("no", "NO"))
+        }
+
+        val datoSendt: String = innsendtTidspunkt.format(datetimeFormatter)
     }
 
     enum class Infotype() {
@@ -86,7 +95,7 @@ internal data class Innsending(
 
         companion object {
             fun fraSanityJson(typenøkkel: String) = when (typenøkkel) {
-                "info" -> Infotype.INFORMASJON
+                "info" -> INFORMASJON
                 "error" -> FEIL
                 "warning" -> ADVARSEL
                 "success" -> null
