@@ -59,7 +59,7 @@ dependencies {
     implementation("io.ktor:ktor-client-cio:2.2.2")
     implementation("io.ktor:ktor-client-content-negotiation:2.2.2")
     implementation("io.ktor:ktor-serialization-jackson:2.2.2")
-    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.14.1")
+    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.14.2")
     implementation("com.openhtmltopdf:openhtmltopdf-pdfbox:1.0.10")
     implementation("com.openhtmltopdf:openhtmltopdf-slf4j:1.0.10")
     implementation("com.openhtmltopdf:openhtmltopdf-svg-support:1.0.10")
