@@ -53,7 +53,7 @@ dependencies {
     implementation("com.github.navikt:rapids-and-rivers:2022122311551671792919.2bdd972d7bdb")
 
     implementation("com.natpryce:konfig:1.6.10.0")
-    implementation("io.github.microutils:kotlin-logging:3.0.4")
+    implementation("io.github.microutils:kotlin-logging:3.0.5")
     implementation("com.github.navikt.dp-biblioteker:pdl-klient:2022.11.24-14.34.528555d5f3df")
     implementation("com.github.navikt.dp-biblioteker:oauth2-klient:2022.11.24-14.34.528555d5f3df")
     implementation("io.ktor:ktor-client-logging:$ktorVersion")
