@@ -47,6 +47,7 @@ tasks.withType<KotlinCompile>() {
 }
 
 dependencies {
+    val ktorVersion = "2.2.3"
     implementation(kotlin("stdlib"))
 
     implementation("com.github.navikt:rapids-and-rivers:2022122311551671792919.2bdd972d7bdb")
@@ -55,10 +56,10 @@ dependencies {
     implementation("io.github.microutils:kotlin-logging:3.0.4")
     implementation("com.github.navikt.dp-biblioteker:pdl-klient:2022.11.24-14.34.528555d5f3df")
     implementation("com.github.navikt.dp-biblioteker:oauth2-klient:2022.11.24-14.34.528555d5f3df")
-    implementation("io.ktor:ktor-client-logging:2.2.2")
-    implementation("io.ktor:ktor-client-cio:2.2.2")
-    implementation("io.ktor:ktor-client-content-negotiation:2.2.2")
-    implementation("io.ktor:ktor-serialization-jackson:2.2.2")
+    implementation("io.ktor:ktor-client-logging:$ktorVersion")
+    implementation("io.ktor:ktor-client-cio:$ktorVersion")
+    implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
+    implementation("io.ktor:ktor-serialization-jackson:$ktorVersion")
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.14.2")
     implementation("com.openhtmltopdf:openhtmltopdf-pdfbox:1.0.10")
     implementation("com.openhtmltopdf:openhtmltopdf-slf4j:1.0.10")
