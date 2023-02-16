@@ -39,7 +39,7 @@ internal class JsonHtmlMapper(
                     overskrift = tekstObjekt.title,
                     beskrivelse = tekstObjekt.description?.let { rawHtml -> Innsending.UnsafeHtml(rawHtml.html) },
                     hjelpetekst = tekstObjekt.hjelpetekst(),
-                    spmSvar = it.fakta()
+                    spmSvar = it.fakta(),
                 )
             }
         } ?: emptyList()
@@ -59,7 +59,7 @@ internal class JsonHtmlMapper(
                     navn = tekstObjekt.title,
                     beskrivelse = tekstObjekt.description?.let { rawHtml -> Innsending.UnsafeHtml(rawHtml.html) },
                     hjelpetekst = tekstObjekt.hjelpetekst(),
-                    valg = valg
+                    valg = valg,
                 )
 
                 else -> Innsending.IkkeInnsendtNå(
@@ -69,7 +69,7 @@ internal class JsonHtmlMapper(
                     begrunnelse = krav["begrunnelse"].asText(),
                     beskrivelse = tekstObjekt.description?.let { rawHtml -> Innsending.UnsafeHtml(rawHtml.html) },
                     hjelpetekst = tekstObjekt.hjelpetekst(),
-                    valg = valg
+                    valg = valg,
                 )
             }
         }
@@ -97,11 +97,12 @@ internal class JsonHtmlMapper(
                 "boolean" -> this.sjekkSvarFinnes { Innsending.ValgSvar(this.booleanEnValg()) }
                 "localdate" -> this.sjekkSvarFinnes { EnkeltSvar(this["svar"].asLocalDate().dagMånedÅr()) }
                 "periode" -> this.sjekkSvarFinnes {
-                    EnkeltSvar(
-                        "${
-                        this["svar"]["fom"].asLocalDate().dagMånedÅr()
-                        } - ${this["svar"]["tom"]?.asLocalDate()?.dagMånedÅr()}"
-                    )
+                    listOf(
+                        this["svar"]["fom"].asLocalDate().dagMånedÅr(),
+                        this["svar"]["tom"]?.asLocalDate()?.dagMånedÅr() ?: "",
+                    ).let {
+                        EnkeltSvar(it.joinToString(" - "))
+                    }
                 }
 
                 "generator" -> Innsending.IngenSvar
@@ -120,7 +121,7 @@ internal class JsonHtmlMapper(
             onFailure = { e ->
                 sikkerlogg.error { "Kunne ikke parse json node: $this" }
                 throw e
-            }
+            },
         )
     }
 
@@ -129,8 +130,8 @@ internal class JsonHtmlMapper(
             listOf(
                 Innsending.SvarAlternativ(
                     jsonAlternativ.text,
-                    alertText(jsonAlternativ)
-                )
+                    alertText(jsonAlternativ),
+                ),
             )
         }
     }
@@ -140,8 +141,8 @@ internal class JsonHtmlMapper(
             listOf(
                 Innsending.SvarAlternativ(
                     jsonAlternativ.text,
-                    alertText(jsonAlternativ)
-                )
+                    alertText(jsonAlternativ),
+                ),
             )
         }
     }
@@ -152,7 +153,7 @@ internal class JsonHtmlMapper(
                 val jsonAlternativ = oppslag.lookup<SvaralternativTekstObjekt>(jsonNode.asText())
                 Innsending.SvarAlternativ(
                     jsonAlternativ.text,
-                    alertText(jsonAlternativ)
+                    alertText(jsonAlternativ),
                 )
             }
 
@@ -166,7 +167,7 @@ internal class JsonHtmlMapper(
                 Innsending.InfoTekst.nyEllerNull(
                     tittel = alerttext.title,
                     unsafeHtmlBody = alerttext.body?.let { Innsending.UnsafeHtml(alerttext.body.html) },
-                    type = infotype
+                    type = infotype,
                 )
             }
         }
@@ -185,9 +186,8 @@ internal class JsonHtmlMapper(
                             beskrivelse = tekstObjekt.description?.let { rawHtml -> Innsending.UnsafeHtml(rawHtml.html) },
                             hjelpetekst = tekstObjekt.hjelpetekst(),
                             oppfølgingspørmål = node.generatorfakta(),
-
                         )
-                    }
+                    },
                 )
             } ?: emptyList()
 
@@ -215,7 +215,7 @@ internal class JsonHtmlMapper(
             språk = språk,
             pdfAMetaTagger = oppslag.pdfaMetaTags(),
             dokumentasjonskrav = parseDokumentkrav(dokumentasjonKrav),
-            type = innsendingType
+            type = innsendingType,
         )
     }
 
@@ -225,7 +225,7 @@ internal class JsonHtmlMapper(
             generellTekst = oppslag.generellTekstEttersending(),
             språk = språk,
             pdfAMetaTagger = oppslag.pdfaMetaTags(),
-            dokumentasjonskrav = parseDokumentkrav(dokumentasjonKrav)
+            dokumentasjonskrav = parseDokumentkrav(dokumentasjonKrav),
         )
     }
 }
