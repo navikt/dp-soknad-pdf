@@ -30,7 +30,7 @@ internal class Oppslag(private val tekstJson: String) {
             return try {
                 objekt as T
             } catch (e: ClassCastException) {
-                logg.error { "Feil type for $tekstId: $e" }
+                logg.warn { "Feil type for $tekstId: $e" }
                 lagDummyTekstObjekt<T>(tekstId) as T
             }
         }

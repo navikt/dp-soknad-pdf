@@ -110,7 +110,7 @@ internal class JsonHtmlMapper(
                 "flervalg" -> this.sjekkSvarFinnes { Innsending.ValgSvar(this.flerValg()) }
                 "land" -> this.sjekkSvarFinnes { EnkeltSvar(LandOppslag.hentLand(språk, this["svar"].asText())) }
                 "dokument" -> this.sjekkSvarFinnes {
-                    logg.error { "Fant dokument i fakta: ${this.dokumentTekst()}" }
+                    logg.warn { "Fant dokument i fakta: ${this.dokumentTekst()}" }
                     Innsending.IngenSvar
                 }
 
