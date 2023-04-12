@@ -46,3 +46,5 @@ spec:
       rules:
         - application: dp-mellomlagring
         - application: dp-soknad
+      external:
+        - host: {{PDL_API_HOST}}
