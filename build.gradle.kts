@@ -71,7 +71,7 @@ dependencies {
     implementation("com.github.navikt:pam-geography:2.17")
 
     testImplementation(kotlin("test"))
-    testImplementation("io.mockk:mockk:1.13.4")
+    testImplementation("io.mockk:mockk:1.13.5")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.2")
     testImplementation("io.kotest:kotest-runner-junit5-jvm:5.5.5")
     testImplementation("io.ktor:ktor-client-${"mock"}:2.0.2")
