@@ -30,7 +30,7 @@ internal object PdfBuilder {
         Font(
             family = "Source Sans Pro",
             path = "/fonts/SourceSansPro-Italic.ttf",
-            weight = 400,
+            weight = 300,
             style = BaseRendererBuilder.FontStyle.ITALIC,
             subset = false
         ),
