@@ -48,3 +48,5 @@ spec:
         - application: dp-soknad
       external:
         - host: {{PDL_API_HOST}}
+        - host: "fonts.googleapis.com"
+        - host: "fonts.gstatic.com"
