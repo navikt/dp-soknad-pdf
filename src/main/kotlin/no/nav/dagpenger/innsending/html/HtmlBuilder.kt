@@ -30,7 +30,6 @@ internal object HtmlBuilder {
             head {
                 title(innsending.generellTekst.tittel)
                 pdfaMetaTags(innsending)
-                fontimports()
                 bookmarks(innsending)
                 søknadPdfStyle()
             }
