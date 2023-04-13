@@ -22,21 +22,21 @@ internal object PdfBuilder {
     private val fonts: List<Font> = listOf(
         Font(
             family = "Source Sans Pro",
-            path = "/SourceSansPro-Normal.ttf",
+            path = "/fonts/SourceSansPro-Normal.ttf",
             weight = 400,
             style = BaseRendererBuilder.FontStyle.NORMAL,
             subset = false
         ),
         Font(
             family = "Source Sans Pro",
-            path = "/SourceSansPro-Italic.ttf",
+            path = "/fonts/SourceSansPro-Italic.ttf",
             weight = 300,
             style = BaseRendererBuilder.FontStyle.ITALIC,
             subset = false
         ),
         Font(
             family = "Source Sans Pro",
-            path = "/SourceSansPro-Semibold.ttf",
+            path = "/fonts/SourceSansPro-Semibold.ttf",
             weight = 600,
             style = BaseRendererBuilder.FontStyle.NORMAL,
             subset = false
