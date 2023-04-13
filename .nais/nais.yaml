@@ -48,3 +48,4 @@ spec:
         - application: dp-soknad
       external:
         - host: {{PDL_API_HOST}}
+        - host: upload.video.google.com
