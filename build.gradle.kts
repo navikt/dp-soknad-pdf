@@ -73,7 +73,7 @@ dependencies {
     testImplementation(kotlin("test"))
     testImplementation("io.mockk:mockk:1.13.5")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.2")
-    testImplementation("io.kotest:kotest-runner-junit5-jvm:5.5.5")
+    testImplementation("io.kotest:kotest-runner-junit5-jvm:5.6.0")
     testImplementation("io.ktor:ktor-client-${"mock"}:2.0.2")
     testImplementation("org.verapdf:validation-model:1.22.2")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.2")
