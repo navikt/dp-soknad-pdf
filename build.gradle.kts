@@ -47,7 +47,7 @@ tasks.withType<KotlinCompile>() {
 }
 
 dependencies {
-    val ktorVersion = "2.2.4"
+    val ktorVersion = "2.3.0"
     implementation(kotlin("stdlib"))
 
     implementation("com.github.navikt:rapids-and-rivers:2023041310341681374880.67ced5ad4dda")
