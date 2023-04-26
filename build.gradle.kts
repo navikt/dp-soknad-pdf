@@ -52,7 +52,7 @@ dependencies {
 
     implementation("com.github.navikt:rapids-and-rivers:2023041310341681374880.67ced5ad4dda")
 
-    implementation("com.natpryce:konfig:1.6.10.0")
+    implementation(libs.konfig)
     implementation("io.github.microutils:kotlin-logging:3.0.5")
     implementation("com.github.navikt.dp-biblioteker:pdl-klient:2023.03.10-16.50.57688052c862")
     implementation("com.github.navikt.dp-biblioteker:oauth2-klient:2023.03.10-16.50.57688052c862")
