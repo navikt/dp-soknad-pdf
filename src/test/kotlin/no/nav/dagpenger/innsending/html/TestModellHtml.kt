@@ -65,7 +65,7 @@ object TestModellHtml {
         ),
         Innsending.SporsmalSvar(
             sporsmal = "Et  annet spørmsål",
-            svar = EnkeltSvar("med et annet svar som også har oppfølging"),
+            svar = EnkeltSvar("med et annet \u0002s svar som også har oppfølging"),
             oppfølgingspørmål = listOf(
                 SpørmsålOgSvarGruppe(
                     listOf(

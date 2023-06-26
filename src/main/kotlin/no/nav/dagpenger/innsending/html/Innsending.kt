@@ -43,7 +43,11 @@ internal data class Innsending(
     data class SpørmsålOgSvarGruppe(val spørsmålOgSvar: List<SporsmalSvar>)
 
     sealed class Svar
-    data class EnkeltSvar(val tekst: String) : Svar()
+    data class EnkeltSvar(var tekst: String) : Svar() {
+        init {
+            tekst = tekst.replace("\u0002", " ")
+        }
+    }
     data class ValgSvar(val alternativ: List<SvarAlternativ>) : Svar()
     data class SvarAlternativ(val tekst: String, val tilleggsinformasjon: InfoTekst?)
     object IngenSvar : Svar()
