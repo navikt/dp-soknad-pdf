@@ -57,7 +57,7 @@ internal fun HEAD.bookmarks(innsending: Innsending) {
                     <bookmark name="Info om søknad" href="#infoblokk"></bookmark>
                     $bokmerker
                 </bookmarks>
-            """.trimIndent()
+            """.trimIndent(),
         )
     }
 }
@@ -129,7 +129,7 @@ private fun Innsending.DokumentKrav.tittel(): String {
 internal fun DIV.dokumentasjonKrav(
     dokumentKrav: List<Innsending.DokumentKrav>,
     valg: Innsending.DokumentKrav.Valg,
-    brutto: Boolean
+    brutto: Boolean,
 ) {
     when (valg) {
         Innsending.DokumentKrav.Valg.SEND_NAA -> {

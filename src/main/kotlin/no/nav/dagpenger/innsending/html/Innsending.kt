@@ -11,7 +11,7 @@ internal data class Innsending(
     val språk: InnsendingsSpråk,
     val pdfAMetaTagger: PdfAMetaTagger,
     val dokumentasjonskrav: List<DokumentKrav>,
-    val type: InnsendingSupplier.InnsendingType = InnsendingSupplier.InnsendingType.DAGPENGER
+    val type: InnsendingSupplier.InnsendingType = InnsendingSupplier.InnsendingType.DAGPENGER,
 ) {
 
     lateinit var infoBlokk: InfoBlokk
@@ -19,7 +19,7 @@ internal data class Innsending(
     open class PdfAMetaTagger(
         val description: String,
         val subject: String,
-        val author: String
+        val author: String,
     )
 
     object DefaultPdfAMetaTagger :
@@ -29,7 +29,7 @@ internal data class Innsending(
         val overskrift: String,
         val beskrivelse: UnsafeHtml? = null,
         val hjelpetekst: Hjelpetekst? = null,
-        val spmSvar: List<SporsmalSvar>
+        val spmSvar: List<SporsmalSvar>,
     )
 
     data class SporsmalSvar(
@@ -37,7 +37,7 @@ internal data class Innsending(
         val svar: Svar,
         val beskrivelse: UnsafeHtml? = null,
         val hjelpetekst: Hjelpetekst? = null,
-        val oppfølgingspørmål: List<SpørmsålOgSvarGruppe> = emptyList()
+        val oppfølgingspørmål: List<SpørmsålOgSvarGruppe> = emptyList(),
     )
 
     data class SpørmsålOgSvarGruppe(val spørsmålOgSvar: List<SporsmalSvar>)
@@ -75,19 +75,19 @@ internal data class Innsending(
         val tittel: String,
         val svar: String,
         val datoSendt: String,
-        val fnr: String
+        val fnr: String,
     )
 
     data class InfoBlokk(
         val fødselsnummer: String,
         val navn: String?,
         val adresse: String,
-        val innsendtTidspunkt: ZonedDateTime
+        val innsendtTidspunkt: ZonedDateTime,
     ) {
         companion object {
             private val datetimeFormatter: DateTimeFormatter = DateTimeFormatter.ofLocalizedDateTime(
                 FormatStyle.LONG,
-                FormatStyle.SHORT
+                FormatStyle.SHORT,
             ).withLocale(Locale("no", "NO"))
         }
 
@@ -129,14 +129,14 @@ internal data class Innsending(
     }
 
     enum class InnsendingsSpråk(
-        val langAtributt: String
+        val langAtributt: String,
     ) {
         BOKMÅL(
-            "no"
+            "no",
         ),
         ENGELSK(
-            "en"
-        )
+            "en",
+        ),
     }
 
     internal sealed class DokumentKrav(
@@ -145,7 +145,7 @@ internal data class Innsending(
         val navn: String,
         val beskrivelse: UnsafeHtml? = null,
         val hjelpetekst: Hjelpetekst? = null,
-        val valg: Valg
+        val valg: Valg,
     ) {
 
         enum class Valg {
@@ -153,7 +153,8 @@ internal data class Innsending(
             SEND_SENERE,
             SENDT_TIDLIGERE,
             SENDER_IKKE,
-            ANDRE_SENDER;
+            ANDRE_SENDER,
+            ;
 
             companion object {
                 fun fromJson(valg: String): Valg = when (valg) {
@@ -174,7 +175,7 @@ internal data class Innsending(
         navn: String,
         beskrivelse: UnsafeHtml?,
         hjelpetekst: Hjelpetekst?,
-        valg: Valg
+        valg: Valg,
     ) :
         DokumentKrav(kravId, kravSvar, navn, beskrivelse, hjelpetekst, valg)
 
@@ -185,7 +186,7 @@ internal data class Innsending(
         val begrunnelse: String,
         beskrivelse: UnsafeHtml?,
         hjelpetekst: Hjelpetekst?,
-        valg: Valg
+        valg: Valg,
     ) :
         DokumentKrav(kravId, kravSvar, navn, beskrivelse, hjelpetekst, valg)
 }

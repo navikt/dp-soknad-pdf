@@ -21,7 +21,7 @@ private val sikkerlogg = KotlinLogging.logger("tjenestekall")
 internal class NyDialogPdfBehovLøser(
     rapidsConnection: RapidsConnection,
     private val pdfLagring: PdfLagring,
-    private val innsendingSupplier: InnsendingSupplier
+    private val innsendingSupplier: InnsendingSupplier,
 ) : River.PacketListener {
     companion object {
         private val logg = KotlinLogging.logger {}
@@ -51,7 +51,6 @@ internal class NyDialogPdfBehovLøser(
         val innsendtTidspunkt = packet.innsendtTidspunkt()
         withLoggingContext("søknadId" to soknadId.toString()) {
             try {
-
                 runBlocking(MDCContext()) {
                     val innsendingType = packet.innsendingType()
                     logg.info("Mottok behov for PDF av søknad. Skjemakode: $innsendingType ")
@@ -60,14 +59,14 @@ internal class NyDialogPdfBehovLøser(
                         ident,
                         innsendtTidspunkt,
                         packet.dokumentSpråk(),
-                        innsendingType
+                        innsendingType,
                     )
                         .let { lagArkiverbartDokument(it) }
                         .let { dokumenter ->
                             pdfLagring.lagrePdf(
                                 søknadUUid = soknadId.toString(),
                                 arkiverbartDokument = dokumenter,
-                                fnr = ident
+                                fnr = ident,
                             ).let {
                                 with(it.behovSvar()) {
                                     packet["@løsning"] = mapOf(BEHOV to this)

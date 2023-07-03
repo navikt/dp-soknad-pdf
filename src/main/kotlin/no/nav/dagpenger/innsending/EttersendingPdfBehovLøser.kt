@@ -27,8 +27,8 @@ internal class EttersendingPdfBehovLøser(
         fnr: String,
         innsendtTidspunkt: ZonedDateTime,
         innsendingsSpråk: Innsending.InnsendingsSpråk,
-        block: Innsending.() -> Innsending
-    ) -> Innsending
+        block: Innsending.() -> Innsending,
+    ) -> Innsending,
 ) : River.PacketListener {
     companion object {
         private val logg = KotlinLogging.logger {}
@@ -60,14 +60,14 @@ internal class EttersendingPdfBehovLøser(
                         soknadId,
                         ident,
                         innsendtTidspunkt,
-                        packet.dokumentSpråk()
+                        packet.dokumentSpråk(),
                     ) { this.filtrerInnsendteDokumentasjonsKrav(innsendtDokumentajonsKravId) }
                         .let { lagArkiverbarEttersending(it) }
                         .let { dokumenter ->
                             pdfLagring.lagrePdf(
                                 søknadUUid = soknadId.toString(),
                                 arkiverbartDokument = dokumenter,
-                                fnr = ident
+                                fnr = ident,
                             ).let {
                                 with(it.behovSvar()) {
                                     packet["@løsning"] = mapOf(BEHOV to this)
@@ -96,7 +96,7 @@ private fun Innsending.filtrerInnsendteDokumentasjonsKrav(innsendtDokumentajonsK
     return this.copy(
         dokumentasjonskrav = this.dokumentasjonskrav.filter { dokumentKrav ->
             dokumentKrav.kravId in innsendtDokumentajonsKravId
-        }
+        },
     ).also {
         it.infoBlokk = this.infoBlokk
     }

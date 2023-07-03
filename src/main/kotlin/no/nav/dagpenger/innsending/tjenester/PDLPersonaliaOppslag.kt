@@ -64,9 +64,9 @@ internal class PDLPersonaliaOppslag(pdlUrl: String, private val tokenProvider: (
                     navn = Personalia.Navn(
                         forNavn = it.fornavn,
                         mellomNavn = it.mellomnavn,
-                        etterNavn = it.etternavn
+                        etterNavn = it.etternavn,
                     ),
-                    adresse = AdresseMapper(AdresseVisitor(it).adresser).folkeregistertAdresse ?: Adresse.TOM_ADRESSE
+                    adresse = AdresseMapper(AdresseVisitor(it).adresser).folkeregistertAdresse ?: Adresse.TOM_ADRESSE,
                 )
             }
         } catch (e: Exception) {
@@ -79,16 +79,16 @@ internal class PDLPersonaliaOppslag(pdlUrl: String, private val tokenProvider: (
 
 internal data class Personalia(
     val navn: Navn,
-    val adresse: Adresse
+    val adresse: Adresse,
 ) {
     companion object {
         val TOM_PERSONALIA = Personalia(
             navn = Navn(
                 forNavn = "",
                 mellomNavn = null,
-                etterNavn = ""
+                etterNavn = "",
             ),
-            adresse = Adresse.TOM_ADRESSE
+            adresse = Adresse.TOM_ADRESSE,
         )
     }
 

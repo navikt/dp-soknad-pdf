@@ -16,30 +16,32 @@ internal object App : RapidsConnection.StatusListener {
     init {
         val personaliaOppslag = PDLPersonaliaOppslag(
             pdlUrl = Configuration.pdlApiUrl,
-            tokenProvider = Configuration.pdlTokenSupplier
+            tokenProvider = Configuration.pdlTokenSupplier,
         )
         rapidsConnection.register(this)
         NyDialogPdfBehovLøser(
             rapidsConnection = rapidsConnection,
             pdfLagring = PdfLagring(
-                baseUrl = Configuration.dpMellomlagringBaseUrl, tokenSupplier = Configuration.mellomlagringTokenSupplier
+                baseUrl = Configuration.dpMellomlagringBaseUrl,
+                tokenSupplier = Configuration.mellomlagringTokenSupplier,
             ),
             innsendingSupplier = InnsendingSupplier(
                 dpSoknadBaseUrl = Configuration.dpSoknadUrl,
                 tokenSupplier = Configuration.soknadTokenSupplier,
-                personaliOppslag = personaliaOppslag
-            )
+                personaliOppslag = personaliaOppslag,
+            ),
         )
         EttersendingPdfBehovLøser(
             rapidsConnection = rapidsConnection,
             pdfLagring = PdfLagring(
-                baseUrl = Configuration.dpMellomlagringBaseUrl, tokenSupplier = Configuration.mellomlagringTokenSupplier
+                baseUrl = Configuration.dpMellomlagringBaseUrl,
+                tokenSupplier = Configuration.mellomlagringTokenSupplier,
             ),
             innsendingSupplier = InnsendingSupplier(
                 dpSoknadBaseUrl = Configuration.dpSoknadUrl,
                 tokenSupplier = Configuration.soknadTokenSupplier,
-                personaliOppslag = personaliaOppslag
-            )::hentEttersending
+                personaliOppslag = personaliaOppslag,
+            )::hentEttersending,
         )
     }
 

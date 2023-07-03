@@ -35,13 +35,13 @@ internal class SerderTest {
             innsendingsData = debugfaktaJson,
             dokumentasjonKrav = dokumentasjonKravJson,
             tekst = debugtekstJson,
-            språk = Innsending.InnsendingsSpråk.BOKMÅL
+            språk = Innsending.InnsendingsSpråk.BOKMÅL,
         ).parse().apply {
             infoBlokk = Innsending.InfoBlokk(
                 fødselsnummer = "ident",
                 innsendtTidspunkt = ZonedDateTime.now(),
                 navn = "Ola Nordmann",
-                adresse = "Kardemomme By, 4609 Kristiansand, Norge"
+                adresse = "Kardemomme By, 4609 Kristiansand, Norge",
             )
         }
 
@@ -52,14 +52,13 @@ internal class SerderTest {
             assertEquals(
                 0,
                 Jsoup.parse(it).getElementsByClass("hjelpetekst").filter { t -> t.childrenSize() < 1 }.size,
-                "fant tomme hjelpetekster"
+                "fant tomme hjelpetekster",
             )
         }
     }
 
     @Test
     fun `parser søknadstekst riktig`() {
-
         oppslag.lookup<SeksjonTekstObjekt>("seksjon1").also {
             assertEquals("seksjon1", it.textId)
             assertEquals("Tittel for seksjon 1", it.title)
@@ -77,7 +76,7 @@ internal class SerderTest {
             assertEquals("f3", it.textId)
             assertEquals(
                 "Her blir det spurt om noe som du kan svare ja eller nei på. Svarer du ja eller nei?",
-                it.text
+                it.text,
             )
             assertEquals("<p>Hjelpetekst</p>", it.helpText?.body?.html?.replace(" ", ""))
             assertNull(it.description)
@@ -90,13 +89,13 @@ internal class SerderTest {
             assertEquals("svaralternativ1", oppslag.textId)
             assertEquals(
                 "Vet ikke helt hva dte her skal brukes til enda, men gjetter på at vi finner det ut",
-                oppslag.text
+                oppslag.text,
             )
             require(oppslag.alertText != null)
             oppslag.alertText.also { alerttext ->
                 assertEquals(
                     "<p>Her er ett og annet som er greit å vite hvios du har valgt svaralternativ1</p>",
-                    alerttext.body!!.html
+                    alerttext.body!!.html,
                 )
                 assertEquals("Her er noe info", alerttext.title)
                 assertEquals("info", alerttext.type)
@@ -120,13 +119,13 @@ internal class SerderTest {
                 innsendingsData = debugfaktaJson,
                 dokumentasjonKrav = dokumentasjonKravJson,
                 tekst = debugtekstJson,
-                språk = Innsending.InnsendingsSpråk.BOKMÅL
+                språk = Innsending.InnsendingsSpråk.BOKMÅL,
             ).parse(InnsendingSupplier.InnsendingType.DAGPENGER).apply {
                 infoBlokk = Innsending.InfoBlokk(
                     fødselsnummer = "ident",
                     innsendtTidspunkt = ZonedDateTime.now(),
                     navn = "Ola Nordmann",
-                    adresse = "Kardemomme By, 4609 Kristiansand, Norge"
+                    adresse = "Kardemomme By, 4609 Kristiansand, Norge",
 
                 )
             }
@@ -154,13 +153,13 @@ internal class SerderTest {
                 innsendingsData = null,
                 dokumentasjonKrav = dokumentasjonKravJson,
                 tekst = debugtekstJson,
-                språk = Innsending.InnsendingsSpråk.BOKMÅL
+                språk = Innsending.InnsendingsSpråk.BOKMÅL,
             ).parseEttersending().apply {
                 infoBlokk = Innsending.InfoBlokk(
                     fødselsnummer = "ident",
                     innsendtTidspunkt = ZonedDateTime.now(),
                     navn = "Ola Nordmann",
-                    adresse = "Kardemomme By, 4609 Kristiansand, Norge"
+                    adresse = "Kardemomme By, 4609 Kristiansand, Norge",
                 )
             }
 
@@ -186,7 +185,7 @@ private fun assertIngenUlovligeTagger(htmlString: RawHtmlString) {
     listOf("<script>", "<img>", "<iframe>").forEach {
         assertFalse(
             htmlString.html.contains(it.toRegex()),
-            "string ${htmlString.html} inneholder ulovlig tag $it"
+            "string ${htmlString.html} inneholder ulovlig tag $it",
         )
     }
 }
@@ -202,7 +201,7 @@ private fun Oppslag.`portable objekter i testfil`() =
         this.lookup<FaktaTekstObjekt>("f3"),
         this.lookup<FaktaTekstObjekt>("f67"),
         this.lookup<SeksjonTekstObjekt>("seksjon1"),
-        this.lookup<SvaralternativTekstObjekt>("svaralternativ1")
+        this.lookup<SvaralternativTekstObjekt>("svaralternativ1"),
     )
 
 private fun assertIngenTommehjelpetekster(innsending: Innsending) {
@@ -212,7 +211,7 @@ private fun assertIngenTommehjelpetekster(innsending: Innsending) {
             spmSvar.hjelpetekst?.let {
                 assertFalse(
                     it.isEmpty(),
-                    "Fant tom hjelpetekst på spørsmål ${spmSvar.sporsmal}"
+                    "Fant tom hjelpetekst på spørsmål ${spmSvar.sporsmal}",
                 )
             }
         }

@@ -1,8 +1,8 @@
 package no.nav.dagpenger.innsending.tjenester
 
+import no.nav.dagpenger.innsending.tjenester.PDLAdresseMapper.LandDataDAO.finnLand
+import no.nav.dagpenger.innsending.tjenester.PDLAdresseMapper.PostDataDao.finnPoststed
 import no.nav.dagpenger.innsending.tjenester.PDLAdresseMapper.formatertAdresse
-import no.nav.dagpenger.innsending.tjenester.PDLAdresseMapper.landDataDAO.finnLand
-import no.nav.dagpenger.innsending.tjenester.PDLAdresseMapper.postDataDAO.finnPoststed
 import no.nav.dagpenger.pdl.adresse.AdresseMapper
 import no.nav.dagpenger.pdl.adresse.AdresseMetadata
 import no.nav.dagpenger.pdl.adresse.PDLAdresse
@@ -56,7 +56,7 @@ internal class AdresseMapper(pdlAdresser: List<PDLAdresse>) {
 internal object PDLAdresseMapper : AdresseMapper<Adresse>() {
     private class GeografiOppslagInitException(e: Exception) : RuntimeException(e)
 
-    private object postDataDAO {
+    private object PostDataDao {
         private val dao: PostDataDAO = try {
             PostDataDAO()
         } catch (e: IOException) {
@@ -70,7 +70,7 @@ internal object PDLAdresseMapper : AdresseMapper<Adresse>() {
         }
     }
 
-    private object landDataDAO {
+    private object LandDataDAO {
         private val dao: CountryDAO = try {
             CountryDAO()
         } catch (e: IOException) {
@@ -96,7 +96,7 @@ internal object PDLAdresseMapper : AdresseMapper<Adresse>() {
                 postnummer = postnummer ?: "",
                 poststed = finnPoststed(postnummer) ?: "",
                 landkode = "NO",
-                land = "NORGE"
+                land = "NORGE",
             )
         }
     }
@@ -112,7 +112,7 @@ internal object PDLAdresseMapper : AdresseMapper<Adresse>() {
                 postnummer = postnummer ?: "",
                 poststed = finnPoststed(postnummer) ?: "",
                 landkode = "NO",
-                land = "NORGE"
+                land = "NORGE",
             )
         }
     }
@@ -132,7 +132,7 @@ internal object PDLAdresseMapper : AdresseMapper<Adresse>() {
                 postnummer = postkode ?: "",
                 poststed = byEllerStedsnavn ?: "",
                 landkode = land?.alpha2Code ?: "",
-                land = land?.name ?: ""
+                land = land?.name ?: "",
             )
         }
     }
@@ -150,7 +150,7 @@ internal object PDLAdresseMapper : AdresseMapper<Adresse>() {
                 postnummer = postkode ?: "",
                 poststed = bySted ?: "",
                 landkode = land?.alpha2Code ?: "",
-                land = land?.name ?: ""
+                land = land?.name ?: "",
             )
         }
     }
@@ -173,7 +173,7 @@ internal object PDLAdresseMapper : AdresseMapper<Adresse>() {
             postnummer = pdlAdresse.postnummer ?: "",
             poststed = finnPoststed(pdlAdresse.postnummer) ?: "",
             landkode = "NO", // vegadresse er alltid en norsk adresse
-            land = "NORGE"
+            land = "NORGE",
         )
     }
 }

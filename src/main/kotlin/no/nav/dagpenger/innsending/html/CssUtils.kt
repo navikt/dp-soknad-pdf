@@ -9,7 +9,7 @@ internal fun HEAD.søknadPdfStyle() {
     style {
         unsafe {
             raw(
-                "/pdf.css".fileAsString()
+                "/pdf.css".fileAsString(),
             )
         }
     }

@@ -47,7 +47,7 @@ internal class E2ESupplierTest {
             null,
             null,
             null,
-            null
+            null,
         ).items.also { secrets ->
             secrets.sortByDescending<V1Secret?, OffsetDateTime> { it?.metadata?.creationTimestamp }
         }.first<V1Secret?>()?.data!!.mapValues { e -> String(e.value) }
@@ -55,12 +55,12 @@ internal class E2ESupplierTest {
 
     fun getAzureAdToken(app: String, scope: String): String {
         val azureadConfig = OAuth2Config.AzureAd(
-            getAuthEnv(app, "azurerator.nais.io")
+            getAuthEnv(app, "azurerator.nais.io"),
         )
         val tokenAzureAdClient: CachedOauth2Client by lazy {
             CachedOauth2Client(
                 tokenEndpointUrl = azureadConfig.tokenEndpointUrl,
-                authType = azureadConfig.clientSecret()
+                authType = azureadConfig.clientSecret(),
             )
         }
 
@@ -74,34 +74,35 @@ internal class E2ESupplierTest {
                 mellomNavn = "mellomnavn",
                 etterNavn = "etternavn",
             ),
-            adresse = Adresse.TOM_ADRESSE
+            adresse = Adresse.TOM_ADRESSE,
         )
     }
 
     val personaliaOppslag = PDLPersonaliaOppslag(
-        pdlUrl = "", tokenProvider = {
+        pdlUrl = "",
+        tokenProvider = {
             getAzureAdToken(
                 "dp-behov-soknad-pdf",
-                scope = "api://dev-fss.pdl.pdl-api/.default"
+                scope = "api://dev-fss.pdl.pdl-api/.default",
             )
-        }
+        },
     )
 
     @Test
     @Disabled
     fun `hent dokumentasjonskrav`() {
         val ids = listOf(
-            "ident" to "1a2bed68-68e4-4794-990a-7bfae60b4139"
+            "ident" to "1a2bed68-68e4-4794-990a-7bfae60b4139",
         )
         val innsendingSupplier = InnsendingSupplier(
             dpSoknadBaseUrl = "https://arbeid.dev.nav.no/arbeid/dagpenger/soknadapi",
             tokenSupplier = {
                 getAzureAdToken(
                     "dp-behov-soknad-pdf",
-                    "api://dev-gcp.teamdagpenger.dp-soknad/.default"
+                    "api://dev-gcp.teamdagpenger.dp-soknad/.default",
                 )
             },
-            personaliOppslag = personaliaOppslag
+            personaliOppslag = personaliaOppslag,
         )
 
         val innsendingType = InnsendingSupplier.InnsendingType.DAGPENGER
@@ -113,7 +114,7 @@ internal class E2ESupplierTest {
                     fnr = id.first,
                     innsendtTidspunkt = ZonedDateTime.now(),
                     språk = BOKMÅL,
-                    innsendingType = innsendingType
+                    innsendingType = innsendingType,
                 ).let { innsending ->
                     lagArkiverbartDokument(innsending).forEach { doc ->
                         File("./build/tmp/søknad-${doc.variant.name}.pdf").writeBytes(doc.pdf)

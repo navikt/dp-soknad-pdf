@@ -22,7 +22,7 @@ internal object HtmlBuilder {
     private fun lagHtml(
         innsending: Innsending,
         seksjonFunksjon: DIV.(Innsending.Seksjon, Innsending.GenerellTekst) -> Unit = DIV::nettoSeksjon,
-        brutto: Boolean
+        brutto: Boolean,
     ): String {
         val generellTekst = innsending.generellTekst
         return createHTML(prettyPrint = false, xhtmlCompatible = true).html {
@@ -59,22 +59,22 @@ internal object HtmlBuilder {
                         dokumentasjonKrav(
                             innsending.dokumentasjonskrav,
                             Innsending.DokumentKrav.Valg.SEND_SENERE,
-                            brutto
+                            brutto,
                         )
                         dokumentasjonKrav(
                             innsending.dokumentasjonskrav,
                             Innsending.DokumentKrav.Valg.SENDER_IKKE,
-                            brutto
+                            brutto,
                         )
                         dokumentasjonKrav(
                             innsending.dokumentasjonskrav,
                             Innsending.DokumentKrav.Valg.SENDT_TIDLIGERE,
-                            brutto
+                            brutto,
                         )
                         dokumentasjonKrav(
                             innsending.dokumentasjonskrav,
                             Innsending.DokumentKrav.Valg.ANDRE_SENDER,
-                            brutto
+                            brutto,
                         )
                         // todo engelsk tekst. Hack
                         if (innsending.type == InnsendingSupplier.InnsendingType.DAGPENGER) {

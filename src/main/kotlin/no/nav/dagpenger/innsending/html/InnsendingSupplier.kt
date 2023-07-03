@@ -21,7 +21,7 @@ import java.util.UUID
 internal class InnsendingSupplier(
     private val dpSoknadBaseUrl: String,
     tokenSupplier: () -> String,
-    private val personaliOppslag: PersonaliaOppslag
+    private val personaliOppslag: PersonaliaOppslag,
 ) {
     private val httpKlient: HttpClient = HttpClient(CIO) {
         defaultRequest {
@@ -37,7 +37,7 @@ internal class InnsendingSupplier(
 
     internal enum class InnsendingType {
         DAGPENGER,
-        GENERELL
+        GENERELL,
     }
 
     suspend fun hentSoknad(
@@ -45,7 +45,7 @@ internal class InnsendingSupplier(
         fnr: String,
         innsendtTidspunkt: ZonedDateTime,
         språk: Innsending.InnsendingsSpråk,
-        innsendingType: InnsendingType
+        innsendingType: InnsendingType,
     ): Innsending {
         return withContext(Dispatchers.IO) {
             val fakta = async { hentFakta(id) }
@@ -56,14 +56,14 @@ internal class InnsendingSupplier(
                 innsendingsData = fakta.await(),
                 dokumentasjonKrav = dokumentasjonsKrav.await(),
                 tekst = tekst.await(),
-                språk = språk
+                språk = språk,
             ).parse(innsendingType).also {
                 val person = deferredPerson.await()
                 it.infoBlokk = Innsending.InfoBlokk(
                     fødselsnummer = fnr,
                     innsendtTidspunkt = innsendtTidspunkt,
                     navn = person.navn.formatertNavn,
-                    adresse = person.adresse.formatertAdresse
+                    adresse = person.adresse.formatertAdresse,
                 )
             }
         }
@@ -74,7 +74,7 @@ internal class InnsendingSupplier(
         fnr: String,
         innsendtTidspunkt: ZonedDateTime,
         språk: Innsending.InnsendingsSpråk,
-        innsendingCopyFunc: Innsending.() -> Innsending = { this }
+        innsendingCopyFunc: Innsending.() -> Innsending = { this },
     ): Innsending {
         return withContext(Dispatchers.IO) {
             val tekst = async { hentTekst(id) }
@@ -84,14 +84,14 @@ internal class InnsendingSupplier(
                 innsendingsData = null,
                 dokumentasjonKrav = dokumentasjonsKrav.await(),
                 tekst = tekst.await(),
-                språk = språk
+                språk = språk,
             ).parseEttersending().also {
                 val person = deferredPerson.await()
                 it.infoBlokk = Innsending.InfoBlokk(
                     fødselsnummer = fnr,
                     innsendtTidspunkt = innsendtTidspunkt,
                     navn = person.navn.formatertNavn,
-                    adresse = person.adresse.formatertAdresse
+                    adresse = person.adresse.formatertAdresse,
                 )
             }.innsendingCopyFunc()
         }

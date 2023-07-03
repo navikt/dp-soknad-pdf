@@ -25,8 +25,8 @@ internal object Configuration {
             "DP_MELLOMLAGRING_SCOPE" to "api://dev-gcp.teamdagpenger.dp-mellomlagring/.default",
             "DP_SOKNAD_BASE_URL" to "http://dp-soknad/arbeid/dagpenger/soknadapi",
             "DP_SOKNAD_SCOPE" to "api://dev-gcp.teamdagpenger.dp-soknad/.default",
-            "PDL_API_SCOPE" to "api://dev-fss.pdl.pdl-api/.default"
-        )
+            "PDL_API_SCOPE" to "api://dev-fss.pdl.pdl-api/.default",
+        ),
     )
 
     val properties: Configuration =
@@ -60,7 +60,7 @@ internal object Configuration {
         val azureAdConfig = OAuth2Config.AzureAd(properties)
         CachedOauth2Client(
             tokenEndpointUrl = azureAdConfig.tokenEndpointUrl,
-            authType = azureAdConfig.clientSecret()
+            authType = azureAdConfig.clientSecret(),
         )
     }
 

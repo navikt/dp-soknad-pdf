@@ -34,21 +34,21 @@ internal class PdfLagringTest {
                     ]
                 """.trimIndent(),
                 status = HttpStatusCode.Created,
-                headers = headersOf(HttpHeaders.ContentType, "application/json")
+                headers = headersOf(HttpHeaders.ContentType, "application/json"),
             )
         }
         runBlocking {
             val dokumentliste = PdfLagring(
                 baseUrl = "http://dp-mellomlagring/v1/azuread/ve",
                 tokenSupplier = { "token" },
-                engine = mockEngine
+                engine = mockEngine,
             ).lagrePdf(
                 "uuid",
                 listOf(
                     ArkiverbartDokument.netto("<!DOCTYPE html>".toByteArray()),
-                    ArkiverbartDokument.brutto("<!DOCTYPE html>".toByteArray())
+                    ArkiverbartDokument.brutto("<!DOCTYPE html>".toByteArray()),
                 ),
-                testFnr
+                testFnr,
             )
             dokumentliste.single { it.variant == ArkiverbartDokument.DokumentVariant.BRUTTO }.also {
                 assertEquals("brutto.pdf", it.filnavn)

@@ -22,13 +22,13 @@ class FaktaUtenSvarTest {
                 innsendingsData = faktaJson,
                 dokumentasjonKrav = dokumentasjonKravJson,
                 tekst = tekstJson,
-                språk = Innsending.InnsendingsSpråk.BOKMÅL
+                språk = Innsending.InnsendingsSpråk.BOKMÅL,
             ).parse().apply {
                 infoBlokk = Innsending.InfoBlokk(
                     fødselsnummer = "ident",
                     innsendtTidspunkt = ZonedDateTime.now(),
                     navn = "Ola Nordmann",
-                    adresse = "Kardemomme By, 4609 Kristiansand, Norge"
+                    adresse = "Kardemomme By, 4609 Kristiansand, Norge",
 
                 )
             }.let {

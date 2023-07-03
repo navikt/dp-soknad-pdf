@@ -1,3 +1,4 @@
+import com.diffplug.spotless.LineEnding
 import org.gradle.api.JavaVersion.VERSION_17
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.gradle.api.tasks.testing.logging.TestLogEvent
@@ -38,7 +39,7 @@ tasks.withType<Jar>().configureEach {
     from(
         configurations.runtimeClasspath.get().map {
             if (it.isDirectory) it else zipTree(it)
-        }
+        },
     )
 }
 
@@ -82,14 +83,18 @@ dependencies {
     testImplementation("io.kubernetes:client-java:18.0.0")
 }
 
-spotless {
+configure<com.diffplug.gradle.spotless.SpotlessExtension> {
     kotlin {
-        ktlint("0.43.2")
+        ktlint()
     }
+
     kotlinGradle {
-        target("*.gradle.kts", "buildSrc/**/*.kt*")
-        ktlint("0.43.2")
+        ktlint()
     }
+    // Workaround for <https://github.com/diffplug/spotless/issues/1644>
+    // using idea found at
+    // <https://github.com/diffplug/spotless/issues/1527#issuecomment-1409142798>.
+    lineEndings = LineEnding.PLATFORM_NATIVE // or any other except GIT_ATTRIBUTES
 }
 
 tasks.named("compileKotlin") {

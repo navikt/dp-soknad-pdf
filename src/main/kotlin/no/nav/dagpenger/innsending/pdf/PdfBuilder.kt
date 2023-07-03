@@ -25,21 +25,21 @@ internal object PdfBuilder {
             path = "/fonts/SourceSansPro-Normal.ttf",
             weight = 400,
             style = BaseRendererBuilder.FontStyle.NORMAL,
-            subset = false
+            subset = false,
         ),
         Font(
             family = "Source Sans Pro",
             path = "/fonts/SourceSansPro-Italic.ttf",
             weight = 300,
             style = BaseRendererBuilder.FontStyle.ITALIC,
-            subset = false
+            subset = false,
         ),
         Font(
             family = "Source Sans Pro",
             path = "/fonts/SourceSansPro-Semibold.ttf",
             weight = 600,
             style = BaseRendererBuilder.FontStyle.NORMAL,
-            subset = false
+            subset = false,
         ),
     )
 
@@ -49,11 +49,16 @@ internal object PdfBuilder {
                 PdfRendererBuilder().apply {
                     fonts.forEach { font ->
                         useFont(
-                            /* supplier = */ font.inputStreamSupplier(),
-                            /* fontFamily = */ font.family,
-                            /* fontWeight = */ font.weight,
-                            /* fontStyle = */ font.style,
-                            /* subset = */ font.subset
+                            /* supplier = */
+                            font.inputStreamSupplier(),
+                            /* fontFamily = */
+                            font.family,
+                            /* fontWeight = */
+                            font.weight,
+                            /* fontStyle = */
+                            font.style,
+                            /* subset = */
+                            font.subset,
                         )
                     }
                 }

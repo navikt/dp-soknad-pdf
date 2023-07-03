@@ -38,14 +38,14 @@ internal class NyDialogPdfBehovLøserTest {
                     it.lagrePdf(
                         soknadId.toString(),
                         any(),
-                        testFnr
+                        testFnr,
                     )
                 } returns listOf(
                     LagretDokument("urn:vedlegg:soknadId/netto.pdf", NETTO, "netto.pdf"),
                     LagretDokument("urn:vedlegg:soknadId/brutto.pdf", BRUTTO, "brutto.pdf"),
                 )
             },
-            innsendingSupplier = mockInnsendingSupplier
+            innsendingSupplier = mockInnsendingSupplier,
         )
     }
 
@@ -55,7 +55,7 @@ internal class NyDialogPdfBehovLøserTest {
         assertEquals(1, testRapid.inspektør.size)
         assertJsonEquals(
             expectedLøsning,
-            testRapid.inspektør.message(0)["@løsning"][NyDialogPdfBehovLøser.BEHOV]
+            testRapid.inspektør.message(0)["@løsning"][NyDialogPdfBehovLøser.BEHOV],
         )
         coVerify(exactly = 1) { mockInnsendingSupplier.hentSoknad(soknadId, any(), any(), any(), DAGPENGER) }
     }
@@ -66,7 +66,7 @@ internal class NyDialogPdfBehovLøserTest {
         assertEquals(1, testRapid.inspektør.size)
         assertJsonEquals(
             expectedLøsning,
-            testRapid.inspektør.message(0)["@løsning"][NyDialogPdfBehovLøser.BEHOV]
+            testRapid.inspektør.message(0)["@løsning"][NyDialogPdfBehovLøser.BEHOV],
         )
         coVerify(exactly = 1) { mockInnsendingSupplier.hentSoknad(soknadId, any(), any(), any(), GENERELL) }
     }

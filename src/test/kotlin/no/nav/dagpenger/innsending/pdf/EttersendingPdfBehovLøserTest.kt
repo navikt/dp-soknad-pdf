@@ -33,13 +33,13 @@ internal class EttersendingPdfBehovLøserTest {
                     it.lagrePdf(
                         soknadId.toString(),
                         any(),
-                        testFnr
+                        testFnr,
                     )
                 } returns listOf(
                     LagretDokument("urn:vedlegg:soknadId/ettersending.pdf", NETTO, "ettersending.pdf"),
                 )
             },
-            innsendingSupplier = mockInnsending::hentEttersending
+            innsendingSupplier = mockInnsending::hentEttersending,
         )
     }
 
@@ -68,7 +68,7 @@ internal class EttersendingPdfBehovLøserTest {
 
         assertJsonEquals(
             expectedLøsning,
-            testRapid.inspektør.message(0)["@løsning"][EttersendingPdfBehovLøser.BEHOV]
+            testRapid.inspektør.message(0)["@løsning"][EttersendingPdfBehovLøser.BEHOV],
         )
     }
 
@@ -113,7 +113,7 @@ internal class EttersendingPdfBehovLøserTest {
             fnr: String,
             innsendtTidspunkt: ZonedDateTime,
             språk: Innsending.InnsendingsSpråk,
-            block: Innsending.() -> Innsending
+            block: Innsending.() -> Innsending,
         ): Innsending {
             return innsending.block().also {
                 kopiertInnsending = it

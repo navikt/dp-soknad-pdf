@@ -20,7 +20,7 @@ internal class ArkiverbartDokument private constructor(val variant: DokumentVari
 internal class LagretDokument(
     val urn: String,
     val variant: ArkiverbartDokument.DokumentVariant,
-    val filnavn: String
+    val filnavn: String,
 ) {
     companion object {
         internal fun List<LagretDokument>.behovSvar(): List<BehovSvar> = this.map {
@@ -28,8 +28,8 @@ internal class LagretDokument(
                 urn = it.urn,
                 metainfo = BehovSvar.MetaInfo(
                     innhold = it.filnavn,
-                    variant = it.variant.name
-                )
+                    variant = it.variant.name,
+                ),
             )
         }
     }
@@ -39,8 +39,8 @@ internal fun lagArkiverbartDokument(innsending: Innsending): List<ArkiverbartDok
     return listOf(
         ArkiverbartDokument.netto(HtmlBuilder.lagNettoHtml(innsending).let { PdfBuilder.lagPdf(it) }),
         ArkiverbartDokument.brutto(
-            HtmlBuilder.lagBruttoHtml(innsending).let { PdfBuilder.lagPdf(it) }
-        )
+            HtmlBuilder.lagBruttoHtml(innsending).let { PdfBuilder.lagPdf(it) },
+        ),
     )
 }
 internal fun lagArkiverbarEttersending(innsending: Innsending): List<ArkiverbartDokument> {

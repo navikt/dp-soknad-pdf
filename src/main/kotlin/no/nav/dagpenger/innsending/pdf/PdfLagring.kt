@@ -45,21 +45,22 @@ class PdfLagring(
     internal suspend fun lagrePdf(
         søknadUUid: String,
         arkiverbartDokument: List<ArkiverbartDokument>,
-        fnr: String
+        fnr: String,
     ): List<LagretDokument> {
         return httpKlient.submitFormWithBinaryData(
             url = "$baseUrl/$søknadUUid",
             formData = formData {
                 arkiverbartDokument.forEach {
                     append(
-                        it.filnavn, it.pdf,
+                        it.filnavn,
+                        it.pdf,
                         Headers.build {
                             append(HttpHeaders.ContentType, ContentType.Application.Pdf.toString())
                             append(HttpHeaders.ContentDisposition, "filename=${it.filnavn}")
-                        }
+                        },
                     )
                 }
-            }
+            },
         ) {
             this.header("X-Eier", fnr)
         }.body<List<URNResponse>>().map {
@@ -69,7 +70,7 @@ class PdfLagring(
             LagretDokument(
                 urn = it.urn,
                 variant = a2.variant,
-                filnavn = it.filnavn
+                filnavn = it.filnavn,
             )
         }
     }
@@ -80,5 +81,5 @@ internal data class URNResponse(
     val urn: String,
     val filsti: String,
     val storrelse: Long,
-    val tidspunkt: ZonedDateTime
+    val tidspunkt: ZonedDateTime,
 )

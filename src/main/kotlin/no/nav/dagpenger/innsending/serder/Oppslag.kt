@@ -43,7 +43,7 @@ internal class Oppslag(private val tekstJson: String) {
                 SvaralternativTekstObjekt::class -> SvaralternativTekstObjekt(
                     textId = tekstId,
                     text = tekstId,
-                    alertText = null
+                    alertText = null,
                 )
                 DokumentkravTekstObjekt::class -> DokumentkravTekstObjekt(textId = tekstId, title = tekstId)
                 else -> throw IllegalArgumentException("Ukjent klasse: ${T::class.java.name}")
@@ -75,7 +75,7 @@ internal class Oppslag(private val tekstJson: String) {
                     text = tekst["text"].asText(),
                     description = tekst.get("description")?.asRawHtmlString(),
                     helpText = tekst.hjelpetekst(),
-                    unit = tekst.get("unit")?.asText()
+                    unit = tekst.get("unit")?.asText(),
                 )
             }
         }
@@ -91,7 +91,7 @@ internal class Oppslag(private val tekstJson: String) {
                     textId = textId,
                     title = tekst["title"].asText(),
                     description = tekst.get("description")?.asRawHtmlString(),
-                    helpText = tekst.hjelpetekst()
+                    helpText = tekst.hjelpetekst(),
                 )
             }
         }
@@ -105,7 +105,7 @@ internal class Oppslag(private val tekstJson: String) {
             withLoggingContext("textId" to textId) {
                 map[textId] = EnkelText(
                     textId = textId,
-                    text = tekst["valueText"].asText()
+                    text = tekst["valueText"].asText(),
                 )
             }
         }
@@ -132,9 +132,9 @@ internal class Oppslag(private val tekstJson: String) {
                     helpText = dokumentkrav["helpText"]?.takeIf { !it.isNull }?.let { helpText ->
                         HelpText(
                             helpText["title"]?.asText(),
-                            helpText["body"].asRawHtmlString()
+                            helpText["body"].asRawHtmlString(),
                         )
-                    }
+                    },
                 )
             }
         }
@@ -153,9 +153,9 @@ internal class Oppslag(private val tekstJson: String) {
                         TekstObjekt.AlertText(
                             alerttext["title"]?.asText(),
                             alerttext["type"]?.asText() ?: "error",
-                            alerttext["body"]?.asRawHtmlString()
+                            alerttext["body"]?.asRawHtmlString(),
                         )
-                    }
+                    },
                 )
             }
         }
@@ -172,7 +172,7 @@ internal class Oppslag(private val tekstJson: String) {
             tittel = tittel,
             svar = (lookup<EnkelText>("pdf.svar")).text,
             datoSendt = (lookup<EnkelText>("pdf.datosendt")).text,
-            fnr = (lookup<EnkelText>("pdf.fnr")).text
+            fnr = (lookup<EnkelText>("pdf.fnr")).text,
         )
     }
 
@@ -183,7 +183,7 @@ internal class Oppslag(private val tekstJson: String) {
             tittel = tittel,
             svar = lookup<EnkelText>("pdf.svar").text,
             datoSendt = lookup<EnkelText>("pdf.datosendt").text,
-            fnr = lookup<EnkelText>("pdf.fnr").text
+            fnr = lookup<EnkelText>("pdf.fnr").text,
         )
     }
 
@@ -192,7 +192,7 @@ internal class Oppslag(private val tekstJson: String) {
             Innsending.PdfAMetaTagger(
                 description = (lookup<EnkelText>("pdfa.description")).text,
                 subject = (lookup<EnkelText>("pdfa.subject")).text,
-                author = (lookup<EnkelText>("pdfa.author")).text
+                author = (lookup<EnkelText>("pdfa.author")).text,
             )
         }
 
@@ -202,14 +202,14 @@ internal class Oppslag(private val tekstJson: String) {
             val text: String,
             textId: String,
             description: RawHtmlString? = null,
-            helpText: HelpText? = null
+            helpText: HelpText? = null,
         ) : TekstObjekt(textId, description, helpText)
 
         class SeksjonTekstObjekt(
             val title: String,
             textId: String,
             description: RawHtmlString? = null,
-            helpText: HelpText? = null
+            helpText: HelpText? = null,
         ) : TekstObjekt(textId, description, helpText)
 
         class SvaralternativTekstObjekt(val text: String, val alertText: AlertText?, textId: String) :
@@ -229,7 +229,7 @@ internal class Oppslag(private val tekstJson: String) {
             textId: String,
             val title: String,
             description: RawHtmlString? = null,
-            helpText: HelpText? = null
+            helpText: HelpText? = null,
         ) : TekstObjekt(textId, description, helpText)
 
         class HelpText(val title: String?, val body: RawHtmlString?)
