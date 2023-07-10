@@ -22,7 +22,7 @@ spec:
     max: 3
   resources:
     limits:
-      cpu: 12
+      cpu: "12"
       memory: 2024Mi
     requests:
       cpu: 350m
