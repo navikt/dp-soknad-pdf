@@ -22,10 +22,10 @@ spec:
     max: 3
   resources:
     limits:
-      cpu: 3000m
-      memory: 1024Mi
+      cpu: 12
+      memory: 2024Mi
     requests:
-      cpu: 2000m
+      cpu: 350m
       memory: 1024Mi
   secureLogs:
     enabled: true
