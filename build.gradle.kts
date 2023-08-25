@@ -80,7 +80,7 @@ dependencies {
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.3")
 
     // FOr E2E
-    testImplementation("io.kubernetes:client-java:18.0.0")
+    testImplementation("io.kubernetes:client-java:18.0.1")
 }
 
 configure<com.diffplug.gradle.spotless.SpotlessExtension> {
