@@ -51,7 +51,7 @@ dependencies {
     val ktorVersion = "2.3.2"
     implementation(kotlin("stdlib"))
 
-    implementation("com.github.navikt:rapids-and-rivers:2023042609401682494832.502ede9d3e7e")
+    implementation("com.github.navikt:rapids-and-rivers:2023082311481692784104.98e0711da2cd")
 
     implementation("com.natpryce:konfig:1.6.10.0")
     implementation("io.github.microutils:kotlin-logging:3.0.5")
