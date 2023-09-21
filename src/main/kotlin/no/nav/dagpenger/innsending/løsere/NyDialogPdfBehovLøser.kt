@@ -1,12 +1,12 @@
-package no.nav.dagpenger.innsending
+package no.nav.dagpenger.innsending.løsere
 
-import com.fasterxml.jackson.databind.node.ArrayNode
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.slf4j.MDCContext
 import mu.KotlinLogging
 import mu.withLoggingContext
 import no.nav.dagpenger.innsending.LagretDokument.Companion.behovSvar
-import no.nav.dagpenger.innsending.html.Innsending
+import no.nav.dagpenger.innsending.html.InnsendingSupplier
+import no.nav.dagpenger.innsending.lagArkiverbartDokument
 import no.nav.dagpenger.innsending.pdf.PdfLagring
 import no.nav.dagpenger.innsending.serder.dokumentSpråk
 import no.nav.dagpenger.innsending.serder.ident
@@ -16,24 +16,23 @@ import no.nav.helse.rapids_rivers.JsonMessage
 import no.nav.helse.rapids_rivers.MessageContext
 import no.nav.helse.rapids_rivers.RapidsConnection
 import no.nav.helse.rapids_rivers.River
-import java.time.ZonedDateTime
-import java.util.UUID
 
-internal class EttersendingPdfBehovLøser(
+private val sikkerlogg = KotlinLogging.logger("tjenestekall")
+
+internal class NyDialogPdfBehovLøser(
     rapidsConnection: RapidsConnection,
     private val pdfLagring: PdfLagring,
-    private val innsendingSupplier: suspend (
-        soknadId: UUID,
-        fnr: String,
-        innsendtTidspunkt: ZonedDateTime,
-        innsendingsSpråk: Innsending.InnsendingsSpråk,
-        block: Innsending.() -> Innsending,
-    ) -> Innsending,
+    private val innsendingSupplier: InnsendingSupplier,
 ) : River.PacketListener {
     companion object {
         private val logg = KotlinLogging.logger {}
-        private val sikkerlogg = KotlinLogging.logger("tjenestekall")
         const val BEHOV = "ArkiverbarSøknad"
+        private fun JsonMessage.innsendingType(): InnsendingSupplier.InnsendingType {
+            return when (this["skjemakode"].asText()) {
+                "GENERELL_INNSENDING" -> InnsendingSupplier.InnsendingType.GENERELL
+                else -> InnsendingSupplier.InnsendingType.DAGPENGER
+            }
+        }
     }
 
     init {
@@ -41,8 +40,8 @@ internal class EttersendingPdfBehovLøser(
             validate { it.demandValue("@event_name", "behov") }
             validate { it.demandAll("@behov", listOf(BEHOV)) }
             validate { it.rejectKey("@løsning") }
-            validate { it.requireKey("søknad_uuid", "ident", "innsendtTidspunkt", "dokumentasjonKravId") }
-            validate { it.requireValue("type", "ETTERSENDING_TIL_DIALOG") }
+            validate { it.requireKey("søknad_uuid", "ident", "innsendtTidspunkt", "skjemakode") }
+            validate { it.requireValue("type", "NY_DIALOG") }
             validate { it.interestedIn("dokument_språk") }
         }.register(this)
     }
@@ -51,18 +50,19 @@ internal class EttersendingPdfBehovLøser(
         val soknadId = packet.søknadUuid()
         val ident = packet.ident()
         val innsendtTidspunkt = packet.innsendtTidspunkt()
-        val innsendtDokumentajonsKravId = packet.innsendtDokumentajonsKravId()
         withLoggingContext("søknadId" to soknadId.toString()) {
             try {
                 runBlocking(MDCContext()) {
-                    logg.info("Mottok behov for PDF av ettersending")
-                    innsendingSupplier(
+                    val innsendingType = packet.innsendingType()
+                    logg.info("Mottok behov for PDF av søknad. Skjemakode: $innsendingType ")
+                    innsendingSupplier.hentSoknad(
                         soknadId,
                         ident,
                         innsendtTidspunkt,
                         packet.dokumentSpråk(),
-                    ) { this.filtrerInnsendteDokumentasjonsKrav(innsendtDokumentajonsKravId) }
-                        .let { lagArkiverbarEttersending(it) }
+                        innsendingType,
+                    )
+                        .let { lagArkiverbartDokument(it) }
                         .let { dokumenter ->
                             pdfLagring.lagrePdf(
                                 søknadUUid = soknadId.toString(),
@@ -84,20 +84,5 @@ internal class EttersendingPdfBehovLøser(
                 throw e
             }
         }
-    }
-}
-
-private fun JsonMessage.innsendtDokumentajonsKravId(): Set<String> {
-    // todo errorhandling
-    return (this["dokumentasjonKravId"] as ArrayNode).map { it.asText() }.toSet()
-}
-
-private fun Innsending.filtrerInnsendteDokumentasjonsKrav(innsendtDokumentajonsKravId: Set<String>): Innsending {
-    return this.copy(
-        dokumentasjonskrav = this.dokumentasjonskrav.filter { dokumentKrav ->
-            dokumentKrav.kravId in innsendtDokumentajonsKravId
-        },
-    ).also {
-        it.infoBlokk = this.infoBlokk
     }
 }

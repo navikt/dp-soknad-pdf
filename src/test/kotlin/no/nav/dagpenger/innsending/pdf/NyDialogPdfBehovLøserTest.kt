@@ -8,7 +8,7 @@ import io.mockk.mockk
 import no.nav.dagpenger.innsending.ArkiverbartDokument.DokumentVariant.BRUTTO
 import no.nav.dagpenger.innsending.ArkiverbartDokument.DokumentVariant.NETTO
 import no.nav.dagpenger.innsending.LagretDokument
-import no.nav.dagpenger.innsending.NyDialogPdfBehovLøser
+import no.nav.dagpenger.innsending.løsere.NyDialogPdfBehovLøser
 import no.nav.dagpenger.innsending.html.InnsendingSupplier
 import no.nav.dagpenger.innsending.html.InnsendingSupplier.InnsendingType.DAGPENGER
 import no.nav.dagpenger.innsending.html.InnsendingSupplier.InnsendingType.GENERELL

@@ -5,7 +5,7 @@ import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import io.mockk.coEvery
 import io.mockk.mockk
 import no.nav.dagpenger.innsending.ArkiverbartDokument.DokumentVariant.NETTO
-import no.nav.dagpenger.innsending.EttersendingPdfBehovLøser
+import no.nav.dagpenger.innsending.løsere.EttersendingPdfBehovLøser
 import no.nav.dagpenger.innsending.LagretDokument
 import no.nav.dagpenger.innsending.html.Innsending
 import no.nav.dagpenger.innsending.html.TestModellHtml

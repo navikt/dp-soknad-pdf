@@ -1,11 +1,13 @@
-package no.nav.dagpenger.innsending
+package no.nav.dagpenger.innsending.løsere
 
+import com.fasterxml.jackson.databind.node.ArrayNode
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.slf4j.MDCContext
 import mu.KotlinLogging
 import mu.withLoggingContext
 import no.nav.dagpenger.innsending.LagretDokument.Companion.behovSvar
-import no.nav.dagpenger.innsending.html.InnsendingSupplier
+import no.nav.dagpenger.innsending.html.Innsending
+import no.nav.dagpenger.innsending.lagArkiverbarEttersending
 import no.nav.dagpenger.innsending.pdf.PdfLagring
 import no.nav.dagpenger.innsending.serder.dokumentSpråk
 import no.nav.dagpenger.innsending.serder.ident
@@ -15,23 +17,24 @@ import no.nav.helse.rapids_rivers.JsonMessage
 import no.nav.helse.rapids_rivers.MessageContext
 import no.nav.helse.rapids_rivers.RapidsConnection
 import no.nav.helse.rapids_rivers.River
+import java.time.ZonedDateTime
+import java.util.UUID
 
-private val sikkerlogg = KotlinLogging.logger("tjenestekall")
-
-internal class NyDialogPdfBehovLøser(
+internal class EttersendingPdfBehovLøser(
     rapidsConnection: RapidsConnection,
     private val pdfLagring: PdfLagring,
-    private val innsendingSupplier: InnsendingSupplier,
+    private val innsendingSupplier: suspend (
+        soknadId: UUID,
+        fnr: String,
+        innsendtTidspunkt: ZonedDateTime,
+        innsendingsSpråk: Innsending.InnsendingsSpråk,
+        block: Innsending.() -> Innsending,
+    ) -> Innsending,
 ) : River.PacketListener {
     companion object {
         private val logg = KotlinLogging.logger {}
+        private val sikkerlogg = KotlinLogging.logger("tjenestekall")
         const val BEHOV = "ArkiverbarSøknad"
-        private fun JsonMessage.innsendingType(): InnsendingSupplier.InnsendingType {
-            return when (this["skjemakode"].asText()) {
-                "GENERELL_INNSENDING" -> InnsendingSupplier.InnsendingType.GENERELL
-                else -> InnsendingSupplier.InnsendingType.DAGPENGER
-            }
-        }
     }
 
     init {
@@ -39,8 +42,8 @@ internal class NyDialogPdfBehovLøser(
             validate { it.demandValue("@event_name", "behov") }
             validate { it.demandAll("@behov", listOf(BEHOV)) }
             validate { it.rejectKey("@løsning") }
-            validate { it.requireKey("søknad_uuid", "ident", "innsendtTidspunkt", "skjemakode") }
-            validate { it.requireValue("type", "NY_DIALOG") }
+            validate { it.requireKey("søknad_uuid", "ident", "innsendtTidspunkt", "dokumentasjonKravId") }
+            validate { it.requireValue("type", "ETTERSENDING_TIL_DIALOG") }
             validate { it.interestedIn("dokument_språk") }
         }.register(this)
     }
@@ -49,19 +52,18 @@ internal class NyDialogPdfBehovLøser(
         val soknadId = packet.søknadUuid()
         val ident = packet.ident()
         val innsendtTidspunkt = packet.innsendtTidspunkt()
+        val innsendtDokumentajonsKravId = packet.innsendtDokumentajonsKravId()
         withLoggingContext("søknadId" to soknadId.toString()) {
             try {
                 runBlocking(MDCContext()) {
-                    val innsendingType = packet.innsendingType()
-                    logg.info("Mottok behov for PDF av søknad. Skjemakode: $innsendingType ")
-                    innsendingSupplier.hentSoknad(
+                    logg.info("Mottok behov for PDF av ettersending")
+                    innsendingSupplier(
                         soknadId,
                         ident,
                         innsendtTidspunkt,
                         packet.dokumentSpråk(),
-                        innsendingType,
-                    )
-                        .let { lagArkiverbartDokument(it) }
+                    ) { this.filtrerInnsendteDokumentasjonsKrav(innsendtDokumentajonsKravId) }
+                        .let { lagArkiverbarEttersending(it) }
                         .let { dokumenter ->
                             pdfLagring.lagrePdf(
                                 søknadUUid = soknadId.toString(),
@@ -83,5 +85,20 @@ internal class NyDialogPdfBehovLøser(
                 throw e
             }
         }
+    }
+}
+
+private fun JsonMessage.innsendtDokumentajonsKravId(): Set<String> {
+    // todo errorhandling
+    return (this["dokumentasjonKravId"] as ArrayNode).map { it.asText() }.toSet()
+}
+
+private fun Innsending.filtrerInnsendteDokumentasjonsKrav(innsendtDokumentajonsKravId: Set<String>): Innsending {
+    return this.copy(
+        dokumentasjonskrav = this.dokumentasjonskrav.filter { dokumentKrav ->
+            dokumentKrav.kravId in innsendtDokumentajonsKravId
+        },
+    ).also {
+        it.infoBlokk = this.infoBlokk
     }
 }
