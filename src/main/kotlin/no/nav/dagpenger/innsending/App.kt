@@ -3,6 +3,7 @@ package no.nav.dagpenger.innsending
 import no.nav.dagpenger.innsending.html.InnsendingSupplier
 import no.nav.dagpenger.innsending.løsere.EttersendingPdfBehovLøser
 import no.nav.dagpenger.innsending.løsere.NyDialogPdfBehovLøser
+import no.nav.dagpenger.innsending.løsere.RapporteringPdfBehovLøser
 import no.nav.dagpenger.innsending.pdf.PdfLagring
 import no.nav.dagpenger.innsending.tjenester.PDLPersonaliaOppslag
 import no.nav.helse.rapids_rivers.RapidApplication
@@ -44,6 +45,13 @@ internal object App : RapidsConnection.StatusListener {
                 tokenSupplier = Configuration.soknadTokenSupplier,
                 personaliOppslag = personaliaOppslag,
             )::hentEttersending,
+        )
+        RapporteringPdfBehovLøser(
+            rapidsConnection = rapidsConnection,
+            pdfLagring = PdfLagring(
+                baseUrl = Configuration.dpMellomlagringBaseUrl,
+                tokenSupplier = Configuration.mellomlagringTokenSupplier,
+            ),
         )
     }
 
