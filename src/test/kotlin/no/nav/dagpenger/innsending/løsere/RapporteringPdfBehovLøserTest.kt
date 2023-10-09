@@ -44,13 +44,6 @@ internal class RapporteringPdfBehovLøserTest {
             expectedLøsning,
             testRapid.inspektør.message(0)["@løsning"],
         )
-
-        /*
-        val array = it.toByteArray()
-        val file = File("test.pdf")
-        file.writeBytes(array)
-        array
-         */
     }
 
     @Test
