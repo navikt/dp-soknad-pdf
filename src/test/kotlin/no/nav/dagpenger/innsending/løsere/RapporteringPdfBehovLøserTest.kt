@@ -42,7 +42,7 @@ internal class RapporteringPdfBehovLøserTest {
         assertEquals(1, testRapid.inspektør.size)
         assertJsonEquals(
             expectedLøsning,
-            testRapid.inspektør.message(0)["@løsning"][RapporteringPdfBehovLøser.BEHOV],
+            testRapid.inspektør.message(0)["@løsning"],
         )
 
         /*
@@ -63,20 +63,6 @@ internal class RapporteringPdfBehovLøserTest {
         val objectMapper = jacksonObjectMapper()
         assertEquals(objectMapper.readTree(expected), actual)
     }
-
-    @Language("JSON")
-    val expectedLøsning = """
-           [
-                  {
-                    "metainfo": {
-                      "innhold": "netto.pdf",
-                      "filtype": "PDF", 
-                      "variant": "NETTO"
-                    },
-                    "urn": "urn:vedlegg:journalpostId/netto.pdf"
-                  }
-                ]
-    """.trimIndent()
 
     @Language("JSON")
     val json = """
@@ -109,13 +95,30 @@ internal class RapporteringPdfBehovLøserTest {
         }
     """.trimIndent().replace("\"", "\\\"").replace("\n", "")
 
+    @Language("JSON")
+    val expectedLøsning = """
+        {
+           "${RapporteringPdfBehovLøser.BEHOV}": [
+              {
+                "metainfo": {
+                  "innhold": "netto.pdf",
+                  "filtype": "PDF", 
+                  "variant": "NETTO"
+                },
+                "urn": "urn:vedlegg:journalpostId/netto.pdf"
+              }
+           ],
+           "json": "$json"
+        }
+    """.trimIndent()
+
     val now = ZonedDateTime.now(ZoneId.of("Europe/Oslo"))
 
     @Language("JSON")
     val testMessage = """
         {
             "@event_name": "behov",
-            "@behov": ["OpprettPdfForRapportering"],
+            "@behov": ["MellomlagreRapportering"],
             "dokument_språk": "no-NB",
             "ident": "$testFnr",
             "periodeId": "$journalpostId",
@@ -130,7 +133,7 @@ internal class RapporteringPdfBehovLøserTest {
     @Language("JSON")
     val testMessageMedLøsning = """ {
         "@event_name": "behov",
-        "@behov": ["OpprettPdfForRapportering"],
+        "@behov": ["MellomlagreRapportering"],
         "@løsning": "something",
         "ident": "12345678910",
         "journalpostId": "$journalpostId",

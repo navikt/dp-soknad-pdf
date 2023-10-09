@@ -25,7 +25,6 @@ import no.nav.helse.rapids_rivers.JsonMessage
 import no.nav.helse.rapids_rivers.MessageContext
 import no.nav.helse.rapids_rivers.RapidsConnection
 import no.nav.helse.rapids_rivers.River
-import java.util.UUID
 
 internal class RapporteringPdfBehovLøser(
     rapidsConnection: RapidsConnection,
@@ -34,7 +33,7 @@ internal class RapporteringPdfBehovLøser(
     companion object {
         private val logg = KotlinLogging.logger {}
         private val sikkerlogg = KotlinLogging.logger("tjenestekall")
-        const val BEHOV = "OpprettPdfForRapportering"
+        const val BEHOV = "MellomlagreRapportering"
     }
 
     init {
@@ -42,42 +41,44 @@ internal class RapporteringPdfBehovLøser(
             validate { it.demandValue("@event_name", "behov") }
             validate { it.demandAll("@behov", listOf(BEHOV)) }
             validate { it.rejectKey("@løsning") }
-            validate { it.requireKey("ident", "periodeId", "journalpostId", "json") }
+            validate { it.requireKey("ident", "periodeId", "json") }
         }.register(this)
     }
 
     override fun onPacket(packet: JsonMessage, context: MessageContext) {
         val ident = packet.ident()
-        val periodeId = packet["periodeId"].asText().let { UUID.fromString(it) }
-        val journalpostId = packet["journalpostId"].asText()
-        val json = jacksonObjectMapper().readTree(packet["json"].asText())
+        val periodeId = packet["periodeId"].asText()
+        val json = packet["json"].asText()
+        val jsonTree = jacksonObjectMapper().readTree(json)
 
         withLoggingContext(
-            "periodeId" to periodeId.toString(),
-            "journalpostId" to journalpostId,
+            "periodeId" to periodeId,
         ) {
             try {
                 runBlocking(MDCContext()) {
                     logg.info("Mottok behov for PDF av rapportering")
 
                     val html = createHTML(prettyPrint = false, xhtmlCompatible = false).html {
-                        lang = json["språk"].asText()
+                        lang = jsonTree["språk"].asText()
                         head {
                             title("Rapporteringperiode $periodeId")
                             søknadPdfStyle()
                         }
                         body {
-                            iterate(json, "") // pre-tagen fungerer ikke, derfor må vi gjøre formatering selv
+                            iterate(jsonTree, "") // pre-tagen fungerer ikke, derfor må vi gjøre formatering selv
                         }
                     }
 
                     pdfLagring.lagrePdf(
-                        søknadUUid = journalpostId,
+                        søknadUUid = periodeId,
                         arkiverbartDokument = listOf(ArkiverbartDokument.netto(PdfBuilder.lagPdf(html))),
                         fnr = ident,
                     ).let {
                         with(it.behovSvar()) {
-                            packet["@løsning"] = mapOf(BEHOV to this)
+                            packet["@løsning"] = mapOf(
+                                BEHOV to this,
+                                "json" to json,
+                            )
                         }
                     }
 
