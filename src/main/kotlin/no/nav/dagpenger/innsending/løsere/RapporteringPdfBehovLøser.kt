@@ -6,17 +6,15 @@ import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.slf4j.MDCContext
 import kotlinx.html.BODY
-import kotlinx.html.body
+import kotlinx.html.HEAD
 import kotlinx.html.div
-import kotlinx.html.head
 import kotlinx.html.html
-import kotlinx.html.lang
-import kotlinx.html.stream.createHTML
 import kotlinx.html.title
 import mu.KotlinLogging
 import mu.withLoggingContext
 import no.nav.dagpenger.innsending.ArkiverbartDokument
 import no.nav.dagpenger.innsending.LagretDokument.Companion.behovSvar
+import no.nav.dagpenger.innsending.html.HtmlBuilder.lagHtml
 import no.nav.dagpenger.innsending.html.søknadPdfStyle
 import no.nav.dagpenger.innsending.pdf.PdfBuilder
 import no.nav.dagpenger.innsending.pdf.PdfLagring
@@ -58,16 +56,12 @@ internal class RapporteringPdfBehovLøser(
                 runBlocking(MDCContext()) {
                     logg.info("Mottok behov for PDF av rapportering")
 
-                    val html = createHTML(prettyPrint = false, xhtmlCompatible = false).html {
-                        lang = jsonTree["språk"].asText()
-                        head {
-                            title("Rapporteringperiode $periodeId")
-                            søknadPdfStyle()
-                        }
-                        body {
-                            iterate(jsonTree, "") // pre-tagen fungerer ikke, derfor må vi gjøre formatering selv
-                        }
-                    }
+                    // pre-tagen fungerer ikke, derfor må vi gjøre formatering selv
+                    val html = lagHtml(
+                        jsonTree["språk"].asText(),
+                        head("Rapporteringperiode $periodeId"),
+                        iterate(jsonTree, ""),
+                    )
 
                     pdfLagring.lagrePdf(
                         søknadUUid = periodeId,
@@ -94,18 +88,27 @@ internal class RapporteringPdfBehovLøser(
         }
     }
 
-    private fun BODY.iterate(json: JsonNode, indent: String) {
-        val iterator = json.fields()
-        while (iterator.hasNext()) {
-            val item = iterator.next()
+    private fun head(tittel: String): HEAD.() -> Unit {
+        return {
+            title(tittel)
+            søknadPdfStyle()
+        }
+    }
 
-            if (item.value.nodeType == JsonNodeType.OBJECT) {
-                div { +"$indent ${item.key}: {" }
-                iterate(item.value, "__")
-                div { +"$indent }" }
-            } else {
-                div {
-                    +"$indent ${item.key}: ${item.value.asText()}"
+    private fun iterate(json: JsonNode, indent: String): BODY.() -> Unit {
+        return {
+            val iterator = json.fields()
+            while (iterator.hasNext()) {
+                val item = iterator.next()
+
+                if (item.value.nodeType == JsonNodeType.OBJECT) {
+                    div { +"$indent ${item.key}: {" }
+                    iterate(item.value, "__")
+                    div { +"$indent }" }
+                } else {
+                    div {
+                        +"$indent ${item.key}: ${item.value.asText()}"
+                    }
                 }
             }
         }

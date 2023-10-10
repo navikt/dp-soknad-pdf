@@ -1,6 +1,8 @@
 package no.nav.dagpenger.innsending.html
 
+import kotlinx.html.BODY
 import kotlinx.html.DIV
+import kotlinx.html.HEAD
 import kotlinx.html.body
 import kotlinx.html.div
 import kotlinx.html.h1
@@ -25,15 +27,16 @@ internal object HtmlBuilder {
         brutto: Boolean,
     ): String {
         val generellTekst = innsending.generellTekst
-        return createHTML(prettyPrint = false, xhtmlCompatible = true).html {
-            lang = innsending.språk.langAtributt
-            head {
+
+        return lagHtml(
+            innsending.språk.langAtributt,
+            {
                 title(innsending.generellTekst.tittel)
                 pdfaMetaTags(innsending)
                 bookmarks(innsending)
                 søknadPdfStyle()
-            }
-            body {
+            },
+            {
                 h1 {
                     id = "hovedoverskrift"
                     +"${innsending.generellTekst.hovedOverskrift}: ${innsending.infoBlokk.navn}"
@@ -84,7 +87,15 @@ internal object HtmlBuilder {
                         }
                     }
                 }
-            }
+            },
+        )
+    }
+
+    fun lagHtml(språk: String, head: HEAD.() -> Unit = {}, body: BODY.() -> Unit = {}): String {
+        return createHTML(prettyPrint = false, xhtmlCompatible = true).html {
+            lang = språk
+            head(head)
+            body(null, body)
         }
     }
 }
