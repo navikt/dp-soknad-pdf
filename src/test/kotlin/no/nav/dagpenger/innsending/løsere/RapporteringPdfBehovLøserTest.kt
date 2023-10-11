@@ -2,31 +2,37 @@ package no.nav.dagpenger.innsending.løsere
 
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import de.redsix.pdfcompare.CompareResultImpl
+import de.redsix.pdfcompare.PdfComparator
 import io.mockk.coEvery
 import io.mockk.mockk
+import io.mockk.slot
+import no.nav.dagpenger.innsending.ArkiverbartDokument
 import no.nav.dagpenger.innsending.ArkiverbartDokument.DokumentVariant.NETTO
 import no.nav.dagpenger.innsending.LagretDokument
 import no.nav.dagpenger.innsending.pdf.PdfLagring
 import no.nav.helse.rapids_rivers.testsupport.TestRapid
 import org.intellij.lang.annotations.Language
 import org.junit.jupiter.api.Test
+import java.io.File
 import java.time.ZoneId
 import java.time.ZonedDateTime
-import java.util.UUID
+import java.util.*
 import kotlin.test.assertEquals
 
 internal class RapporteringPdfBehovLøserTest {
     val journalpostId = UUID.randomUUID()
     val testFnr = "12345678910"
 
+    val slot = slot<List<ArkiverbartDokument>>()
     val testRapid = TestRapid().also {
         RapporteringPdfBehovLøser(
             rapidsConnection = it,
             pdfLagring = mockk<PdfLagring>().also {
                 coEvery {
                     it.lagrePdf(
-                        journalpostId.toString(),
-                        any(),
+                        "periode12345",
+                        capture(slot),
                         testFnr,
                     )
                 } returns listOf(
@@ -44,6 +50,19 @@ internal class RapporteringPdfBehovLøserTest {
             expectedLøsning,
             testRapid.inspektør.message(0)["@løsning"],
         )
+
+        val referenceFile = File("src/test/resources/rapportering.pdf")
+        val createdFile = File("build/tmp/test/rapportering.pdf")
+        val diffFile = File("build/tmp/test/rapportering_diff")
+        slot.captured.let { dokumenter ->
+            createdFile.writeBytes(dokumenter[0].pdf)
+        }
+
+        val equal = PdfComparator<CompareResultImpl>(referenceFile.path, createdFile.path).compare().writeTo(diffFile.path)
+
+        if (!equal) {
+            throw Exception("PDFene er ikke like")
+        }
     }
 
     @Test
@@ -70,7 +89,7 @@ internal class RapporteringPdfBehovLøserTest {
             "klient": "Ktor client",
             "språk": "no-NB",
             "rapportering": {
-                "2023-09-25": {},
+                "2023-09-25": { "Arbeid":  "7.5" },
                 "2023-09-26": {},
                 "2023-09-27": {},
                 "2023-09-28": {},
@@ -114,7 +133,7 @@ internal class RapporteringPdfBehovLøserTest {
             "@behov": ["MellomlagreRapportering"],
             "dokument_språk": "no-NB",
             "ident": "$testFnr",
-            "periodeId": "$journalpostId",
+            "periodeId": "periode12345",
             "journalpostId": "$journalpostId",
             "json": "$json",
             "skjemakode": "04-01.04",

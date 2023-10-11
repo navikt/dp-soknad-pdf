@@ -6,9 +6,9 @@ import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.slf4j.MDCContext
 import kotlinx.html.BODY
+import kotlinx.html.DIV
 import kotlinx.html.HEAD
 import kotlinx.html.div
-import kotlinx.html.html
 import kotlinx.html.title
 import mu.KotlinLogging
 import mu.withLoggingContext
@@ -60,7 +60,7 @@ internal class RapporteringPdfBehovLøser(
                     val html = lagHtml(
                         jsonTree["språk"].asText(),
                         head("Rapporteringperiode $periodeId"),
-                        iterate(jsonTree, ""),
+                        body(jsonTree),
                     )
 
                     pdfLagring.lagrePdf(
@@ -95,7 +95,13 @@ internal class RapporteringPdfBehovLøser(
         }
     }
 
-    private fun iterate(json: JsonNode, indent: String): BODY.() -> Unit {
+    private fun body(json: JsonNode): BODY.() -> Unit {
+        return {
+            div(null, iterate(json, ""))
+        }
+    }
+
+    private fun iterate(json: JsonNode, indent: String): DIV.() -> Unit {
         return {
             val iterator = json.fields()
             while (iterator.hasNext()) {
@@ -103,7 +109,7 @@ internal class RapporteringPdfBehovLøser(
 
                 if (item.value.nodeType == JsonNodeType.OBJECT) {
                     div { +"$indent ${item.key}: {" }
-                    iterate(item.value, "__")
+                    div(null, iterate(item.value, "  $indent"))
                     div { +"$indent }" }
                 } else {
                     div {
