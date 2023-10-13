@@ -48,7 +48,7 @@ tasks.withType<KotlinCompile>() {
 }
 
 dependencies {
-    val ktorVersion = "2.3.3"
+    val ktorVersion = "2.3.4"
     implementation(kotlin("stdlib"))
 
     implementation("com.github.navikt:rapids-and-rivers:2023082311481692784104.98e0711da2cd")
@@ -73,11 +73,11 @@ dependencies {
 
     testImplementation(kotlin("test"))
     testImplementation("io.mockk:mockk:1.13.7")
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.3")
-    testImplementation("io.kotest:kotest-runner-junit5-jvm:5.6.2")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.0")
+    testImplementation("io.kotest:kotest-runner-junit5-jvm:5.7.2")
     testImplementation("io.ktor:ktor-client-${"mock"}:2.0.2")
     testImplementation("org.verapdf:validation-model:1.24.1")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.3")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.10.0")
 
     // FOr E2E
     testImplementation("io.kubernetes:client-java:18.0.1")
