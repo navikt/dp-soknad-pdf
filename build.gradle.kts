@@ -76,7 +76,7 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.0")
     testImplementation("io.kotest:kotest-runner-junit5-jvm:5.7.2")
     testImplementation("io.ktor:ktor-client-${"mock"}:2.0.2")
-    testImplementation("org.verapdf:validation-model:1.22.2")
+    testImplementation("org.verapdf:validation-model:1.24.1")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.10.0")
 
     // FOr E2E
