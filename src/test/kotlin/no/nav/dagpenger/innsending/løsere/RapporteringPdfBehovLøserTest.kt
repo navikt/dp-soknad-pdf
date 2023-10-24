@@ -14,8 +14,6 @@ import no.nav.dagpenger.innsending.pdf.PdfLagring
 import no.nav.helse.rapids_rivers.testsupport.TestRapid
 import org.junit.jupiter.api.Test
 import java.io.File
-import java.time.ZoneId
-import java.time.ZonedDateTime
 import java.util.*
 import kotlin.test.assertEquals
 
@@ -143,15 +141,22 @@ internal class RapporteringPdfBehovLøserTest {
         }
     """.trimIndent()
 
-    private val now = ZonedDateTime.now(ZoneId.of("Europe/Oslo"))
     private val testMessageMedLøsning = """
         {
-          "@event_name": "behov",
-          "@behov": ["MellomlagreRapportering"],
+          "@event_name":"behov",
+          "@behovId":"eb1ae7a9-d314-4f4a-a5e0-360b537ca11f",
+          "@behov":["MellomlagreRapportering"],
           "@løsning": "something",
-          "ident": "12345678910",
-          "journalpostId": "$journalpostId",
-          "innsendtTidspunkt": "$now"
+          "meldingsreferanseId":"d0ce2eef-ab53-4b06-acf3-4c85386dc561",
+          "ident":"$testFnr",
+          "MellomlagreRapportering":{
+              "periodeId":"$periodeId",
+              "json":"$json"
+          },
+          "@id":"30ef9625-196a-445b-9b4e-67e0e6a5118d",
+          "@opprettet":"2023-10-23T18:53:08.056035121",
+          "system_read_count":1,
+          "system_participating_services":[{"id": "30ef9625-196a-445b-9b4e-67e0e6a5118d", "service": "dp-rapportering"}]
         }
     """.trimIndent()
 }
