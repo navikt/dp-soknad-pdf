@@ -12,7 +12,6 @@ import no.nav.dagpenger.innsending.ArkiverbartDokument.DokumentVariant.NETTO
 import no.nav.dagpenger.innsending.LagretDokument
 import no.nav.dagpenger.innsending.pdf.PdfLagring
 import no.nav.helse.rapids_rivers.testsupport.TestRapid
-import org.intellij.lang.annotations.Language
 import org.junit.jupiter.api.Test
 import java.io.File
 import java.time.ZoneId
@@ -21,6 +20,7 @@ import java.util.*
 import kotlin.test.assertEquals
 
 internal class RapporteringPdfBehovLøserTest {
+    val periodeId = "6c43443b-5048-450c-964b-0235f89449fa"
     val journalpostId = UUID.randomUUID()
     val testFnr = "12345678910"
 
@@ -31,7 +31,7 @@ internal class RapporteringPdfBehovLøserTest {
             pdfLagring = mockk<PdfLagring>().also {
                 coEvery {
                     it.lagrePdf(
-                        "periode12345",
+                        periodeId,
                         capture(slot),
                         testFnr,
                     )
@@ -76,39 +76,40 @@ internal class RapporteringPdfBehovLøserTest {
         assertEquals(objectMapper.readTree(expected), actual)
     }
 
-    @Language("JSON")
-    val json = """
+    private val json = """
         {
-            "timestamp": "2023-09-28T09:00:15.396222",
-            "claims": {
-                "sub": "",
-                "iss": ""
-            },
-            "image": "IMAGE",
-            "kildekode": "COMMIT",
-            "klient": "Ktor client",
-            "språk": "no-NB",
-            "rapportering": {
-                "2023-09-25": { "Arbeid":  "7.5" },
-                "2023-09-26": {},
-                "2023-09-27": {},
-                "2023-09-28": {},
-                "2023-09-29": {},
-                "2023-09-30": {},
-                "2023-10-01": {},
-                "2023-10-02": {},
-                "2023-10-03": {},
-                "2023-10-04": {},
-                "2023-10-05": {},
-                "2023-10-06": {},
-                "2023-10-07": {},
-                "2023-10-08": {}
-            }
+          "timestamp":"2023-10-23T18:53:07.614763446",
+          "claims":{
+            "sub":{"missing":false,"null":false},"iss":{"missing":false,"null":false}
+          },
+          "image":"ghcr.io/navikt/dp-rapportering-frontend:294a16920167022439d00c646b2c03e5742a1470",
+          "kildekode":"294a16920167022439d00c646b2c03e5742a1470",
+          "klient":"node",
+          "språk":"no-NB",
+          "rapportering":{
+            "2023-07-31":{"Arbeid":54000000000000},
+            "2023-08-01":{"Arbeid":54000000000000},
+            "2023-08-02":{"Arbeid":28800000000000},
+            "2023-08-03":{},
+            "2023-08-04":{},
+            "2023-08-05":{},
+            "2023-08-06":{},
+            "2023-08-07":{},
+            "2023-08-08":{},
+            "2023-08-09":{"Syk":172800000000000},
+            "2023-08-10":{},
+            "2023-08-11":{"Ferie":172800000000000},
+            "2023-08-12":{},
+            "2023-08-13":{}
+          },
+          "@id":"99c0df05-6ce7-4bf4-b46a-80c4bc3b1041",
+          "@opprettet":"2023-10-23T18:53:07.730688948",
+          "system_read_count":0,
+          "system_participating_services":[{"id": "99c0df05-6ce7-4bf4-b46a-80c4bc3b1041", "service": "dp-rapportering"}]
         }
     """.trimIndent().replace("\"", "\\\"").replace("\n", "")
 
-    @Language("JSON")
-    val expectedLøsning = """
+    private val expectedLøsning = """
         {
            "${RapporteringPdfBehovLøser.BEHOV}": [
               {
@@ -124,31 +125,33 @@ internal class RapporteringPdfBehovLøserTest {
         }
     """.trimIndent()
 
-    val now = ZonedDateTime.now(ZoneId.of("Europe/Oslo"))
-
-    @Language("JSON")
-    val testMessage = """
+    private val testMessage = """
         {
-            "@event_name": "behov",
-            "@behov": ["MellomlagreRapportering"],
-            "dokument_språk": "no-NB",
-            "ident": "$testFnr",
-            "periodeId": "periode12345",
-            "journalpostId": "$journalpostId",
-            "json": "$json",
-            "skjemakode": "04-01.04",
-            "type": "NY_DIALOG",
-            "innsendtTidspunkt": "$now"
+          "@event_name":"behov",
+          "@behovId":"eb1ae7a9-d314-4f4a-a5e0-360b537ca11f",
+          "@behov":["MellomlagreRapportering"],
+          "meldingsreferanseId":"d0ce2eef-ab53-4b06-acf3-4c85386dc561",
+          "ident":"$testFnr",
+          "MellomlagreRapportering":{
+              "periodeId":"$periodeId",
+              "json":"$json"
+          },
+          "@id":"30ef9625-196a-445b-9b4e-67e0e6a5118d",
+          "@opprettet":"2023-10-23T18:53:08.056035121",
+          "system_read_count":1,
+          "system_participating_services":[{"id": "30ef9625-196a-445b-9b4e-67e0e6a5118d", "service": "dp-rapportering"}]
         }
     """.trimIndent()
 
-    @Language("JSON")
-    val testMessageMedLøsning = """ {
-        "@event_name": "behov",
-        "@behov": ["MellomlagreRapportering"],
-        "@løsning": "something",
-        "ident": "12345678910",
-        "journalpostId": "$journalpostId",
-        "innsendtTidspunkt": "$now"
+    private val now = ZonedDateTime.now(ZoneId.of("Europe/Oslo"))
+    private val testMessageMedLøsning = """
+        {
+          "@event_name": "behov",
+          "@behov": ["MellomlagreRapportering"],
+          "@løsning": "something",
+          "ident": "12345678910",
+          "journalpostId": "$journalpostId",
+          "innsendtTidspunkt": "$now"
+        }
     """.trimIndent()
 }

@@ -39,14 +39,20 @@ internal class RapporteringPdfBehovLøser(
             validate { it.demandValue("@event_name", "behov") }
             validate { it.demandAll("@behov", listOf(BEHOV)) }
             validate { it.rejectKey("@løsning") }
-            validate { it.requireKey("ident", "periodeId", "json") }
+            validate { it.requireKey("ident") }
+            validate {
+                it.require(BEHOV) { behov ->
+                    behov.required("periodeId")
+                    behov.required("json")
+                }
+            }
         }.register(this)
     }
 
     override fun onPacket(packet: JsonMessage, context: MessageContext) {
         val ident = packet.ident()
-        val periodeId = packet["periodeId"].asText()
-        val json = packet["json"].asText()
+        val periodeId = packet[BEHOV]["periodeId"].asText()
+        val json = packet[BEHOV]["json"].asText()
         val jsonTree = jacksonObjectMapper().readTree(json)
 
         withLoggingContext(
