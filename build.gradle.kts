@@ -17,7 +17,8 @@ apply {
 repositories {
     mavenCentral()
     maven(url = "https://packages.confluent.io/maven/")
-    maven("https://jitpack.io")
+    maven(url = "https://jitpack.io")
+    maven("https://github-package-registry-mirror.gc.nav.no/cached/maven-release")
 }
 
 application {
@@ -55,8 +56,8 @@ dependencies {
 
     implementation("com.natpryce:konfig:1.6.10.0")
     implementation("io.github.microutils:kotlin-logging:3.0.5")
-    implementation("com.github.navikt.dp-biblioteker:pdl-klient:2023.04.27-09.33.fcf0798bf943")
-    implementation("com.github.navikt.dp-biblioteker:oauth2-klient:2023.04.27-09.33.fcf0798bf943")
+    implementation("no.nav.dagpenger:pdl-klient:2023.10.24-13.39.9882fef7a133")
+    implementation("no.nav.dagpenger:oauth2-klient:2023.10.24-13.39.9882fef7a133")
     implementation("io.ktor:ktor-client-logging:$ktorVersion")
     implementation("io.ktor:ktor-client-cio:$ktorVersion")
     implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
