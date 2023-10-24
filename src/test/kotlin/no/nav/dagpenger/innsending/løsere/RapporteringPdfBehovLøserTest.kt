@@ -14,12 +14,10 @@ import no.nav.dagpenger.innsending.pdf.PdfLagring
 import no.nav.helse.rapids_rivers.testsupport.TestRapid
 import org.junit.jupiter.api.Test
 import java.io.File
-import java.util.*
 import kotlin.test.assertEquals
 
 internal class RapporteringPdfBehovLøserTest {
     val periodeId = "6c43443b-5048-450c-964b-0235f89449fa"
-    val journalpostId = UUID.randomUUID()
     val testFnr = "12345678910"
 
     val slot = slot<List<ArkiverbartDokument>>()
