@@ -17,7 +17,8 @@ apply {
 repositories {
     mavenCentral()
     maven(url = "https://packages.confluent.io/maven/")
-    maven("https://jitpack.io")
+    maven(url = "https://jitpack.io")
+    maven("https://github-package-registry-mirror.gc.nav.no/cached/maven-release")
 }
 
 application {
@@ -48,15 +49,15 @@ tasks.withType<KotlinCompile>() {
 }
 
 dependencies {
-    val ktorVersion = "2.3.4"
+    val ktorVersion = "2.3.5"
     implementation(kotlin("stdlib"))
 
-    implementation("com.github.navikt:rapids-and-rivers:2023082311481692784104.98e0711da2cd")
+    implementation("com.github.navikt:rapids-and-rivers:2023101613431697456627.0cdd93eb696f")
 
     implementation("com.natpryce:konfig:1.6.10.0")
     implementation("io.github.microutils:kotlin-logging:3.0.5")
-    implementation("com.github.navikt.dp-biblioteker:pdl-klient:2023.04.27-09.33.fcf0798bf943")
-    implementation("com.github.navikt.dp-biblioteker:oauth2-klient:2023.04.27-09.33.fcf0798bf943")
+    implementation("no.nav.dagpenger:pdl-klient:2023.10.24-13.39.9882fef7a133")
+    implementation("no.nav.dagpenger:oauth2-klient:2023.10.24-13.39.9882fef7a133")
     implementation("io.ktor:ktor-client-logging:$ktorVersion")
     implementation("io.ktor:ktor-client-cio:$ktorVersion")
     implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
@@ -69,10 +70,10 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-html-jvm:0.9.1")
     implementation("org.apache.commons:commons-text:1.10.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-slf4j:1.7.3")
-    implementation("com.github.navikt:pam-geography:2.18")
+    implementation("com.github.navikt:pam-geography:2.19")
 
     testImplementation(kotlin("test"))
-    testImplementation("io.mockk:mockk:1.13.7")
+    testImplementation("io.mockk:mockk:1.13.8")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.0")
     testImplementation("io.kotest:kotest-runner-junit5-jvm:5.7.2")
     testImplementation("io.ktor:ktor-client-${"mock"}:2.0.2")
