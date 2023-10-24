@@ -77,7 +77,6 @@ internal class RapporteringPdfBehovLøser(
                         with(it.behovSvar()) {
                             packet["@løsning"] = mapOf(
                                 BEHOV to this,
-                                "json" to json,
                             )
                         }
                     }

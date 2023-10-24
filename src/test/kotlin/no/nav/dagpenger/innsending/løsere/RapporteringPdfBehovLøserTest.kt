@@ -118,8 +118,7 @@ internal class RapporteringPdfBehovLøserTest {
                 },
                 "urn": "urn:vedlegg:journalpostId/netto.pdf"
               }
-           ],
-           "json": "$json"
+           ]
         }
     """.trimIndent()
 
