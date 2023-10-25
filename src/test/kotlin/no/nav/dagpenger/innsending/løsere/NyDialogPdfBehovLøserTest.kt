@@ -1,6 +1,10 @@
+<<<<<<< HEAD:src/test/kotlin/no/nav/dagpenger/innsending/løsere/NyDialogPdfBehovLøserTest.kt
+package no.nav.dagpenger.innsending.løsere
+=======
 @file:Suppress("ktlint:standard:property-naming")
 
 package no.nav.dagpenger.innsending.pdf
+>>>>>>> main:src/test/kotlin/no/nav/dagpenger/innsending/pdf/NyDialogPdfBehovLøserTest.kt
 
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
@@ -10,11 +14,11 @@ import io.mockk.mockk
 import no.nav.dagpenger.innsending.ArkiverbartDokument.DokumentVariant.BRUTTO
 import no.nav.dagpenger.innsending.ArkiverbartDokument.DokumentVariant.NETTO
 import no.nav.dagpenger.innsending.LagretDokument
-import no.nav.dagpenger.innsending.NyDialogPdfBehovLøser
 import no.nav.dagpenger.innsending.html.InnsendingSupplier
 import no.nav.dagpenger.innsending.html.InnsendingSupplier.InnsendingType.DAGPENGER
 import no.nav.dagpenger.innsending.html.InnsendingSupplier.InnsendingType.GENERELL
 import no.nav.dagpenger.innsending.html.TestModellHtml.innsending
+import no.nav.dagpenger.innsending.pdf.PdfLagring
 import no.nav.helse.rapids_rivers.testsupport.TestRapid
 import org.intellij.lang.annotations.Language
 import org.junit.jupiter.api.Test

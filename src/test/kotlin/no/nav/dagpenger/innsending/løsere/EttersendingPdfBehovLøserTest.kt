@@ -1,15 +1,15 @@
-package no.nav.dagpenger.innsending.pdf
+package no.nav.dagpenger.innsending.løsere
 
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import io.mockk.coEvery
 import io.mockk.mockk
 import no.nav.dagpenger.innsending.ArkiverbartDokument.DokumentVariant.NETTO
-import no.nav.dagpenger.innsending.EttersendingPdfBehovLøser
 import no.nav.dagpenger.innsending.LagretDokument
 import no.nav.dagpenger.innsending.html.Innsending
 import no.nav.dagpenger.innsending.html.TestModellHtml
 import no.nav.dagpenger.innsending.html.TestModellHtml.innsending
+import no.nav.dagpenger.innsending.pdf.PdfLagring
 import no.nav.helse.rapids_rivers.testsupport.TestRapid
 import org.intellij.lang.annotations.Language
 import org.junit.jupiter.api.Test

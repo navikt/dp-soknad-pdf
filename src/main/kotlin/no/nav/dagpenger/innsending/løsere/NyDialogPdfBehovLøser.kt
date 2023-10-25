@@ -1,4 +1,4 @@
-package no.nav.dagpenger.innsending
+package no.nav.dagpenger.innsending.løsere
 
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.slf4j.MDCContext
@@ -6,6 +6,7 @@ import mu.KotlinLogging
 import mu.withLoggingContext
 import no.nav.dagpenger.innsending.LagretDokument.Companion.behovSvar
 import no.nav.dagpenger.innsending.html.InnsendingSupplier
+import no.nav.dagpenger.innsending.lagArkiverbartDokument
 import no.nav.dagpenger.innsending.pdf.PdfLagring
 import no.nav.dagpenger.innsending.serder.dokumentSpråk
 import no.nav.dagpenger.innsending.serder.ident
