@@ -21,22 +21,25 @@ internal class RapporteringPdfBehovLøserTest {
     val testFnr = "12345678910"
 
     val slot = slot<List<ArkiverbartDokument>>()
-    val testRapid = TestRapid().also {
-        RapporteringPdfBehovLøser(
-            rapidsConnection = it,
-            pdfLagring = mockk<PdfLagring>().also {
-                coEvery {
-                    it.lagrePdf(
-                        periodeId,
-                        capture(slot),
-                        testFnr,
-                    )
-                } returns listOf(
-                    LagretDokument("urn:vedlegg:journalpostId/netto.pdf", NETTO, "netto.pdf"),
-                )
-            },
-        )
-    }
+    val testRapid =
+        TestRapid().also {
+            RapporteringPdfBehovLøser(
+                rapidsConnection = it,
+                pdfLagring =
+                    mockk<PdfLagring>().also {
+                        coEvery {
+                            it.lagrePdf(
+                                periodeId,
+                                capture(slot),
+                                testFnr,
+                            )
+                        } returns
+                            listOf(
+                                LagretDokument("urn:vedlegg:journalpostId/netto.pdf", NETTO, "netto.pdf"),
+                            )
+                    },
+            )
+        }
 
     @Test
     fun `besvarer pdf behov for rapportering`() {
@@ -67,12 +70,16 @@ internal class RapporteringPdfBehovLøserTest {
         assertEquals(0, testRapid.inspektør.size)
     }
 
-    private fun assertJsonEquals(expected: String, actual: JsonNode) {
+    private fun assertJsonEquals(
+        expected: String,
+        actual: JsonNode,
+    ) {
         val objectMapper = jacksonObjectMapper()
         assertEquals(objectMapper.readTree(expected), actual)
     }
 
-    private val json = """
+    private val json =
+        """
         {
           "timestamp":"2023-10-23T18:53:07.614763446",
           "claims":{
@@ -103,9 +110,10 @@ internal class RapporteringPdfBehovLøserTest {
           "system_read_count":0,
           "system_participating_services":[{"id": "99c0df05-6ce7-4bf4-b46a-80c4bc3b1041", "service": "dp-rapportering"}]
         }
-    """.trimIndent().replace("\"", "\\\"").replace("\n", "")
+        """.trimIndent().replace("\"", "\\\"").replace("\n", "")
 
-    private val expectedLøsning = """
+    private val expectedLøsning =
+        """
         {
            "${RapporteringPdfBehovLøser.BEHOV}": [
               {
@@ -118,9 +126,10 @@ internal class RapporteringPdfBehovLøserTest {
               }
            ]
         }
-    """.trimIndent()
+        """.trimIndent()
 
-    private val testMessage = """
+    private val testMessage =
+        """
         {
           "@event_name":"behov",
           "@behovId":"eb1ae7a9-d314-4f4a-a5e0-360b537ca11f",
@@ -136,9 +145,10 @@ internal class RapporteringPdfBehovLøserTest {
           "system_read_count":1,
           "system_participating_services":[{"id": "30ef9625-196a-445b-9b4e-67e0e6a5118d", "service": "dp-rapportering"}]
         }
-    """.trimIndent()
+        """.trimIndent()
 
-    private val testMessageMedLøsning = """
+    private val testMessageMedLøsning =
+        """
         {
           "@event_name":"behov",
           "@behovId":"eb1ae7a9-d314-4f4a-a5e0-360b537ca11f",
@@ -155,5 +165,5 @@ internal class RapporteringPdfBehovLøserTest {
           "system_read_count":1,
           "system_participating_services":[{"id": "30ef9625-196a-445b-9b4e-67e0e6a5118d", "service": "dp-rapportering"}]
         }
-    """.trimIndent()
+        """.trimIndent()
 }

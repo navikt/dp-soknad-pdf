@@ -96,7 +96,11 @@ internal object HtmlBuilder {
         )
     }
 
-    fun lagHtml(språk: String, head: HEAD.() -> Unit = {}, body: BODY.() -> Unit = {}): String {
+    fun lagHtml(
+        språk: String,
+        head: HEAD.() -> Unit = {},
+        body: BODY.() -> Unit = {},
+    ): String {
         return createHTML(prettyPrint = false, xhtmlCompatible = true).html {
             lang = språk
             head(head)

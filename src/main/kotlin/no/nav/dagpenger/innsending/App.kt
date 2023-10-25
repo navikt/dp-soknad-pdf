@@ -52,10 +52,11 @@ internal object App : RapidsConnection.StatusListener {
         )
         RapporteringPdfBehovLøser(
             rapidsConnection = rapidsConnection,
-            pdfLagring = PdfLagring(
-                baseUrl = Configuration.dpMellomlagringBaseUrl,
-                tokenSupplier = Configuration.mellomlagringTokenSupplier,
-            ),
+            pdfLagring =
+                PdfLagring(
+                    baseUrl = Configuration.dpMellomlagringBaseUrl,
+                    tokenSupplier = Configuration.mellomlagringTokenSupplier,
+                ),
         )
     }
 

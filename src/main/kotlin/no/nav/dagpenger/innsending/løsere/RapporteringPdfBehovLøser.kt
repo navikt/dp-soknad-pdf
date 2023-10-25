@@ -49,7 +49,10 @@ internal class RapporteringPdfBehovLøser(
         }.register(this)
     }
 
-    override fun onPacket(packet: JsonMessage, context: MessageContext) {
+    override fun onPacket(
+        packet: JsonMessage,
+        context: MessageContext,
+    ) {
         val ident = packet.ident()
         val periodeId = packet[BEHOV]["periodeId"].asText()
         val json = packet[BEHOV]["json"].asText()
@@ -63,11 +66,12 @@ internal class RapporteringPdfBehovLøser(
                     logg.info("Mottok behov for PDF av rapportering")
 
                     // pre-tagen fungerer ikke, derfor må vi gjøre formatering selv
-                    val html = lagHtml(
-                        jsonTree["språk"].asText(),
-                        head("Rapporteringperiode $periodeId"),
-                        body(jsonTree),
-                    )
+                    val html =
+                        lagHtml(
+                            jsonTree["språk"].asText(),
+                            head("Rapporteringperiode $periodeId"),
+                            body(jsonTree),
+                        )
 
                     pdfLagring.lagrePdf(
                         søknadUUid = periodeId,
@@ -75,9 +79,10 @@ internal class RapporteringPdfBehovLøser(
                         fnr = ident,
                     ).let {
                         with(it.behovSvar()) {
-                            packet["@løsning"] = mapOf(
-                                BEHOV to this,
-                            )
+                            packet["@løsning"] =
+                                mapOf(
+                                    BEHOV to this,
+                                )
                         }
                     }
 
@@ -106,7 +111,10 @@ internal class RapporteringPdfBehovLøser(
         }
     }
 
-    private fun iterate(json: JsonNode, indent: String): DIV.() -> Unit {
+    private fun iterate(
+        json: JsonNode,
+        indent: String,
+    ): DIV.() -> Unit {
         return {
             val iterator = json.fields()
             while (iterator.hasNext()) {
