@@ -75,7 +75,7 @@ dependencies {
     testImplementation("de.redsix:pdfcompare:1.1.61")
 
     // FOr E2E
-    testImplementation("io.kubernetes:client-java:18.0.1")
+    testImplementation("io.kubernetes:client-java:19.0.0")
 }
 
 configure<com.diffplug.gradle.spotless.SpotlessExtension> {
