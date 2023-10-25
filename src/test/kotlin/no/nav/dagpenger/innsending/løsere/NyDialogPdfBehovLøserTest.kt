@@ -1,10 +1,6 @@
-<<<<<<< HEAD:src/test/kotlin/no/nav/dagpenger/innsending/løsere/NyDialogPdfBehovLøserTest.kt
-package no.nav.dagpenger.innsending.løsere
-=======
 @file:Suppress("ktlint:standard:property-naming")
 
-package no.nav.dagpenger.innsending.pdf
->>>>>>> main:src/test/kotlin/no/nav/dagpenger/innsending/pdf/NyDialogPdfBehovLøserTest.kt
+package no.nav.dagpenger.innsending.løsere
 
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
