@@ -50,6 +50,7 @@ internal class E2ESupplierTest {
             null,
             null,
             null,
+            null,
         ).items.also { secrets ->
             secrets.sortByDescending<V1Secret?, OffsetDateTime> { it?.metadata?.creationTimestamp }
         }.first<V1Secret?>()?.data!!.mapValues { e -> String(e.value) }
