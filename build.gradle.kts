@@ -6,17 +6,12 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     application
-    kotlin("jvm") version "1.9.10"
-    id("com.diffplug.spotless") version "6.22.0"
-}
-
-apply {
-    plugin("com.diffplug.spotless")
+    alias(libs.plugins.kotlin)
+    alias(libs.plugins.spotless)
 }
 
 repositories {
     mavenCentral()
-    maven(url = "https://packages.confluent.io/maven/")
     maven("https://github-package-registry-mirror.gc.nav.no/cached/maven-release")
 }
 
@@ -48,20 +43,18 @@ tasks.withType<KotlinCompile> {
 }
 
 dependencies {
-    val ktorVersion = "2.3.5"
     implementation(kotlin("stdlib"))
 
-    implementation("com.github.navikt:rapids-and-rivers:2023101613431697456627.0cdd93eb696f")
-
-    implementation("com.natpryce:konfig:1.6.10.0")
-    implementation("io.github.microutils:kotlin-logging:3.0.5")
+    implementation(libs.rapids.and.rivers)
+    implementation(libs.konfig)
+    implementation(libs.kotlin.logging)
     implementation("no.nav.dagpenger:pdl-klient:2023.10.24-13.47.d3b2b6230e59")
     implementation("no.nav.dagpenger:oauth2-klient:2023.10.24-13.39.9882fef7a133")
-    implementation("io.ktor:ktor-client-logging:$ktorVersion")
-    implementation("io.ktor:ktor-client-cio:$ktorVersion")
-    implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
-    implementation("io.ktor:ktor-serialization-jackson:$ktorVersion")
-    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.15.3")
+    implementation(libs.ktor.client.logging.jvm)
+    implementation(libs.ktor.client.cio)
+    implementation(libs.ktor.client.content.negotiation)
+    implementation(libs.ktor.serialization.jackson)
+    implementation(libs.jackson.datatype.jsr310)
     implementation("com.openhtmltopdf:openhtmltopdf-pdfbox:1.0.10")
     implementation("com.openhtmltopdf:openhtmltopdf-slf4j:1.0.10")
     implementation("com.openhtmltopdf:openhtmltopdf-svg-support:1.0.10")
@@ -72,13 +65,13 @@ dependencies {
     implementation("no.nav.pam.geography:pam-geography:2.19")
 
     testImplementation(kotlin("test"))
-    testImplementation("io.mockk:mockk:1.13.8")
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.0")
+    testImplementation(libs.mockk)
+    val junitVersion = libs.versions.junit.get()
+    testImplementation("org.junit.jupiter:junit-jupiter-api:$junitVersion")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$junitVersion")
     testImplementation("io.kotest:kotest-runner-junit5-jvm:5.7.2")
-    testImplementation("io.ktor:ktor-client-${"mock"}:2.0.2")
+    testImplementation(libs.ktor.client.mock)
     testImplementation("org.verapdf:validation-model:1.24.1")
-    testImplementation("de.redsix:pdfcompare:1.1.60")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.10.0")
 
     // FOr E2E
     testImplementation("io.kubernetes:client-java:18.0.1")
