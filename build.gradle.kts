@@ -17,7 +17,6 @@ apply {
 repositories {
     mavenCentral()
     maven(url = "https://packages.confluent.io/maven/")
-    maven(url = "https://jitpack.io")
     maven("https://github-package-registry-mirror.gc.nav.no/cached/maven-release")
 }
 
@@ -70,7 +69,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-html-jvm:0.9.1")
     implementation("org.apache.commons:commons-text:1.10.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-slf4j:1.7.3")
-    implementation("com.github.navikt:pam-geography:2.19")
+    implementation("no.nav.pam.geography:pam-geography:2.19")
 
     testImplementation(kotlin("test"))
     testImplementation("io.mockk:mockk:1.13.8")
