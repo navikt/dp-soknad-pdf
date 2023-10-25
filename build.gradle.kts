@@ -55,7 +55,7 @@ dependencies {
 
     implementation("com.natpryce:konfig:1.6.10.0")
     implementation("io.github.microutils:kotlin-logging:3.0.5")
-    implementation("no.nav.dagpenger:pdl-klient:2023.10.24-13.39.9882fef7a133")
+    implementation("no.nav.dagpenger:pdl-klient:2023.10.24-13.47.d3b2b6230e59")
     implementation("no.nav.dagpenger:oauth2-klient:2023.10.24-13.39.9882fef7a133")
     implementation("io.ktor:ktor-client-logging:$ktorVersion")
     implementation("io.ktor:ktor-client-cio:$ktorVersion")
