@@ -26,21 +26,21 @@ class PdfLagring(
     tokenSupplier: () -> String,
     engine: HttpClientEngine = CIO.create(),
 ) {
-
-    private val httpKlient: HttpClient = HttpClient(engine) {
-        defaultRequest {
-            header("Authorization", "Bearer ${tokenSupplier.invoke()}")
-        }
-        install(ContentNegotiation) {
-            jackson {
-                registerModule(JavaTimeModule())
-                disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
+    private val httpKlient: HttpClient =
+        HttpClient(engine) {
+            defaultRequest {
+                header("Authorization", "Bearer ${tokenSupplier.invoke()}")
+            }
+            install(ContentNegotiation) {
+                jackson {
+                    registerModule(JavaTimeModule())
+                    disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
+                }
+            }
+            install(Logging) {
+                level = LogLevel.INFO
             }
         }
-        install(Logging) {
-            level = LogLevel.INFO
-        }
-    }
 
     internal suspend fun lagrePdf(
         søknadUUid: String,
@@ -49,24 +49,26 @@ class PdfLagring(
     ): List<LagretDokument> {
         return httpKlient.submitFormWithBinaryData(
             url = "$baseUrl/$søknadUUid",
-            formData = formData {
-                arkiverbartDokument.forEach {
-                    append(
-                        it.filnavn,
-                        it.pdf,
-                        Headers.build {
-                            append(HttpHeaders.ContentType, ContentType.Application.Pdf.toString())
-                            append(HttpHeaders.ContentDisposition, "filename=${it.filnavn}")
-                        },
-                    )
-                }
-            },
+            formData =
+                formData {
+                    arkiverbartDokument.forEach {
+                        append(
+                            it.filnavn,
+                            it.pdf,
+                            Headers.build {
+                                append(HttpHeaders.ContentType, ContentType.Application.Pdf.toString())
+                                append(HttpHeaders.ContentDisposition, "filename=${it.filnavn}")
+                            },
+                        )
+                    }
+                },
         ) {
             this.header("X-Eier", fnr)
         }.body<List<URNResponse>>().map {
-            val a2 = arkiverbartDokument.single { a ->
-                a.filnavn == it.filnavn
-            }
+            val a2 =
+                arkiverbartDokument.single { a ->
+                    a.filnavn == it.filnavn
+                }
             LagretDokument(
                 urn = it.urn,
                 variant = a2.variant,

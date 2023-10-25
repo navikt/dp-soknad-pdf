@@ -12,22 +12,22 @@ import no.nav.dagpenger.oauth2.CachedOauth2Client
 import no.nav.dagpenger.oauth2.OAuth2Config
 
 internal object Configuration {
+    const val APP_NAME = "dp-behov-soknad-pdf"
 
-    const val appName = "dp-behov-soknad-pdf"
-
-    private val defaultProperties = ConfigurationMap(
-        mapOf(
-            "RAPID_APP_NAME" to appName,
-            "KAFKA_CONSUMER_GROUP_ID" to "$appName-v1",
-            "KAFKA_RAPID_TOPIC" to "teamdagpenger.rapid.v1",
-            "KAFKA_RESET_POLICY" to "latest",
-            "DP_MELLOMLAGRING_BASE_URL" to "http://dp-mellomlagring/v1/azuread/mellomlagring/vedlegg",
-            "DP_MELLOMLAGRING_SCOPE" to "api://dev-gcp.teamdagpenger.dp-mellomlagring/.default",
-            "DP_SOKNAD_BASE_URL" to "http://dp-soknad/arbeid/dagpenger/soknadapi",
-            "DP_SOKNAD_SCOPE" to "api://dev-gcp.teamdagpenger.dp-soknad/.default",
-            "PDL_API_SCOPE" to "api://dev-fss.pdl.pdl-api/.default",
-        ),
-    )
+    private val defaultProperties =
+        ConfigurationMap(
+            mapOf(
+                "RAPID_APP_NAME" to APP_NAME,
+                "KAFKA_CONSUMER_GROUP_ID" to "$APP_NAME-v1",
+                "KAFKA_RAPID_TOPIC" to "teamdagpenger.rapid.v1",
+                "KAFKA_RESET_POLICY" to "latest",
+                "DP_MELLOMLAGRING_BASE_URL" to "http://dp-mellomlagring/v1/azuread/mellomlagring/vedlegg",
+                "DP_MELLOMLAGRING_SCOPE" to "api://dev-gcp.teamdagpenger.dp-mellomlagring/.default",
+                "DP_SOKNAD_BASE_URL" to "http://dp-soknad/arbeid/dagpenger/soknadapi",
+                "DP_SOKNAD_SCOPE" to "api://dev-gcp.teamdagpenger.dp-soknad/.default",
+                "PDL_API_SCOPE" to "api://dev-fss.pdl.pdl-api/.default",
+            ),
+        )
 
     val properties: Configuration =
         ConfigurationProperties.systemProperties() overriding EnvironmentVariables() overriding defaultProperties
@@ -52,9 +52,10 @@ internal object Configuration {
         azureAdTokenSupplier(properties[Key("DP_SOKNAD_SCOPE", stringType)])
     }
 
-    val config: Map<String, String> = properties.list().reversed().fold(emptyMap()) { map, pair ->
-        map + pair.second
-    }
+    val config: Map<String, String> =
+        properties.list().reversed().fold(emptyMap()) { map, pair ->
+            map + pair.second
+        }
 
     private val azureAdClient: CachedOauth2Client by lazy {
         val azureAdConfig = OAuth2Config.AzureAd(properties)
@@ -64,7 +65,8 @@ internal object Configuration {
         )
     }
 
-    private fun azureAdTokenSupplier(scope: String): () -> String = {
-        runBlocking { azureAdClient.clientCredentials(scope).accessToken }
-    }
+    private fun azureAdTokenSupplier(scope: String): () -> String =
+        {
+            runBlocking { azureAdClient.clientCredentials(scope).accessToken }
+        }
 }

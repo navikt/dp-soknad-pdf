@@ -23,17 +23,18 @@ internal class InnsendingSupplier(
     tokenSupplier: () -> String,
     private val personaliOppslag: PersonaliaOppslag,
 ) {
-    private val httpKlient: HttpClient = HttpClient(CIO) {
-        defaultRequest {
-            header("Authorization", "Bearer ${tokenSupplier.invoke()}")
+    private val httpKlient: HttpClient =
+        HttpClient(CIO) {
+            defaultRequest {
+                header("Authorization", "Bearer ${tokenSupplier.invoke()}")
+            }
+            install(ContentNegotiation) {
+                jackson { }
+            }
+            install(Logging) {
+                level = LogLevel.INFO
+            }
         }
-        install(ContentNegotiation) {
-            jackson { }
-        }
-        install(Logging) {
-            level = LogLevel.INFO
-        }
-    }
 
     internal enum class InnsendingType {
         DAGPENGER,
@@ -59,12 +60,13 @@ internal class InnsendingSupplier(
                 språk = språk,
             ).parse(innsendingType).also {
                 val person = deferredPerson.await()
-                it.infoBlokk = Innsending.InfoBlokk(
-                    fødselsnummer = fnr,
-                    innsendtTidspunkt = innsendtTidspunkt,
-                    navn = person.navn.formatertNavn,
-                    adresse = person.adresse.formatertAdresse,
-                )
+                it.infoBlokk =
+                    Innsending.InfoBlokk(
+                        fødselsnummer = fnr,
+                        innsendtTidspunkt = innsendtTidspunkt,
+                        navn = person.navn.formatertNavn,
+                        adresse = person.adresse.formatertAdresse,
+                    )
             }
         }
     }
@@ -87,12 +89,13 @@ internal class InnsendingSupplier(
                 språk = språk,
             ).parseEttersending().also {
                 val person = deferredPerson.await()
-                it.infoBlokk = Innsending.InfoBlokk(
-                    fødselsnummer = fnr,
-                    innsendtTidspunkt = innsendtTidspunkt,
-                    navn = person.navn.formatertNavn,
-                    adresse = person.adresse.formatertAdresse,
-                )
+                it.infoBlokk =
+                    Innsending.InfoBlokk(
+                        fødselsnummer = fnr,
+                        innsendtTidspunkt = innsendtTidspunkt,
+                        navn = person.navn.formatertNavn,
+                        adresse = person.adresse.formatertAdresse,
+                    )
             }.innsendingCopyFunc()
         }
     }

@@ -31,19 +31,21 @@ internal class SerderTest {
 
     @Test
     fun `Debug test`() {
-        val mappetInnsending = JsonHtmlMapper(
-            innsendingsData = debugfaktaJson,
-            dokumentasjonKrav = dokumentasjonKravJson,
-            tekst = debugtekstJson,
-            språk = Innsending.InnsendingsSpråk.BOKMÅL,
-        ).parse().apply {
-            infoBlokk = Innsending.InfoBlokk(
-                fødselsnummer = "ident",
-                innsendtTidspunkt = ZonedDateTime.now(),
-                navn = "Ola Nordmann",
-                adresse = "Kardemomme By, 4609 Kristiansand, Norge",
-            )
-        }
+        val mappetInnsending =
+            JsonHtmlMapper(
+                innsendingsData = debugfaktaJson,
+                dokumentasjonKrav = dokumentasjonKravJson,
+                tekst = debugtekstJson,
+                språk = Innsending.InnsendingsSpråk.BOKMÅL,
+            ).parse().apply {
+                infoBlokk =
+                    Innsending.InfoBlokk(
+                        fødselsnummer = "ident",
+                        innsendtTidspunkt = ZonedDateTime.now(),
+                        navn = "Ola Nordmann",
+                        adresse = "Kardemomme By, 4609 Kristiansand, Norge",
+                    )
+            }
 
         assertIngenTommehjelpetekster(mappetInnsending)
         HtmlBuilder.lagNettoHtml(mappetInnsending).also { PdfBuilder.lagPdf(it) }
@@ -63,6 +65,7 @@ internal class SerderTest {
             assertEquals("seksjon1", it.textId)
             assertEquals("Tittel for seksjon 1", it.title)
             assertEquals("Hjelpetekst med overskrift til seksjon", it.helpText?.title)
+            @Suppress("ktlint:standard:max-line-length")
             val expcextedBody =
                 """<p>Her er en hjelpetekst tekst som hjelper veldig mye når en trenger hjelp. Med superhjelpsom <a href="https://nav.no/superhjelpen">lenke</a></p>"""
             assertEquals(expcextedBody, it.helpText?.body?.html)
@@ -115,20 +118,21 @@ internal class SerderTest {
     @Test
     fun `lager html og pfd fra json`() {
         assertDoesNotThrow {
-            val innsending = JsonHtmlMapper(
-                innsendingsData = debugfaktaJson,
-                dokumentasjonKrav = dokumentasjonKravJson,
-                tekst = debugtekstJson,
-                språk = Innsending.InnsendingsSpråk.BOKMÅL,
-            ).parse(InnsendingSupplier.InnsendingType.DAGPENGER).apply {
-                infoBlokk = Innsending.InfoBlokk(
-                    fødselsnummer = "ident",
-                    innsendtTidspunkt = ZonedDateTime.now(),
-                    navn = "Ola Nordmann",
-                    adresse = "Kardemomme By, 4609 Kristiansand, Norge",
-
-                )
-            }
+            val innsending =
+                JsonHtmlMapper(
+                    innsendingsData = debugfaktaJson,
+                    dokumentasjonKrav = dokumentasjonKravJson,
+                    tekst = debugtekstJson,
+                    språk = Innsending.InnsendingsSpråk.BOKMÅL,
+                ).parse(InnsendingSupplier.InnsendingType.DAGPENGER).apply {
+                    infoBlokk =
+                        Innsending.InfoBlokk(
+                            fødselsnummer = "ident",
+                            innsendtTidspunkt = ZonedDateTime.now(),
+                            navn = "Ola Nordmann",
+                            adresse = "Kardemomme By, 4609 Kristiansand, Norge",
+                        )
+                }
 
             HtmlBuilder.lagBruttoHtml(innsending).also {
                 File("build/tmp/test/søknad_brutto.html").writeText(it)
@@ -149,19 +153,21 @@ internal class SerderTest {
     @Test
     fun `lager html og pfd for ettersending`() {
         assertDoesNotThrow {
-            val innsending = JsonHtmlMapper(
-                innsendingsData = null,
-                dokumentasjonKrav = dokumentasjonKravJson,
-                tekst = debugtekstJson,
-                språk = Innsending.InnsendingsSpråk.BOKMÅL,
-            ).parseEttersending().apply {
-                infoBlokk = Innsending.InfoBlokk(
-                    fødselsnummer = "ident",
-                    innsendtTidspunkt = ZonedDateTime.now(),
-                    navn = "Ola Nordmann",
-                    adresse = "Kardemomme By, 4609 Kristiansand, Norge",
-                )
-            }
+            val innsending =
+                JsonHtmlMapper(
+                    innsendingsData = null,
+                    dokumentasjonKrav = dokumentasjonKravJson,
+                    tekst = debugtekstJson,
+                    språk = Innsending.InnsendingsSpråk.BOKMÅL,
+                ).parseEttersending().apply {
+                    infoBlokk =
+                        Innsending.InfoBlokk(
+                            fødselsnummer = "ident",
+                            innsendtTidspunkt = ZonedDateTime.now(),
+                            navn = "Ola Nordmann",
+                            adresse = "Kardemomme By, 4609 Kristiansand, Norge",
+                        )
+                }
 
             HtmlBuilder.lagEttersendingHtml(innsending).also {
                 File("build/tmp/test/ettersending.html").writeText(it)

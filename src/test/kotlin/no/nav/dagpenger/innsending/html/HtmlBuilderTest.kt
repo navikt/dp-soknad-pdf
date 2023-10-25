@@ -46,8 +46,10 @@ class HtmlBuilderTest {
     }
 }
 
-private fun antallElementerMedKlassenavn(htmlstring: String, klassenavn: String) =
-    Jsoup.parse(htmlstring).getElementsByClass(klassenavn).size
+private fun antallElementerMedKlassenavn(
+    htmlstring: String,
+    klassenavn: String,
+) = Jsoup.parse(htmlstring).getElementsByClass(klassenavn).size
 
 @Language("HTML")
 private val foo: String = """<!DOCTYPE html>

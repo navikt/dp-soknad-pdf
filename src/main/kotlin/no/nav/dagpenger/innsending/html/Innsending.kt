@@ -13,7 +13,6 @@ internal data class Innsending(
     val dokumentasjonskrav: List<DokumentKrav>,
     val type: InnsendingSupplier.InnsendingType = InnsendingSupplier.InnsendingType.DAGPENGER,
 ) {
-
     lateinit var infoBlokk: InfoBlokk
 
     open class PdfAMetaTagger(
@@ -43,18 +42,24 @@ internal data class Innsending(
     data class SpørmsålOgSvarGruppe(val spørsmålOgSvar: List<SporsmalSvar>)
 
     sealed class Svar
+
     data class EnkeltSvar(var tekst: String) : Svar() {
         init {
             tekst = tekst.replace("\u0002", " ")
         }
     }
+
     data class ValgSvar(val alternativ: List<SvarAlternativ>) : Svar()
+
     data class SvarAlternativ(val tekst: String, val tilleggsinformasjon: InfoTekst?)
     object IngenSvar : Svar()
 
     class Hjelpetekst private constructor(val unsafeHtmlBody: UnsafeHtml?, val tittel: String? = null) {
         companion object {
-            fun nyEllerNull(unsafeHtmlBody: UnsafeHtml? = null, tittel: String? = null) = when {
+            fun nyEllerNull(
+                unsafeHtmlBody: UnsafeHtml? = null,
+                tittel: String? = null,
+            ) = when {
                 tittel.isNullOrEmpty() && unsafeHtmlBody?.kode.isNullOrEmpty() -> null
                 else -> Hjelpetekst(unsafeHtmlBody, tittel)
             }
@@ -63,7 +68,11 @@ internal data class Innsending(
 
     class InfoTekst private constructor(val tittel: String?, val unsafeHtmlBody: UnsafeHtml?, val type: Infotype) {
         companion object {
-            fun nyEllerNull(tittel: String? = null, unsafeHtmlBody: UnsafeHtml? = null, type: Infotype) = when {
+            fun nyEllerNull(
+                tittel: String? = null,
+                unsafeHtmlBody: UnsafeHtml? = null,
+                type: Infotype,
+            ) = when {
                 tittel.isNullOrEmpty() && unsafeHtmlBody?.kode.isNullOrEmpty() -> null
                 else -> InfoTekst(tittel, unsafeHtmlBody, type)
             }
@@ -85,28 +94,33 @@ internal data class Innsending(
         val innsendtTidspunkt: ZonedDateTime,
     ) {
         companion object {
-            private val datetimeFormatter: DateTimeFormatter = DateTimeFormatter.ofLocalizedDateTime(
-                FormatStyle.LONG,
-                FormatStyle.SHORT,
-            ).withLocale(Locale("no", "NO"))
+            private val datetimeFormatter: DateTimeFormatter =
+                DateTimeFormatter.ofLocalizedDateTime(
+                    FormatStyle.LONG,
+                    FormatStyle.SHORT,
+                ).withLocale(Locale("no", "NO"))
         }
 
         val datoSendt: String = innsendtTidspunkt.format(datetimeFormatter)
     }
 
     enum class Infotype() {
-        INFORMASJON, ADVARSEL, FEIL;
+        INFORMASJON,
+        ADVARSEL,
+        FEIL,
+        ;
 
         companion object {
-            fun fraSanityJson(typenøkkel: String) = when (typenøkkel) {
-                "info" -> INFORMASJON
-                "error" -> FEIL
-                "warning" -> ADVARSEL
-                "success" -> null
-                else -> {
-                    throw IllegalArgumentException("ukjent alerttekst type $typenøkkel")
+            fun fraSanityJson(typenøkkel: String) =
+                when (typenøkkel) {
+                    "info" -> INFORMASJON
+                    "error" -> FEIL
+                    "warning" -> ADVARSEL
+                    "success" -> null
+                    else -> {
+                        throw IllegalArgumentException("ukjent alerttekst type $typenøkkel")
+                    }
                 }
-            }
         }
     }
 
@@ -121,8 +135,7 @@ internal data class Innsending(
         }
 
         companion object {
-            private fun String.leggTilPåHtmlPtag(kode: String): String =
-                """<p class="$this"${kode.substringAfter("<p")}"""
+            private fun String.leggTilPåHtmlPtag(kode: String): String = """<p class="$this"${kode.substringAfter("<p")}"""
         }
 
         override fun toString() = "UnsafeHtml($kode)"
@@ -147,7 +160,6 @@ internal data class Innsending(
         val hjelpetekst: Hjelpetekst? = null,
         val valg: Valg,
     ) {
-
         enum class Valg {
             SEND_NAA,
             SEND_SENERE,
@@ -157,14 +169,15 @@ internal data class Innsending(
             ;
 
             companion object {
-                fun fromJson(valg: String): Valg = when (valg) {
-                    "dokumentkrav.svar.send.naa" -> SEND_NAA
-                    "dokumentkrav.svar.send.senere" -> SEND_SENERE
-                    "dokumentkrav.svar.sendt.tidligere" -> SENDT_TIDLIGERE
-                    "dokumentkrav.svar.sender.ikke" -> SENDER_IKKE
-                    "dokumentkrav.svar.andre.sender" -> ANDRE_SENDER
-                    else -> throw IllegalArgumentException("Kjenner ikke til svar: '$valg'")
-                }
+                fun fromJson(valg: String): Valg =
+                    when (valg) {
+                        "dokumentkrav.svar.send.naa" -> SEND_NAA
+                        "dokumentkrav.svar.send.senere" -> SEND_SENERE
+                        "dokumentkrav.svar.sendt.tidligere" -> SENDT_TIDLIGERE
+                        "dokumentkrav.svar.sender.ikke" -> SENDER_IKKE
+                        "dokumentkrav.svar.andre.sender" -> ANDRE_SENDER
+                        else -> throw IllegalArgumentException("Kjenner ikke til svar: '$valg'")
+                    }
             }
         }
     }

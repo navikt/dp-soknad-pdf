@@ -25,41 +25,45 @@ internal class EttersendingPdfBehovLøserTest {
 
     val mockInnsending = MockInnsendingSupplier(innsending)
 
-    val testRapid = TestRapid().also {
-        EttersendingPdfBehovLøser(
-            rapidsConnection = it,
-            pdfLagring = mockk<PdfLagring>().also {
-                coEvery {
-                    it.lagrePdf(
-                        soknadId.toString(),
-                        any(),
-                        testFnr,
-                    )
-                } returns listOf(
-                    LagretDokument("urn:vedlegg:soknadId/ettersending.pdf", NETTO, "ettersending.pdf"),
-                )
-            },
-            innsendingSupplier = mockInnsending::hentEttersending,
-        )
-    }
+    val testRapid =
+        TestRapid().also {
+            EttersendingPdfBehovLøser(
+                rapidsConnection = it,
+                pdfLagring =
+                    mockk<PdfLagring>().also {
+                        coEvery {
+                            it.lagrePdf(
+                                soknadId.toString(),
+                                any(),
+                                testFnr,
+                            )
+                        } returns
+                            listOf(
+                                LagretDokument("urn:vedlegg:soknadId/ettersending.pdf", NETTO, "ettersending.pdf"),
+                            )
+                    },
+                innsendingSupplier = mockInnsending::hentEttersending,
+            )
+        }
 
     @Test
     fun `besvarer pdf behov`() {
         testRapid.sendTestMessage(testMessage)
         assertEquals(1, testRapid.inspektør.size)
         @Language("JSON")
-        val expectedLøsning = """
-           [
-                  {
-                    "metainfo": {
-                      "innhold": "ettersending.pdf",
-                      "filtype": "PDF", 
-                      "variant": "NETTO"
-                    },
-                    "urn": "urn:vedlegg:soknadId/ettersending.pdf"
-                  }
-                ]
-        """.trimIndent()
+        val expectedLøsning =
+            """
+            [
+                   {
+                     "metainfo": {
+                       "innhold": "ettersending.pdf",
+                       "filtype": "PDF", 
+                       "variant": "NETTO"
+                     },
+                     "urn": "urn:vedlegg:soknadId/ettersending.pdf"
+                   }
+                 ]
+            """.trimIndent()
 
         assertNotNull(mockInnsending.kopiertInnsending)
         mockInnsending.kopiertInnsending?.let {
@@ -72,7 +76,10 @@ internal class EttersendingPdfBehovLøserTest {
         )
     }
 
-    private fun assertJsonEquals(expected: String, actual: JsonNode) {
+    private fun assertJsonEquals(
+        expected: String,
+        actual: JsonNode,
+    ) {
         val objectMapper = jacksonObjectMapper()
         assertEquals(objectMapper.readTree(expected), actual)
     }
@@ -84,7 +91,9 @@ internal class EttersendingPdfBehovLøserTest {
     }
 
     @Language("JSON")
-    val testMessage = """ {
+    val testMessage =
+        """
+         {
         "@event_name": "behov",
         "@behov": ["ArkiverbarSøknad"],
         "dokument_språk": "en",
@@ -94,20 +103,23 @@ internal class EttersendingPdfBehovLøserTest {
         "type": "ETTERSENDING_TIL_DIALOG",
         "innsendtTidspunkt": "${ZonedDateTime.now(ZoneId.of("Europe/Oslo"))}"
             }
-    """.trimIndent()
+        """.trimIndent()
 
     @Language("JSON")
-    val testMessageMedLøsning = """ {
+    val testMessageMedLøsning =
+        """
+         {
         "@event_name": "behov",
         "@behov": ["ArkiverbarSøknad"],
         "@løsning": "something",
         "søknad_uuid": "$soknadId",
         "ident": "12345678910",
         "innsendtTidspunkt": "${ZonedDateTime.now(ZoneId.of("Europe/Oslo"))}}"
-    """.trimIndent()
+        """.trimIndent()
 
     internal class MockInnsendingSupplier(val innsending: Innsending) {
         var kopiertInnsending: Innsending? = null
+
         fun hentEttersending(
             soknadId: UUID,
             fnr: String,

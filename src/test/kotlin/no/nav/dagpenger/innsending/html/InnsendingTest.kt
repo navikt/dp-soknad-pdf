@@ -6,7 +6,6 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class InnsendingTest {
-
     @Test
     fun `legger til klasse i string`() {
         val testHtml = "<p>Somethings gotta give</p>"

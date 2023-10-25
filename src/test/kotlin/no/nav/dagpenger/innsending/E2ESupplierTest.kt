@@ -26,10 +26,12 @@ import java.time.ZonedDateTime
 import java.util.UUID
 
 internal class E2ESupplierTest {
-
     // Hente azuread eller tokenx secret for  app
 // jwker.nais.io -> tokenx,  azurerator.nais.io -> azuread
-    fun getAuthEnv(app: String, type: String = "jwker.nais.io"): Map<String, String> {
+    fun getAuthEnv(
+        app: String,
+        type: String = "jwker.nais.io",
+    ): Map<String, String> {
         // file path to your KubeConfig
         val kubeConfigPath = System.getenv("KUBECONFIG")
 
@@ -53,10 +55,14 @@ internal class E2ESupplierTest {
         }.first<V1Secret?>()?.data!!.mapValues { e -> String(e.value) }
     }
 
-    fun getAzureAdToken(app: String, scope: String): String {
-        val azureadConfig = OAuth2Config.AzureAd(
-            getAuthEnv(app, "azurerator.nais.io"),
-        )
+    fun getAzureAdToken(
+        app: String,
+        scope: String,
+    ): String {
+        val azureadConfig =
+            OAuth2Config.AzureAd(
+                getAuthEnv(app, "azurerator.nais.io"),
+            )
         val tokenAzureAdClient: CachedOauth2Client by lazy {
             CachedOauth2Client(
                 tokenEndpointUrl = azureadConfig.tokenEndpointUrl,
@@ -67,43 +73,49 @@ internal class E2ESupplierTest {
         return tokenAzureAdClient.clientCredentials(scope).accessToken
     }
 
-    val mockPersonaliaOppslag = mockk<PersonaliaOppslag>().also {
-        coEvery { it.hentPerson(any()) } returns Personalia(
-            navn = Personalia.Navn(
-                forNavn = "fornavn",
-                mellomNavn = "mellomnavn",
-                etterNavn = "etternavn",
-            ),
-            adresse = Adresse.TOM_ADRESSE,
-        )
-    }
+    val mockPersonaliaOppslag =
+        mockk<PersonaliaOppslag>().also {
+            coEvery { it.hentPerson(any()) } returns
+                Personalia(
+                    navn =
+                        Personalia.Navn(
+                            forNavn = "fornavn",
+                            mellomNavn = "mellomnavn",
+                            etterNavn = "etternavn",
+                        ),
+                    adresse = Adresse.TOM_ADRESSE,
+                )
+        }
 
-    val personaliaOppslag = PDLPersonaliaOppslag(
-        pdlUrl = "",
-        tokenProvider = {
-            getAzureAdToken(
-                "dp-behov-soknad-pdf",
-                scope = "api://dev-fss.pdl.pdl-api/.default",
-            )
-        },
-    )
+    val personaliaOppslag =
+        PDLPersonaliaOppslag(
+            pdlUrl = "",
+            tokenProvider = {
+                getAzureAdToken(
+                    "dp-behov-soknad-pdf",
+                    scope = "api://dev-fss.pdl.pdl-api/.default",
+                )
+            },
+        )
 
     @Test
     @Disabled
     fun `hent dokumentasjonskrav`() {
-        val ids = listOf(
-            "ident" to "1a2bed68-68e4-4794-990a-7bfae60b4139",
-        )
-        val innsendingSupplier = InnsendingSupplier(
-            dpSoknadBaseUrl = "https://arbeid.dev.nav.no/arbeid/dagpenger/soknadapi",
-            tokenSupplier = {
-                getAzureAdToken(
-                    "dp-behov-soknad-pdf",
-                    "api://dev-gcp.teamdagpenger.dp-soknad/.default",
-                )
-            },
-            personaliOppslag = personaliaOppslag,
-        )
+        val ids =
+            listOf(
+                "ident" to "1a2bed68-68e4-4794-990a-7bfae60b4139",
+            )
+        val innsendingSupplier =
+            InnsendingSupplier(
+                dpSoknadBaseUrl = "https://arbeid.dev.nav.no/arbeid/dagpenger/soknadapi",
+                tokenSupplier = {
+                    getAzureAdToken(
+                        "dp-behov-soknad-pdf",
+                        "api://dev-gcp.teamdagpenger.dp-soknad/.default",
+                    )
+                },
+                personaliOppslag = personaliaOppslag,
+            )
 
         val innsendingType = InnsendingSupplier.InnsendingType.DAGPENGER
         runBlocking {

@@ -9,11 +9,13 @@ internal class ArkiverbartDokument private constructor(val variant: DokumentVari
 
     companion object {
         internal fun netto(pdf: ByteArray) = ArkiverbartDokument(DokumentVariant.NETTO, pdf)
+
         internal fun brutto(pdf: ByteArray) = ArkiverbartDokument(DokumentVariant.BRUTTO, pdf)
     }
 
     enum class DokumentVariant {
-        NETTO, BRUTTO
+        NETTO,
+        BRUTTO,
     }
 }
 
@@ -23,15 +25,17 @@ internal class LagretDokument(
     val filnavn: String,
 ) {
     companion object {
-        internal fun List<LagretDokument>.behovSvar(): List<BehovSvar> = this.map {
-            BehovSvar(
-                urn = it.urn,
-                metainfo = BehovSvar.MetaInfo(
-                    innhold = it.filnavn,
-                    variant = it.variant.name,
-                ),
-            )
-        }
+        internal fun List<LagretDokument>.behovSvar(): List<BehovSvar> =
+            this.map {
+                BehovSvar(
+                    urn = it.urn,
+                    metainfo =
+                        BehovSvar.MetaInfo(
+                            innhold = it.filnavn,
+                            variant = it.variant.name,
+                        ),
+                )
+            }
     }
 }
 
@@ -43,6 +47,7 @@ internal fun lagArkiverbartDokument(innsending: Innsending): List<ArkiverbartDok
         ),
     )
 }
+
 internal fun lagArkiverbarEttersending(innsending: Innsending): List<ArkiverbartDokument> {
     return listOf(
         ArkiverbartDokument.netto(HtmlBuilder.lagEttersendingHtml(innsending).let { PdfBuilder.lagPdf(it) }),

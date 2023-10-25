@@ -23,10 +23,11 @@ internal class Oppslag(private val tekstJson: String) {
         private val logg = KotlinLogging.logger {}
 
         inline fun <reified T : TekstObjekt> Map<String, TekstObjekt>.lookup(tekstId: String): T {
-            val objekt: TekstObjekt = this.getOrElse(tekstId) {
-                logg.error { "Fant ikke tekst for tekstId: $tekstId" }
-                lagDummyTekstObjekt<T>(tekstId)
-            }
+            val objekt: TekstObjekt =
+                this.getOrElse(tekstId) {
+                    logg.error { "Fant ikke tekst for tekstId: $tekstId" }
+                    lagDummyTekstObjekt<T>(tekstId)
+                }
             return try {
                 objekt as T
             } catch (e: ClassCastException) {
@@ -40,11 +41,13 @@ internal class Oppslag(private val tekstJson: String) {
                 EnkelText::class -> EnkelText(textId = tekstId, text = tekstId)
                 FaktaTekstObjekt::class -> FaktaTekstObjekt(textId = tekstId, text = tekstId)
                 SeksjonTekstObjekt::class -> SeksjonTekstObjekt(textId = tekstId, title = tekstId)
-                SvaralternativTekstObjekt::class -> SvaralternativTekstObjekt(
-                    textId = tekstId,
-                    text = tekstId,
-                    alertText = null,
-                )
+                SvaralternativTekstObjekt::class ->
+                    SvaralternativTekstObjekt(
+                        textId = tekstId,
+                        text = tekstId,
+                        alertText = null,
+                    )
+
                 DokumentkravTekstObjekt::class -> DokumentkravTekstObjekt(textId = tekstId, title = tekstId)
                 else -> throw IllegalArgumentException("Ukjent klasse: ${T::class.java.name}")
             }
@@ -54,10 +57,13 @@ internal class Oppslag(private val tekstJson: String) {
 
     private val objectMapper = jacksonObjectMapper()
     private val tekstMap = parse(tekstJson)
+
     private fun parse(tekstJson: String): Map<String, TekstObjekt> {
         return try {
             objectMapper.readTree(tekstJson).let {
-                it.tilFaktaTekstObjekt() + it.tilSeksjonTekstObjekt() + it.tilSvarAlternativTekstObjekt() + it.tilAppTekstObjekt() + it.tilDokumentkravTekstObjekt()
+                it.tilFaktaTekstObjekt() + it.tilSeksjonTekstObjekt() +
+                    it.tilSvarAlternativTekstObjekt() + it.tilAppTekstObjekt() +
+                    it.tilDokumentkravTekstObjekt()
             }
         } catch (e: NullPointerException) {
             logg.error(e) { "Fikk NullPointerException ved parsing av tekster: $tekstJson" }
@@ -70,13 +76,14 @@ internal class Oppslag(private val tekstJson: String) {
         fakta().forEach { tekst ->
             val textId = tekst["textId"].asText()
             withLoggingContext("textId" to textId) {
-                map[textId] = FaktaTekstObjekt(
-                    textId = textId,
-                    text = tekst["text"].asText(),
-                    description = tekst.get("description")?.asRawHtmlString(),
-                    helpText = tekst.hjelpetekst(),
-                    unit = tekst.get("unit")?.asText(),
-                )
+                map[textId] =
+                    FaktaTekstObjekt(
+                        textId = textId,
+                        text = tekst["text"].asText(),
+                        description = tekst.get("description")?.asRawHtmlString(),
+                        helpText = tekst.hjelpetekst(),
+                        unit = tekst.get("unit")?.asText(),
+                    )
             }
         }
         return map
@@ -87,12 +94,13 @@ internal class Oppslag(private val tekstJson: String) {
         seksjoner().forEach { tekst ->
             val textId = tekst["textId"].asText()
             withLoggingContext("textId" to textId) {
-                map[textId] = SeksjonTekstObjekt(
-                    textId = textId,
-                    title = tekst["title"].asText(),
-                    description = tekst.get("description")?.asRawHtmlString(),
-                    helpText = tekst.hjelpetekst(),
-                )
+                map[textId] =
+                    SeksjonTekstObjekt(
+                        textId = textId,
+                        title = tekst["title"].asText(),
+                        description = tekst.get("description")?.asRawHtmlString(),
+                        helpText = tekst.hjelpetekst(),
+                    )
             }
         }
         return map
@@ -103,10 +111,11 @@ internal class Oppslag(private val tekstJson: String) {
         apptekster().forEach { tekst ->
             val textId = tekst["textId"].asText()
             withLoggingContext("textId" to textId) {
-                map[textId] = EnkelText(
-                    textId = textId,
-                    text = tekst["valueText"].asText(),
-                )
+                map[textId] =
+                    EnkelText(
+                        textId = textId,
+                        text = tekst["valueText"].asText(),
+                    )
             }
         }
         return map
@@ -115,27 +124,31 @@ internal class Oppslag(private val tekstJson: String) {
     private fun JsonNode.tilDokumentkravTekstObjekt(): Map<String, TekstObjekt> {
         return dokumentkrav().associate { dokumentkrav ->
             val textId = dokumentkrav["textId"].asText()
-            val title: String = when {
-                dokumentkrav["title"].isNull -> {
-                    logg.error { "Fant ikke title for $textId" }
-                    textId
+            val title: String =
+                when {
+                    dokumentkrav["title"].isNull -> {
+                        logg.error { "Fant ikke title for $textId" }
+                        textId
+                    }
+
+                    else -> {
+                        dokumentkrav["title"].asText()
+                    }
                 }
-                else -> {
-                    dokumentkrav["title"].asText()
-                }
-            }
             withLoggingContext("textId" to textId) {
-                textId to DokumentkravTekstObjekt(
-                    textId = textId,
-                    title = title,
-                    description = dokumentkrav.get("description")?.asRawHtmlString(),
-                    helpText = dokumentkrav["helpText"]?.takeIf { !it.isNull }?.let { helpText ->
-                        HelpText(
-                            helpText["title"]?.asText(),
-                            helpText["body"].asRawHtmlString(),
-                        )
-                    },
-                )
+                textId to
+                    DokumentkravTekstObjekt(
+                        textId = textId,
+                        title = title,
+                        description = dokumentkrav.get("description")?.asRawHtmlString(),
+                        helpText =
+                            dokumentkrav["helpText"]?.takeIf { !it.isNull }?.let { helpText ->
+                                HelpText(
+                                    helpText["title"]?.asText(),
+                                    helpText["body"].asRawHtmlString(),
+                                )
+                            },
+                    )
             }
         }
     }
@@ -145,28 +158,31 @@ internal class Oppslag(private val tekstJson: String) {
         (dokumentkravSvaralternativer() + svaralternativer()).forEach { tekst ->
             val textId = tekst["textId"].asText()
             withLoggingContext("textId" to textId) {
-                map[textId] = SvaralternativTekstObjekt(
-                    textId = textId,
-                    text = tekst["text"].asText(),
-                    alertText = tekst["alertText"]?.takeIf { !it.isNull }?.let { alerttext ->
-                        // todo fixme
-                        TekstObjekt.AlertText(
-                            alerttext["title"]?.asText(),
-                            alerttext["type"]?.asText() ?: "error",
-                            alerttext["body"]?.asRawHtmlString(),
-                        )
-                    },
-                )
+                map[textId] =
+                    SvaralternativTekstObjekt(
+                        textId = textId,
+                        text = tekst["text"].asText(),
+                        alertText =
+                            tekst["alertText"]?.takeIf { !it.isNull }?.let { alerttext ->
+                                // todo fixme
+                                TekstObjekt.AlertText(
+                                    alerttext["title"]?.asText(),
+                                    alerttext["type"]?.asText() ?: "error",
+                                    alerttext["body"]?.asRawHtmlString(),
+                                )
+                            },
+                    )
             }
         }
         return map
     }
 
     internal fun generellTekst(innsendingType: InnsendingSupplier.InnsendingType): Innsending.GenerellTekst {
-        val tittel = when (innsendingType) {
-            InnsendingSupplier.InnsendingType.DAGPENGER -> lookup<EnkelText>("soknad.header.tittel").text
-            InnsendingSupplier.InnsendingType.GENERELL -> lookup<EnkelText>("pdf.generell-innsending.hovedoverskrift").text
-        }
+        val tittel =
+            when (innsendingType) {
+                InnsendingSupplier.InnsendingType.DAGPENGER -> lookup<EnkelText>("soknad.header.tittel").text
+                InnsendingSupplier.InnsendingType.GENERELL -> lookup<EnkelText>("pdf.generell-innsending.hovedoverskrift").text
+            }
         return Innsending.GenerellTekst(
             hovedOverskrift = tittel,
             tittel = tittel,
@@ -236,22 +252,24 @@ internal class Oppslag(private val tekstJson: String) {
     }
 }
 
-private fun JsonNode.asRawHtmlString(): RawHtmlString? = when {
-    this is TextNode -> this.asText()
-    this is ArrayNode -> this.toList().joinToString(separator = "") { it.asText() }
-    isNull -> null
-    else -> throw UgyldigHtmlError(this.toPrettyString())
-}
-    .let { RawHtmlString.nyEllerNull(it) }
+private fun JsonNode.asRawHtmlString(): RawHtmlString? =
+    when {
+        this is TextNode -> this.asText()
+        this is ArrayNode -> this.toList().joinToString(separator = "") { it.asText() }
+        isNull -> null
+        else -> throw UgyldigHtmlError(this.toPrettyString())
+    }
+        .let { RawHtmlString.nyEllerNull(it) }
 
 class RawHtmlString private constructor(htmlFraSanity: String) {
     val html: String = Jsoup.clean(htmlFraSanity, tilatteTaggerOgAttributter)
 
     companion object {
-        internal fun nyEllerNull(htmlString: String?): RawHtmlString? = when {
-            htmlString.isNullOrEmpty() -> null
-            else -> RawHtmlString(htmlString)
-        }
+        internal fun nyEllerNull(htmlString: String?): RawHtmlString? =
+            when {
+                htmlString.isNullOrEmpty() -> null
+                else -> RawHtmlString(htmlString)
+            }
 
         private val tilatteTaggerOgAttributter = Safelist.relaxed().removeTags("img", "br")
     }
@@ -263,10 +281,15 @@ private fun JsonNode.hjelpetekst(): HelpText? =
     }
 
 private fun JsonNode.seksjoner() = this["sanityTexts"]["seksjoner"]
+
 private fun JsonNode.svaralternativer() = this["sanityTexts"]["svaralternativer"]
+
 private fun JsonNode.dokumentkravSvaralternativer() = this["sanityTexts"]["dokumentkravSvar"] ?: emptyList<JsonNode>()
+
 private fun JsonNode.dokumentkrav() = this["sanityTexts"]["dokumentkrav"]
+
 private fun JsonNode.fakta() = this["sanityTexts"]["fakta"]
+
 private fun JsonNode.apptekster(): JsonNode = this["sanityTexts"]["apptekster"]
 
 class UgyldigHtmlError(htmlString: String) : IllegalArgumentException("Mottok ugyldig HTML: $htmlString")

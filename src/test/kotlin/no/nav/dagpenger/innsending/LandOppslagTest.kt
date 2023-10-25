@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
 internal class LandOppslagTest {
-
     @Test
     fun `henter riktig land på riktig språk`() {
         LandOppslag.hentLand(Innsending.InnsendingsSpråk.ENGELSK, "NOR").also {

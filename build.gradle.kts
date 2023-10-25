@@ -43,7 +43,7 @@ tasks.withType<Jar>().configureEach {
     )
 }
 
-tasks.withType<KotlinCompile>() {
+tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = VERSION_17.toString()
 }
 
