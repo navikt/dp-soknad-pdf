@@ -19,29 +19,30 @@ internal object PdfBuilder {
         fun inputStreamSupplier(): () -> InputStream = { path.fileAsInputStream() }
     }
 
-    private val fonts: List<Font> = listOf(
-        Font(
-            family = "Source Sans Pro",
-            path = "/fonts/SourceSansPro-Normal.ttf",
-            weight = 400,
-            style = BaseRendererBuilder.FontStyle.NORMAL,
-            subset = false,
-        ),
-        Font(
-            family = "Source Sans Pro",
-            path = "/fonts/SourceSansPro-Italic.ttf",
-            weight = 300,
-            style = BaseRendererBuilder.FontStyle.ITALIC,
-            subset = false,
-        ),
-        Font(
-            family = "Source Sans Pro",
-            path = "/fonts/SourceSansPro-Semibold.ttf",
-            weight = 600,
-            style = BaseRendererBuilder.FontStyle.NORMAL,
-            subset = false,
-        ),
-    )
+    private val fonts: List<Font> =
+        listOf(
+            Font(
+                family = "Source Sans Pro",
+                path = "/fonts/SourceSansPro-Normal.ttf",
+                weight = 400,
+                style = BaseRendererBuilder.FontStyle.NORMAL,
+                subset = false,
+            ),
+            Font(
+                family = "Source Sans Pro",
+                path = "/fonts/SourceSansPro-Italic.ttf",
+                weight = 300,
+                style = BaseRendererBuilder.FontStyle.ITALIC,
+                subset = false,
+            ),
+            Font(
+                family = "Source Sans Pro",
+                path = "/fonts/SourceSansPro-Semibold.ttf",
+                weight = 600,
+                style = BaseRendererBuilder.FontStyle.NORMAL,
+                subset = false,
+            ),
+        )
 
     internal fun lagPdf(html: String): ByteArray {
         return try {
@@ -49,15 +50,15 @@ internal object PdfBuilder {
                 PdfRendererBuilder().apply {
                     fonts.forEach { font ->
                         useFont(
-                            /* supplier = */
+                            // supplier =
                             font.inputStreamSupplier(),
-                            /* fontFamily = */
+                            // fontFamily =
                             font.family,
-                            /* fontWeight = */
+                            // fontWeight =
                             font.weight,
-                            /* fontStyle = */
+                            // fontStyle =
                             font.style,
-                            /* subset = */
+                            // subset =
                             font.subset,
                         )
                     }

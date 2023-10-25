@@ -17,29 +17,33 @@ internal object App : RapidsConnection.StatusListener {
     private val rapidsConnection = RapidApplication.create(Configuration.config)
 
     init {
-        val personaliaOppslag = PDLPersonaliaOppslag(
-            pdlUrl = Configuration.pdlApiUrl,
-            tokenProvider = Configuration.pdlTokenSupplier,
-        )
+        val personaliaOppslag =
+            PDLPersonaliaOppslag(
+                pdlUrl = Configuration.pdlApiUrl,
+                tokenProvider = Configuration.pdlTokenSupplier,
+            )
         rapidsConnection.register(this)
         NyDialogPdfBehovLøser(
             rapidsConnection = rapidsConnection,
-            pdfLagring = PdfLagring(
-                baseUrl = Configuration.dpMellomlagringBaseUrl,
-                tokenSupplier = Configuration.mellomlagringTokenSupplier,
-            ),
-            innsendingSupplier = InnsendingSupplier(
-                dpSoknadBaseUrl = Configuration.dpSoknadUrl,
-                tokenSupplier = Configuration.soknadTokenSupplier,
-                personaliOppslag = personaliaOppslag,
-            ),
+            pdfLagring =
+                PdfLagring(
+                    baseUrl = Configuration.dpMellomlagringBaseUrl,
+                    tokenSupplier = Configuration.mellomlagringTokenSupplier,
+                ),
+            innsendingSupplier =
+                InnsendingSupplier(
+                    dpSoknadBaseUrl = Configuration.dpSoknadUrl,
+                    tokenSupplier = Configuration.soknadTokenSupplier,
+                    personaliOppslag = personaliaOppslag,
+                ),
         )
         EttersendingPdfBehovLøser(
             rapidsConnection = rapidsConnection,
-            pdfLagring = PdfLagring(
-                baseUrl = Configuration.dpMellomlagringBaseUrl,
-                tokenSupplier = Configuration.mellomlagringTokenSupplier,
-            ),
+            pdfLagring =
+                PdfLagring(
+                    baseUrl = Configuration.dpMellomlagringBaseUrl,
+                    tokenSupplier = Configuration.mellomlagringTokenSupplier,
+                ),
             innsendingSupplier = InnsendingSupplier(
                 dpSoknadBaseUrl = Configuration.dpSoknadUrl,
                 tokenSupplier = Configuration.soknadTokenSupplier,

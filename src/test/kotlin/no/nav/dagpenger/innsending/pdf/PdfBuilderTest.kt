@@ -13,7 +13,6 @@ import java.io.File
 import kotlin.test.assertTrue
 
 internal class PdfBuilderTest {
-
     @Test
     fun `Kan lage PDF fra HTML`() {
         assertDoesNotThrow {
@@ -30,10 +29,15 @@ internal class PdfBuilderTest {
             val pdf = ByteArrayInputStream(PdfBuilder.lagPdf(HtmlBuilder.lagBruttoHtml(TestModellHtml.innsending)))
             val validator = foundry.createValidator(PDFAFlavour.PDFA_2_U, true)
             foundry.createParser(pdf, PDFAFlavour.PDFA_2_U).also { parser ->
-                val result = validator.validate(parser).testAssertions.filter {
-                    it.status == TestAssertion.Status.FAILED
-                }.distinctBy { it.ruleId }
-                assertTrue(result.isEmpty(), "PDF-A verifisering feiler på :\n ${result.map { it.ruleId }}, se https://docs.verapdf.org/validation/pdfa-parts-2-and-3/")
+                val result =
+                    validator.validate(parser).testAssertions.filter {
+                        it.status == TestAssertion.Status.FAILED
+                    }.distinctBy { it.ruleId }
+                assertTrue(
+                    result.isEmpty(),
+                    "PDF-A verifisering feiler på :\n ${result.map { it.ruleId }}," +
+                        " se https://docs.verapdf.org/validation/pdfa-parts-2-and-3/",
+                )
             }
         }
     }

@@ -18,7 +18,9 @@ import no.nav.dagpenger.innsending.html.Innsending.InnsendingsSpråk.BOKMÅL
 
 internal object HtmlBuilder {
     fun lagNettoHtml(innsending: Innsending) = lagHtml(innsending, DIV::nettoSeksjon, false)
+
     fun lagBruttoHtml(innsending: Innsending) = lagHtml(innsending, DIV::bruttoSeksjon, true)
+
     fun lagEttersendingHtml(innsending: Innsending) = lagHtml(innsending, { _, _ -> }, false)
 
     private fun lagHtml(
@@ -82,7 +84,10 @@ internal object HtmlBuilder {
                         // todo engelsk tekst. Hack
                         if (innsending.type == InnsendingSupplier.InnsendingType.DAGPENGER) {
                             if (innsending.språk == BOKMÅL) {
-                                p { +"Frist for innsendinger er 14 dager etter at du sendte søknaden. Vi trenger dokumentasjonen for å vurdere om du har rett til dagpenger. Du er ansvarlig for at dokumentasjonen sendes til oss. Hvis du ikke sender alle dokumentene innen fristen kan du få avslag på søknaden, fordi NAV mangler viktige opplysninger i saken din. Ta kontakt hvis du ikke rekker å ettersende alle dokumentene." }
+                                @Suppress("ktlint:standard:max-line-length")
+                                p {
+                                    +"Frist for innsendinger er 14 dager etter at du sendte søknaden. Vi trenger dokumentasjonen for å vurdere om du har rett til dagpenger. Du er ansvarlig for at dokumentasjonen sendes til oss. Hvis du ikke sender alle dokumentene innen fristen kan du få avslag på søknaden, fordi NAV mangler viktige opplysninger i saken din. Ta kontakt hvis du ikke rekker å ettersende alle dokumentene."
+                                }
                             }
                         }
                     }

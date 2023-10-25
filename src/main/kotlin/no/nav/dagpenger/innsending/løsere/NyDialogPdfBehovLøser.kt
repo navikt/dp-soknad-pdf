@@ -27,6 +27,7 @@ internal class NyDialogPdfBehovLøser(
     companion object {
         private val logg = KotlinLogging.logger {}
         const val BEHOV = "ArkiverbarSøknad"
+
         private fun JsonMessage.innsendingType(): InnsendingSupplier.InnsendingType {
             return when (this["skjemakode"].asText()) {
                 "GENERELL_INNSENDING" -> InnsendingSupplier.InnsendingType.GENERELL
@@ -46,7 +47,10 @@ internal class NyDialogPdfBehovLøser(
         }.register(this)
     }
 
-    override fun onPacket(packet: JsonMessage, context: MessageContext) {
+    override fun onPacket(
+        packet: JsonMessage,
+        context: MessageContext,
+    ) {
         val soknadId = packet.søknadUuid()
         val ident = packet.ident()
         val innsendtTidspunkt = packet.innsendtTidspunkt()

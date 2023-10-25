@@ -39,30 +39,35 @@ internal fun HEAD.pdfaMetaTags(innsending: Innsending) {
 
 internal fun HEAD.bookmarks(innsending: Innsending) {
 // TODO: Språktilpassning på statiske bokmerker
-    val seksjonBokmerker = innsending.seksjoner.map {
-        """<bookmark name = "${it.overskrift}" href="#${seksjonId(it.overskrift)}"></bookmark>"""
-    }
-    val dokumentasjonBookmark = when {
-        innsending.dokumentasjonskrav.isNotEmpty() -> """<bookmark name = "Dokumentasjon" href="#Dokumentasjon"></bookmark>"""
-        else -> null
-    }
+    val seksjonBokmerker =
+        innsending.seksjoner.map {
+            """<bookmark name = "${it.overskrift}" href="#${seksjonId(it.overskrift)}"></bookmark>"""
+        }
+    val dokumentasjonBookmark =
+        when {
+            innsending.dokumentasjonskrav.isNotEmpty() -> """<bookmark name = "Dokumentasjon" href="#Dokumentasjon"></bookmark>"""
+            else -> null
+        }
     val bokmerker = listOfNotNull(seksjonBokmerker, dokumentasjonBookmark).joinToString("")
 
     unsafe {
         //language=HTML
         raw(
             """
-                <bookmarks>
-                    <bookmark name="${innsending.generellTekst.hovedOverskrift}" href="#hovedoverskrift"></bookmark>
-                    <bookmark name="Info om søknad" href="#infoblokk"></bookmark>
-                    $bokmerker
-                </bookmarks>
+            <bookmarks>
+                <bookmark name="${innsending.generellTekst.hovedOverskrift}" href="#hovedoverskrift"></bookmark>
+                <bookmark name="Info om søknad" href="#infoblokk"></bookmark>
+                $bokmerker
+            </bookmarks>
             """.trimIndent(),
         )
     }
 }
 
-internal fun DIV.boldSpanP(boldTekst: String, vanligTekst: String) {
+internal fun DIV.boldSpanP(
+    boldTekst: String,
+    vanligTekst: String,
+) {
     p {
         span(classes = "boldSpan") { +"$boldTekst: " }
         +vanligTekst
@@ -76,7 +81,11 @@ internal fun DIV.begrunnelse(begrunnelse: String) {
     }
 }
 
-internal fun DIV.valgsvar(boldTekst: String, svar: Innsending.ValgSvar, brutto: Boolean) {
+internal fun DIV.valgsvar(
+    boldTekst: String,
+    svar: Innsending.ValgSvar,
+    brutto: Boolean,
+) {
     p {
         span(classes = "boldSpan") { +"$boldTekst: " }
         if (svar.alternativ.size == 1) {
@@ -169,7 +178,11 @@ internal fun DIV.dokumentasjonKrav(
     }
 }
 
-private fun DIV.dokumentKrav(innsendts: List<Innsending.IkkeInnsendtNå>, beskrivelse: String, brutto: Boolean) {
+private fun DIV.dokumentKrav(
+    innsendts: List<Innsending.IkkeInnsendtNå>,
+    beskrivelse: String,
+    brutto: Boolean,
+) {
     if (innsendts.isNotEmpty()) {
         p { +beskrivelse }
         ul(classes = "dokumentasjonkrav") {
@@ -194,7 +207,11 @@ private fun tilleggsinformasjonOverskrift(info: Innsending.InfoTekst): String {
     return overskrift
 }
 
-private fun DIV.svar(tekst: GenerellTekst, svar: Innsending.Svar, brutto: Boolean = false) {
+private fun DIV.svar(
+    tekst: GenerellTekst,
+    svar: Innsending.Svar,
+    brutto: Boolean = false,
+) {
     when (svar) {
         is Innsending.EnkeltSvar -> boldSpanP(tekst.svar, svar.tekst)
         is Innsending.ValgSvar -> valgsvar(tekst.svar, svar, brutto)
@@ -202,13 +219,19 @@ private fun DIV.svar(tekst: GenerellTekst, svar: Innsending.Svar, brutto: Boolea
     }
 }
 
-internal fun DIV.nettoSeksjon(seksjon: Innsending.Seksjon, tekst: GenerellTekst) {
+internal fun DIV.nettoSeksjon(
+    seksjon: Innsending.Seksjon,
+    tekst: GenerellTekst,
+) {
     id = seksjonId(seksjon.overskrift)
     h2 { +seksjon.overskrift }
     seksjon.spmSvar.forEach { nettoSpørsmål(it, tekst) }
 }
 
-private fun DIV.nettoSpørsmål(spmSvar: SporsmalSvar, tekst: GenerellTekst) {
+private fun DIV.nettoSpørsmål(
+    spmSvar: SporsmalSvar,
+    tekst: GenerellTekst,
+) {
     div {
         h3 { +spmSvar.sporsmal }
         svar(tekst, spmSvar.svar)
@@ -222,7 +245,10 @@ private fun DIV.nettoSpørsmål(spmSvar: SporsmalSvar, tekst: GenerellTekst) {
     }
 }
 
-internal fun DIV.bruttoSeksjon(seksjon: Innsending.Seksjon, tekst: GenerellTekst) {
+internal fun DIV.bruttoSeksjon(
+    seksjon: Innsending.Seksjon,
+    tekst: GenerellTekst,
+) {
     id = seksjonId(seksjon.overskrift)
     h2 { +seksjon.overskrift }
     try {
@@ -241,7 +267,10 @@ internal fun DIV.bruttoSeksjon(seksjon: Innsending.Seksjon, tekst: GenerellTekst
     }
 }
 
-private fun DIV.bruttoSpørsmål(spmSvar: SporsmalSvar, tekst: GenerellTekst) {
+private fun DIV.bruttoSpørsmål(
+    spmSvar: SporsmalSvar,
+    tekst: GenerellTekst,
+) {
     div {
         h3 { +spmSvar.sporsmal }
         // todo

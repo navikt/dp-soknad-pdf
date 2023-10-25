@@ -25,24 +25,25 @@ internal class OppslagTest {
     }
 
     @Language("JSON")
-    private val testTekster = """
-       {
-  "sanityTexts": {
-    "fakta": [
-    ],
-    "seksjoner": [
-    ],
-    "svaralternativer": [
-    ],
-    "apptekster": [
-     {
-        "textId": "id2",
-        "valueText": "Legg til barn"
-      }
-    ],
-    "dokumentkrav": [
-    ]
-  }
-}
-    """.trimIndent()
+    private val testTekster =
+        """
+               {
+          "sanityTexts": {
+            "fakta": [
+            ],
+            "seksjoner": [
+            ],
+            "svaralternativer": [
+            ],
+            "apptekster": [
+             {
+                "textId": "id2",
+                "valueText": "Legg til barn"
+              }
+            ],
+            "dokumentkrav": [
+            ]
+          }
+        }
+        """.trimIndent()
 }

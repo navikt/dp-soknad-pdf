@@ -53,24 +53,26 @@ internal class JsonHtmlMapper(
             val tekstObjekt =
                 oppslag.lookup<DokumentkravTekstObjekt>(krav["beskrivendeId"].asText())
             when (valg) {
-                Innsending.DokumentKrav.Valg.SEND_NAA -> Innsending.Innsendt(
-                    kravId = kravId,
-                    kravSvar = kravSvar,
-                    navn = tekstObjekt.title,
-                    beskrivelse = tekstObjekt.description?.let { rawHtml -> Innsending.UnsafeHtml(rawHtml.html) },
-                    hjelpetekst = tekstObjekt.hjelpetekst(),
-                    valg = valg,
-                )
+                Innsending.DokumentKrav.Valg.SEND_NAA ->
+                    Innsending.Innsendt(
+                        kravId = kravId,
+                        kravSvar = kravSvar,
+                        navn = tekstObjekt.title,
+                        beskrivelse = tekstObjekt.description?.let { rawHtml -> Innsending.UnsafeHtml(rawHtml.html) },
+                        hjelpetekst = tekstObjekt.hjelpetekst(),
+                        valg = valg,
+                    )
 
-                else -> Innsending.IkkeInnsendtNå(
-                    kravId = kravId,
-                    kravSvar = kravSvar,
-                    navn = tekstObjekt.title,
-                    begrunnelse = krav["begrunnelse"].asText(),
-                    beskrivelse = tekstObjekt.description?.let { rawHtml -> Innsending.UnsafeHtml(rawHtml.html) },
-                    hjelpetekst = tekstObjekt.hjelpetekst(),
-                    valg = valg,
-                )
+                else ->
+                    Innsending.IkkeInnsendtNå(
+                        kravId = kravId,
+                        kravSvar = kravSvar,
+                        navn = tekstObjekt.title,
+                        begrunnelse = krav["begrunnelse"].asText(),
+                        beskrivelse = tekstObjekt.description?.let { rawHtml -> Innsending.UnsafeHtml(rawHtml.html) },
+                        hjelpetekst = tekstObjekt.hjelpetekst(),
+                        valg = valg,
+                    )
             }
         }
     }
@@ -96,23 +98,25 @@ internal class JsonHtmlMapper(
                 "int" -> this.sjekkSvarFinnes { EnkeltSvar(this["svar"].asText()) }
                 "boolean" -> this.sjekkSvarFinnes { Innsending.ValgSvar(this.booleanEnValg()) }
                 "localdate" -> this.sjekkSvarFinnes { EnkeltSvar(this["svar"].asLocalDate().dagMånedÅr()) }
-                "periode" -> this.sjekkSvarFinnes {
-                    listOf(
-                        this["svar"]["fom"].asLocalDate().dagMånedÅr(),
-                        this["svar"]["tom"]?.asLocalDate()?.dagMånedÅr() ?: "",
-                    ).let {
-                        EnkeltSvar(it.joinToString(" - "))
+                "periode" ->
+                    this.sjekkSvarFinnes {
+                        listOf(
+                            this["svar"]["fom"].asLocalDate().dagMånedÅr(),
+                            this["svar"]["tom"]?.asLocalDate()?.dagMånedÅr() ?: "",
+                        ).let {
+                            EnkeltSvar(it.joinToString(" - "))
+                        }
                     }
-                }
 
                 "generator" -> Innsending.IngenSvar
                 "envalg" -> this.sjekkSvarFinnes { Innsending.ValgSvar(this.envalg()) }
                 "flervalg" -> this.sjekkSvarFinnes { Innsending.ValgSvar(this.flerValg()) }
                 "land" -> this.sjekkSvarFinnes { EnkeltSvar(LandOppslag.hentLand(språk, this["svar"].asText())) }
-                "dokument" -> this.sjekkSvarFinnes {
-                    logg.warn { "Fant dokument i fakta: ${this.dokumentTekst()}" }
-                    Innsending.IngenSvar
-                }
+                "dokument" ->
+                    this.sjekkSvarFinnes {
+                        logg.warn { "Fant dokument i fakta: ${this.dokumentTekst()}" }
+                        Innsending.IngenSvar
+                    }
 
                 else -> throw IllegalArgumentException("Ukjent faktumtype $type")
             }
@@ -149,13 +153,14 @@ internal class JsonHtmlMapper(
 
     private fun JsonNode.flerValg(): List<Innsending.SvarAlternativ> {
         return when (this["type"].asText()) {
-            "flervalg" -> this["svar"].toList().map { jsonNode ->
-                val jsonAlternativ = oppslag.lookup<SvaralternativTekstObjekt>(jsonNode.asText())
-                Innsending.SvarAlternativ(
-                    jsonAlternativ.text,
-                    alertText(jsonAlternativ),
-                )
-            }
+            "flervalg" ->
+                this["svar"].toList().map { jsonNode ->
+                    val jsonAlternativ = oppslag.lookup<SvaralternativTekstObjekt>(jsonNode.asText())
+                    Innsending.SvarAlternativ(
+                        jsonAlternativ.text,
+                        alertText(jsonAlternativ),
+                    )
+                }
 
             else -> emptyList()
         }
@@ -175,21 +180,22 @@ internal class JsonHtmlMapper(
 
     private fun JsonNode.generatorfakta(): List<Innsending.SpørmsålOgSvarGruppe> {
         return when (this["type"].asText()) {
-            "generator" -> this["svar"]?.toList()?.map { liste ->
-                Innsending.SpørmsålOgSvarGruppe(
-                    liste.toList().map { node ->
-                        val tekstObjekt =
-                            oppslag.lookup<FaktaTekstObjekt>(node["beskrivendeId"].asText())
-                        Innsending.SporsmalSvar(
-                            sporsmal = tekstObjekt.text,
-                            svar = node.svar(),
-                            beskrivelse = tekstObjekt.description?.let { rawHtml -> Innsending.UnsafeHtml(rawHtml.html) },
-                            hjelpetekst = tekstObjekt.hjelpetekst(),
-                            oppfølgingspørmål = node.generatorfakta(),
-                        )
-                    },
-                )
-            } ?: emptyList()
+            "generator" ->
+                this["svar"]?.toList()?.map { liste ->
+                    Innsending.SpørmsålOgSvarGruppe(
+                        liste.toList().map { node ->
+                            val tekstObjekt =
+                                oppslag.lookup<FaktaTekstObjekt>(node["beskrivendeId"].asText())
+                            Innsending.SporsmalSvar(
+                                sporsmal = tekstObjekt.text,
+                                svar = node.svar(),
+                                beskrivelse = tekstObjekt.description?.let { rawHtml -> Innsending.UnsafeHtml(rawHtml.html) },
+                                hjelpetekst = tekstObjekt.hjelpetekst(),
+                                oppfølgingspørmål = node.generatorfakta(),
+                            )
+                        },
+                    )
+                } ?: emptyList()
 
             else -> emptyList()
         }
@@ -244,11 +250,9 @@ private fun JsonNode.dokumentTekst(): String {
     return "Du har lastet opp $filnavn den $opplastetDato"
 }
 
-private fun LocalDate.dagMånedÅr(): String =
-    this.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
+private fun LocalDate.dagMånedÅr(): String = this.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
 
-private fun LocalDateTime.dagMånedÅr(): String =
-    this.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
+private fun LocalDateTime.dagMånedÅr(): String = this.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
 
 private fun TekstObjekt.hjelpetekst(): Innsending.Hjelpetekst? {
     return this.helpText?.let { oppslag ->

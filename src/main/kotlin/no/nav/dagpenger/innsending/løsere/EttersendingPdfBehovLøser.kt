@@ -48,7 +48,10 @@ internal class EttersendingPdfBehovLøser(
         }.register(this)
     }
 
-    override fun onPacket(packet: JsonMessage, context: MessageContext) {
+    override fun onPacket(
+        packet: JsonMessage,
+        context: MessageContext,
+    ) {
         val soknadId = packet.søknadUuid()
         val ident = packet.ident()
         val innsendtTidspunkt = packet.innsendtTidspunkt()
@@ -95,9 +98,10 @@ private fun JsonMessage.innsendtDokumentajonsKravId(): Set<String> {
 
 private fun Innsending.filtrerInnsendteDokumentasjonsKrav(innsendtDokumentajonsKravId: Set<String>): Innsending {
     return this.copy(
-        dokumentasjonskrav = this.dokumentasjonskrav.filter { dokumentKrav ->
-            dokumentKrav.kravId in innsendtDokumentajonsKravId
-        },
+        dokumentasjonskrav =
+            this.dokumentasjonskrav.filter { dokumentKrav ->
+                dokumentKrav.kravId in innsendtDokumentajonsKravId
+            },
     ).also {
         it.infoBlokk = this.infoBlokk
     }

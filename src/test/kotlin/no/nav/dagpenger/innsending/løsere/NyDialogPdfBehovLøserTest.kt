@@ -1,4 +1,10 @@
+<<<<<<< HEAD:src/test/kotlin/no/nav/dagpenger/innsending/løsere/NyDialogPdfBehovLøserTest.kt
 package no.nav.dagpenger.innsending.løsere
+=======
+@file:Suppress("ktlint:standard:property-naming")
+
+package no.nav.dagpenger.innsending.pdf
+>>>>>>> main:src/test/kotlin/no/nav/dagpenger/innsending/pdf/NyDialogPdfBehovLøserTest.kt
 
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
@@ -25,29 +31,33 @@ internal class NyDialogPdfBehovLøserTest {
     val soknadId = UUID.randomUUID()
     val testFnr = "12345678910"
 
-    val mockInnsendingSupplier = mockk<InnsendingSupplier>().also {
-        coEvery { it.hentSoknad(soknadId, any(), any(), any(), DAGPENGER) } returns innsending
-        coEvery { it.hentSoknad(soknadId, any(), any(), any(), GENERELL) } returns innsending
-    }
+    val mockInnsendingSupplier =
+        mockk<InnsendingSupplier>().also {
+            coEvery { it.hentSoknad(soknadId, any(), any(), any(), DAGPENGER) } returns innsending
+            coEvery { it.hentSoknad(soknadId, any(), any(), any(), GENERELL) } returns innsending
+        }
 
-    val testRapid = TestRapid().also {
-        NyDialogPdfBehovLøser(
-            rapidsConnection = it,
-            pdfLagring = mockk<PdfLagring>().also {
-                coEvery {
-                    it.lagrePdf(
-                        soknadId.toString(),
-                        any(),
-                        testFnr,
-                    )
-                } returns listOf(
-                    LagretDokument("urn:vedlegg:soknadId/netto.pdf", NETTO, "netto.pdf"),
-                    LagretDokument("urn:vedlegg:soknadId/brutto.pdf", BRUTTO, "brutto.pdf"),
-                )
-            },
-            innsendingSupplier = mockInnsendingSupplier,
-        )
-    }
+    val testRapid =
+        TestRapid().also {
+            NyDialogPdfBehovLøser(
+                rapidsConnection = it,
+                pdfLagring =
+                    mockk<PdfLagring>().also {
+                        coEvery {
+                            it.lagrePdf(
+                                soknadId.toString(),
+                                any(),
+                                testFnr,
+                            )
+                        } returns
+                            listOf(
+                                LagretDokument("urn:vedlegg:soknadId/netto.pdf", NETTO, "netto.pdf"),
+                                LagretDokument("urn:vedlegg:soknadId/brutto.pdf", BRUTTO, "brutto.pdf"),
+                            )
+                    },
+                innsendingSupplier = mockInnsendingSupplier,
+            )
+        }
 
     @Test
     fun `besvarer pdf behov for dagpenger søknad `() {
@@ -71,7 +81,10 @@ internal class NyDialogPdfBehovLøserTest {
         coVerify(exactly = 1) { mockInnsendingSupplier.hentSoknad(soknadId, any(), any(), any(), GENERELL) }
     }
 
-    private fun assertJsonEquals(expected: String, actual: JsonNode) {
+    private fun assertJsonEquals(
+        expected: String,
+        actual: JsonNode,
+    ) {
         val objectMapper = jacksonObjectMapper()
         assertEquals(objectMapper.readTree(expected), actual)
     }
@@ -83,29 +96,32 @@ internal class NyDialogPdfBehovLøserTest {
     }
 
     @Language("JSON")
-    val expectedLøsning = """
-           [
-                  {
-                    "metainfo": {
-                      "innhold": "netto.pdf",
-                      "filtype": "PDF", 
-                      "variant": "NETTO"
-                    },
-                    "urn": "urn:vedlegg:soknadId/netto.pdf"
-                  },
-                  {
-                    "metainfo": {
-                      "innhold": "brutto.pdf",
-                      "filtype": "PDF",
-                      "variant": "BRUTTO"
-                    },
-                    "urn": "urn:vedlegg:soknadId/brutto.pdf"
-                  }
-                ]
-    """.trimIndent()
+    val expectedLøsning =
+        """
+        [
+               {
+                 "metainfo": {
+                   "innhold": "netto.pdf",
+                   "filtype": "PDF", 
+                   "variant": "NETTO"
+                 },
+                 "urn": "urn:vedlegg:soknadId/netto.pdf"
+               },
+               {
+                 "metainfo": {
+                   "innhold": "brutto.pdf",
+                   "filtype": "PDF",
+                   "variant": "BRUTTO"
+                 },
+                 "urn": "urn:vedlegg:soknadId/brutto.pdf"
+               }
+             ]
+        """.trimIndent()
 
     @Language("JSON")
-    val testMessage_dagpenger = """ {
+    val testMessage_dagpenger =
+        """
+         {
         "@event_name": "behov",
         "@behov": ["ArkiverbarSøknad"],
         "dokument_språk": "en",
@@ -115,10 +131,12 @@ internal class NyDialogPdfBehovLøserTest {
         "type": "NY_DIALOG",
         "innsendtTidspunkt": "${ZonedDateTime.now(ZoneId.of("Europe/Oslo"))}"
             }
-    """.trimIndent()
+        """.trimIndent()
 
     @Language("JSON")
-    val testMessage_generell = """ {
+    val testMessage_generell =
+        """
+         {
         "@event_name": "behov",
         "@behov": ["ArkiverbarSøknad"],
         "dokument_språk": "en",
@@ -128,15 +146,17 @@ internal class NyDialogPdfBehovLøserTest {
         "type": "NY_DIALOG",
         "innsendtTidspunkt": "${ZonedDateTime.now(ZoneId.of("Europe/Oslo"))}"
             }
-    """.trimIndent()
+        """.trimIndent()
 
     @Language("JSON")
-    val testMessageMedLøsning = """ {
+    val testMessageMedLøsning =
+        """
+         {
         "@event_name": "behov",
         "@behov": ["ArkiverbarSøknad"],
         "@løsning": "something",
         "søknad_uuid": "$soknadId",
         "ident": "12345678910",
         "innsendtTidspunkt": "${ZonedDateTime.now(ZoneId.of("Europe/Oslo"))}}"
-    """.trimIndent()
+        """.trimIndent()
 }

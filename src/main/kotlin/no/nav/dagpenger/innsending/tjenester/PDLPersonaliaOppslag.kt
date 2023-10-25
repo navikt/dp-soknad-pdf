@@ -26,38 +26,39 @@ internal interface PersonaliaOppslag {
 }
 
 internal class PDLPersonaliaOppslag(pdlUrl: String, private val tokenProvider: () -> String) : PersonaliaOppslag {
-    private val httpClient = HttpClient(CIO) {
-        install(ContentNegotiation) {
-            jackson {
-                configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-                setSerializationInclusion(JsonInclude.Include.NON_NULL)
-                registerModules(JavaTimeModule())
+    private val httpClient =
+        HttpClient(CIO) {
+            install(ContentNegotiation) {
+                jackson {
+                    configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+                    setSerializationInclusion(JsonInclude.Include.NON_NULL)
+                    registerModules(JavaTimeModule())
+                }
+            }
+            install(HttpRequestRetry) {
+                retryOnServerErrors(maxRetries = 5)
+                exponentialDelay()
+            }
+
+            install(HttpTimeout) {
+                this.connectTimeoutMillis = 5.seconds.inWholeMilliseconds
+                this.requestTimeoutMillis = 15.seconds.inWholeMilliseconds
+                this.socketTimeoutMillis = 5.seconds.inWholeMilliseconds
+            }
+
+            install(Logging) {
+                level = LogLevel.INFO
+            }
+
+            defaultRequest {
+                header("TEMA", "DAG")
+                header("Authorization", "Bearer ${tokenProvider.invoke()}")
+                header(
+                    "behandlingsnummer",
+                    "B286",
+                ) // https://behandlingskatalog.intern.nav.no/process/purpose/DAGPENGER/486f1672-52ed-46fb-8d64-bda906ec1bc9
             }
         }
-        install(HttpRequestRetry) {
-            retryOnServerErrors(maxRetries = 5)
-            exponentialDelay()
-        }
-
-        install(HttpTimeout) {
-            this.connectTimeoutMillis = 5.seconds.inWholeMilliseconds
-            this.requestTimeoutMillis = 15.seconds.inWholeMilliseconds
-            this.socketTimeoutMillis = 5.seconds.inWholeMilliseconds
-        }
-
-        install(Logging) {
-            level = LogLevel.INFO
-        }
-
-        defaultRequest {
-            header("TEMA", "DAG")
-            header("Authorization", "Bearer ${tokenProvider.invoke()}")
-            header(
-                "behandlingsnummer",
-                "B286",
-            ) // https://behandlingskatalog.intern.nav.no/process/purpose/DAGPENGER/486f1672-52ed-46fb-8d64-bda906ec1bc9
-        }
-    }
 
     private val personOppslag = createPersonOppslag(pdlUrl, httpClient)
 
@@ -65,11 +66,12 @@ internal class PDLPersonaliaOppslag(pdlUrl: String, private val tokenProvider: (
         return try {
             personOppslag.hentPerson(ident).let {
                 Personalia(
-                    navn = Personalia.Navn(
-                        forNavn = it.fornavn,
-                        mellomNavn = it.mellomnavn,
-                        etterNavn = it.etternavn,
-                    ),
+                    navn =
+                        Personalia.Navn(
+                            forNavn = it.fornavn,
+                            mellomNavn = it.mellomnavn,
+                            etterNavn = it.etternavn,
+                        ),
                     adresse = AdresseMapper(AdresseVisitor(it).adresser).folkeregistertAdresse ?: Adresse.TOM_ADRESSE,
                 )
             }
@@ -86,14 +88,16 @@ internal data class Personalia(
     val adresse: Adresse,
 ) {
     companion object {
-        val TOM_PERSONALIA = Personalia(
-            navn = Navn(
-                forNavn = "",
-                mellomNavn = null,
-                etterNavn = "",
-            ),
-            adresse = Adresse.TOM_ADRESSE,
-        )
+        val TOM_PERSONALIA =
+            Personalia(
+                navn =
+                    Navn(
+                        forNavn = "",
+                        mellomNavn = null,
+                        etterNavn = "",
+                    ),
+                adresse = Adresse.TOM_ADRESSE,
+            )
     }
 
     data class Navn(
