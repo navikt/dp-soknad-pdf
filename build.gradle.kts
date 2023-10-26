@@ -1,7 +1,5 @@
-import org.gradle.api.JavaVersion.VERSION_17
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.gradle.api.tasks.testing.logging.TestLogEvent
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     application
@@ -20,7 +18,9 @@ application {
 }
 
 java {
-    targetCompatibility = VERSION_17
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
 }
 
 tasks.withType<Jar>().configureEach {
@@ -35,10 +35,6 @@ tasks.withType<Jar>().configureEach {
             if (it.isDirectory) it else zipTree(it)
         },
     )
-}
-
-tasks.withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = VERSION_17.toString()
 }
 
 dependencies {
