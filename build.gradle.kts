@@ -66,9 +66,6 @@ dependencies {
 
     testImplementation(kotlin("test"))
     testImplementation(libs.mockk)
-    val junitVersion = libs.versions.junit.get()
-    testImplementation("org.junit.jupiter:junit-jupiter-api:$junitVersion")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$junitVersion")
     testImplementation("io.kotest:kotest-runner-junit5-jvm:5.7.2")
     testImplementation(libs.ktor.client.mock)
     testImplementation("org.verapdf:validation-model:1.24.1")
