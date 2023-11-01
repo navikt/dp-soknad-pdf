@@ -55,7 +55,7 @@ dependencies {
     implementation("com.openhtmltopdf:openhtmltopdf-svg-support:1.0.10")
     implementation("org.jsoup:jsoup:1.16.2")
     implementation("org.jetbrains.kotlinx:kotlinx-html-jvm:0.9.1")
-    implementation("org.apache.commons:commons-text:1.10.0")
+    implementation("org.apache.commons:commons-text:1.11.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-slf4j:1.7.3")
     implementation("no.nav.pam.geography:pam-geography:2.20")
 
