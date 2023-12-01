@@ -22,11 +22,11 @@ spec:
     max: 3
   resources:
     limits:
-      cpu: "12"
-      memory: 2024Mi
+      cpu: "12" # Denne appen KAN bruke mye CPU, så vi bør ha en limit
+      memory: 1536Mi
     requests:
-      cpu: 350m
-      memory: 1024Mi
+      cpu: 100m
+      memory: 768Mi
   secureLogs:
     enabled: true
   env:
