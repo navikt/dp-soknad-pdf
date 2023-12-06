@@ -43,8 +43,8 @@ dependencies {
     implementation(libs.rapids.and.rivers)
     implementation(libs.konfig)
     implementation(libs.kotlin.logging)
-    implementation("no.nav.dagpenger:oauth2-klient:2023.11.27-13.50.d478414fd10d")
-    implementation("no.nav.dagpenger:pdl-klient:2023.11.27-13.50.d478414fd10d")
+    implementation("no.nav.dagpenger:oauth2-klient:2023.12.05-22.18.78bfc9253ddf")
+    implementation("no.nav.dagpenger:pdl-klient:2023.12.05-22.18.78bfc9253ddf")
     implementation(libs.ktor.client.logging.jvm)
     implementation(libs.ktor.client.cio)
     implementation(libs.ktor.client.content.negotiation)
@@ -55,7 +55,7 @@ dependencies {
     implementation("com.openhtmltopdf:openhtmltopdf-svg-support:1.0.10")
     implementation("org.jetbrains.kotlinx:kotlinx-html-jvm:0.10.1")
     implementation("org.jsoup:jsoup:1.17.1")
-    implementation("org.jetbrains.kotlinx:kotlinx-html-jvm:0.9.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-html-jvm:0.10.1")
     implementation("org.apache.commons:commons-text:1.11.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-slf4j:1.7.3")
     implementation("no.nav.pam.geography:pam-geography:2.20")
@@ -65,7 +65,7 @@ dependencies {
     testImplementation("io.kotest:kotest-runner-junit5-jvm:5.8.0")
     testImplementation(libs.ktor.client.mock)
     testImplementation("org.verapdf:validation-model:1.24.1")
-    testImplementation("de.redsix:pdfcompare:1.1.61")
+    testImplementation("de.redsix:pdfcompare:1.1.64")
 
     // FOr E2E
     testImplementation("io.kubernetes:client-java:19.0.0")
