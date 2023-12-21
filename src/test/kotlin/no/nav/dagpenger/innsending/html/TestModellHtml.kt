@@ -32,7 +32,7 @@ object TestModellHtml {
                         tittel = null,
                         unsafeHtmlBody =
                             Innsending.UnsafeHtml(
-                                "<p>Med noe tekst som kan være like lang som hjelpetekste vil jeg tro. Og forhåentligvis har mindre skrivefeil</p>",
+                                "<p>Med noe tekst som kan være like lang som hjelpetekste vil jeg tro. Og forhåentligvis har mindre skrivefeil</p>",
                             ),
                         type = Innsending.Infotype.ADVARSEL,
                     ),
@@ -48,7 +48,7 @@ object TestModellHtml {
                         svar = EnkeltSvar("Ja"),
                     ),
                     Innsending.SporsmalSvar(
-                        sporsmal = "Kan du jobbe i hele Norge?",
+                        sporsmal = "Kan du jobbe &nbsp; i hele  Norge?",
                         svar = EnkeltSvar("Ja"),
                     ),
                     Innsending.SporsmalSvar(

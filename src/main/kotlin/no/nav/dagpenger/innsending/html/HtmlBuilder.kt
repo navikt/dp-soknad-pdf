@@ -105,6 +105,6 @@ internal object HtmlBuilder {
             lang = språk
             head(head)
             body(null, body)
-        }
+        }.replace("&nbsp;", " ")
     }
 }
