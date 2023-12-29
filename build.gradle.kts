@@ -54,7 +54,7 @@ dependencies {
     implementation("com.openhtmltopdf:openhtmltopdf-slf4j:1.0.10")
     implementation("com.openhtmltopdf:openhtmltopdf-svg-support:1.0.10")
     implementation("org.jetbrains.kotlinx:kotlinx-html-jvm:0.10.1")
-    implementation("org.jsoup:jsoup:1.17.1")
+    implementation("org.jsoup:jsoup:1.17.2")
     implementation("org.jetbrains.kotlinx:kotlinx-html-jvm:0.9.1")
     implementation("org.apache.commons:commons-text:1.11.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-slf4j:1.7.3")
