@@ -52,6 +52,7 @@ internal data class Innsending(
     data class ValgSvar(val alternativ: List<SvarAlternativ>) : Svar()
 
     data class SvarAlternativ(val tekst: String, val tilleggsinformasjon: InfoTekst?)
+
     object IngenSvar : Svar()
 
     class Hjelpetekst private constructor(val unsafeHtmlBody: UnsafeHtml?, val tittel: String? = null) {
