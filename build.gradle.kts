@@ -44,7 +44,7 @@ dependencies {
     implementation(libs.konfig)
     implementation(libs.kotlin.logging)
     implementation("no.nav.dagpenger:oauth2-klient:2023.12.20-09.10.d437884c245f")
-    implementation("no.nav.dagpenger:pdl-klient:2023.12.20-09.10.d437884c245f")
+    implementation("no.nav.dagpenger:pdl-klient:2024.02.06-21.41.c1844e1bb3f7")
     implementation(libs.ktor.client.logging.jvm)
     implementation(libs.ktor.client.cio)
     implementation(libs.ktor.client.content.negotiation)
