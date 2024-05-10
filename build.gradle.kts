@@ -62,7 +62,7 @@ dependencies {
 
     testImplementation(kotlin("test"))
     testImplementation(libs.mockk)
-    testImplementation("io.kotest:kotest-runner-junit5-jvm:5.8.1")
+    testImplementation("io.kotest:kotest-runner-junit5-jvm:5.9.0")
     testImplementation(libs.ktor.client.mock)
     testImplementation("org.verapdf:validation-model:1.24.2")
     testImplementation("de.redsix:pdfcompare:1.1.61")
