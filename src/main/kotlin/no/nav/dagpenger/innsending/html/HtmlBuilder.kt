@@ -106,5 +106,7 @@ internal object HtmlBuilder {
             head(head)
             body(null, body)
         }.replace("&nbsp;", " ")
+            .replace("\u001d", "") // Group separator character
+            .replace("\u001c", "") // File separator character
     }
 }

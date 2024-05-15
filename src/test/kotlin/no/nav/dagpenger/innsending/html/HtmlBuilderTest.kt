@@ -28,6 +28,14 @@ class HtmlBuilderTest {
     }
 
     @Test
+    fun `kan lage brutto- og netto HTML`() {
+        assertDoesNotThrow {
+            HtmlBuilder.lagBruttoHtml(TestModellHtml.innsending)
+            HtmlBuilder.lagNettoHtml(TestModellHtml.innsending)
+        }
+    }
+
+    @Test
     fun `lager html`() {
         val head: HEAD.() -> Unit = {
             title("Test tittel")

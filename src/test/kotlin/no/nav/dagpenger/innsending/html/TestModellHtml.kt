@@ -208,6 +208,14 @@ object TestModellHtml {
                                 ),
                             ),
                     ),
+                    Innsending.SporsmalSvar(
+                        sporsmal = "Dett er spm 4",
+                        svar = EnkeltSvar("Dette er ikke gyldig XML tegn ->> \u001D\u001C og heller ikke dette ->> \u001D "),
+                        beskrivelse =
+                            Innsending.UnsafeHtml(
+                                """Og dette er ikke gyldig XML tegn ->>  og heller ikke dette ->>  """,
+                            ),
+                    ),
                 ),
             beskrivelse = Innsending.UnsafeHtml("<p>En description er en beskrivelse av en egen elefant</p>"),
         )
