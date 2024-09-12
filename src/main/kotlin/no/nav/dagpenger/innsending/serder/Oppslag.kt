@@ -162,9 +162,9 @@ internal class Oppslag(
                     SvaralternativTekstObjekt(
                         textId = textId,
                         text =
-                            when (tekst.hasNonNull("text")) {
-                                true -> tekst["text"].asText()
-                                false -> hentTekst(textId)
+                            when (tekst["text"].isNull) {
+                                true -> hentTekst(textId)
+                                false -> tekst["text"].asText()
                             },
                         alertText =
                             tekst["alertText"]?.takeIf { !it.isNull }?.let { alerttext ->
