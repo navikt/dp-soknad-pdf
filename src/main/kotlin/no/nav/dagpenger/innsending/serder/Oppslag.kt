@@ -162,9 +162,9 @@ internal class Oppslag(private val tekstJson: String) {
                     SvaralternativTekstObjekt(
                         textId = textId,
                         text =
-                            when (tekst["text"].isNull) {
-                                true -> hentTekst(textId)
-                                false -> tekst["text"].asText()
+                            when (tekst.hasNonNull("text")) {
+                                true -> tekst["text"].asText()
+                                false -> hentTekst(textId)
                             },
                         alertText =
                             tekst["alertText"]?.takeIf { !it.isNull }?.let { alerttext ->
