@@ -161,7 +161,11 @@ internal class Oppslag(private val tekstJson: String) {
                 map[textId] =
                     SvaralternativTekstObjekt(
                         textId = textId,
-                        text = tekst["text"].asText(),
+                        text =
+                            when (tekst["text"].isNull) {
+                                true -> hentTekst(textId)
+                                false -> tekst["text"].asText()
+                            },
                         alertText =
                             tekst["alertText"]?.takeIf { !it.isNull }?.let { alerttext ->
                                 // todo fixme
@@ -175,6 +179,19 @@ internal class Oppslag(private val tekstJson: String) {
             }
         }
         return map
+    }
+
+    // todo: Fjerne denne når vi har fått riktig tekst fra sanity
+    private fun hentTekst(textId: String): String {
+        logg.warn { "Fant ikke tekst for '$textId' i sanity-json" }
+        return when (textId) {
+            "dokumentkrav.svar.send.naa" -> "Laste opp nå"
+            "dokumentkrav.svar.sender.ikke" -> "Jeg sender det ikke"
+            "dokumentkrav.svar.sendt.tidligere" -> "Jeg har sendt det i en tidligere søknad om dagpenger"
+            "dokumentkrav.svar.send.senere" -> "Jeg sender det senere"
+            "dokumentkrav.svar.andre.sender" -> "Noen andre sender det for meg"
+            else -> textId
+        }
     }
 
     internal fun generellTekst(innsendingType: InnsendingSupplier.InnsendingType): Innsending.GenerellTekst {
