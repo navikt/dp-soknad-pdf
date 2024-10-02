@@ -58,7 +58,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-html-jvm:0.11.0")
     implementation("org.apache.commons:commons-text:1.12.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-slf4j:1.9.0")
-    implementation("no.nav.pam.geography:pam-geography:2.22")
+    implementation("no.nav.pam.geography:pam-geography:2.23")
 
     testImplementation(kotlin("test"))
     testImplementation(libs.mockk)
