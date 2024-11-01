@@ -23,28 +23,14 @@ java {
     }
 }
 
-tasks.withType<Jar>().configureEach {
-    dependsOn("test")
-    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-    manifest {
-        attributes(mapOf("Main-Class" to application.mainClass.get()))
-    }
-
-    from(
-        configurations.runtimeClasspath.get().map {
-            if (it.isDirectory) it else zipTree(it)
-        },
-    )
-}
-
 dependencies {
     implementation(kotlin("stdlib"))
 
     implementation(libs.rapids.and.rivers)
     implementation(libs.konfig)
     implementation(libs.kotlin.logging)
-    implementation("no.nav.dagpenger:oauth2-klient:2024.05.15-10.36.c98cfe9cb526")
-    implementation("no.nav.dagpenger:pdl-klient:2024.05.15-10.36.c98cfe9cb526")
+    implementation("no.nav.dagpenger:oauth2-klient:2024.07.23-10.35.4fc49fbf0d7e")
+    implementation("no.nav.dagpenger:pdl-klient:2024.09.20-13.31.40516c678fde")
     implementation(libs.ktor.client.logging.jvm)
     implementation(libs.ktor.client.cio)
     implementation(libs.ktor.client.content.negotiation)
@@ -54,11 +40,11 @@ dependencies {
     implementation("com.openhtmltopdf:openhtmltopdf-slf4j:1.0.10")
     implementation("com.openhtmltopdf:openhtmltopdf-svg-support:1.0.10")
     implementation("org.jetbrains.kotlinx:kotlinx-html-jvm:0.11.0")
-    implementation("org.jsoup:jsoup:1.17.2")
+    implementation("org.jsoup:jsoup:1.18.1")
     implementation("org.jetbrains.kotlinx:kotlinx-html-jvm:0.11.0")
     implementation("org.apache.commons:commons-text:1.12.0")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-slf4j:1.8.1")
-    implementation("no.nav.pam.geography:pam-geography:2.21")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-slf4j:1.9.0")
+    implementation("no.nav.pam.geography:pam-geography:2.23")
 
     testImplementation(kotlin("test"))
     testImplementation(libs.mockk)
@@ -68,7 +54,7 @@ dependencies {
     testImplementation("de.redsix:pdfcompare:1.2.2")
 
     // FOr E2E
-    testImplementation("io.kubernetes:client-java:21.0.0-legacy")
+    testImplementation("io.kubernetes:client-java:21.0.1-legacy")
 }
 
 configure<com.diffplug.gradle.spotless.SpotlessExtension> {
