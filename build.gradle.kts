@@ -59,7 +59,7 @@ dependencies {
 
 dependencies {
     constraints {
-        implementation("org.apache.xmlgraphics:batik-xml:1.18") {
+        implementation("org.apache.xmlgraphics:batik-bridge:1.18") {
             because("Versjon 1.14 har sårbarheter.")
         }
     }
