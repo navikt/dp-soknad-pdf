@@ -57,6 +57,12 @@ dependencies {
     testImplementation("io.kubernetes:client-java:21.0.1-legacy")
 }
 
+configurations.all {
+    resolutionStrategy {
+        force("org.apache.xmlgraphics:batik-xml:1.18")
+    }
+}
+
 configure<com.diffplug.gradle.spotless.SpotlessExtension> {
     kotlin {
         ktlint()
