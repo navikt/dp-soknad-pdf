@@ -57,12 +57,10 @@ dependencies {
     testImplementation("io.kubernetes:client-java:21.0.1-legacy")
 }
 
-configurations.all {
-    resolutionStrategy {
-        eachDependency {
-            if (requested.group == "org.apache.xmlgraphics" && requested.name == "batik-xml") {
-                useVersion("1.18")
-            }
+dependencies {
+    constraints {
+        implementation("org.apache.xmlgraphics:batik-xml:1.18") {
+            because("Versjon 1.14 har sårbarheter.")
         }
     }
 }
