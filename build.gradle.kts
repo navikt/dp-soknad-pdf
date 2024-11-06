@@ -59,7 +59,11 @@ dependencies {
 
 configurations.all {
     resolutionStrategy {
-        force("org.apache.xmlgraphics:batik-xml:1.18")
+        eachDependency {
+            if (requested.group == "org.apache.xmlgraphics" && requested.name == "batik-xml") {
+                useVersion("1.18")
+            }
+        }
     }
 }
 
