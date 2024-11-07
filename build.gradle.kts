@@ -57,6 +57,15 @@ dependencies {
     testImplementation("io.kubernetes:client-java:21.0.1-legacy")
 }
 
+// TODO: Kan fjernes når pakken som drar inn denne avhengigheten oppdateres (com.openhtmltopdf:openhtmltopdf-pdfbox:1.0.10)
+dependencies {
+    constraints {
+        implementation("org.apache.xmlgraphics:batik-bridge:1.18") {
+            because("Versjon 1.14 har sårbarheter.")
+        }
+    }
+}
+
 configure<com.diffplug.gradle.spotless.SpotlessExtension> {
     kotlin {
         ktlint()
