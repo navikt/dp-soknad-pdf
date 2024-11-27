@@ -1,6 +1,5 @@
 package no.nav.dagpenger.innsending
 
-import com.github.navikt.tbd_libs.rapids_and_rivers_api.RapidsConnection
 import no.nav.dagpenger.innsending.html.InnsendingSupplier
 import no.nav.dagpenger.innsending.løsere.EttersendingPdfBehovLøser
 import no.nav.dagpenger.innsending.løsere.NyDialogPdfBehovLøser
@@ -8,6 +7,7 @@ import no.nav.dagpenger.innsending.løsere.RapporteringPdfBehovLøser
 import no.nav.dagpenger.innsending.pdf.PdfLagring
 import no.nav.dagpenger.innsending.tjenester.PDLPersonaliaOppslag
 import no.nav.helse.rapids_rivers.RapidApplication
+import no.nav.helse.rapids_rivers.RapidsConnection
 
 fun main() {
     App.start()
