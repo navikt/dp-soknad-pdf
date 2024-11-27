@@ -99,7 +99,7 @@ internal data class Innsending(
                 DateTimeFormatter.ofLocalizedDateTime(
                     FormatStyle.LONG,
                     FormatStyle.SHORT,
-                ).withLocale(Locale("no", "NO"))
+                ).withLocale(Locale.of("no", "NO"))
         }
 
         val datoSendt: String = innsendtTidspunkt.format(datetimeFormatter)

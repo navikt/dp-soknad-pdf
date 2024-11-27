@@ -29,8 +29,8 @@ dependencies {
     implementation(libs.rapids.and.rivers)
     implementation(libs.konfig)
     implementation(libs.kotlin.logging)
-    implementation("no.nav.dagpenger:oauth2-klient:2024.07.23-10.35.4fc49fbf0d7e")
-    implementation("no.nav.dagpenger:pdl-klient:2024.09.20-13.31.40516c678fde")
+    implementation("no.nav.dagpenger:oauth2-klient:2024.10.31-15.02.1d4f08a38d24")
+    implementation("no.nav.dagpenger:pdl-klient:2024.10.31-15.02.1d4f08a38d24")
     implementation(libs.ktor.client.logging.jvm)
     implementation(libs.ktor.client.cio)
     implementation(libs.ktor.client.content.negotiation)
@@ -47,6 +47,7 @@ dependencies {
     implementation("no.nav.pam.geography:pam-geography:2.23")
 
     testImplementation(kotlin("test"))
+    testImplementation(libs.rapids.and.rivers.test)
     testImplementation(libs.mockk)
     testImplementation("io.kotest:kotest-runner-junit5-jvm:5.9.1")
     testImplementation(libs.ktor.client.mock)

@@ -71,7 +71,7 @@ internal class E2ESupplierTest {
             )
         }
 
-        return tokenAzureAdClient.clientCredentials(scope).accessToken
+        return tokenAzureAdClient.clientCredentials(scope).accessToken ?: throw IllegalStateException("Kunne ikke få tak i token")
     }
 
     val mockPersonaliaOppslag =
