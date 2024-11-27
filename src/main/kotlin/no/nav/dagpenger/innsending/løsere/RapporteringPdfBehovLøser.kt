@@ -3,6 +3,12 @@ package no.nav.dagpenger.innsending.løsere
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.node.JsonNodeType
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import com.github.navikt.tbd_libs.rapids_and_rivers.JsonMessage
+import com.github.navikt.tbd_libs.rapids_and_rivers.River
+import com.github.navikt.tbd_libs.rapids_and_rivers_api.MessageContext
+import com.github.navikt.tbd_libs.rapids_and_rivers_api.MessageMetadata
+import com.github.navikt.tbd_libs.rapids_and_rivers_api.RapidsConnection
+import io.micrometer.core.instrument.MeterRegistry
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.slf4j.MDCContext
 import kotlinx.html.BODY
@@ -19,10 +25,6 @@ import no.nav.dagpenger.innsending.html.søknadPdfStyle
 import no.nav.dagpenger.innsending.pdf.PdfBuilder
 import no.nav.dagpenger.innsending.pdf.PdfLagring
 import no.nav.dagpenger.innsending.serder.ident
-import no.nav.helse.rapids_rivers.JsonMessage
-import no.nav.helse.rapids_rivers.MessageContext
-import no.nav.helse.rapids_rivers.RapidsConnection
-import no.nav.helse.rapids_rivers.River
 
 internal class RapporteringPdfBehovLøser(
     rapidsConnection: RapidsConnection,
@@ -36,9 +38,9 @@ internal class RapporteringPdfBehovLøser(
 
     init {
         River(rapidsConnection).apply {
-            validate { it.demandValue("@event_name", "behov") }
-            validate { it.demandAll("@behov", listOf(BEHOV)) }
-            validate { it.rejectKey("@løsning") }
+            precondition { it.requireValue("@event_name", "behov") }
+            precondition { it.requireAllOrAny("@behov", listOf(BEHOV)) }
+            precondition { it.forbid("@løsning") }
             validate { it.requireKey("ident") }
             validate {
                 it.require(BEHOV) { behov ->
@@ -52,6 +54,8 @@ internal class RapporteringPdfBehovLøser(
     override fun onPacket(
         packet: JsonMessage,
         context: MessageContext,
+        metadata: MessageMetadata,
+        meterRegistry: MeterRegistry,
     ) {
         val ident = packet.ident()
         val periodeId = packet[BEHOV]["periodeId"].asText()

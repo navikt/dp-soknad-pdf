@@ -1,5 +1,11 @@
 package no.nav.dagpenger.innsending.løsere
 
+import com.github.navikt.tbd_libs.rapids_and_rivers.JsonMessage
+import com.github.navikt.tbd_libs.rapids_and_rivers.River
+import com.github.navikt.tbd_libs.rapids_and_rivers_api.MessageContext
+import com.github.navikt.tbd_libs.rapids_and_rivers_api.MessageMetadata
+import com.github.navikt.tbd_libs.rapids_and_rivers_api.RapidsConnection
+import io.micrometer.core.instrument.MeterRegistry
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.slf4j.MDCContext
 import mu.KotlinLogging
@@ -12,10 +18,6 @@ import no.nav.dagpenger.innsending.serder.dokumentSpråk
 import no.nav.dagpenger.innsending.serder.ident
 import no.nav.dagpenger.innsending.serder.innsendtTidspunkt
 import no.nav.dagpenger.innsending.serder.søknadUuid
-import no.nav.helse.rapids_rivers.JsonMessage
-import no.nav.helse.rapids_rivers.MessageContext
-import no.nav.helse.rapids_rivers.RapidsConnection
-import no.nav.helse.rapids_rivers.River
 
 private val sikkerlogg = KotlinLogging.logger("tjenestekall")
 
@@ -38,9 +40,9 @@ internal class NyDialogPdfBehovLøser(
 
     init {
         River(rapidsConnection).apply {
-            validate { it.demandValue("@event_name", "behov") }
-            validate { it.demandAll("@behov", listOf(BEHOV)) }
-            validate { it.rejectKey("@løsning") }
+            precondition { it.requireValue("@event_name", "behov") }
+            precondition { it.requireAllOrAny("@behov", listOf(BEHOV)) }
+            precondition { it.forbid("@løsning") }
             validate { it.requireKey("søknad_uuid", "ident", "innsendtTidspunkt", "skjemakode") }
             validate { it.requireValue("type", "NY_DIALOG") }
             validate { it.interestedIn("dokument_språk") }
@@ -50,6 +52,8 @@ internal class NyDialogPdfBehovLøser(
     override fun onPacket(
         packet: JsonMessage,
         context: MessageContext,
+        metadata: MessageMetadata,
+        meterRegistry: MeterRegistry,
     ) {
         val soknadId = packet.søknadUuid()
         val ident = packet.ident()

@@ -2,6 +2,8 @@ package no.nav.dagpenger.innsending.serder
 
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import com.github.navikt.tbd_libs.rapids_and_rivers.asLocalDate
+import com.github.navikt.tbd_libs.rapids_and_rivers.asLocalDateTime
 import mu.KotlinLogging
 import no.nav.dagpenger.innsending.LandOppslag
 import no.nav.dagpenger.innsending.html.Innsending
@@ -13,8 +15,6 @@ import no.nav.dagpenger.innsending.serder.Oppslag.TekstObjekt.DokumentkravTekstO
 import no.nav.dagpenger.innsending.serder.Oppslag.TekstObjekt.FaktaTekstObjekt
 import no.nav.dagpenger.innsending.serder.Oppslag.TekstObjekt.SeksjonTekstObjekt
 import no.nav.dagpenger.innsending.serder.Oppslag.TekstObjekt.SvaralternativTekstObjekt
-import no.nav.helse.rapids_rivers.asLocalDate
-import no.nav.helse.rapids_rivers.asLocalDateTime
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
