@@ -1,8 +1,8 @@
 package no.nav.dagpenger.innsending.serder
 
 import com.fasterxml.jackson.databind.JsonNode
+import com.github.navikt.tbd_libs.rapids_and_rivers.JsonMessage
 import no.nav.dagpenger.innsending.html.Innsending
-import no.nav.helse.rapids_rivers.JsonMessage
 import java.time.ZonedDateTime
 import java.util.UUID
 
