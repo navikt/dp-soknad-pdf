@@ -30,6 +30,8 @@ spec:
   secureLogs:
     enabled: true
   env:
+    - name: JDK_JAVA_OPTIONS
+      value: -XX:+UseParallelGC -XX:ActiveProcessorCount=4
     - name: DP_MELLOMLAGRING_SCOPE
       value: {{ DP_MELLOMLAGRING_SCOPE }}
     - name: DP_SOKNAD_SCOPE
