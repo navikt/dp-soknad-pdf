@@ -25,6 +25,7 @@ internal class InnsendingSupplier(
 ) {
     private val httpKlient: HttpClient =
         HttpClient(CIO) {
+            expectSuccess = true
             defaultRequest {
                 header("Authorization", "Bearer ${tokenSupplier.invoke()}")
             }
